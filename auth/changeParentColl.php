@@ -91,6 +91,8 @@ function testArgs(){
 	$parent = intval($parent);
 	
 	if ($parent == $currparent) return;
+	
+	if ($child == $parent) return;
 
 	$args = $child . " " . $currparent . " " . $parent;
 
