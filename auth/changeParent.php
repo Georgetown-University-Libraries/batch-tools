@@ -98,6 +98,12 @@ function testArgs(){
     	return;
     };
 
+// test if the child community is the same as the parent community
+    if ($child == $parent) {
+    	$status = "Invalid operation: child: {$child}, parent: {$parent} are the same.";
+    	return;
+    };
+
 	$args = escapeshellarg($child) . " " . escapeshellarg($currparent) . " " . escapeshellarg($parent);
     	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
