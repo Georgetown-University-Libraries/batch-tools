@@ -98,6 +98,36 @@ function testArgs(){
     	return;
     };
 
+// test if the child community is the same as the parent community (SD-51)
+    if ($child == $parent) {
+    	$status = "Invalid operation:  child: {$child}, parent: {$parent} are the same.";
+    	return;
+    }
+
+// test if the child community is an ancestor of the parent community (SD-51)
+	$child_path = "";
+	$parent_path = "";
+	
+	foreach(community::$COMBO as $obj) {
+		if ($obj->community_id == $child) {
+			$child_path = $obj->getMyPath();
+			break;
+		}
+	}
+	
+	foreach(community::$COMBO as $obj) {
+		if ($obj->community_id == $parent) {
+			$parent_path = $obj->getMyPath();
+			break;
+		}
+	}
+	
+	if (substr($parent_path, 0, strlen($child_path)) == $child_path) {
+		$status = "Invalid operation:  child : {$child} is an ancestor of the parent: {$parent}";
+		return;
+	}
+		
+
 	$args = escapeshellarg($child) . " " . escapeshellarg($currparent) . " " . escapeshellarg($parent);
     	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());

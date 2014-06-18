@@ -91,7 +91,7 @@ function testArgs(){
 	$parent = intval($parent);
 	
 	if ($parent == $currparent) return;
-
+	
 	$args = $child . " " . $currparent . " " . $parent;
 
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
