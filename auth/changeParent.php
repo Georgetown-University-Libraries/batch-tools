@@ -68,6 +68,24 @@ function uncheckedPost($name, $value) {
 	}
 }
 
+// test if child community is an ancestor of parent community (SD-51)
+function isAncestor($childId, $parentId) {
+	if(!isset(community::$COMMUNITIES[$parentId])) return false;
+	
+	$parent = community::$COMMUNITIES[$parentId];
+	$next_parent_id = $parent->parent_id;
+	
+	//test if parent is a top level node
+	if ($next_parent_id == $parentId) return false;
+	
+	//test if child community is the parent of parent community
+	if ($next_parent_id == $childId) return true;
+	
+	//recursively test parent community's parent objects
+	return isAncestor($next_parent_id, $parentId);
+};
+
+
 function testArgs(){
 	global $status;
 	$CUSTOM = custom::instance();
@@ -97,6 +115,20 @@ function testArgs(){
     	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparnt}";
     	return;
     };
+
+// test if the child community is the same as the parent community (SD-51)
+    if ($child == $parent) {
+    	$status = "Invalid operation:  child community (id {$child}) and parent community (id {$parent}) are the same.";
+    	return;
+    }
+
+// test if the child community is an ancestor of the parent community (SD-51)
+	if (isAncestor($child, $parent)) {
+		$status = "Invalid operation:  child community (id {$child}) is an ancestor of the parent community (id {$parent})";
+		return;
+	}
+
+		
 
 	$args = escapeshellarg($child) . " " . escapeshellarg($currparent) . " " . escapeshellarg($parent);
     	
