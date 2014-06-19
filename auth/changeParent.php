@@ -70,7 +70,7 @@ function uncheckedPost($name, $value) {
 
 // test if child community is an ancestor of parent community (SD-51)
 function isAncestor($childId, $parentId) {
-	if(!isset(community::$COMMUNITIES[$parentId])) return false;
+	// if(!isset(community::$COMMUNITIES[$parentId])) return false;
 	
 	$parent = community::$COMMUNITIES[$parentId];
 	$next_parent_id = $parent->parent_id;
@@ -127,7 +127,6 @@ function testArgs(){
 		$status = "Invalid operation:  child community (id {$child}) is an ancestor of the parent community (id {$parent})";
 		return;
 	}
-
 		
 
 	$args = escapeshellarg($child) . " " . escapeshellarg($currparent) . " " . escapeshellarg($parent);
