@@ -68,6 +68,24 @@ function uncheckedPost($name, $value) {
 	}
 }
 
+// test if child community is an ancestor of parent community (SD-51)
+function isAncestor($childId, $parentId) {
+	if(!isset(community::$COMMUNITIES[$parentId])) return false;
+	
+	$parent = community::$COMMUNITIES[$parentId];
+	$next_parent_id = $parent->parent_id;
+	
+	//test if parent is a top level node
+	if ($next_parent_id == $parentId) return false;
+	
+	//test if child community is the parent of parent community
+	if ($next_parent_id == $childId) return true;
+	
+	//recursively test parent community's parent objects
+	return isAncestor($next_parent_id, $parentId);
+};
+
+
 function testArgs(){
 	global $status;
 	$CUSTOM = custom::instance();
@@ -100,32 +118,16 @@ function testArgs(){
 
 // test if the child community is the same as the parent community (SD-51)
     if ($child == $parent) {
-    	$status = "Invalid operation:  child: {$child}, parent: {$parent} are the same.";
+    	$status = "Invalid operation:  child community (id {$child}) and parent community (id {$parent}) are the same.";
     	return;
     }
 
 // test if the child community is an ancestor of the parent community (SD-51)
-	$child_path = "";
-	$parent_path = "";
-	
-	foreach(community::$COMBO as $obj) {
-		if ($obj->community_id == $child) {
-			$child_path = $obj->getMyPath();
-			break;
-		}
-	}
-	
-	foreach(community::$COMBO as $obj) {
-		if ($obj->community_id == $parent) {
-			$parent_path = $obj->getMyPath();
-			break;
-		}
-	}
-	
-	if (substr($parent_path, 0, strlen($child_path)) == $child_path) {
-		$status = "Invalid operation:  child : {$child} is an ancestor of the parent: {$parent}";
+	if (isAncestor($child, $parent)) {
+		$status = "Invalid operation:  child community (id {$child}) is an ancestor of the parent community (id {$parent})";
 		return;
 	}
+
 		
 
 	$args = escapeshellarg($child) . " " . escapeshellarg($currparent) . " " . escapeshellarg($parent);
