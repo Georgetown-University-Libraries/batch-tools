@@ -82,7 +82,7 @@ function isAncestor($childId, $parentId) {
 	if ($next_parent_id == $childId) return true;
 	
 	//recursively test parent community's parent objects
-	return isAncestor($next_parent_id, $parentId);
+	return isAncestor($childId, $next_parent_id);
 };
 
 
