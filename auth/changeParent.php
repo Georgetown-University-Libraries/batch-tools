@@ -73,7 +73,7 @@ function isAncestor($childId, $parentId) {
 	if(!isset(community::$COMMUNITIES[$parentId])) return false;
 	
 	$parent = community::$COMMUNITIES[$parentId];
-	$next_parent_id = $parent->parent_id;
+	$next_parent_id = $parent->parent_comm_id;
 	
 	//test if parent is a top level node
 	if ($next_parent_id == $parentId) return false;
@@ -82,7 +82,7 @@ function isAncestor($childId, $parentId) {
 	if ($next_parent_id == $childId) return true;
 	
 	//recursively test parent community's parent objects
-	return isAncestor($next_parent_id, $parentId);
+	return isAncestor($childId, $next_parent_id);
 };
 
 
@@ -127,7 +127,6 @@ function testArgs(){
 		$status = "Invalid operation:  child community (id {$child}) is an ancestor of the parent community (id {$parent})";
 		return;
 	}
-
 		
 
 	$args = escapeshellarg($child) . " " . escapeshellarg($currparent) . " " . escapeshellarg($parent);
