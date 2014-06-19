@@ -70,10 +70,10 @@ function uncheckedPost($name, $value) {
 
 // test if child community is an ancestor of parent community (SD-51)
 function isAncestor($childId, $parentId) {
-	// if(!isset(community::$COMMUNITIES[$parentId])) return false;
+	if(!isset(community::$COMMUNITIES[$parentId])) return false;
 	
 	$parent = community::$COMMUNITIES[$parentId];
-	$next_parent_id = $parent->parent_id;
+	$next_parent_id = $parent->parent_comm_id;
 	
 	//test if parent is a top level node
 	if ($next_parent_id == $parentId) return false;
