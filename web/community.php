@@ -354,8 +354,8 @@ class hierarchy {
   		  $this->id = $obj->community_id;
   		  $this->hid = "comm-".$obj->community_id;
 		  $this->pid = $obj->parent_comm_id;
-  		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
-		  $this->topid = $obj->getMyTopCommunity()->community_id;
+  		  $this->topid = $obj->getMyTopCommunity()->community_id;
+		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
 		  $this->thandle = $obj->getMyTopCommunity()->handle; 
 		  $this->type = "community";
 		} else if ($obj instanceof collection) {
