@@ -118,14 +118,6 @@ class collection {
 		}
 		return community::$COMMUNITIES[$this->community_id];
 	}
-	
-	public function getParentNoTop() {
-		if ($this->getParent()->community_id == null) {
-			return $this;
-		}
-		return community::$COMMUNITIES[$this->getParent()->community_id];
-	}
-	
 	public function getMyPath() {
 		return $this->getParent()->getMyPath() . '/' . custom::instance()->getPathName($this->name);
 	}
@@ -139,13 +131,10 @@ class collection {
 	}
 	
 	public function getMyPathWithoutTopComm() {
-		return $this->getParentNoTop()->getMyPath() . '/' . custom::instance()->getPathName($this->name);
-		
-		/* $path = $this->getMyPath();
+		$path = $this->getMyPath();
 		$top_path = $this->topCommunity->getMyPath();
 		$short_path = substr($path, strlen($top_path));
 		return $short_path;
-		*/
 	}
 
 
