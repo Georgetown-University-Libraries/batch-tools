@@ -131,6 +131,7 @@ class collection {
 	}
 	
 	public function getMyPathWithoutTopComm() {
+		
 		$path = $this->getMyPath();
 		$top_path = $this->getMyTopCommunity()->getMyPath();
 		$short_path = substr($path, strlen($top_path));
@@ -161,7 +162,7 @@ class collection {
 		$colls = "";
 		foreach(self::$COLLECTIONS as $c) {
 			$sel = ($collsel == $c->handle) ? "selected" : "";
-			$colls .= "<option class='allcoll {$c->topCommunity->shortname}' value='{$c->handle}' {$sel}>{$c->getMyPathWithoutTopComm()}</option>";
+			$colls .= "<option class='allcoll {$c->topCommunity->shortname}' value='{$c->handle}' {$sel}>{$c->getMyPath()}</option>";
 		}
 		echo <<< HERE
 		<div id="collWidget">
