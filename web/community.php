@@ -133,7 +133,7 @@ class collection {
 	public function getMyPathWithoutTopComm() {
 		$path = $this->getMyPath();
 		$top_path = $this->getMyTopCommunity()->getMyPath();
-		$path = substr($path, strlen($top_path));
+		$short_path = substr($path, strlen($top_path));
 		return $path;
 	}
 
