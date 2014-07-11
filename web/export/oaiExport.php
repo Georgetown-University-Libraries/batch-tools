@@ -158,7 +158,7 @@ function getRecords($format, $set, $resumption = "") {
       $stat = $xml->loadXML($ret);
     
       if (!$stat) throw new exception("No data for list reocrds {$req}");
-	  $nl = $xml->getElementsByTagName("record");
+	  $nl = $xml->getElementsByTagNameNS("","record");
 	  $r2 = htmlspecialchars($req);
       //echo "<req>{$r2} {$nl->length}</req>";
 	  for($i=0; $i<$nl->length; $i++) {
