@@ -33,6 +33,8 @@ class custom {
 	public function getBgindicator() {return "&";}
 	public function getDefuser() {return "userxx";}
 	public function getCurrentUser() {return isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : $this->getDefuser();}
+	public function testUserInGroup($group) {return true;}
+	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
 	public function getRestServiceUrl() {return "http://demo.dspace.org/rest";}
 	public function showBatchTools() {return true;}
