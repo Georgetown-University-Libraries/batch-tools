@@ -61,11 +61,11 @@ HERE;
 		</div>
 		<hr/>
 		<h1 align="center">{$this->title}</h1>
+HERE;
 		if (!$hasPerm) {
 			litFooter();
 			exit();
 		}
-HERE;
 	}
 
 	public function litFooter() {
