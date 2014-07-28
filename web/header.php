@@ -64,7 +64,8 @@ HERE;
 HERE;
 		if (!$hasPerm) {
 			litFooter();
-			exit();
+			echo "<h2>You do not have permission to perform this function</h2>";
+			exit;
 		}
 	}
 
