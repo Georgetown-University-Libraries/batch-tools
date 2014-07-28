@@ -38,7 +38,7 @@ class custom {
 	public function getCurrentUser() {return isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : $this->getDefuser();}
 	public function getCurrentUserEmail() {return "";}
     public function getAllGroups() {return array();}
-    public function getCurrentGroups() {return this->getGroupsForUser($this->getCurrentUser());}
+    public function getCurrentGroups() {return $this->getGroupsForUser($this->getCurrentUser());}
     public function getGroupsForUser($user) {return array();}
     public function getUsersForGroup($group) {return array();}
 	public function testUserInGroup($group) {return in_array($group, $this->getCurrentGroup($group));}
