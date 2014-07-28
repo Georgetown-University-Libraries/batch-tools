@@ -41,7 +41,7 @@ class custom {
     public function getCurrentGroups() {return $this->getGroupsForUser($this->getCurrentUser());}
     public function getGroupsForUser($user) {return array();}
     public function getUsersForGroup($group) {return array();}
-	public function testUserInGroup($group) {return in_array($group, $this->getCurrentGroup());}
+	public function testUserInGroup($group) {return in_array($group, $this->getCurrentGroups());}
 	public function isUserCollectionOwner() {return $this->testUserInGroup(self::COLLADMIN);}
 	public function isUserSysAdmin() {return $this->testUserInGroup(self::SYSADMIN);}
 	public function isUserViewer() {return $this->testUserInGroup(self::VIEWER);}
