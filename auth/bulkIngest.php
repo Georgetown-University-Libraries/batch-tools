@@ -24,7 +24,6 @@ $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
 $CUSTOM->getCommunityInit()->initCollections();
 
-$defuser =  $CUSTOM->getDefuser();
 $ingestLoc =  $CUSTOM->getIngestLoc();
 
 $status = "";

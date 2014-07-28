@@ -24,6 +24,9 @@ class custom {
 	
 	public static $INSTANCE;
 	public $QKEY = array();
+	const COLLADMIN = "collection-admin";
+	const SYSADMIN  = "system-admin";
+	const VIEWER = "viewer";
 	
 	public function getRoot() {return dirname(dirname(__FILE__));}
 	public function getWebRoot() {return "/batch-tools/";}
@@ -35,10 +38,13 @@ class custom {
 	public function getCurrentUser() {return isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : $this->getDefuser();}
 	public function getCurrentUserEmail() {return "";}
     public function getAllGroups() {return array();}
-    public function getCurrentGroups() {return array();}
+    public function getCurrentGroups() {return this->getGroupsForUser($this->getCurrentUser());}
     public function getGroupsForUser($user) {return array();}
     public function getUsersForGroup($group) {return array();}
-	public function testUserInGroup($group) {return true;}
+	public function testUserInGroup($group) {return in_array($group, $this->getCurrentGroup($group));}
+	public function isUserCollectionOwner() {return $this->testUserInGroup(self::COLLADMIN);}
+	public function isUserSysAdmin() {return $this->testUserInGroup(self::SYSADMIN);}
+	public function isUserViewer() {return $this->testUserInGroup(self::VIEWER);}
 	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
 	public function getRestServiceUrl() {return "http://demo.dspace.org/rest";}

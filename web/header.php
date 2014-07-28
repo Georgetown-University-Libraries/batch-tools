@@ -43,9 +43,12 @@ class LitHeader {
 HERE;
 	}
 	
-	public function litHeader($arr) {
+	public function litHeader($arr, $hasPerm = null) {
 		$CUSTOM = custom::instance();
 		$WEBROOT = custom::getWebRoot();
+		
+		if ($hasPerm == null) $hasPerm = $CUSTOM->isUserViewer();
+		
 		echo <<< HERE
 		<div class="breadcrumb">
 		  <a href="{$WEBROOT}/web/index.php">DSpace Web Tools</a> &gt;
@@ -58,6 +61,10 @@ HERE;
 		</div>
 		<hr/>
 		<h1 align="center">{$this->title}</h1>
+		if (!$hasPerm) {
+			litFooter();
+			exit();
+		}
 HERE;
 	}
 

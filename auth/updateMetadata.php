@@ -22,7 +22,6 @@ include '../web/header.php';
 
 $CUSTOM = custom::instance();
 $dspaceBatch = $CUSTOM->getDspaceBatch();
-$defuser =  $CUSTOM->getDefuser();
 
 $status = "";
 testArgs();
