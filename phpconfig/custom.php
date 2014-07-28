@@ -33,6 +33,7 @@ class custom {
 	public function getBgindicator() {return "&";}
 	public function getDefuser() {return "userxx";}
 	public function getCurrentUser() {return isset($_SERVER['REMOTE_USER']) ? $_SERVER['REMOTE_USER'] : $this->getDefuser();}
+	public function getCurrentUserEmail() {return "";}
     public function getAllGroups() {return array();}
     public function getCurrentGroups() {return array();}
     public function getGroupsForUser($user) {return array();}
@@ -65,20 +66,6 @@ class custom {
 		return self::$INSTANCE;
 	}
 	
-	//limit user to specific domains 
-	function getDomainOptions() {
-	$opt = <<< HERE
-    <option value="@foo.bar">foo.bar</option>
-HERE;
-		return $opt;
-	}
-	
-	
-  //validate the user domain provided	
-  function validateDomain($domain) {	
-	return "";
-  }
-  
   //validate the collection handle provided
   function validateCollection($coll) {
 	return "";

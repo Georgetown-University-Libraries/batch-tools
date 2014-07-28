@@ -29,7 +29,6 @@ $ingestLoc =  $CUSTOM->getIngestLoc();
 
 $status = "";
 testArgs();
-$user = $CUSTOM->getCurrentUser();
 header('Content-type: text/html; charset=UTF-8');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -77,14 +76,6 @@ $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
   </div>
 </p>
 </fieldset>
-<p>
-  <label for="user">User Id</label>
-  <input type="text" id="user" name="user" readonly value="<?php echo $user?>" />
-  <label for="domain" title="User's e-mail domain'">@</label>
-  <select id="domain" name="domain">
-    <?php echo $CUSTOM->getDomainOptions()?>
-  </select>
-</p>
 </p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit Job" disabled/>
@@ -103,17 +94,6 @@ function testArgs(){
 	$dspaceBatch = $CUSTOM->getDspaceBatch();
 	$mroot =  $CUSTOM->getMapRoot();
 	$bgindicator =  $CUSTOM->getBgindicator();
-	
-	if (count($_POST) == 0) return;
-	$user = util::getPostArg("user","");
-	if (preg_match("|^[a-z0-9]+$|", $user) == 0) {
-		$status = "Invalid User: " . $user;
-		return;
-	}
-	
-	$domain = util::getPostArg("domain","");
-	$status = custom::instance()->validateDomain($domain);
-	if ($status != "") return;
 	
 	$coll = util::getPostArg("collection","");
 	$status = custom::instance()->validateCollection($coll);
@@ -134,7 +114,7 @@ function testArgs(){
 	$mapfile = $mroot . $batch;
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
-	$user = escapeshellarg($user.$domain);
+	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
 	$coll = escapeshellarg($coll);
 	$loc = escapeshellarg($ingestLoc . $loc);
 	$mapfile = escapeshellarg($mapfile);

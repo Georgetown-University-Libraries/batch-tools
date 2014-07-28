@@ -26,7 +26,6 @@ $defuser =  $CUSTOM->getDefuser();
 
 $status = "";
 testArgs();
-$user = $CUSTOM->getCurrentUser();
 
 header('Content-type: text/html; charset=UTF-8');
 ?>
@@ -53,14 +52,6 @@ $header->litPageHeader();
   <input type="checkbox" class="checkbox" name="preview" value="preview" id="preview" checked/>
   <label for="actTiles">Preview changes</label>
 </p>
-<p>
-  <label for="user">User Id *</label>
-  <input type="text" id="user" name="user" readonly value="<?php echo $user?>" />
-  <label for="domain" title="User's e-mail domain'">@</label>
-  <select id="domain" name="domain">
-    <?php echo $CUSTOM->getDomainOptions()?>
-  </select>
-</p>
 </p>
 <p align="center">
 	<input id="submit" type="submit" title="Submit Job" disabled/>
@@ -82,14 +73,6 @@ function testArgs(){
 		$status = "";
 		return;
 	}
-	$user = util::getPostArg("user","");
-	if (preg_match("|^[a-z0-9]+$|", $user) == 0) {
-		$status = "Invalid User: " . $user;
-		return;
-	}
-	$domain = util::getPostArg("domain","");
-	$status = $CUSTOM->validateDomain($domain);
-	if ($status != "") return;
 	
 	if ($_FILES["metadata"]["error"]) {
 		$name = isset($_FILES["metadata"]["tmp_name"]) ? $_FILES["metadata"]["tmp_name"] : $_FILES["metadata"]["name"];
@@ -103,7 +86,7 @@ function testArgs(){
 	move_uploaded_file($_FILES["metadata"]["tmp_name"], $temp);
     $temp = escapeshellarg($temp);  
       
-	$user = escapeshellarg($user.$domain);
+	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
 
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$cmd = <<< HERE
