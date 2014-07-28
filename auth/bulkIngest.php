@@ -27,7 +27,9 @@ $CUSTOM->getCommunityInit()->initCollections();
 $ingestLoc =  $CUSTOM->getIngestLoc();
 
 $status = "";
-testArgs();
+
+$hasPerm = $CUSTOM->isUserCollectionOwner();
+if ($hasPerm) testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -39,7 +41,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array());?>
+<?php $header->litHeader(array(), $hasPerm);?>
 <div id="formIngest">
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>This process will trigger a bulk ingest of content.</p>

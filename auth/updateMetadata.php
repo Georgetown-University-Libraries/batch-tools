@@ -24,7 +24,8 @@ $CUSTOM = custom::instance();
 $dspaceBatch = $CUSTOM->getDspaceBatch();
 
 $status = "";
-testArgs();
+$hasPerm = $CUSTOM->isUserCollectionOwner();
+if ($hasPerm) testArgs();
 
 header('Content-type: text/html; charset=UTF-8');
 ?>
@@ -37,7 +38,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array());?>
+<?php $header->litHeader(array(), $hasPerm);?>
 <div id="formMetadata">
 <form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data" >
 <p>Be very careful with this option.  (1)Export metadata from DSpace as CSV (2)Edit the CSV (3)Carefully use this option to update</p>
