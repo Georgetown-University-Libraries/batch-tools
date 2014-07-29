@@ -48,7 +48,7 @@ class custom {
 	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
 	public function getRestServiceUrl() {return "http://demo.dspace.org/rest";}
-	public function showBatchTools() {return true;}
+	public function showBatchTools() {return $this->isUserCollectionOwner();}
 	
 	public function isPdo() {return false;}
 	public function showQueryTools() {return $this->isPdo();}
