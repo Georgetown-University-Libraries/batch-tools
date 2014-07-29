@@ -66,8 +66,8 @@ HERE;
 		<h1 align="center">{$this->title}</h1>
 HERE;
 		if (!$hasPerm) {
-			litFooter();
 			echo "<h2>You do not have permission to perform this function</h2>";
+			litFooter();
 			exit;
 		}
 	}
