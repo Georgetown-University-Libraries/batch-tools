@@ -159,6 +159,8 @@ class custom {
     	return $self->getDefaultQueryKeys();
     }
     
+    public function getIntroHtml() {return "";}
+
     public function getAdminHtml() {
         return <<< EOF
 <h4>Admin Access Only</h4>

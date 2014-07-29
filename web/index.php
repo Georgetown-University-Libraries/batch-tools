@@ -47,6 +47,9 @@ if ($CUSTOM->showQueryTools()) {
 }
 ?>
 <div class="batch-tool-links">
+<?php
+echo $CUSTOM->getIntroHtml();
+?>
 <h4>Reporting Tools*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
