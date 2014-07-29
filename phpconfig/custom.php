@@ -28,6 +28,7 @@ class custom {
 	const SYSADMIN  = "system-admin";
 	const VIEWER = "viewer";
 	
+	public function getSystemName() {return "DSpace Web Tools";}
 	public function getRoot() {return dirname(dirname(__FILE__));}
 	public function getWebRoot() {return "/batch-tools/";}
 	public function getQueueRoot() {return $this->getRoot() . "/queue/";}

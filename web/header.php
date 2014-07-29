@@ -51,10 +51,11 @@ HERE;
 	public function litHeaderAuth($arr, $hasPerm) {
 		$CUSTOM = custom::instance();
 		$WEBROOT = custom::getWebRoot();
+		$sysname = custom::getSystemName();
 		
 		echo <<< HERE
 		<div class="breadcrumb">
-		  <a href="{$WEBROOT}/web/index.php">DSpace Web Tools</a> &gt;
+		  <a href="{$WEBROOT}/web/index.php">{$sysname}</a> &gt;
 HERE;
 	    foreach($arr as $a) {
 	    	echo "{$a} &gt;"; 
