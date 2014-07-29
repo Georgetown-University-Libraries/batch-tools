@@ -34,7 +34,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array(), $hasPerm);?>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formMetadata">
 <form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data" >
 <div id="status"><?php echo $status?></div>

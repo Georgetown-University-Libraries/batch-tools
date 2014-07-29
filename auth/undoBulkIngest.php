@@ -52,7 +52,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array(), $hasPerm);?>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formUningest">
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>This process will remove items added by bulk ingest</p>

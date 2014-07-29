@@ -41,7 +41,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array(), $hasPerm);?>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formIngest">
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>This process will trigger a bulk ingest of content.</p>

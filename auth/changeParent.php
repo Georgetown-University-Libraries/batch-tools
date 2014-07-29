@@ -37,7 +37,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array(), $hasPerm);?>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formChangeParent">
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>Use this option to move a community under another community</p>

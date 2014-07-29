@@ -39,7 +39,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array(), $hasPerm);?>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formFilter">
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>After a bitstream (document, image, etc) has been loaded into DSpace, the filter media process must run against it in order to enable all functionality for the media that was loaded.  The filter media process runs in the background as a batch process.  This process runs nightly against the repository.  This script permits an administrator to manually invoke the filter media process.</p>

@@ -38,7 +38,7 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php $header->litHeader(array(), $hasPerm);?>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formMetadata">
 <form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data" >
 <p>Be very careful with this option.  (1)Export metadata from DSpace as CSV (2)Edit the CSV (3)Carefully use this option to update</p>

@@ -43,11 +43,14 @@ class LitHeader {
 HERE;
 	}
 	
-	public function litHeader($arr, $hasPerm = null) {
+	public function litHeader($arr) {
+		$CUSTOM = custom::instance();
+		litHeaderAuth($arr, $CUSTOM->isUserViewer());
+	}
+	
+	public function litHeaderAuth($arr, $hasPerm) {
 		$CUSTOM = custom::instance();
 		$WEBROOT = custom::getWebRoot();
-		
-		if ($hasPerm == null) $hasPerm = $CUSTOM->isUserViewer();
 		
 		echo <<< HERE
 		<div class="breadcrumb">
