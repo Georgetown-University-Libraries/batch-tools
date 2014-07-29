@@ -45,7 +45,7 @@ HERE;
 	
 	public function litHeader($arr) {
 		$CUSTOM = custom::instance();
-		litHeaderAuth($arr, $CUSTOM->isUserViewer());
+		$this->litHeaderAuth($arr, $CUSTOM->isUserViewer());
 	}
 	
 	public function litHeaderAuth($arr, $hasPerm) {
