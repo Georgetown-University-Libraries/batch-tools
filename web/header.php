@@ -68,7 +68,7 @@ HERE;
 HERE;
 		if (!$hasPerm) {
 			echo "<h2 class='guperm'>You do not have permission to access this page.</h2>";
-			litFooter();
+			$this->litFooter();
 			exit;
 		}
 	}
