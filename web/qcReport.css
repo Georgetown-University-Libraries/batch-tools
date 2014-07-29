@@ -29,11 +29,11 @@ input[readonly] {background-color: #EEEEEE;}
 #locsel {width: 400px;}
 #locclose {float: right;}
 div.hit em {font-style: normal; background-color: yellow;}
-ul#lit-nav{text-align: center; margin-left: 10%; }
-ul#lit-nav li {display: inline; float: left; width: 120px; margin: 6px;}
-ul#lit-nav li.opt {border: thin solid #EEEEEE;}
-ul#lit-nav li.sel {background-color: #caf9f8}
-ul#lit-nav li.opt:hover {background-color: #EEEEEE;}
+ul.lit-nav{text-align: center; margin-left: 10%; }
+ul.lit-nav li {display: inline; float: left; width: 120px; margin: 6px;}
+ul.lit-nav li.opt {border: thin solid #EEEEEE;}
+ul.lit-nav li.sel {background-color: #caf9f8}
+ul.lit-nav li.opt:hover {background-color: #EEEEEE;}
 div.clear {clear:both;}
 body {position:relative;}
 #gu-search-results dl {margin-left: 30px;}
