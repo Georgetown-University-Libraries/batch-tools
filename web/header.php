@@ -50,8 +50,8 @@ HERE;
 	
 	public function litHeaderAuth($arr, $hasPerm) {
 		$CUSTOM = custom::instance();
-		$WEBROOT = custom::getWebRoot();
-		$sysname = custom::getSystemName();
+		$WEBROOT = $CUSTOM->getWebRoot();
+		$sysname = $CUSTOM->getSystemName();
 		
 		echo <<< HERE
 		<div class="breadcrumb">
