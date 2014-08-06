@@ -60,7 +60,7 @@ function testArgs(){
 	$handle = util::getPostArg("handle","");
 	if ($handle == "") return;
 	header('Content-type: application/xml');
-    $req = $CUSTOM->getSolrPath() . "search/select?indent=on&version=2.2&q=handle:{$handle}";
+    $req = $CUSTOM->getSolrPath() . "search/select?indent=on&version=2.2&q=handle:{$handle}&mlt=true&fq=g0&mlt.fl=dc.title_mlt%2Cdc.contributor.author_mlt%2Cdc.creator_mlt&mlt.mintf=1&mlt.count=3&mlt.minwl=4";
     $ret = file_get_contents($req);
     echo $ret;
     exit;
