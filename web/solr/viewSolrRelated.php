@@ -35,7 +35,7 @@ $header->litPageHeader();
 <?php $header->litHeader(array());?>
 <div id="viewSolr">
 <form method="POST" action="">
-<p>View the SOLR Related Items for a DSpace Resource.</p>
+<p>View the SOLR index for a DSpace Resource.</p>
 <div id="status"><?php echo $status?></div>
 <p>
   <label for="handle">Handle</label>
