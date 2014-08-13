@@ -100,12 +100,8 @@ function testArgs(){
 		return;
 	}
 	
-	$temp = $ingestLoc . $_FILES["zip"]["name"];
-	$status = $_FILES["zip"]["tmp_name"] . " moved to " . $temp;
-	return;
-
-	move_uploaded_file($_FILES["zip"]["tmp_name"], $temp);
-	
+	$loc = $ingestLoc . $_FILES["zip"]["name"];
+	move_uploaded_file($_FILES["zip"]["tmp_name"], $loc);	
 
 	$batch = date("Ymd_H.i.s");
 	$mapfile = $mroot . $batch;
@@ -116,7 +112,7 @@ function testArgs(){
 	$loc = escapeshellarg($ingestLoc . $loc);
 	$mapfile = escapeshellarg($mapfile);
 	
-	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-skipindex" : "gu-ingest";
+	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
 
 	$cmd = <<< HERE
 {$u} {$mode} {$user} {$coll} {$loc} {$mapfile}
