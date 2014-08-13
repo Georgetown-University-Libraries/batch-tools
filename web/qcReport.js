@@ -50,6 +50,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   	
   	if ($("#formFilter").length > 0) mediaFilterForm();
   	if ($("#formIngest").length > 0) bulkIngestForm();
+  	if ($("#formIngestZip").length > 0) bulkIngestZipForm();
   	if ($("#formUningest").length > 0) bulkUningestForm();
   	if ($("#formMetadata").length > 0) metadataForm();
   	if ($("#formChangeParent").length > 0) changeParentForm();
@@ -191,6 +192,18 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 	  	$("#loc").keyup(v);
   }
   
+  function bulkIngestZipForm() {
+	  	var v = function() {
+	  		var b = ($("#collSelect").val() != "") && ($("#zip").val() != 0);
+	  		if (b){
+	  	  		$("#ingestSubmit").removeAttr("disabled");
+	  		} else {
+	  	  		$("#ingestSubmit").attr("disabled", true);  			
+	  		}
+	  	};
+	  	$("#formIngest #collSelect").change(v);
+  }
+
   function bulkUningestForm() {
 	  	var v = function() {
 	  		var b = ($("#mapfile").val() != "");

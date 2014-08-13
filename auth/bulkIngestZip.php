@@ -42,14 +42,14 @@ $header->litPageHeader();
 </head>
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
-<div id="formIngest">
+<div id="formIngestZip">
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>This process will trigger a bulk ingest of content.</p>
 <p>Assumptions:</p>
 <ol>
-<li>Content has been prepared into ingest folders</li>
+<li>Content has been prepared into ingest folders </li>
 <li>Ingest folder metadata has been validated</li>
-<li>Ingest folders have been transferred to the staging area on the server</li>
+<li>Ingest folders have been zipped into a single file</li>
 </ol>
 <div id="status"><?php echo $status?></div>
 <?php 
@@ -62,9 +62,8 @@ $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
 </p>
 <p>
 <fieldset class="loc">
-<legend>Ingest Folder Location * </legend>
+<legend>Upload Zip File * </legend>
 <p>
-  <label for="zip">Upload Zip File</label>
   <input type="file" name="zip" id="zip"/>
 </p>
 </fieldset>
