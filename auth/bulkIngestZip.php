@@ -64,9 +64,8 @@ $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
 <fieldset class="loc">
 <legend>Ingest Folder Location * </legend>
 <p>
-  <label for="loc">Folder Location (Staging)</label>
-  <br/>&#160;&#160;
-  <file name="zip" id="zip"/>
+  <label for="zip">Upload Zip File</label>
+  <input type="file" name="zip" id="zip"/>
 </p>
 </fieldset>
 </p>
