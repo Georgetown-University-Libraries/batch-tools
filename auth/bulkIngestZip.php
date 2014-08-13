@@ -97,10 +97,11 @@ function testArgs(){
 	}
 	
 	$temp = $ingestLoc . $_FILES["zip"]["name"];
-	move_uploaded_file($_FILES["zip"]["tmp_name"], $temp);
-	
 	$status = "file moved to " . $temp;
 	return;
+
+	move_uploaded_file($_FILES["zip"]["tmp_name"], $temp);
+	
 
 	$batch = date("Ymd_H.i.s");
 	$mapfile = $mroot . $batch;
