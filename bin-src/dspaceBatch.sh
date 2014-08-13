@@ -208,8 +208,8 @@ then
   LOC=$4
   MAP=$5
   
-  echo unzip $ZIP
-  unzip $ZIP 
+  echo "unzip $ZIP" >> ${$UNNING}
+  unzip $ZIP >> ${$UNNING} 2>&1
   exit
   
   echo Command: "$@" > ${RUNNING}
