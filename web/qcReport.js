@@ -201,7 +201,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 	  	  		$("#ingestSubmit").attr("disabled", true);  			
 	  		}
 	  	};
-	  	$("#formIngest #collSelect").change(v);
+	  	$("#formIngestZip #collSelect").change(v);
   }
 
   function bulkUningestForm() {
