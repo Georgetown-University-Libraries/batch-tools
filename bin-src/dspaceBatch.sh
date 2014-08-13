@@ -205,12 +205,12 @@ then
   USER=$2
   COLL=$3
   ZIP=$4
-  LOC=$4
+  LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$5
   
   echo Command: "$@" > ${RUNNING}
-  echo "unzip $ZIP" >> ${RUNNING}
-  unzip $ZIP >> ${RUNNING} 2>&1
+  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
+  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
 
   mv ${RUNNING} ${COMPLETE}
   exit
