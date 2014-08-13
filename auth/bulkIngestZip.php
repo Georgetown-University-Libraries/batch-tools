@@ -98,6 +98,8 @@ function testArgs(){
 	
 	$temp = $ingestLoc . $_FILES["zip"]["name"];
 	move_uploaded_file($_FILES["zip"]["tmp_name"], $temp);
+	
+	$status = "file moved to " . $temp;
 	return;
 
 	$batch = date("Ymd_H.i.s");
