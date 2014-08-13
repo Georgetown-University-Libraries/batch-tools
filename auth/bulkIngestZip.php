@@ -66,7 +66,6 @@ $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
 <p>
   <label for="loc">Folder Location (Staging)</label>
   <br/>&#160;&#160;
-  <?php echo $ingestLoc?><input type="text" id="loc" name="loc" size="70" value="<?php echo util::getPostArg("loc","")?>"/>
   <file name="zip" id="zip"/>
 </p>
 </fieldset>
