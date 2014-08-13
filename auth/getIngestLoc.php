@@ -21,9 +21,9 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 include '../phpconfig/init.php';
 include '../web/util.php';
 
+$CUSTOM = custom::instance();
 $hasPerm = $CUSTOM->isUserCollectionOwner();
 if (!$hasPerm) exit; 
-$CUSTOM = custom::instance();
 $ingestLoc = $CUSTOM->getIngestLoc();
 $loc = util::getArg("loc","");
 
