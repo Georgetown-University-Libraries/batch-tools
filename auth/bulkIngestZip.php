@@ -90,6 +90,10 @@ function testArgs(){
 	$status = custom::instance()->validateCollection($coll);
 	if ($status != "") return;
 	
+	if (count($_POST) == 0) {
+		$status = "";
+		return;
+	}
 	if ($_FILES["zip"]["error"]) {
 		$name = isset($_FILES["zip"]["tmp_name"]) ? $_FILES["zip"]["tmp_name"] : $_FILES["zip"]["name"];
 		$status = "File upload error: " . $_FILES["zip"]["error"] . " on file " . $name;
