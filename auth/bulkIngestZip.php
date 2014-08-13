@@ -118,9 +118,6 @@ function testArgs(){
 {$u} {$mode} {$user} {$coll} {$loc} {$mapfile}
 HERE;
     
-    $status = $cmd;
-    return;
-    
     //echo($dspaceBatch . " " .$cmd);
     exec($dspaceBatch . " " . $cmd . " " . $bgindicator);
     header("Location: ../web/queue.php");
