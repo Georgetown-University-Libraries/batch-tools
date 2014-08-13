@@ -90,6 +90,14 @@ function testArgs(){
 	$status = custom::instance()->validateCollection($coll);
 	if ($status != "") return;
 	
+	if ($_FILES["zip"]["error"]) {
+		$name = isset($_FILES["zip"]["tmp_name"]) ? $_FILES["zip"]["tmp_name"] : $_FILES["zip"]["name"];
+		$status = "File upload error: " . $_FILES["zip"]["error"] . " on file " . $name;
+		return;
+	}
+	
+	$temp = $ingestLoc . $_FILES["zip"]["name"];
+	move_uploaded_file($_FILES["zip"]["tmp_name"], $temp);
 	return;
 
 	$batch = date("Ymd_H.i.s");
