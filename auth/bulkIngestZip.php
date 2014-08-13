@@ -109,7 +109,7 @@ function testArgs(){
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
 	$coll = escapeshellarg($coll);
-	$loc = escapeshellarg($ingestLoc . $loc);
+	$loc = escapeshellarg($loc);
 	$mapfile = escapeshellarg($mapfile);
 	
 	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
@@ -117,6 +117,9 @@ function testArgs(){
 	$cmd = <<< HERE
 {$u} {$mode} {$user} {$coll} {$loc} {$mapfile}
 HERE;
+    
+    $status = $cmd;
+    return;
     
     //echo($dspaceBatch . " " .$cmd);
     exec($dspaceBatch . " " . $cmd . " " . $bgindicator);
