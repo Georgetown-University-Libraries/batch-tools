@@ -96,8 +96,6 @@ function testArgs(){
 		return;
 	}
 	
-	print_r()
-	
 	$temp = $ingestLoc . $_FILES["zip"]["name"];
 	$status = $_FILES["zip"]["tmp_name"] . " moved to " . $temp;
 	return;
