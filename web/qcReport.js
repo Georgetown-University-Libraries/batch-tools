@@ -194,14 +194,14 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   
   function bulkIngestZipForm() {
 	  	var v = function() {
-	  		var b = ($("#collSelect").val() != "") && ($("#zip").val() != 0);
+	  		var b = ($("#collSelect").val() != "") && ($("#zip").val() != "");
 	  		if (b){
 	  	  		$("#ingestSubmit").removeAttr("disabled");
 	  		} else {
 	  	  		$("#ingestSubmit").attr("disabled", true);  			
 	  		}
 	  	};
-	  	$("#formIngestZip #collSelect").change(v);
+	  	$("#formIngestZip #collSelect,#formIngestZip #zip").change(v);
   }
 
   function bulkUningestForm() {
