@@ -43,7 +43,7 @@ $header->litPageHeader();
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formIngestZip">
-<form method="POST" action="" onsubmit="jobQueue();return true;">
+<form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data">
 <p>This process will trigger a bulk ingest of content.</p>
 <p>Assumptions:</p>
 <ol>
@@ -96,8 +96,10 @@ function testArgs(){
 		return;
 	}
 	
+	print_r()
+	
 	$temp = $ingestLoc . $_FILES["zip"]["name"];
-	$status = "file moved to " . $temp;
+	$status = $_FILES["zip"]["tmp_name"] . " moved to " . $temp;
 	return;
 
 	move_uploaded_file($_FILES["zip"]["tmp_name"], $temp);
