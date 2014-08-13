@@ -209,6 +209,10 @@ then
   MAP=$5
   
   echo Command: "$@" > ${RUNNING}
+
+  echo "rm -rf $LOC" >> ${RUNNING}
+  rm -rf $LOC >> ${RUNNING} 2>&1
+
   echo "unzip $ZIP -d $LOC" >> ${RUNNING}
   unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
 
