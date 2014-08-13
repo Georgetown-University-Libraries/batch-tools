@@ -211,8 +211,10 @@ then
   echo Command: "$@" > ${RUNNING}
   echo "unzip $ZIP" >> ${RUNNING}
   unzip $ZIP >> ${RUNNING} 2>&1
+
+  mv ${RUNNING} ${COMPLETE}
   exit
-  
+
   echo Command: "$@" > ${RUNNING}
   echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
