@@ -173,6 +173,50 @@ then
   date >> ${RUNNING} 2>&1
 
   mv ${RUNNING} ${COMPLETE}
+elif [ "$1" = "gu-ingest-zip" ]
+then 
+  USER=$2
+  COLL=$3
+  ZIP=$4
+  LOC=${ZIP%\.[Zz][Ii][Pp]}
+  MAP=$5
+  
+  echo Command: "$@" > ${RUNNING}
+
+  echo "rm -rf $LOC" >> ${RUNNING}
+  rm -rf $LOC >> ${RUNNING} 2>&1
+
+  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
+  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
+
+  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
+
+  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
+  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
+  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
+  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
+
+  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
+  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
+     
+  export JAVA_OPTS=-Xmx1200m   
+  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
+  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1 
+        
+  if [ $VER = 3 ]
+  then
+    echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
+      
+    echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
+  fi
+  
+  echo "Job complete" >> ${RUNNING} 2>&1
+  date >> ${RUNNING} 2>&1
+
+  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "gu-ingest-skipindex" ]
 then 
   USER=$2
@@ -216,10 +260,6 @@ then
   echo "unzip $ZIP -d $LOC" >> ${RUNNING}
   unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
 
-  mv ${RUNNING} ${COMPLETE}
-  exit
-
-  echo Command: "$@" > ${RUNNING}
   echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
 
