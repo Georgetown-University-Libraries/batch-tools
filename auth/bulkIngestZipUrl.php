@@ -62,9 +62,9 @@ $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
 </p>
 <p>
 <fieldset class="loc">
-<legend>Upload Zip File * </legend>
+<legend>Zip File URL * </legend>
 <p>
-  <input type="text" name="zip" id="zip"/>
+  <input type="text" name="zip" id="zip" size="80"/>
 </p>
 </fieldset>
 </p>
