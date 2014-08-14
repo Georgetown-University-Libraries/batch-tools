@@ -100,7 +100,7 @@ then
   
   if [ $REINDEX = 1 ]
   then
-    ${update_solr}
+    $(update_solr)
   fi
 
 elif [ "$1" = "metadata-import" ]
@@ -114,7 +114,7 @@ then
     
     if [ "$x" = "-s" ]
     then
-      ${update_solr}
+      $(update_solr)
     fi
   done
 elif [ "$1" = "gu-refresh-statistics" ]
@@ -135,11 +135,11 @@ then
   echo ${DSROOT}/bin/dspace stats-util -o >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace stats-util -o >> ${RUNNING} 2>&1 
 
-  ${discovery_opt}
+  $(discovery_opt)
 elif [ "$1" = "gu-update-index" ]
 then
   ${index_update}
-  ${discovery_opt}
+  $(discovery_opt)
 
 elif [ "$1" = "gu-change-parent" ]
 then
@@ -167,8 +167,8 @@ then
   MAP=$5
   FMN=
   
-  ${bulk_ingest}
-  ${update_solr}
+  $(bulk_ingest)
+  $(update_solr)
 elif [ "$1" = "gu-ingest-zip" ]
 then 
   USER=$2
@@ -178,9 +178,9 @@ then
   MAP=$5
   FMN=
 
-  ${unzip_ingest}
-  ${bulk_ingest}
-  ${update_solr}
+  $(unzip_ingest)
+  $(bulk_ingest)
+  $(update_solr)
 elif [ "$1" = "gu-ingest-zipurl" ]
 then 
   USER=$2
@@ -191,10 +191,10 @@ then
   MAP=$6
   FMN=
 
-  ${download_zip}
-  ${unzip_ingest}
-  ${bulk_ingest}
-  ${update_solr}
+  $(download_zip)
+  $(unzip_ingest)
+  $(bulk_ingest)
+  $(update_solr)
 elif [ "$1" = "gu-ingest-skipindex" ]
 then 
   USER=$2
@@ -203,7 +203,7 @@ then
   MAP=$5
   FMN=-n
   
-  ${bulk_ingest}
+  $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zip-skipindex" ]
 then 
   USER=$2
@@ -213,8 +213,8 @@ then
   MAP=$5
   FMN=-n
 
-  ${unzip_ingest}
-  ${bulk_ingest}
+  $(unzip_ingest)
+  $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zipurl-skipindex" ]
 then 
   USER=$2
@@ -225,9 +225,9 @@ then
   MAP=$6
   FMN=-n
 
-  ${download_zip}
-  ${unzip_ingest}
-  ${bulk_ingest}
+  $(download_zip)
+  $(unzip_ingest)
+  $(bulk_ingest)
 elif [ "$1" = "gu-uningest" ]
 then 
   USER=$2
