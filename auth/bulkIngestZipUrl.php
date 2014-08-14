@@ -90,9 +90,9 @@ function testArgs(){
 	$status = custom::instance()->validateCollection($coll);
 	if ($status != "") return;
 	
-	$zip = util::getPostArg("zip","");
+	$zipurl = util::getPostArg("zip","");
 	
-	if ($zip == "") {
+	if ($zipurl == "") {
 		$status = "A URL for a Zip File must be provided";
 		return;
 	}
@@ -100,20 +100,19 @@ function testArgs(){
 	$batch = date("Ymd_H.i.s");
 	$loc = $ingestLoc . $batch . ".zip";
 	
-	file_put_contents($loc, fopen($zip, 'r'));
-
 	$mapfile = $mroot . $batch;
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
 	$coll = escapeshellarg($coll);
+	$zipurl = escapeshellarg($zipurl);
 	$loc = escapeshellarg($loc);
 	$mapfile = escapeshellarg($mapfile);
 	
-	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
+	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-zipurl-skipindex" : "gu-ingest-zipurl";
 
 	$cmd = <<< HERE
-{$u} {$mode} {$user} {$coll} {$loc} {$mapfile}
+{$u} {$mode} {$user} {$coll} {$zipurl} {$loc} {$mapfile}
 HERE;
     
     //echo($dspaceBatch . " " .$cmd);
