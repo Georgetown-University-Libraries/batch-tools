@@ -228,8 +228,8 @@ then
 
   echo Command: "$@" > ${RUNNING}
 
-  echo "wget -O ${ZIP} ${URL}" > ${RUNNING}
-  wget -O ${ZIP} ${URL} > ${RUNNING} 2>&1
+  echo "wget -O ${ZIP} ${URL}" >> ${RUNNING}
+  wget -O ${ZIP} ${URL} >> ${RUNNING} 2>&1
 
   echo "rm -rf $LOC" >> ${RUNNING}
   rm -rf $LOC >> ${RUNNING} 2>&1
@@ -338,8 +338,8 @@ then
   
   echo Command: "$@" > ${RUNNING}
 
-  echo "wget -O ${ZIP} ${URL}" > ${RUNNING}
-  wget -O ${ZIP} ${URL} > ${RUNNING} 2>&1
+  echo "wget -O ${ZIP} ${URL}" >> ${RUNNING}
+  wget -O ${ZIP} ${URL} >> ${RUNNING} 2>&1
 
   echo "rm -rf $LOC" >> ${RUNNING}
   rm -rf $LOC >> ${RUNNING} 2>&1
