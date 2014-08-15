@@ -80,9 +80,8 @@ function testArgs(){
 		return;
 	}
 	
-	$status = "preview: " . util::getPostArg("preview","");
-	return;
-	
+    print_r($_POST);
+    return;	
 	$run = (util::getPostArg("preview","") == "") ? "-s" : "";
 		
 	$temp = $ingestLoc . $_FILES["metadata"]["name"];
