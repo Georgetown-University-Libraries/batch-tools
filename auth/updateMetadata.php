@@ -69,7 +69,7 @@ function testArgs(){
 	$dspaceBatch = $CUSTOM->getDspaceBatch();
 	$ingestLoc =  $CUSTOM->getIngestLoc();
 	
-	if (count($_POST) == 0) {
+	if (count($_FILES) == 0) {
 		$status = "";
 		return;
 	}
@@ -80,8 +80,6 @@ function testArgs(){
 		return;
 	}
 	
-    print_r($_POST);
-    return;	
 	$run = (util::getPostArg("preview","") == "") ? "-s" : "";
 		
 	$temp = $ingestLoc . $_FILES["metadata"]["name"];
