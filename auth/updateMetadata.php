@@ -93,6 +93,9 @@ function testArgs(){
 {$u} metadata-import -f {$temp} -e {$user} {$run}
 HERE;
     
+    $status = $cmd;
+    return;
+    
     //echo($dspaceBatch . " " .$cmd);
     exec($dspaceBatch . " " . $cmd);
     header("Location: ../web/queue.php");
