@@ -80,12 +80,11 @@ function testArgs(){
 		return;
 	}
 	
+	$status = "preview: " . util::getPostArg("preview","");
+	return;
+	
 	$run = (util::getPostArg("preview","") == "") ? "-s" : "";
-	
-	$status = "run: " . $run;
-    return;
-	
-	
+		
 	$temp = $ingestLoc . $_FILES["metadata"]["name"];
 	move_uploaded_file($_FILES["metadata"]["tmp_name"], $temp);
     $temp = escapeshellarg($temp);  
