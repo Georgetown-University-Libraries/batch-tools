@@ -2,6 +2,8 @@ ROOT=DSPACETOOLSROOT
 DSROOT=DSPACEROOT
 HPFX=YOURPFX
 SOLR=SOLRROOT
+VER=DSPACEVER
+SCRIBD=
 
 USERNAME=$1
 shift
@@ -11,15 +13,77 @@ QDIR=${ROOT}/queue/
 RUNNING=${QDIR}/${FNAME}.running.txt
 COMPLETE=${QDIR}/${FNAME}.complete.txt
 
-VER=3
 
 RUN=false
+
+function update_solr {
+  if [ $VER = 3 ]
+  then
+    export JAVA_OPTS=-Xmx1200m   
+    echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
+    
+    echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
+  fi 
+}
+
+function discovery_opt {
+  if [ $VER = 3 ]
+  then
+    export JAVA_OPTS=-Xmx1200m   
+    ${DSROOT}/bin/dspace update-discovery-index -o >> ${RUNNING} 2>&1 
+  fi
+}
+
+function index_update {
+  if [ $VER = 3 ]
+  then
+    export JAVA_OPTS=-Xmx1200m   
+    echo ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
+  fi
+}
+
+function bulk_ingest {
+  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
+
+  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
+  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
+  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
+  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
+
+  if [ "$SCRIBD" != "" ]
+  then
+    echo "${DSROOT}/bin/dspace filter-media -p '${SCRIBD}' -f -n -v -i $COLL" >> ${RUNNING} 
+    ${DSROOT}/bin/dspace filter-media -p "${SCRIBD}" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
+  fi
+     
+  export JAVA_OPTS=-Xmx1200m   
+  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
+  ${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL >> ${RUNNING} 2>&1         
+}
+
+function download_zip {
+  echo "wget -O ${ZIP} ${URL}" >> ${RUNNING}
+  wget -O ${ZIP} ${URL} >> ${RUNNING} 2>&1
+}
+
+function unzip_ingest {
+  echo "rm -rf $LOC" >> ${RUNNING}
+  rm -rf $LOC >> ${RUNNING} 2>&1
+
+  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
+  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
+}
+
+echo Command: "$@" > ${RUNNING}
 
 if [ "$1" = "filter-media" ]
 then
   export JAVA_OPTS=-Xmx1200m   
 
-  echo Command: "$@" > ${RUNNING}
   ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
   
   REINDEX=1
@@ -36,21 +100,11 @@ then
   
   if [ $REINDEX = 1 ]
   then
-    if [ $VER = 3 ]
-    then
-      echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-      ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-    
-      echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
-      ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
-
-    fi 
+    $(update_solr)
   fi
 
-  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "metadata-import" ]
 then
-  echo Command: "$@" > ${RUNNING}
   ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
 
   while [ $# -ge 1 ]
@@ -60,26 +114,12 @@ then
     
     if [ "$x" = "-s" ]
     then
-      if [ $VER = 3 ]
-      then
-        export JAVA_OPTS=-Xmx1200m   
-
-        echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-        ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-      
-        echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
-        ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
-
-      fi
-
+      $(update_solr)
     fi
   done
-
-  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "gu-refresh-statistics" ]
 then
   export JAVA_OPTS=-Xmx1200m   
-  echo Command: "$@" > ${RUNNING}
   echo ${DSROOT}/bin/dspace stat-general >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace stat-general >> ${RUNNING} 2>&1 
 
@@ -95,38 +135,21 @@ then
   echo ${DSROOT}/bin/dspace stats-util -o >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace stats-util -o >> ${RUNNING} 2>&1 
 
-  if [ $VER = 3 ]
-  then
-    ${DSROOT}/bin/dspace update-discovery-index -o >> ${RUNNING} 2>&1 
-  fi
-
-  mv ${RUNNING} ${COMPLETE}
+  $(discovery_opt)
 elif [ "$1" = "gu-update-index" ]
 then
-  export JAVA_OPTS=-Xmx1200m   
-  echo Command: "$@" > ${RUNNING}
-  echo ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
+  ${index_update}
+  $(discovery_opt)
 
-  if [ $VER = 3 ]
-  then
-    ${DSROOT}/bin/dspace update-discovery-index -o >> ${RUNNING} 2>&1 
-  fi
-
-  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "gu-change-parent" ]
 then
-  echo Command: "$@" > ${RUNNING}
   echo ${DSROOT}/bin/dspace community-filiator -r -c $2 -p $3 >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace community-filiator -r -c $2 -p $3 >> ${RUNNING} 2>&1 
 
   echo ${DSROOT}/bin/dspace community-filiator -s -c $2 -p $4 >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace community-filiator -s -c $2 -p $4 >> ${RUNNING} 2>&1 
-
-  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "gu-change-coll-parent" ]
 then
-  echo Command: "$@" > ${RUNNING}
   echo "Updating database..." >> ${RUNNING} 2>&1 
   /usr/bin/psql -c "update community2collection set community_id=$4 where community_id=$3 and collection_id=$2;" >> ${RUNNING} 2>&1
   echo " ** The item has been moved, but the search index does not yet reflect the change" >> ${RUNNING} 2>&1 
@@ -136,43 +159,16 @@ then
   echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1 
   echo " ** You must run update-discovery-index -f after restarting the server" >> ${RUNNING} 2>&1 
   echo " ** You must then run oai import" >> ${RUNNING} 2>&1 
-  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "gu-ingest" ]
 then 
   USER=$2
   COLL=$3
   LOC=$4
   MAP=$5
+  FMN=
   
-  echo Command: "$@" > ${RUNNING}
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-
-  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-     
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1 
-        
-  if [ $VER = 3 ]
-  then
-    echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-      
-    echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
-    ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
-  fi
-  
-  echo "Job complete" >> ${RUNNING} 2>&1
-  date >> ${RUNNING} 2>&1
-
-  mv ${RUNNING} ${COMPLETE}
+  $(bulk_ingest)
+  $(update_solr)
 elif [ "$1" = "gu-ingest-zip" ]
 then 
   USER=$2
@@ -180,43 +176,11 @@ then
   ZIP=$4
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$5
-  
-  echo Command: "$@" > ${RUNNING}
+  FMN=
 
-  echo "rm -rf $LOC" >> ${RUNNING}
-  rm -rf $LOC >> ${RUNNING} 2>&1
-
-  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
-  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
-
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-
-  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-     
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1 
-        
-  if [ $VER = 3 ]
-  then
-    echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-      
-    echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
-    ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
-  fi
-  
-  echo "Job complete" >> ${RUNNING} 2>&1
-  date >> ${RUNNING} 2>&1
-
-  mv ${RUNNING} ${COMPLETE}
+  $(unzip_ingest)
+  $(bulk_ingest)
+  $(update_solr)
 elif [ "$1" = "gu-ingest-zipurl" ]
 then 
   USER=$2
@@ -225,73 +189,21 @@ then
   ZIP=$5
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$6
+  FMN=
 
-  echo Command: "$@" > ${RUNNING}
-
-  echo "wget -O ${ZIP} ${URL}" >> ${RUNNING}
-  wget -O ${ZIP} ${URL} >> ${RUNNING} 2>&1
-
-  echo "rm -rf $LOC" >> ${RUNNING}
-  rm -rf $LOC >> ${RUNNING} 2>&1
-
-  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
-  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
-
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-
-  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-     
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1 
-        
-  if [ $VER = 3 ]
-  then
-    echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-      
-    echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
-    ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
-  fi
-  
-  echo "Job complete" >> ${RUNNING} 2>&1
-  date >> ${RUNNING} 2>&1
-
-  mv ${RUNNING} ${COMPLETE}
+  $(download_zip)
+  $(unzip_ingest)
+  $(bulk_ingest)
+  $(update_solr)
 elif [ "$1" = "gu-ingest-skipindex" ]
 then 
   USER=$2
   COLL=$3
   LOC=$4
   MAP=$5
+  FMN=-n
   
-  echo Command: "$@" > ${RUNNING}
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-
-  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-     
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -n -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -n -i $COLL >> ${RUNNING} 2>&1 
-        
-  echo "Job complete" >> ${RUNNING} 2>&1
-  date >> ${RUNNING} 2>&1
-
-  mv ${RUNNING} ${COMPLETE}
+  $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zip-skipindex" ]
 then 
   USER=$2
@@ -299,34 +211,10 @@ then
   ZIP=$4
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$5
-  
-  echo Command: "$@" > ${RUNNING}
+  FMN=-n
 
-  echo "rm -rf $LOC" >> ${RUNNING}
-  rm -rf $LOC >> ${RUNNING} 2>&1
-
-  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
-  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
-
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-
-  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-     
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -n -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -n -i $COLL >> ${RUNNING} 2>&1 
-        
-  echo "Job complete" >> ${RUNNING} 2>&1
-  date >> ${RUNNING} 2>&1
-
-  mv ${RUNNING} ${COMPLETE}
+  $(unzip_ingest)
+  $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zipurl-skipindex" ]
 then 
   USER=$2
@@ -335,47 +223,18 @@ then
   ZIP=$5
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$6
-  
-  echo Command: "$@" > ${RUNNING}
+  FMN=-n
 
-  echo "wget -O ${ZIP} ${URL}" >> ${RUNNING}
-  wget -O ${ZIP} ${URL} >> ${RUNNING} 2>&1
-
-  echo "rm -rf $LOC" >> ${RUNNING}
-  rm -rf $LOC >> ${RUNNING} 2>&1
-
-  echo "unzip $ZIP -d $LOC" >> ${RUNNING}
-  unzip $ZIP -d $LOC >> ${RUNNING} 2>&1
-
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-
-  echo "${DSROOT}/bin/dspace filter-media -p 'Scribd Upload' -f -n -v -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -p "Scribd Upload" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-     
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -n -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -n -i $COLL >> ${RUNNING} 2>&1 
-        
-  echo "Job complete" >> ${RUNNING} 2>&1
-  date >> ${RUNNING} 2>&1
-
-  mv ${RUNNING} ${COMPLETE}
+  $(download_zip)
+  $(unzip_ingest)
+  $(bulk_ingest)
 elif [ "$1" = "gu-uningest" ]
 then 
   USER=$2
   MAP=$3
   
-  echo Command: "$@" > ${RUNNING}
   echo Command: import -d -e ${USER} -m "${MAP}" >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace import -d -e ${USER} -m "${MAP}" >> ${RUNNING} 2>&1 
-
-  mv ${RUNNING} ${COMPLETE}
 elif [ "$1" = "gu-reindex" ]
 then 
   SRCH=$2
@@ -389,9 +248,10 @@ then
   export JAVA_OPTS=-Xmx1200m   
   echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-
-  mv ${RUNNING} ${COMPLETE}
 else
-  echo "Unsupported DSpace Command"
+  echo "Unsupported DSpace Command" >> ${RUNNING}
 fi
 
+echo "Job complete" >> ${RUNNING} 2>&1
+date >> ${RUNNING} 2>&1
+mv ${RUNNING} ${COMPLETE}

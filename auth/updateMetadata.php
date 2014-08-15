@@ -69,7 +69,7 @@ function testArgs(){
 	$dspaceBatch = $CUSTOM->getDspaceBatch();
 	$ingestLoc =  $CUSTOM->getIngestLoc();
 	
-	if (count($_POST) == 0) {
+	if (count($_FILES) == 0) {
 		$status = "";
 		return;
 	}
@@ -81,7 +81,7 @@ function testArgs(){
 	}
 	
 	$run = (util::getPostArg("preview","") == "") ? "-s" : "";
-	
+		
 	$temp = $ingestLoc . $_FILES["metadata"]["name"];
 	move_uploaded_file($_FILES["metadata"]["tmp_name"], $temp);
     $temp = escapeshellarg($temp);  
@@ -92,7 +92,7 @@ function testArgs(){
 	$cmd = <<< HERE
 {$u} metadata-import -f {$temp} -e {$user} {$run}
 HERE;
-    
+        
     //echo($dspaceBatch . " " .$cmd);
     exec($dspaceBatch . " " . $cmd);
     header("Location: ../web/queue.php");

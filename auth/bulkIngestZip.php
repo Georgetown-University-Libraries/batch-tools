@@ -64,6 +64,7 @@ $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
 <fieldset class="loc">
 <legend>Upload Zip File * </legend>
 <p>
+  <label for="zip">File to upload, max size allowed: <?php echo ini_get("upload_max_filesize")?></label>
   <input type="file" name="zip" id="zip"/>
 </p>
 </fieldset>
