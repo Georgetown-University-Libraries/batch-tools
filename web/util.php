@@ -24,10 +24,7 @@ class util {
     }
 
 	public static function getArg($name, $def) {
-		if (isset($_GET[$name])) {
-			if ($_GET[$name] == null) return $def;
-			return $_GET[$name];
-		}
+		if (isset($_GET[$name])) return $_GET[$name];
 		return $def; 
 	}
 	
@@ -53,10 +50,7 @@ class util {
 	
 
 	public static function getPostArg($name, $def) {
-		if (isset($_POST[$name])) {
-			if ($_POST[$name] == null) return $def;
-			return $_POST[$name];
-		}
+		if (isset($_POST[$name])) return $_POST[$name];
 		return $def; 
 	}
 
