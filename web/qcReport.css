@@ -16,6 +16,7 @@ td.mod, th.mod {width: 200px;}
 #formFilter form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;}
 #formChangeParent form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;}
 #formIngest form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;}
+#formReindex form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;} 
 #formIngestZip form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;}
 #formMetadata form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;}
 #formUningest form {border: solid black 1px;padding: 10px; width: 800px; align: center;margin: 0 auto;}
