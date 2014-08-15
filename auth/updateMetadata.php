@@ -82,6 +82,10 @@ function testArgs(){
 	
 	$run = (util::getPostArg("preview","") == "") ? "-s" : "";
 	
+	$status = "run: " . $run;
+    return;
+	
+	
 	$temp = $ingestLoc . $_FILES["metadata"]["name"];
 	move_uploaded_file($_FILES["metadata"]["tmp_name"], $temp);
     $temp = escapeshellarg($temp);  
@@ -92,10 +96,7 @@ function testArgs(){
 	$cmd = <<< HERE
 {$u} metadata-import -f {$temp} -e {$user} {$run}
 HERE;
-    
-    $status = $cmd;
-    return;
-    
+        
     //echo($dspaceBatch . " " .$cmd);
     exec($dspaceBatch . " " . $cmd);
     header("Location: ../web/queue.php");
