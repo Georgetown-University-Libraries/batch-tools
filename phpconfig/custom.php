@@ -166,6 +166,15 @@ class custom {
 <h4>Admin Access Only</h4>
 <ul>
 <li><a href="../auth/bulkIngest.php">Initiate Bulk Ingest</a></li>
+<li><a href="../auth/bulkIngestZip.php">Initiate Bulk Ingest - Zip Upload</a></li>
+<li>
+  <a href="../auth/bulkIngestZipUrl.php">Initiate Bulk Ingest - Zip URL</a>
+  <ul>
+    <li>
+      <a href="https://github.com/Georgetown-University-Libraries/batch-tools/wiki/Using-a-Zip-File-on-Box-as-an-Ingest-Source">Using a Zip File on Box as an Ingest Source</a>
+    </li>
+  </ul>
+</li>
 <li><a href="../auth/updateIndex.php">Update Text and Discovery Index</a></li>
 <li><a href="../auth/undoBulkIngest.php">Undo Bulk Ingest</a></li>
 <li><a href="../auth/changeParent.php">Move Community</a></li>
