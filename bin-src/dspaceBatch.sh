@@ -92,7 +92,7 @@ function bulk_ingest {
   fi
      
   export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media {FMN} -i $COLL" >> ${RUNNING} 
+  echo "${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL" >> ${RUNNING} 
   ${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL >> ${RUNNING} 2>&1         
 }
 
