@@ -43,7 +43,7 @@ $header->litPageHeader();
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formIngestZip">
-<form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data">
+<form method="POST" action="" enctype="multipart/form-data">
 <p>This process will trigger a bulk ingest of content.</p>
 <p>Assumptions:</p>
 <ol>
