@@ -361,7 +361,12 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
   }
   
   function jobQueue() {
-	  $('#filterSubmit,#ingestSubmit').attr('disabled',true);
+	  $('#filterSubmit,#ingestSubmit,#changeParentSubmit,#reindexSubmit').attr('disabled',true);
 	  $("#submitting").show();
 	  setTimeout(function(){document.location="../web/queue.php"}, 5000)
+  }
+  
+  function jobQueueUpload() {
+	  $('#filterSubmit,#ingestSubmit,#changeParentSubmit,#reindexSubmit').attr('disabled',true);
+	  $("#status").text("Please wait for file to upload (see status) before navigating away");
   }
