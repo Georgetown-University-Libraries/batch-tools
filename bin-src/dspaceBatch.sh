@@ -5,6 +5,13 @@ SOLR=SOLRROOT
 VER=DSPACEVER
 SCRIBD=
 
+if [ $VER = 4 ]
+then
+  FMNDEF=-n
+else
+  FMNDEF=
+fi
+
 USERNAME=$1
 shift
 BATCH=`date +"%Y-%m-%d_%H:%M:%S"`
@@ -16,16 +23,33 @@ COMPLETE=${QDIR}/${FNAME}.complete.txt
 
 RUN=false
 
-function update_solr {
+function update_discovery {
   if [ $VER = 3 ]
   then
     export JAVA_OPTS=-Xmx1200m   
     echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
     ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-    
+  elif [ $VER = 4 ]
+  then
+    export JAVA_OPTS=-Xmx1200m   
+    echo "${DSROOT}/bin/dspace index-discovery" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace index-discovery >> ${RUNNING} 2>&1 
+  fi 
+}
+
+function update_oai {
+  if [ $VER >= 3 ]
+  then
+    export JAVA_OPTS=-Xmx1200m   
     echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
     ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
   fi 
+}
+
+
+function update_solr {
+  $(update_discovery)
+  $(update_oai)
 }
 
 function discovery_opt {
@@ -33,6 +57,10 @@ function discovery_opt {
   then
     export JAVA_OPTS=-Xmx1200m   
     ${DSROOT}/bin/dspace update-discovery-index -o >> ${RUNNING} 2>&1 
+  elif [ $VER = 4 ]
+  then
+    echo "${DSROOT}/bin/dspace index-discovery -o" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace index-discovery -o >> ${RUNNING} 2>&1 
   fi
 }
 
@@ -42,6 +70,9 @@ function index_update {
     export JAVA_OPTS=-Xmx1200m   
     echo ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
     ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
+  elif [ $VER = 4 ]
+  then
+    echo "Index update is N/A in DSpace 4" >> ${RUNNING} 2>&1 
   fi
 }
 
@@ -61,7 +92,7 @@ function bulk_ingest {
   fi
      
   export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
+  echo "${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL" >> ${RUNNING} 
   ${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL >> ${RUNNING} 2>&1         
 }
 
@@ -157,7 +188,7 @@ then
   echo " ** " >> ${RUNNING} 2>&1 
   echo " ** If items do not appear to be correctly indexed, then run the following steps" >> ${RUNNING} 2>&1 
   echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1 
-  echo " ** You must run update-discovery-index -f after restarting the server" >> ${RUNNING} 2>&1 
+  echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1 
   echo " ** You must then run oai import" >> ${RUNNING} 2>&1 
 elif [ "$1" = "gu-ingest" ]
 then 
@@ -165,7 +196,7 @@ then
   COLL=$3
   LOC=$4
   MAP=$5
-  FMN=
+  FMN=$FMNDEF
   
   $(bulk_ingest)
   $(update_solr)
@@ -176,7 +207,7 @@ then
   ZIP=$4
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$5
-  FMN=
+  FMN=$FMNDEF
 
   $(unzip_ingest)
   $(bulk_ingest)
@@ -189,7 +220,7 @@ then
   ZIP=$5
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$6
-  FMN=
+  FMN=$FMNDEF
 
   $(download_zip)
   $(unzip_ingest)
@@ -243,9 +274,7 @@ then
   echo Command: curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1 
   curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1 
 
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
+  $(update_discovery)
 else
   echo "Unsupported DSpace Command" >> ${RUNNING}
 fi
