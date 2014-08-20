@@ -139,8 +139,13 @@ function testArgs(){
 												' -p ' . escapeshellarg("PowerPoint Text Extractor") . 
 												' -p ' . escapeshellarg("Word Text Extractor");
 
-	if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("LIT Image Thumbnail") . 
-												' -p ' . escapeshellarg("LIT PDF Thumbnail");
+    if ($CUSTOM->ver < 4) {
+	    if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("LIT Image Thumbnail") . 
+		    										' -p ' . escapeshellarg("LIT PDF Thumbnail");
+    } else {
+	    if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("ImageMagick Image Thumbnail") . 
+		    										' -p ' . escapeshellarg("ImageMagick PDF Thumbnail");    	
+    }
 	
 	if (util::getPostArg("optForce", false)) $args .= " -f";
 	if (util::getPostArg("optIndex", false) == false) $args .= " -n";
