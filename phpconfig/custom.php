@@ -23,6 +23,7 @@ include dirname(dirname(__FILE__)) . "/web/community.php";
 class custom {
 	
 	public static $INSTANCE;
+	public $ver;
 	public $QKEY = array();
 	const COLLADMIN = "collection-admin";
 	const SYSADMIN  = "system-admin";
@@ -65,9 +66,10 @@ class custom {
 	protected $communityInit;
 	public function getCommunityInit() {return $this->communityInit;}
 	
-	public function __construct() {
+	public function __construct($ver) {
 		$this->communityInit = DefaultInitializer::instance();
 		$this->QKEY = array();
+		$this->ver = $ver;
 	}
 
 	public static function instance() {

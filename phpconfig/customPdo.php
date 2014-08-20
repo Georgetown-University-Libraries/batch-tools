@@ -34,9 +34,10 @@ class customPdo extends custom {
 	}
 	
 	public function isPdo() {return true;}
-	public function __construct() {
+	public function __construct($ver) {
 		PdoInitializer::setInstance($this->getPdoDb());
 		$this->communityInit = PdoInitializer::instance();
+		parent::__construct($ver)
 	}
 
 	public function getQueryVal($sql, $arg) {
