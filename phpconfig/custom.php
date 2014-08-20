@@ -47,6 +47,8 @@ class custom {
 	public function isUserSysAdmin() {return $this->testUserInGroup(self::SYSADMIN);}
 	public function isUserViewer() {return $this->testUserInGroup(self::VIEWER);}
 	
+	public function isCheckFilter($name) {return false;}
+	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
 	public function getRestServiceUrl() {return "http://demo.dspace.org/rest";}
 	public function showBatchTools() {return $this->isUserCollectionOwner();}
