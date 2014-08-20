@@ -37,7 +37,7 @@ class customPdo extends custom {
 	public function __construct($ver) {
 		PdoInitializer::setInstance($this->getPdoDb());
 		$this->communityInit = PdoInitializer::instance();
-		parent::__construct($ver)
+		parent::__construct($ver);
 	}
 
 	public function getQueryVal($sql, $arg) {
