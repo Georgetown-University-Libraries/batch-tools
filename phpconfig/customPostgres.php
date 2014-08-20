@@ -34,9 +34,9 @@ class customPostgres extends custom {
 	}
 	
 	public function __construct($ver) {
+		parent::__construct($ver);
 		PostgresInitializer::setInstance($this->getDbh());
 		$this->communityInit = PostgresInitializer::instance();
-		parent::__construct($ver);
 	}
 
 	public function getQueryVal($sql, $arg = array()) {
