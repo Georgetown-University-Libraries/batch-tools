@@ -50,7 +50,7 @@ if ($CUSTOM->showQueryTools()) {
 <?php
 echo $CUSTOM->getIntroHtml();
 ?>
-<h4>Reporting Tools*</h4>
+<h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
 <?php 

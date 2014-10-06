@@ -167,7 +167,7 @@ class custom {
 
     public function getAdminHtml() {
         return <<< EOF
-<h4>Admin Access Only</h4>
+<h4>Batch Tools (Collection Admin Access)</h4>
 <ul>
 <li><a href="../auth/bulkIngest.php">Initiate Bulk Ingest</a></li>
 <li><a href="../auth/bulkIngestZip.php">Initiate Bulk Ingest - Zip Upload</a></li>
