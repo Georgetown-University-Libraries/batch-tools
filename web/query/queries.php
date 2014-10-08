@@ -111,13 +111,43 @@ class query {
 	function commQuery($filter) {
 		return "
   (
-    select count(*) 
-    from item i
-    inner join communities2item c2i 
-      on c2i.item_id = i.item_id 
-      and c2i.community_id = comm.community_id
-    /*where (i.in_archive is true or i.discoverable = false)*/
-    where i.in_archive is true
+    with a_communities as (
+      with recursive r_communities as (
+        select
+          parent_comm_id, child_comm_id
+        from
+          community2community
+        union
+        select
+          r.parent_comm_id, c.child_comm_id
+        from
+          r_communities r,
+          community2community c
+        where
+          r.child_comm_id = c.parent_comm_id
+      )
+      select 
+        community_id as parent_comm_id, community_id as child_comm_id
+      from 
+        community
+      where 
+        community_id not in (
+          select 
+            parent_comm_id 
+          from 
+            community2community
+        ) 
+      union
+      select * from r_communities
+    )
+    select count(i.*) as x
+    from a_communities a
+    left join community2collection c2c 
+    on c2c.community_id=a.child_comm_id
+    inner join item i
+    on i.owning_collection = c2c.collection_id
+    and i.in_archive is true
+    where a.parent_comm_id = comm.community_id
     {$this->subq} 
     {$filter}
   ) as {$this->name},
