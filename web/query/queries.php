@@ -107,9 +107,9 @@ class query {
   ) as {$this->name},
 ";		
 	}
-
-	function commQuery($filter) {
-		return "
+    
+    static function comm2coll() {
+        return "
   (
     with recursive r_comm2coll as (
       select 
@@ -128,6 +128,11 @@ class query {
       on
         cm2cm.child_comm_id = r.community_id
     )
+        ";
+    }
+
+	function commQuery($filter) {
+		return queries::comm2coll() . "
     select count(i.*) as x
     from r_comm2coll r
     inner join item i 
