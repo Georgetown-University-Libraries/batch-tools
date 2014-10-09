@@ -133,7 +133,7 @@ class query {
     inner join item i 
     on i.owning_collection = r.collection_id 
     and i.in_archive is true 
-    where r.community_id= = comm.community_id
+    where r.community_id = comm.community_id
     {$this->subq} 
     {$filter}
   ) as {$this->name},
