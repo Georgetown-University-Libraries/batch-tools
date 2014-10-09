@@ -44,7 +44,6 @@ inner join handle h on h.resource_id = i2.item_id and resource_type_id = 2
 EOF;
 
 $where = <<< EOF
-/*where (i2.in_archive is true or i2.discoverable = false)*/
 where i2.in_archive is true 
 order by title
 limit 4000
