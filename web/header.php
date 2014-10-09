@@ -62,6 +62,7 @@ HERE;
 	    }
 		echo <<< HERE
 		  {$this->title}
+          [{$CUSTOM->getCurrentUser()}]
 		</div>
 		<hr/>
 		<h1 align="center">{$this->title}</h1>
