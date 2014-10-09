@@ -55,11 +55,16 @@ $header->litPageHeader();
 <?php 
 collection::getCollectionWidget(util::getPostArg("community",""), util::getPostArg("collection",""));
 $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
+
+if ($CUSTOM->ver < 4) {
 ?>
 <p>
   <label for="skipindex">Skip Full Text Index Update</label>
-  <input type="checkbox" id="skipindex" name="skipindex" size="70" value="Y" {$skipindex}/>
+  <input type="checkbox" id="skipindex" name="skipindex" value="Y" {$skipindex}/>
 </p>
+<?php 
+}
+?>
 <p>
 <fieldset class="loc">
 <legend>Upload Zip File * </legend>
