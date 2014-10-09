@@ -110,7 +110,6 @@ class query {
     
     static function comm2coll() {
         return "
-  (
     with recursive r_comm2coll as (
       select 
         community_id, 
@@ -132,7 +131,7 @@ class query {
     }
 
 	function commQuery($filter) {
-		return query::comm2coll() . "
+		return "(" . query::comm2coll() . "
     select count(i.*) as x
     from r_comm2coll r
     inner join item i 
