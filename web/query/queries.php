@@ -132,7 +132,7 @@ class query {
     }
 
 	function commQuery($filter) {
-		return queries::comm2coll() . "
+		return query::comm2coll() . "
     select count(i.*) as x
     from r_comm2coll r
     inner join item i 

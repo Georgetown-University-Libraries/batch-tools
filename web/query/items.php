@@ -79,7 +79,7 @@ where
   {$rptquery->subq};  
 EOF;
 } else if (collectionArg::isCommunity()) {
-$sql = queries::comm2coll() . <<< ZZZ
+$sql = query::comm2coll() . <<< ZZZ
 {$sel}
 inner join
   r_comm2coll r on i.owning_collection = r.collection_id
