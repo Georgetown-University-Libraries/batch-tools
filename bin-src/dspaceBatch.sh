@@ -145,7 +145,10 @@ then
     
     if [ "$x" = "-s" ]
     then
-      $(update_solr)
+      if [ $VER = 3 ]
+      then
+        $(update_solr)
+      fi
     fi
   done
 elif [ "$1" = "gu-refresh-statistics" ]
