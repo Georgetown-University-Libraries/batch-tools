@@ -21,7 +21,7 @@ if ($comm != "") {
     else
 	    $q="owningComm:".$comm;
 } else if ($coll != "") {
-    if ($typearg == "COMMV")
+    if ($typearg == "COLLV")
   	    $q="id:".$coll;
     else	
         $q="owningColl:".$coll;
