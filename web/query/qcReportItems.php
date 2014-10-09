@@ -59,11 +59,13 @@ inner join collection2item c2i
 {$where};  
 EOF;
 } else if (collectionArg::isCommunity()) {
+$comm2coll = query::comm2coll();
 $sql = <<< EOF
+{$comm2coll}
 {$sel}
-inner join communities2item c2i 
-  on c2i.item_id = i2.item_id 
-  and c2i.community_id = :pid
+inner join r_comm2coll r 
+  on r.collection_id = i2.owning_collection 
+  and r.community_id = :pid
 {$where};  
 EOF;
 }
