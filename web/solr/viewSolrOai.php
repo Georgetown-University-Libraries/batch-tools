@@ -60,7 +60,7 @@ function testArgs(){
 	$handle = util::getPostArg("handle","");
 	if ($handle == "") return;
 	header('Content-type: application/xml');
-    $req = $CUSTOM->getSolrPath() . "oai/select?indent=on&version=2.2&q=*:*";
+    $req = $CUSTOM->getSolrPath() . "oai/select?indent=on&version=2.2&q=item.handle:{$handle}";
     $ret = file_get_contents($req);
     echo $ret;
     exit;
