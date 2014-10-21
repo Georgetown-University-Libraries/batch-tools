@@ -27,7 +27,7 @@ header('Content-type: text/html; charset=UTF-8');
 <html>
 <head>
 <?php 
-$header = new LitHeader("View SOLR Data");
+$header = new LitHeader("View OAI SOLR Data");
 $header->litPageHeader();
 ?>
 </head>
@@ -35,7 +35,7 @@ $header->litPageHeader();
 <?php $header->litHeader(array());?>
 <div id="viewSolr">
 <form method="POST" action="">
-<p>View the SOLR Related Items for a DSpace Resource.</p>
+<p>View the OAI SOLR Related Items for a DSpace Resource.</p>
 <div id="status"><?php echo $status?></div>
 <p>
   <label for="handle">Handle</label>
@@ -60,7 +60,7 @@ function testArgs(){
 	$handle = util::getPostArg("handle","");
 	if ($handle == "") return;
 	header('Content-type: application/xml');
-    $req = $CUSTOM->getSolrPath() . "oai/select?indent=on&version=2.2&q=handle:{$handle}";
+    $req = $CUSTOM->getSolrPath() . "oai/select?indent=on&version=2.2&q=*:*";
     $ret = file_get_contents($req);
     echo $ret;
     exit;
