@@ -77,9 +77,12 @@ if ($CUSTOM->showStatsTools()) {
 <li>
   <a href="query/qcA2Z.php">Collection and Community A-Z list</a>
 </li>
-<!--Analyzer SOLR values-->
+<!--Analyze SOLR values-->
 <li>
   <a href="solr/viewSolr.php">View SOLR Index data for a specific item</a>
+</li>
+<li>
+  <a href="solr/viewSolrOai.php">View OAI SOLR Index data for a specific item</a>
 </li>
 <!-- Use the OAI service to provide data exports-->
 <li>
