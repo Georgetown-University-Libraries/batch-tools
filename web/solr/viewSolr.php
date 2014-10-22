@@ -113,9 +113,9 @@ function testArgs(){
       if ($handle == "") return;
       $req .= "&q=item.handle:{$handle}";      
     } else if ($query == "nouid") {
-      $req .= "&q=NOT(uid)";      
+      $req .= "&q=NOT(uid)&rows=0";      
     } else if ($query == "hasuid") {
-      $req .= "&q=uid:*";      
+      $req .= "&q=uid:*&rows=0";      
     } else if ($query == "count") {
       $req .= "&q=*:*&rows=0";      
     } else {
