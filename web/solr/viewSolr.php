@@ -44,8 +44,8 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option val="object">Item, Collection, Community</option>
-    <option val="count">Count items</option>
+    <option value="object">Item, Collection, Community</option>
+    <option value="count">Count items</option>
   </select>
 </p>
 <p align="center">
