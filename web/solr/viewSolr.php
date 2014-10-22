@@ -73,7 +73,7 @@ $header->litPageHeader();
   <label for="query">Query</label>
   <select id="query" name="query">
     <option class="search oai statistics" value="count">Count items</option>
-    <option class="search oai statistics" value="samples">1000 Sample Records</option>
+    <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search handle" value="object">Discovery Item, Collection, Community</option>
     <option class="oai handle" value="oaiitem">OAI item</option>
@@ -120,7 +120,7 @@ function testArgs(){
     } else if ($query == "count") {
       $req .= "&q=*:*&rows=0";      
     } else if ($query == "samples") {
-      $req .= "&q=*:*&rows=1000";      
+      $req .= "&q=*:*&rows=1000&sort=time+desc";      
     } else {
       $req .= "&q=bogus:*&rows=0";      
     }
