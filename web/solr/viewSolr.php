@@ -30,6 +30,18 @@ header('Content-type: text/html; charset=UTF-8');
 $header = new LitHeader("View SOLR Data");
 $header->litPageHeader();
 ?>
+<script type="text/javascript">
+  $(document).ready(function(){
+      $("#rep").change(function(){setOptions();});
+      setOptions();
+  });
+  
+  function setOptions() {
+      $("#query option").attr("disabled",true);
+      var rep = "." . $("#rep").val();
+      $("#query option").find(rep).attr("disabled", false);
+  }
+</script>
 </head>
 <body>
 <?php $header->litHeader(array());?>
@@ -52,8 +64,9 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option value="object">Item, Collection, Community</option>
-    <option value="count">Count items</option>
+    <option class="search oai statistics" value="count">Count items</option>
+    <option class="search " value="object">Discovery Item, Collection, Community</option>
+    <option class="oai" value="oaiitem">OAI item</option>
   </select>
 </p>
 <p align="center">
@@ -77,11 +90,14 @@ function testArgs(){
     $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
     $req = $CUSTOM->getSolrPath() . $rep . "/select?indent=on&version=2.2";
-    if ($query == "count") {
-      $req .= "&q=*:*&rows=0";      
-    } else {
+    if ($query == "object") {
       if ($handle == "") return;
       $req .= "&q=handle:{$handle}";      
+    } else if ($query == "oaiitem") {
+      if ($handle == "") return;
+      $req .= "&q=item.handle:{$handle}";      
+    } else {
+      $req .= "&q=*:*&rows=0";      
     }
     $ret = file_get_contents($req);
     echo $ret;
