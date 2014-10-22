@@ -38,8 +38,8 @@ $header->litPageHeader();
   
   function setOptions() {
       $("#query option").attr("disabled",true);
-      var rep = "." . $("#rep").val();
-      $("#query option").find(rep).attr("disabled", false);
+      var rep = "#query option." . $("#rep").val();
+      $(rep).removeAttr("disabled", false);
   }
 </script>
 </head>
