@@ -32,7 +32,7 @@ $header->litPageHeader();
 ?>
 <script type="text/javascript">
   $(document).ready(function(){
-      $("#rep").change(function(){setOptions();});
+      $("#rep,#query").change(function(){setOptions();});
       setOptions();
   });
   
@@ -62,16 +62,16 @@ $header->litPageHeader();
   </select>
 </p>
 <p>
-  <label for="handle">Handle</label>
-  <input type="text" id="handle" name="handle" size="20" value="10822/1"/>
-</p>
-<p>
   <label for="query">Query</label>
   <select id="query" name="query">
     <option class="search oai statistics" value="count">Count items</option>
     <option class="search handle" value="object">Discovery Item, Collection, Community</option>
     <option class="oai handle" value="oaiitem">OAI item</option>
   </select>
+</p>
+<p>
+  <label for="handle">Handle</label>
+  <input type="text" id="handle" name="handle" size="20" value="10822/1"/>
 </p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit"/>
