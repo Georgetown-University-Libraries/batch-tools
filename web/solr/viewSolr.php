@@ -41,6 +41,13 @@ $header->litPageHeader();
   <label for="handle">Handle</label>
   <input type="text" id="handle" name="handle" size="20" value="10822/1"/>
 </p>
+<p>
+  <label for="query">Query</label>
+  <select id="query" name="query">
+    <option val="object">Item, Collection, Community</option>
+    <option val="count">Count items</option>
+  </select>
+</p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit"/>
 </p>
@@ -58,9 +65,15 @@ function testArgs(){
     $CUSTOM = custom::instance();
 	if (count($_POST) == 0) return;
 	$handle = util::getPostArg("handle","");
-	if ($handle == "") return;
+    $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
-    $req = $CUSTOM->getSolrPath() . "search/select?indent=on&version=2.2&q=handle:{$handle}";
+    $req = $CUSTOM->getSolrPath() . "search/select?indent=on&version=2.2";
+    if ($query == "count") {
+      $req .= "&q=*:*&rows=0";      
+    } else {
+      if ($handle == "") return;
+      $req .= "&q=handle:{$handle}";      
+    }
     $ret = file_get_contents($req);
     echo $ret;
     exit;
