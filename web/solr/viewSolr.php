@@ -40,6 +40,10 @@ $header->litPageHeader();
       $("#query option").attr("disabled",true);
       var rep = "#query option." + $("#rep").val();
       $(rep).removeAttr("disabled");
+      $("#handle").attr("disabled", true);
+      if ($("#query option:selected").is(".handle")) {
+        $("#handle").removeAttr("disabled");
+      }
   }
 </script>
 </head>
@@ -64,8 +68,8 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics" value="count">Count items</option>
-    <option class="search " value="object">Discovery Item, Collection, Community</option>
+    <option class="search oai statistics handle" value="count">Count items</option>
+    <option class="search handle" value="object">Discovery Item, Collection, Community</option>
     <option class="oai" value="oaiitem">OAI item</option>
   </select>
 </p>
