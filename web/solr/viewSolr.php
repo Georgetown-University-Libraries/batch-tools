@@ -38,6 +38,14 @@ $header->litPageHeader();
 <p>View the SOLR Related Items for a DSpace Resource.</p>
 <div id="status"><?php echo $status?></div>
 <p>
+  <label for="rep">Repository</label>
+  <select id="rep" name="rep">
+    <option value="search">Discovery/Search</option>
+    <option value="oai">OAI</option>
+    <option value="statistics">Statistics</option>
+  </select>
+</p>
+<p>
   <label for="handle">Handle</label>
   <input type="text" id="handle" name="handle" size="20" value="10822/1"/>
 </p>
@@ -64,10 +72,11 @@ function testArgs(){
 	
     $CUSTOM = custom::instance();
 	if (count($_POST) == 0) return;
+    $rep = util::getPostArg("rep","search");
 	$handle = util::getPostArg("handle","");
     $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
-    $req = $CUSTOM->getSolrPath() . "search/select?indent=on&version=2.2";
+    $req = $CUSTOM->getSolrPath() . $rep . "/select?indent=on&version=2.2";
     if ($query == "count") {
       $req .= "&q=*:*&rows=0";      
     } else {
