@@ -79,10 +79,7 @@ if ($CUSTOM->showStatsTools()) {
 </li>
 <!--Analyze SOLR values-->
 <li>
-  <a href="solr/viewSolr.php">View SOLR Index data for a specific item</a>
-</li>
-<li>
-  <a href="solr/viewSolrOai.php">View OAI SOLR Index data for a specific item</a>
+  <a href="solr/viewSolr.php">SOLR Index Queries</a>
 </li>
 <!-- Use the OAI service to provide data exports-->
 <li>

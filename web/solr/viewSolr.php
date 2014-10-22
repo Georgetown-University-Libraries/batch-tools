@@ -32,7 +32,15 @@ $header->litPageHeader();
 ?>
 <script type="text/javascript">
   $(document).ready(function(){
-      $("#rep,#query").change(function(){setOptions();});
+      $("#rep").change(function(){
+        $("#query").val("count");
+        setOptions();
+      });
+      
+      $("#query").change(function(){
+        setOptions();
+      });
+      
       setOptions();
   });
   
@@ -65,8 +73,11 @@ $header->litPageHeader();
   <label for="query">Query</label>
   <select id="query" name="query">
     <option class="search oai statistics" value="count">Count items</option>
+
     <option class="search handle" value="object">Discovery Item, Collection, Community</option>
     <option class="oai handle" value="oaiitem">OAI item</option>
+
+    <option class="statistics" value="nouid">No UID in stat record</option>
   </select>
 </p>
 <p>
@@ -100,6 +111,8 @@ function testArgs(){
     } else if ($query == "oaiitem") {
       if ($handle == "") return;
       $req .= "&q=item.handle:{$handle}";      
+    } else if ($query == "nouid") {
+      $req .= "&q=NOT(uid)";      
     } else {
       $req .= "&q=*:*&rows=0";      
     }
