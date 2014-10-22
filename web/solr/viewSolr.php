@@ -116,7 +116,7 @@ function testArgs(){
     } else if ($query == "nouid") {
       $req .= "&q=NOT(uid)&rows=0";      
     } else if ($query == "hasuid") {
-      $req .= "&q=uid:*&rows=0";      
+      $req .= "&q=*-*-*-*-*&rows=0";      
     } else if ($query == "count") {
       $req .= "&q=*:*&rows=0";      
     } else if ($query == "samples") {
