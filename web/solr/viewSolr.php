@@ -68,9 +68,9 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics handle" value="count">Count items</option>
+    <option class="search oai statistics" value="count">Count items</option>
     <option class="search handle" value="object">Discovery Item, Collection, Community</option>
-    <option class="oai" value="oaiitem">OAI item</option>
+    <option class="oai handle" value="oaiitem">OAI item</option>
   </select>
 </p>
 <p align="center">
