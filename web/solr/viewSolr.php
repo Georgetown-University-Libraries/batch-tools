@@ -78,6 +78,7 @@ $header->litPageHeader();
     <option class="oai handle" value="oaiitem">OAI item</option>
 
     <option class="statistics" value="nouid">No UID in stat record</option>
+    <option class="statistics" value="hasuid">Has UID in stat record</option>
   </select>
 </p>
 <p>
@@ -113,8 +114,12 @@ function testArgs(){
       $req .= "&q=item.handle:{$handle}";      
     } else if ($query == "nouid") {
       $req .= "&q=NOT(uid)";      
-    } else {
+    } else if ($query == "hasuid") {
+      $req .= "&q=uid:*";      
+    } else if ($query == "count") {
       $req .= "&q=*:*&rows=0";      
+    } else {
+      $req .= "&q=bogus:*&rows=0";      
     }
     $ret = file_get_contents($req);
     echo $ret;
