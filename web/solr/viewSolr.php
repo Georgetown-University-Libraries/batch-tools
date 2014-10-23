@@ -124,7 +124,7 @@ function testArgs(){
     } else if ($query == "samples") {
       $req .= "&q=*:*&rows=1000&sort=time+desc";      
     } else if ($query == "optimize") {
-      ini_set('max_execution_time', 120);
+      ini_set('max_execution_time', 180);
       $req = $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";
     } else {
       $req .= "&q=bogus:*&rows=0";      
