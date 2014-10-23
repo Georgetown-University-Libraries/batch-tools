@@ -18,10 +18,10 @@ IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-include '../header.php';
-$status = "";
 ini_set('max_execution_time', 180);
 set_time_limit(180);
+include '../header.php';
+$status = "";
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
