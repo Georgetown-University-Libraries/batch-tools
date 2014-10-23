@@ -20,6 +20,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 */
 include '../header.php';
 $status = "";
+ini_set('max_execution_time', 180);
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
@@ -124,7 +125,6 @@ function testArgs(){
     } else if ($query == "samples") {
       $req .= "&q=*:*&rows=1000&sort=time+desc";      
     } else if ($query == "optimize") {
-      ini_set('max_execution_time', 180);
       $req = $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";
     } else {
       $req .= "&q=bogus:*&rows=0";      
