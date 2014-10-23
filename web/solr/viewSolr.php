@@ -21,6 +21,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 include '../header.php';
 $status = "";
 ini_set('max_execution_time', 180);
+set_time_limit(180);
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
