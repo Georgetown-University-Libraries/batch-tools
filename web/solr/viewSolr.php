@@ -124,7 +124,7 @@ function testArgs(){
     } else if ($query == "samples") {
       $req .= "&q=*:*&rows=1000&sort=time+desc";      
     } else if ($query == "optimize") {
-      $req .= $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";      
+      $req = $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";
     } else {
       $req .= "&q=bogus:*&rows=0";      
     }
