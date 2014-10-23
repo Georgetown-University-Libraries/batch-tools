@@ -116,7 +116,7 @@ function testArgs(){
       if ($handle == "") return;
       $req .= "&q=item.handle:{$handle}";      
     } else if ($query == "nouid") {
-      $req .= "&q=NOT(uid)&rows=10&sort=time+desc";      
+      $req .= "&q=NOT(uid:*)&rows=10&sort=time+desc";      
     } else if ($query == "hasuid") {
       $req .= "&q=uid:*&rows=10&sort=time+asc";      
     } else if ($query == "count") {
