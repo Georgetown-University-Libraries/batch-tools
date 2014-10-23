@@ -75,6 +75,8 @@ $header->litPageHeader();
     <option class="search oai statistics" value="count">Count items</option>
     <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
+    <option class="search oai statistics" value="optimize">Optimize</option>
+
     <option class="search handle" value="object">Discovery Item, Collection, Community</option>
     <option class="oai handle" value="oaiitem">OAI item</option>
 
@@ -121,6 +123,8 @@ function testArgs(){
       $req .= "&q=*:*&rows=0";      
     } else if ($query == "samples") {
       $req .= "&q=*:*&rows=1000&sort=time+desc";      
+    } else if ($query == "optimize") {
+      $req .= $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";      
     } else {
       $req .= "&q=bogus:*&rows=0";      
     }
