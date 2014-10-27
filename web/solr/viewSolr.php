@@ -57,10 +57,11 @@ $header->litPageHeader();
           }
       });
 
-      $("#squery").attr("disabled", true);
       if ($("#query option:selected").is(".squery")) {
           $("#squery").removeAttr("disabled");
           $("#squery").val($("#query option:selected").attr("qdata"));
+      } else  {
+          $("#squery").attr("disabled", true).val("");      
       }
       
       if ($("#query option:selected").hasClass(rep) == false) {
