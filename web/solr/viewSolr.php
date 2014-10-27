@@ -44,21 +44,16 @@ $header->litPageHeader();
   });
   
   function setOptions() {
-      var reset = false;
       $("#query option").each(function(){
           if ($(this).hasClass($("#rep").val())) {
               $(this).removeAttr("disabled");
           } else {
              $(this).attr("disabled", true);
              if ($(this).attr("selected") == true) {
-                 reset = true;
+                  $("#query").val("count");
              }
           }
       });
-      if (reset) {
-          $("#query").val("count");
-          return;          
-      }
 
       $("#squery").attr("disabled", true);
       if ($("#query option:selected").is(".squery")) {
