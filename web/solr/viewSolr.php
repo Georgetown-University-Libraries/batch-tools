@@ -59,6 +59,7 @@ $header->litPageHeader();
       }
       
       if ($("#query option:selected").attr("disabled") == true) {
+        alert("is disabled");
           $("#query").val("count");
       }      
       
