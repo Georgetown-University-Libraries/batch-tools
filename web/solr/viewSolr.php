@@ -33,7 +33,7 @@ $header->litPageHeader();
 <script type="text/javascript">
   $(document).ready(function(){
       $("#rep").change(function(){
-        $("#query").val("count");
+        //$("#query").val("count");
         setOptions();
       });
       
@@ -48,10 +48,7 @@ $header->litPageHeader();
       $("#query option").attr("disabled",true);
       var rep = "#query option." + $("#rep").val();
       $(rep).removeAttr("disabled");
-      $("#handle").attr("disabled", true);
-      if ($("#query option:selected").is(".handle")) {
-        $("#handle").removeAttr("disabled");
-      }
+
       $("#squery").attr("disabled", true);
       if ($("#query option:selected").is(".squery")) {
         $("#squery").removeAttr("disabled");
@@ -82,9 +79,6 @@ $header->litPageHeader();
 
     <option class="search oai statistics" value="optimize">Optimize</option>
 
-    <option class="search handle" value="object">Discovery Item, Collection, Community</option>
-    <option class="oai handle" value="oaiitem">OAI item</option>
-
     <option class="statistics" value="nouid">No UID in stat record</option>
     <option class="statistics" value="hasuid">Has UID in stat record (DSpace 4)</option>
 
@@ -93,10 +87,6 @@ $header->litPageHeader();
     <option class="statistics squery" value="squery" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]">Statistics Date Query</option>
 
   </select>
-</p>
-<p>
-  <label for="handle">Handle</label>
-  <input type="text" id="handle" name="handle" size="20" value="10822/1"/>
 </p>
 <p>
   <label for="squery">SOLR Query</label>
