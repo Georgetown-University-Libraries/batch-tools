@@ -87,7 +87,7 @@ $header->litPageHeader();
     <option class="statistics" value="nouid">No UID in stat record</option>
     <option class="statistics" value="hasuid">Has UID in stat record (DSpace 4)</option>
 
-    <option class="search oai statistics" value="squery">Query</option>
+    <option class="search oai statistics squery" value="squery">Query</option>
 
   </select>
 </p>
