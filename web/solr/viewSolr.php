@@ -55,6 +55,7 @@ $header->litPageHeader();
       $("#squery").attr("disabled", true);
       if ($("#query option:selected").is(".squery")) {
         $("#squery").removeAttr("disabled");
+        $("#squery").val($("#query option:selected").attr("qdata"));
       }
   }
 </script>
@@ -87,7 +88,7 @@ $header->litPageHeader();
     <option class="statistics" value="nouid">No UID in stat record</option>
     <option class="statistics" value="hasuid">Has UID in stat record (DSpace 4)</option>
 
-    <option class="search oai statistics squery" value="squery">Query</option>
+    <option class="search oai statistics squery" value="squery" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]">Query</option>
 
   </select>
 </p>
@@ -97,7 +98,7 @@ $header->litPageHeader();
 </p>
 <p>
   <label for="squery">SOLR Query</label>
-  <input type="text" id="squery" name="squery" size="50" value="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]"/>
+  <input type="text" id="squery" name="squery" size="50" value=""/>
 </p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit"/>
