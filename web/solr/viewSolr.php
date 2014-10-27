@@ -97,7 +97,7 @@ $header->litPageHeader();
 </p>
 <p>
   <label for="squery">SOLR Query</label>
-  <input type="text" id="squery" name="squery" size="20" value="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]"/>
+  <input type="text" id="squery" name="squery" size="50" value="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]"/>
 </p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit"/>
