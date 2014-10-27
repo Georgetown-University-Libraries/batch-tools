@@ -49,6 +49,7 @@ $header->litPageHeader();
           if ($(this).hasClass("#rep").val()) {
               $(this).removeAttr("disabled");
           } else {
+             alert($(this).val() + $(this).attr("qdata")+$(this).attr("selected"));
              $(this).attr("disabled", true);
              if ($(this).attr("selected") == true) {
                  reset = true;
