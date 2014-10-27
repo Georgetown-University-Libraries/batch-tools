@@ -97,13 +97,13 @@ $header->litPageHeader();
     <option class="statistics" value="nouid" disabled>No UID in stat record</option>
     <option class="statistics" value="hasuid" disabled>Has UID in stat record (DSpace 4)</option>
 
-    <option class="search squery" value="squery" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
-    <option class="oai squery" value="squery" qdata="item.handle:10822/557062" disabled>OAI Item Handle</option>
-    <option class="statistics squery" value="squery" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]" disabled>Statistics 2010</option>
-    <option class="statistics squery" value="squery" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]" disabled>Statistics 2011</option>
-    <option class="statistics squery" value="squery" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]" disabled>Statistics 2012</option>
-    <option class="statistics squery" value="squery" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]" disabled>Statistics 2013</option>
-    <option class="statistics squery" value="squery" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]" disabled>Statistics 2014</option>
+    <option class="search squery" value="squery_handle" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
+    <option class="oai squery" value="squery_oaihandle" qdata="item.handle:10822/557062" disabled>OAI Item Handle</option>
+    <option class="statistics squery" value="squery2010" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]" disabled>Statistics 2010</option>
+    <option class="statistics squery" value="squery2011" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]" disabled>Statistics 2011</option>
+    <option class="statistics squery" value="squery2012" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]" disabled>Statistics 2012</option>
+    <option class="statistics squery" value="squery2013" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]" disabled>Statistics 2013</option>
+    <option class="statistics squery" value="squery2014" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]" disabled>Statistics 2014</option>
 
   </select>
 </p>
@@ -133,15 +133,7 @@ function testArgs(){
     $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
     $req = $CUSTOM->getSolrPath() . $rep . "/select?indent=on&version=2.2";
-    if ($query == "object") {
-      if ($handle == "") return;
-      $req .= "&q=handle:{$handle}";      
-    } else if ($query == "oaiitem") {
-      if ($handle == "") return;
-      $req .= "&q=item.handle:{$handle}";      
-    } else if ($query == "squery") {
-      $req .= "&q={$squery}";      
-    } else if ($query == "nouid") {
+    if ($query == "nouid") {
       $req .= "&q=NOT(uid:*)&rows=10&sort=time+desc";      
     } else if ($query == "hasuid") {
       $req .= "&q=uid:*&rows=10&sort=time+asc";      
@@ -151,6 +143,8 @@ function testArgs(){
       $req .= "&q=*:*&rows=1000&sort=time+desc";      
     } else if ($query == "optimize") {
       $req = $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";
+    } else if ($squery != "") {
+      $req .= "&q={$squery}";      
     } else {
       $req .= "&q=bogus:*&rows=0";      
     }
