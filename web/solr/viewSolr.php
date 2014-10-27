@@ -46,10 +46,9 @@ $header->litPageHeader();
   function setOptions() {
       var reset = false;
       $("#query option").each(function(){
-          if ($(this).hasClass("#rep").val()) {
+          if ($(this).hasClass("#rep")) {
               $(this).removeAttr("disabled");
           } else {
-             alert($(this).val() + $(this).attr("qdata")+$(this).attr("selected"));
              $(this).attr("disabled", true);
              if ($(this).attr("selected") == true) {
                  reset = true;
