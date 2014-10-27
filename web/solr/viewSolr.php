@@ -49,17 +49,19 @@ $header->litPageHeader();
               $(this).removeAttr("disabled");
           } else {
              $(this).attr("disabled", true);
-             if ($(this).attr("selected") == true) {
-                  $("#query").val("count");
-             }
           }
       });
 
       $("#squery").attr("disabled", true);
       if ($("#query option:selected").is(".squery")) {
-        $("#squery").removeAttr("disabled");
-        $("#squery").val($("#query option:selected").attr("qdata"));
+          $("#squery").removeAttr("disabled");
+          $("#squery").val($("#query option:selected").attr("qdata"));
       }
+      
+      if ($("#query option:selected").attr("disabled") == true) {
+          $("#query").val("count");
+      }      
+      
   }
 </script>
 </head>
