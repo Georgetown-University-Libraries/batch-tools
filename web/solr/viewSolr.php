@@ -46,7 +46,7 @@ $header->litPageHeader();
   function setOptions() {
       var reset = false;
       $("#query option").each(function(){
-          if ($(this).hasClass("#rep")) {
+          if ($(this).hasClass($("#rep").val())) {
               $(this).removeAttr("disabled");
           } else {
              $(this).attr("disabled", true);
