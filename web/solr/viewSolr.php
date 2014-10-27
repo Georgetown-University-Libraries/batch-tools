@@ -39,6 +39,11 @@ $header->litPageHeader();
       $("#query").change(function(){
         setOptions();
       });
+      
+      //accomodate back button behavior
+      if ($("#squery").val() != "") {
+          $("#squery").removeAttr("disabled");
+      }
   });
   
   function setOptions() {
