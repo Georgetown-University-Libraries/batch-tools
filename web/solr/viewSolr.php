@@ -44,13 +44,20 @@ $header->litPageHeader();
   });
   
   function setOptions() {
-      $("#query option").attr("disabled",true);
-      var rep = "#query option." + $("#rep").val();
-      $(rep).removeAttr("disabled");
-      
-      if ($("#query option:selected[disabled]").is("*")) {
-        $("#query").val("count");
-        return;          
+      var reset = false;
+      $("#query option").each(function(){
+          if ($(this).hasClass("#rep").val()) {
+              $(this).removeAttr("disabled");
+          } else {
+             $(this).attr("disabled", true);
+             if ($(this).attr("selected") == true) {
+                 reset = true;
+             }
+          }
+      });
+      if (reset) {
+          $("#query").val("count");
+          return;          
       }
 
       $("#squery").attr("disabled", true);
