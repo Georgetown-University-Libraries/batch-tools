@@ -44,8 +44,10 @@ $header->litPageHeader();
   });
   
   function setOptions() {
+      var rep = $("#rep").val();
+    
       $("#query option").each(function(){
-          if ($(this).hasClass($("#rep").val())) {
+          if ($(this).hasClass(rep)) {
               $(this).removeAttr("disabled");
           } else {
              $(this).attr("disabled", true);
@@ -58,8 +60,7 @@ $header->litPageHeader();
           $("#squery").val($("#query option:selected").attr("qdata"));
       }
       
-      if ($("#query option:selected").attr("disabled") == true) {
-        alert("is disabled");
+      if ($("#query option:selected").hasClass(rep) == false) {
           $("#query").val("count");
       }      
       
