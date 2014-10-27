@@ -70,7 +70,7 @@ $header->litPageHeader();
 <p>
   <label for="rep">Repository</label>
   <select id="rep" name="rep">
-    <option value="search">Discovery/Search</option>
+    <option value="search" selected>Discovery/Search</option>
     <option value="oai">OAI</option>
     <option value="statistics">Statistics</option>
   </select>
@@ -78,7 +78,7 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics" value="count">Count items</option>
+    <option class="search oai statistics" value="count" selected>Count items</option>
     <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search oai statistics" value="optimize">Optimize</option>
@@ -88,7 +88,11 @@ $header->litPageHeader();
 
     <option class="search squery" value="squery" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
     <option class="oai squery" value="squery" qdata="item.handle:10822/557062">OAI Item Handle</option>
-    <option class="statistics squery" value="squery" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]">Statistics Date Query</option>
+    <option class="statistics squery" value="squery" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]">Statistics 2010</option>
+    <option class="statistics squery" value="squery" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]">Statistics 2011</option>
+    <option class="statistics squery" value="squery" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]">Statistics 2012</option>
+    <option class="statistics squery" value="squery" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]">Statistics 2013</option>
+    <option class="statistics squery" value="squery" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]">Statistics 2014</option>
 
   </select>
 </p>
