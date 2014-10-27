@@ -62,6 +62,7 @@ $header->litPageHeader();
       
       if ($("#query option:selected").hasClass(rep) == false) {
           $("#query").val("count");
+          $("#squery").attr("disabled", true).val("");
       }      
       
   }
