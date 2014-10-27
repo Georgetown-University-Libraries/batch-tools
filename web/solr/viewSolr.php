@@ -97,7 +97,7 @@ $header->litPageHeader();
 </p>
 <p>
   <label for="squery">SOLR Query</label>
-  <input type="text" id="squery" name="squeyr" size="20" value="*:*"/>
+  <input type="text" id="squery" name="squery" size="20" value="*:*"/>
 </p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit"/>
