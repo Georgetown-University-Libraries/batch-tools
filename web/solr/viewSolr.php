@@ -52,6 +52,10 @@ $header->litPageHeader();
       if ($("#query option:selected").is(".handle")) {
         $("#handle").removeAttr("disabled");
       }
+      $("#squery").attr("disabled", true);
+      if ($("#query option:selected").is(".squery")) {
+        $("#squery").removeAttr("disabled");
+      }
   }
 </script>
 </head>
@@ -82,11 +86,18 @@ $header->litPageHeader();
 
     <option class="statistics" value="nouid">No UID in stat record</option>
     <option class="statistics" value="hasuid">Has UID in stat record (DSpace 4)</option>
+
+    <option class="search oai statistics" value="squery">Query</option>
+
   </select>
 </p>
 <p>
   <label for="handle">Handle</label>
   <input type="text" id="handle" name="handle" size="20" value="10822/1"/>
+</p>
+<p>
+  <label for="squery">SOLR Query</label>
+  <input type="text" id="squery" name="squeyr" size="20" value="*:*"/>
 </p>
 <p align="center">
 	<input id="ingestSubmit" type="submit" title="Submit"/>
@@ -106,6 +117,7 @@ function testArgs(){
 	if (count($_POST) == 0) return;
     $rep = util::getPostArg("rep","search");
 	$handle = util::getPostArg("handle","");
+    $squery = util::getPostArg("squery","");
     $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
     $req = $CUSTOM->getSolrPath() . $rep . "/select?indent=on&version=2.2";
@@ -115,6 +127,8 @@ function testArgs(){
     } else if ($query == "oaiitem") {
       if ($handle == "") return;
       $req .= "&q=item.handle:{$handle}";      
+    } else if ($query == "squery") {
+      $req .= "&q={$squery}";      
     } else if ($query == "nouid") {
       $req .= "&q=NOT(uid:*)&rows=10&sort=time+desc";      
     } else if ($query == "hasuid") {
