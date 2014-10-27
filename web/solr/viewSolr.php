@@ -33,7 +33,6 @@ $header->litPageHeader();
 <script type="text/javascript">
   $(document).ready(function(){
       $("#rep").change(function(){
-        //$("#query").val("count");
         setOptions();
       });
       
@@ -48,6 +47,11 @@ $header->litPageHeader();
       $("#query option").attr("disabled",true);
       var rep = "#query option." + $("#rep").val();
       $(rep).removeAttr("disabled");
+      
+      if ("#query option:selected").hasAttr("disabled") {
+        $("#query").val("count");
+        return;          
+      }
 
       $("#squery").attr("disabled", true);
       if ($("#query option:selected").is(".squery")) {
