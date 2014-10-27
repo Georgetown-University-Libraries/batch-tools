@@ -48,7 +48,7 @@ $header->litPageHeader();
       var rep = "#query option." + $("#rep").val();
       $(rep).removeAttr("disabled");
       
-      if ($("#query option:selected").hasAttr("disabled")) {
+      if ($("#query option:selected[disabled]") {
         $("#query").val("count");
         return;          
       }
