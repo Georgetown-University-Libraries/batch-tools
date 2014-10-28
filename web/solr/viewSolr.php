@@ -81,12 +81,17 @@ $header->litPageHeader();
     <option value="search" selected>Discovery/Search</option>
     <option value="oai">OAI</option>
     <option value="statistics">Statistics</option>
+    <option value="statistics-2010">Statistics 2010</option>
+    <option value="statistics-2011">Statistics 2011</option>
+    <option value="statistics-2012">Statistics 2012</option>
+    <option value="statistics-2013">Statistics 2013</option>
+    <option value="statistics-2014">Statistics 2014</option>
   </select>
 </p>
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics" value="count" selected>Count items</option>
+    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014" value="count" selected>Count items</option>
     <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search oai statistics" value="optimize">Optimize</option>
@@ -96,11 +101,11 @@ $header->litPageHeader();
 
     <option class="search squery" value="squery_handle" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
     <option class="oai squery" value="squery_oaihandle" qdata="item.handle:10822/557062" >OAI Item Handle</option>
-    <option class="statistics squery" value="squery2010" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]" >Statistics 2010</option>
-    <option class="statistics squery" value="squery2011" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]" >Statistics 2011</option>
-    <option class="statistics squery" value="squery2012" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]" >Statistics 2012</option>
-    <option class="statistics squery" value="squery2013" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]" >Statistics 2013</option>
-    <option class="statistics squery" value="squery2014" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]" >Statistics 2014</option>
+    <option class="statistics statistics-2010 squery" value="squery2010" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]" >Statistics 2010</option>
+    <option class="statistics statistics-2011 squery" value="squery2011" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]" >Statistics 2011</option>
+    <option class="statistics statistics-2012 squery" value="squery2012" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]" >Statistics 2012</option>
+    <option class="statistics statistics-2013 squery" value="squery2013" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]" >Statistics 2013</option>
+    <option class="statistics statistics-2014 squery" value="squery2014" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]" >Statistics 2014</option>
 
   </select>
 </p>
