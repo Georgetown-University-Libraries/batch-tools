@@ -92,13 +92,13 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014" value="count" qdata="*:*" selected>Count items</option>
+    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="count" qdata="*:*" selected>Count items</option>
     <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search oai statistics" value="optimize">Optimize</option>
 
-    <option class="statistics squery" value="nouid" qdata="NOT(uid:*)">No UID in stat record</option>
-    <option class="statistics squery" value="hasuid" qdata="uid:*">Has UID in stat record (DSpace 4)</option>
+    <option class="statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="nouid" qdata="NOT(uid:*)">No UID in stat record</option>
+    <option class="statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="hasuid" qdata="uid:*">Has UID in stat record (DSpace 4)</option>
 
     <option class="search squery" value="squery_handle" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
     <option class="oai squery" value="squery_oaihandle" qdata="item.handle:10822/557062" >OAI Item Handle</option>
