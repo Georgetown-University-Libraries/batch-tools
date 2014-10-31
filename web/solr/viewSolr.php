@@ -81,6 +81,7 @@ $header->litPageHeader();
     <option value="search" selected>Discovery/Search</option>
     <option value="oai">OAI</option>
     <option value="statistics">Statistics</option>
+    <option value="tstatistics">Temp Statistics</option>
     <option value="statistics-2010">Statistics 2010</option>
     <option value="statistics-2011">Statistics 2011</option>
     <option value="statistics-2012">Statistics 2012</option>
@@ -91,13 +92,13 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014" value="count" selected>Count items</option>
+    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014" value="count" qdata="*:*" selected>Count items</option>
     <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search oai statistics" value="optimize">Optimize</option>
 
-    <option class="statistics" value="nouid" >No UID in stat record</option>
-    <option class="statistics" value="hasuid" >Has UID in stat record (DSpace 4)</option>
+    <option class="statistics squery" value="nouid" qdata="NOT(uid:*)">No UID in stat record</option>
+    <option class="statistics squery" value="hasuid" qdata="uid:*">Has UID in stat record (DSpace 4)</option>
 
     <option class="search squery" value="squery_handle" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
     <option class="oai squery" value="squery_oaihandle" qdata="item.handle:10822/557062" >OAI Item Handle</option>
@@ -135,13 +136,7 @@ function testArgs(){
     $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
     $req = $CUSTOM->getSolrPath() . $rep . "/select?indent=on&version=2.2";
-    if ($query == "nouid") {
-      $req .= "&q=NOT(uid:*)&rows=10&sort=time+desc";      
-    } else if ($query == "hasuid") {
-      $req .= "&q=uid:*&rows=10&sort=time+asc";      
-    } else if ($query == "count") {
-      $req .= "&q=*:*&rows=0";      
-    } else if ($query == "samples") {
+    if ($query == "samples") {
       $req .= "&q=*:*&rows=1000&sort=time+desc";      
     } else if ($query == "optimize") {
       $req = $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";
