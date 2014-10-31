@@ -92,21 +92,21 @@ $header->litPageHeader();
 <p>
   <label for="query">Query</label>
   <select id="query" name="query">
-    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="count" qdata="*:*" selected>Count items</option>
+    <option class="search oai statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="count" qdata="*:*" aux="&amp;rows=0" selected>Count items</option>
     <option class="search oai statistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search oai statistics" value="optimize">Optimize</option>
 
-    <option class="statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="nouid" qdata="NOT(uid:*)">No UID in stat record</option>
-    <option class="statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="hasuid" qdata="uid:*">Has UID in stat record (DSpace 4)</option>
+    <option class="statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="nouid" qdata="NOT(uid:*)" aux="&amp;rows=0">No UID in stat record</option>
+    <option class="statistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="hasuid" qdata="uid:*" aux="&amp;rows=0">Has UID in stat record (DSpace 4)</option>
 
     <option class="search squery" value="squery_handle" qdata="handle:10822/1">Discovery Item, Collection, Community</option>
     <option class="oai squery" value="squery_oaihandle" qdata="item.handle:10822/557062" >OAI Item Handle</option>
-    <option class="statistics statistics-2010 squery" value="squery2010" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]" >Statistics 2010</option>
-    <option class="statistics statistics-2011 squery" value="squery2011" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]" >Statistics 2011</option>
-    <option class="statistics statistics-2012 squery" value="squery2012" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]" >Statistics 2012</option>
-    <option class="statistics statistics-2013 squery" value="squery2013" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]" >Statistics 2013</option>
-    <option class="statistics statistics-2014 squery" value="squery2014" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]" >Statistics 2014</option>
+    <option class="statistics statistics-2010 squery" value="squery2010" qdata="time:[2010-01-01T00:00:00Z+TO+2011-01-01T00:00:00Z]" aux="&amp;rows=0">Statistics 2010</option>
+    <option class="statistics statistics-2011 squery" value="squery2011" qdata="time:[2011-01-01T00:00:00Z+TO+2012-01-01T00:00:00Z]" aux="&amp;rows=0">Statistics 2011</option>
+    <option class="statistics statistics-2012 squery" value="squery2012" qdata="time:[2012-01-01T00:00:00Z+TO+2013-01-01T00:00:00Z]" aux="&amp;rows=0">Statistics 2012</option>
+    <option class="statistics statistics-2013 squery" value="squery2013" qdata="time:[2013-01-01T00:00:00Z+TO+2014-01-01T00:00:00Z]" aux="&amp;rows=0">Statistics 2013</option>
+    <option class="statistics statistics-2014 squery" value="squery2014" qdata="time:[2014-01-01T00:00:00Z+TO+2015-01-01T00:00:00Z]" aux="&amp;rows=0">Statistics 2014</option>
 
   </select>
 </p>
@@ -133,6 +133,7 @@ function testArgs(){
     $rep = util::getPostArg("rep","search");
 	$handle = util::getPostArg("handle","");
     $squery = util::getPostArg("squery","");
+    $aux = util::getPostArg("aux","");
     $query = util::getPostArg("query","object");
 	header('Content-type: application/xml');
     $req = $CUSTOM->getSolrPath() . $rep . "/select?indent=on&version=2.2";
@@ -141,7 +142,7 @@ function testArgs(){
     } else if ($query == "optimize") {
       $req = $CUSTOM->getSolrPath() . $rep . "/update?optimize=true";
     } else if ($squery != "") {
-      $req .= "&q={$squery}";      
+      $req .= "&q={$squery}{$aux}";      
     } else {
       $req .= "&q=bogus:*&rows=0";      
     }
