@@ -57,8 +57,10 @@ $header->litPageHeader();
       if ($("#query option:selected").is(".squery")) {
           $("#squery").removeAttr("disabled");
           $("#squery").val($("#query option:selected").attr("qdata"));
+          $("#aux").val($("#query option:selected").attr("aux"));
       } else  {
           $("#squery").attr("disabled", true).val("");      
+          $("#aux").attr("disabled", true).val("");      
       }
       
       if ($("#query option:selected").hasClass(rep) == false) {
@@ -75,6 +77,7 @@ $header->litPageHeader();
 <form method="POST" action="">
 <p>View the SOLR Related Items for a DSpace Resource.</p>
 <div id="status"><?php echo $status?></div>
+<input name="aux" id="aux" type="hidden"/>
 <p>
   <label for="rep">Repository</label>
   <select id="rep" name="rep">
