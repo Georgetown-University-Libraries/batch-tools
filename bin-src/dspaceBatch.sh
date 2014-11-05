@@ -278,6 +278,13 @@ then
   curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1 
 
   $(update_discovery)
+
+elif [ "$1" = "gu-clean-oai-cache" ]
+then
+  export JAVA_OPTS=-Xmx1200m   
+  echo ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
+
 else
   echo "Unsupported DSpace Command" >> ${RUNNING}
 fi
