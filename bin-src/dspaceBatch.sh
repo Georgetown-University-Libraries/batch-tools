@@ -38,7 +38,7 @@ function update_discovery {
 }
 
 function update_oai {
-  if [ $VER >= 3 ]
+  if [ $VER -ge 3 ]
   then
     export JAVA_OPTS=-Xmx1200m   
     echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
@@ -145,7 +145,10 @@ then
     
     if [ "$x" = "-s" ]
     then
-      $(update_solr)
+      if [ $VER = 3 ]
+      then
+        $(update_solr)
+      fi
     fi
   done
 elif [ "$1" = "gu-refresh-statistics" ]

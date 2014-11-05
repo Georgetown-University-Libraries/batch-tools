@@ -50,7 +50,7 @@ if ($CUSTOM->showQueryTools()) {
 <?php
 echo $CUSTOM->getIntroHtml();
 ?>
-<h4>Reporting Tools*</h4>
+<h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
 <?php 
@@ -77,9 +77,9 @@ if ($CUSTOM->showStatsTools()) {
 <li>
   <a href="query/qcA2Z.php">Collection and Community A-Z list</a>
 </li>
-<!--Analyzer SOLR values-->
+<!--Analyze SOLR values-->
 <li>
-  <a href="solr/viewSolr.php">View SOLR Index data for a specific item</a>
+  <a href="solr/viewSolr.php">SOLR Index Queries</a>
 </li>
 <!-- Use the OAI service to provide data exports-->
 <li>

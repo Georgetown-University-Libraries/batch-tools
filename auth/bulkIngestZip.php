@@ -57,8 +57,8 @@ collection::getCollectionWidget(util::getPostArg("community",""), util::getPostA
 $skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
 ?>
 <p>
-  <label for="skipindex">Skip Full Text Index Update</label>
-  <input type="checkbox" id="skipindex" name="skipindex" size="70" value="Y" {$skipindex}/>
+  <label for="skipindex">Skip <?php echo ($CUSTOM->ver < 4) ? "Full Text/" : ""; ?>Solr Index Update</label>
+  <input type="checkbox" id="skipindex" name="skipindex" value="Y" {$skipindex}/>
 </p>
 <p>
 <fieldset class="loc">

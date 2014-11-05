@@ -13,10 +13,18 @@ $coll=util::getArg("coll","");
 $time=util::getArg("time","");
 if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
+$typearg = solrFacets::getTypeArg();
+
 if ($comm != "") {
-	$q="owningComm:".$comm;
+    if ($typearg == "COMMV")
+        $q="(owningComm:".$comm."+OR+id:".$comm.")";
+    else
+	    $q="owningComm:".$comm;
 } else if ($coll != "") {
-	$q="owningColl:".$coll;	
+    if ($typearg == "COLLV")
+  	    $q="id:".$coll;
+    else	
+        $q="owningColl:".$coll;
 } else {
 	$q="owningComm:1";
 }

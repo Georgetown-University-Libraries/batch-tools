@@ -107,17 +107,37 @@ class query {
   ) as {$this->name},
 ";		
 	}
+    
+    static function comm2coll() {
+        return "
+    with recursive r_comm2coll as (
+      select 
+        community_id, 
+        collection_id
+      from 
+        community2collection
+      union
+      select 
+        cm2cm.parent_comm_id as community_id, 
+        r.collection_id
+      from 
+        r_comm2coll r
+      inner join
+        community2community cm2cm
+      on
+        cm2cm.child_comm_id = r.community_id
+    )
+        ";
+    }
 
 	function commQuery($filter) {
-		return "
-  (
-    select count(*) 
-    from item i
-    inner join communities2item c2i 
-      on c2i.item_id = i.item_id 
-      and c2i.community_id = comm.community_id
-    /*where (i.in_archive is true or i.discoverable = false)*/
-    where i.in_archive is true
+		return "(" . query::comm2coll() . "
+    select count(i.*) as x
+    from r_comm2coll r
+    inner join item i 
+    on i.owning_collection = r.collection_id 
+    and i.in_archive is true 
+    where r.community_id = comm.community_id
     {$this->subq} 
     {$filter}
   ) as {$this->name},
