@@ -187,6 +187,7 @@ class custom {
 <li><a href="../auth/refreshStatistics.php">Refresh Statistics</a></li>
 <li><a href="../auth/updateMetadata.php">Update Metadata</a></li>
 <li><a href="../auth/reindexColl.php">Re-index Collection</a></li>
+<li><a href="../auth/cleanOaiCache.php">Clean OAI Cache</a></li>
 </ul>
 EOF;
     }
