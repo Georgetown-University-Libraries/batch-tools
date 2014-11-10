@@ -84,8 +84,8 @@ for($index=0; $index < $indexCount  && $index < 25; $index++) {
 		echo "<td style='width:180px'>";
 		if (count($arr) > 1) echo $arr[1];
 		echo "</td>";
-		echo "<td>";
-		if (count($arr) > 3) echo "<a href='jobstat.php?name=" . $fname . "'>" . $arr[3] . "</a>";
+		echo "<td>";		
+		if (count($arr) > 3) echo "<a href='#' onclick='checkCompleted()'>" . $arr[3] . "</a>";
 		echo "</td>";
 		echo "<td style='width:500px'>" . $cmd . "</pre>";
 		echo "</tr>";
@@ -94,6 +94,17 @@ for($index=0; $index < $indexCount  && $index < 25; $index++) {
 echo <<< HERE
 </tbody>
 </table>
+
+<script>
+	function checkCompleted() {
+		if (doesFileExist($fname)) {
+			window.open(\"$fname\", "_self");
+		} else {
+			$fname = substr_replace($fname, "complete.txt", strpos($fname, "running.txt"));
+			window.open(\"$fname\", "_self");
+		}	
+	}
+</script>
 HERE;
 ?>
 
