@@ -98,7 +98,7 @@ echo <<< HERE
 	document.querySelectorAll("#queue a").addEventListener('click', function(e) {
 		console.log('clicked');
 			
-		}, flase);
+		}, false);
 </script>
 HERE;
 ?>
