@@ -95,9 +95,9 @@ echo <<< HERE
 </tbody>
 </table>
 <script>
-	document.getElementByID('queue').addEventListener('click', function(e)) {
+	document.getElementByID('queue').addEventListener('click', function(e) {
 			
-		}
+		}, flase);
 </script>
 HERE;
 ?>
