@@ -95,7 +95,8 @@ echo <<< HERE
 </tbody>
 </table>
 <script>
-	document.getElementByID('queue').addEventListener('click', function(e) {
+	document.querySelectorAll("#queue a").addEventListener('click', function(e) {
+		console.log('clicked');
 			
 		}, flase);
 </script>
