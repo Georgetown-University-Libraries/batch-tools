@@ -113,11 +113,11 @@ document.querySelector("#queue").addEventListener("click", function(event) {
 	console.log(exist);
 	
 	if (exist) {
-		window.open("'" + url + "'", "_self");
+		window.open(url, "_self");
 	}
 	else {
-		url = url.substring(0, url.indexOf("running.txt")) + "complete.txt";
-		window.open("'" + url + "'", "_self");
+		url = url.substring(url.indexOf("jobstat.php"), url.indexOf("running.txt")) + "complete.txt";
+		window.open(url, "_self");
 	}
   }, false);
 </script>
