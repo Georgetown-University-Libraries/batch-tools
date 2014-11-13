@@ -102,24 +102,18 @@ function checkFile(url) {
 	
 	if (request.status == "200") return true;
 	else return false;
-  }
+}
 
 document.querySelector("#queue").addEventListener("click", function(event) {
 	event.preventDefault();	
 	var url = event.target.href;
 	var exist = checkFile(url);
 	
-	console.log(url);
-	console.log(exist);
+	if (exist == false) {url = url.substring(url.indexOf("jobstat.php"), url.indexOf("running.txt")) + "complete.txt";}	
 	
-	if (exist) {
-		window.open(url, "_self");
-	}
-	else {
-		url = url.substring(url.indexOf("jobstat.php"), url.indexOf("running.txt")) + "complete.txt";
-		window.open(url, "_self");
-	}
-  }, false);
+	window.open(url, "_self");
+
+}, false);
 </script>
 HERE;
 ?>
