@@ -109,6 +109,9 @@ document.querySelector("#queue").addEventListener("click", function(event) {
 	var url = event.target.href;
 	var exist = checkFile(url);
 	
+	console.log(url);
+	console.log(exist);
+	
 	if (exist) {
 		window.open("'" + url + "'", "_self");
 	}
