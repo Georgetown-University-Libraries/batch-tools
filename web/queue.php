@@ -95,10 +95,28 @@ echo <<< HERE
 </tbody>
 </table>
 <script>
-	document.querySelectorAll("#queue a").addEventListener('click', function(e) {
-		console.log('clicked');
-			
-		}, false);
+function checkFile(url) {
+	var request = new XMLHttpRequest();
+	request.open("HEAD", url, false);
+	request.send();
+	
+	if (request.status == "200") return true;
+	else return false;
+  }
+
+document.querySelector("#queue").addEventListener("click", function(event) {
+	event.preventDefault();	
+	var url = event.target.href;
+	var exist = checkFile(url);
+	
+	if (exist) {
+		window.open("'" + url + "'", "_self");
+	}
+	else {
+		url = url.substring(0, url.indexOf("running.txt")) + "complete.txt";
+		window.open("'" + url + "'", "_self");
+	}
+  }, false);
 </script>
 HERE;
 ?>
