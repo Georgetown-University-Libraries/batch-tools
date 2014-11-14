@@ -96,6 +96,7 @@ $header->litPageHeader();
   <label for="query">Query</label>
   <select id="query" name="query">
     <option class="search oai statistics tstatistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="count" qdata="*:*" aux="&amp;rows=0" selected>Count items</option>
+    <option class="search oai statistics tstatistics statistics-2010 statistics-2011 statistics-2012 statistics-2013 statistics-2014 squery" value="count" qdata="*:*" aux="&amp;rows=100" selected>Query items</option>
     <option class="search oai statistics tstatistics" value="samples">1000 Recent Sample Records</option>
 
     <option class="search oai statistics tstatistics" value="optimize">Optimize</option>
