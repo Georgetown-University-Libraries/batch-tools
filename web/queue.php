@@ -94,6 +94,7 @@ for($index=0; $index < $indexCount  && $index < 25; $index++) {
 echo <<< HERE
 </tbody>
 </table>
+<!--
 <script>
 function checkFile(url) {
 	var request = new XMLHttpRequest();
@@ -115,6 +116,7 @@ document.querySelector("#queue").addEventListener("click", function(event) {
 
 }, false);
 </script>
+-->
 HERE;
 ?>
 
