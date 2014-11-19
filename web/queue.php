@@ -84,7 +84,7 @@ for($index=0; $index < $indexCount  && $index < 25; $index++) {
 		echo "<td style='width:180px'>";
 		if (count($arr) > 1) echo $arr[1];
 		echo "</td>";
-		echo "<td>";
+		echo "<td>";		
 		if (count($arr) > 3) echo "<a href='jobstat.php?name=" . $fname . "'>" . $arr[3] . "</a>";
 		echo "</td>";
 		echo "<td style='width:500px'>" . $cmd . "</pre>";
@@ -94,6 +94,29 @@ for($index=0; $index < $indexCount  && $index < 25; $index++) {
 echo <<< HERE
 </tbody>
 </table>
+<!--
+<script>
+function checkFile(url) {
+	var request = new XMLHttpRequest();
+	request.open("HEAD", url, false);
+	request.send();
+	
+	if (request.status == "200") return true;
+	else return false;
+}
+
+document.querySelector("#queue").addEventListener("click", function(event) {
+	event.preventDefault();	
+	var url = event.target.href;
+	var exist = checkFile(url);
+	
+	if (exist == false) {url = url.substring(url.indexOf("jobstat.php"), url.indexOf("running.txt")) + "complete.txt";}	
+	
+	window.open(url, "_self");
+
+}, false);
+</script>
+-->
 HERE;
 ?>
 
