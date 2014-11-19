@@ -41,9 +41,9 @@ $header->litPageHeader();
 <?php 
 $header->litHeader(array("<a href='queue.php'>Job Queue</a>"));
 if ($fname != ""){
-	if (!file_exists($qroot.$fname)){
+	if (!file_exists($qroot . $fname)){
 		echo "Job has been completed";
-		$fname = substr($fname, strpos($fname, "running.txt"), strlen($fname)-1 ) + "complete.txt";
+		$fname = str_replace("running.txt", "complete.txt", $fname);
 	}
 	echo "<pre>";
 	echo file_get_contents($qroot . $fname);
