@@ -27,6 +27,10 @@ if (preg_match("/^job\\.[0-9a-zA-Z\\._\\-:]+\\.txt$/", $fname) == 0) {
 	$fname = "";
 }
 
+if (!file_exists($qroot . $fname)){
+	$fname = str_replace("running.txt", "complete.txt", $fname);
+	}
+
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -38,13 +42,10 @@ $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php 
+<?php
+
 $header->litHeader(array("<a href='queue.php'>Job Queue</a>"));
 if ($fname != ""){
-	if (!file_exists($qroot . $fname)){
-		echo "Job has been completed";
-		$fname = str_replace("running.txt", "complete.txt", $fname);
-	}
 	echo "<pre>";
 	echo file_get_contents($qroot . $fname);
 	echo "</pre>";
