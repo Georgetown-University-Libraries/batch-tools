@@ -30,7 +30,9 @@ $coll  = util::getPostArg("coll","");
 $comm  = util::getPostArg("comm","");
 $op    = util::getPostArg("op","");
 $field = util::getPostArg("field","");
-$val   = util::getPostArg("val","");
+$dfield = util::getPostArg("dfield",array());
+$val    = util::getPostArg("val","");
+$isCSV  = (util::getPostArg("query","") == "CSV Extract");
 
 $sql = <<< EOF
 select 
@@ -57,24 +59,38 @@ if (!$result) {
     die("Error in SQL query");
 }       
 
+$mfields = array();
+$dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
 $sel = "<select id='field' name='field'>";
 foreach ($result as $row) {
-    $selected = sel($row[0], $field);
-    $sel .= "<option value='{$row[0]}' {$selected}>{$row[4]}</option>";
+    $mfi = $row[0];
+    $mfn = $row[4];
+    $mfields[$mfi] = $mfn;
+    $selected = sel($mfi, $field);
+    $sel .= "<option value='{$mfi}' {$selected}>{$mfn}</option>";
+    $selected = in_array($mfi, $dfield) ? "selected" : "";
+    $dsel .= "<option value='{$mfi}' {$selected}>{$mfn}</option>";
 }
 $sel .= "</select>";
+$dsel .= "</select>";
 
 $status = "";
 $hasPerm = $CUSTOM->isUserCollectionOwner();
-header('Content-type: text/html; charset=UTF-8');
+if ($isCSV) {
+    header("Content-type: text/csv");
+    header("Content-Disposition: attachment; filename=export.csv"); 
+} else {
+    header('Content-type: text/html; charset=UTF-8');
+}
+   
+if (!$isCSV) {
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<head>
-<?php 
+<body>
+<?php
 $header = new LitHeader("Query Construction");
 $header->litPageHeader();
-$op = util::getPostArg("op","");
 ?>
 </head>
 <body>
@@ -102,27 +118,49 @@ $op = util::getPostArg("op","");
   <label for="val">; Value: </label>
   <input name="val" id="val" type="text" value="<?php echo $val?>"/>
 </p>
-<p align="center">
-	<input id="querySubmit" type="submit" title="Submit Form"/>
+<p>
+  <label for="dfield">Fields to display</label>
+  <br/>
+  <?php echo $dsel?>
 </p>
-<p><em>* One of the 2 selection fields is required</em></p>
+<p align="center">
+	<input id="querySubmit" name="query" value="Show Results" type="submit"/>
+    <input id="queryCsv" name="query" value="CSV Extract" type="submit"/>
+</p>
+<p><em>* Up to 2000 results will be returned</em></p>
 </form>
 </div>
 <?php 
+}
+
 if (count($_POST) > 0) {
 
 $sql = <<< EOF
 select 
   c.name,
+  ch.handle, 
   i.item_id,
   regexp_replace(mv.text_value,E'[\r\n\t ]+',' ','g') as title,
-  handle
+  ih.handle,
+EOF;
+
+    $sep = $isCSV ? "||" : "<hr/>";
+    foreach($dfield as $k) {
+        if (is_numeric($k)) {
+            $sql .= "(select array_to_string(array_agg(text_value), '{$sep}') from metadatavalue m where i.item_id=m.item_id and m.metadata_field_id={$k}),";
+        }
+    }
+
+$sql .= <<< EOF
+  1
 from 
   collection c
 inner join 
   item i on i.owning_collection=c.collection_id
 inner join 
-  handle on i.item_id = resource_id and resource_type_id = 2
+  handle ih on i.item_id = ih.resource_id and ih.resource_type_id = 2
+inner join 
+  handle ch on c.collection_id = ch.resource_id and ch.resource_type_id = 3
 left join
   metadatavalue mv on mv.item_id = i.item_id 
 inner join metadatafieldregistry mfr on mfr.metadata_field_id = mv.metadata_field_id
@@ -173,7 +211,7 @@ EOF;
         $arr[':field'] = $field;
         $arr[':val'] = $val;
     }
-    $sql .= $where;
+    $sql .= $where . " limit 2000";
 
     $dbh = $CUSTOM->getPdoDb();
     $stmt = $dbh->prepare($sql);
@@ -187,48 +225,87 @@ EOF;
     }       
 
     $result = $stmt->fetchAll();
+    $rescount = count($result);
 
-?>
-<div id="export">
-<table class="sortable">
-<tbody>
-<tr  class='header'>
-  <th class="">Count</th>
-  <th class="title">Collection</th>
-  <th class="title">Title</th>
-  <th class="">Handle</th>
-</tr>
+    if (!$isCSV) {
+        echo "<div id='export'>";
+        echo "<div>{$rescount} items found</div>";
+        echo "<table class='sortable'>";
+        echo "<tbody>";
+        echo "<tr class='header'>";
+        echo "<th>Item Num</th>";
+        echo "<th class='title''>Collection</th>";
+        echo "<th>Collection Handle</th>";
+        echo "<th class='title''>Title</th>";
+        echo "<th>Item Handle</th>";
+        foreach($dfield as $k) {
+            if (!is_numeric($k)) continue;
+            echo "<th class=''>{$mfields[$k]}[en]</th>";
+        }
+        echo "</tr>";
+    } else {
+        echo "id,collection,dc.title[en]";
+        foreach($dfield as $k) {
+           if (!is_numeric($k)) continue;
+           echo ",{$mfields[$k]}[en]";
+        }
+        echo "\n";
+    }
 
-<?php
-$handleContext =  isset($GLOBALS['handleContext']) ? $GLOBALS['handleContext'] : "";
-$c = 0;
-foreach ($result as $row) {
-     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
-    echo "<tr class='{$class}'>";
-    echo "<td>{$c}</td>";
-    echo "<td>{$row[0]}</td>";
-    echo "<td>{$row[2]}</td>";
-    $h = $row[3];
-    $href = $handleContext . '/handle/' .$h . '?show=full';
-    $disp = $h;
+    $handleContext =  isset($GLOBALS['handleContext']) ? $GLOBALS['handleContext'] : "";
+    $c = 0;
+    foreach ($result as $row) {
+        $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
+        $cname = $row[0];
+        $ch = $row[1];
+        $iid = $row[2];
+        $title = $row[3];
+        $ih = $row[4];
+        $col = 4;
+        if ($isCSV) {
+            echo "{$iid},{$ch}" .',"' . $title . '"';
+            foreach($dfield as $k) {
+                if (!is_numeric($k)) continue;
+                $col++;
+                $val = $row[$col];
+                $val = preg_replace("/\n/"," ",$val);
+                $val = str_replace('/["]/',"",$val);
+                echo ',"' . $val . '"';
+            }
+            echo "\n";
+        } else {
+            echo "<tr class='{$class}'>";
+            echo "<td>{$c}</td>";
+            echo "<td>{$cname}</td>";
+            $href = $handleContext . '/handle/' .$ch . '?show=full';
+            $disp = $ch;
     
-    echo "<td><a href='{$href}'>{$disp}</a></td>";
-    echo "</tr>";
-}       
+            echo "<td><a href='{$href}'>{$disp}</a></td>";
+            echo "<td>{$title}</td>";
+            $href = $handleContext . '/handle/' .$ih . '?show=full';
+            $disp = $ih;
+    
+            echo "<td><a href='{$href}'>{$disp}</a></td>";         
+            foreach($dfield as $k) {
+                if (!is_numeric($k)) continue;
+                $col++;
+                echo "<td>{$row[$col]}</td>";
+            }
+            echo "</tr>";
+        }
+        if ($c > 2000) break;
+    }       
 
-?>
-</tbody>
-</table>
-</div>
-<?php
+    if (!$isCSV) { 
+        echo "</tbody>";
+        echo "</table>";
+        echo "</div>";
+        $header->litFooter();
+        echo "</body>";
+        echo "</html>";
+    }
 }
-?>
 
-<?php $header->litFooter();?>
-</body>
-</html>
-
-<?php
 function sel($val,$test) {
     return ($val == $test) ? 'selected' : '';
 }
