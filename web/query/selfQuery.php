@@ -61,7 +61,7 @@ if (!$result) {
 
 $mfields = array();
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
-$sel = "<select id='field' name='field'>";
+$sel = "<select id='field' name='field'><option value='0'>All</option>";
 foreach ($result as $row) {
     $mfi = $row[0];
     $mfn = $row[4];
@@ -142,6 +142,8 @@ select
   i.item_id,
   regexp_replace(mv.text_value,E'[\r\n\t ]+',' ','g') as title,
   ih.handle,
+  i.discoverable,
+  i.withdrawn,
 EOF;
 
     $sep = $isCSV ? "||" : "<hr/>";
@@ -180,37 +182,69 @@ EOF;
     }
 
     $where = "";
-    if ($op == "exists") {        
-        $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
-        $arr[':field'] = $field;
-    } else if ($op == "not exists") {
-        $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
-        $arr[':field'] = $field;
-    } else if ($op == "equals") {
-        $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
-        $arr[':field'] = $field;
-        $arr[':val'] = $val;
-    } else if ($op == "not equals") {
-        $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
-        $arr[':field'] = $field;
-        $arr[':val'] = $val;
-    } else if ($op == "like") {
-        $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
-        $arr[':field'] = $field;
-        $arr[':val'] = $val;
-    } else if ($op == "not like") {
-        $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
-        $arr[':field'] = $field;
-        $arr[':val'] = $val;
-    } else if ($op == "matches") {
-        $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
-        $arr[':field'] = $field;
-        $arr[':val'] = $val;
-    } else if ($op == "doesn't match") {
-        $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
-        $arr[':field'] = $field;
-        $arr[':val'] = $val;
+    
+    if ($field == 0) {
+        if ($op == "exists") {        
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
+        } else if ($op == "not exists") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
+        } else if ($op == "equals") {
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val)";
+            $arr[':val'] = $val;
+        } else if ($op == "not equals") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val)";
+            $arr[':val'] = $val;
+        } else if ($op == "like") {
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val)";
+            $arr[':val'] = $val;
+        } else if ($op == "not like") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val)";
+            $arr[':val'] = $val;
+        } else if ($op == "matches") {
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val)";
+            $arr[':val'] = $val;
+        } else if ($op == "doesn't match") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val)";
+            $arr[':val'] = $val;
+        }
+        
+    } else {
+        if ($op == "exists") {        
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
+            $arr[':field'] = $field;
+        } else if ($op == "not exists") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
+            $arr[':field'] = $field;
+        } else if ($op == "equals") {
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
+            $arr[':field'] = $field;
+            $arr[':val'] = $val;
+        } else if ($op == "not equals") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
+            $arr[':field'] = $field;
+            $arr[':val'] = $val;
+        } else if ($op == "like") {
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
+            $arr[':field'] = $field;
+            $arr[':val'] = $val;
+        } else if ($op == "not like") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
+            $arr[':field'] = $field;
+            $arr[':val'] = $val;
+        } else if ($op == "matches") {
+            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
+            $arr[':field'] = $field;
+            $arr[':val'] = $val;
+        } else if ($op == "doesn't match") {
+            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
+            $arr[':field'] = $field;
+            $arr[':val'] = $val;
+        }
+        
+        
     }
+    
+    
     $sql .= $where . " limit 2000";
 
     $dbh = $CUSTOM->getPdoDb();
@@ -238,6 +272,7 @@ EOF;
         echo "<th>Collection Handle</th>";
         echo "<th class='title''>Title</th>";
         echo "<th>Item Handle</th>";
+        echo "<th>Item Status</th>";
         foreach($dfield as $k) {
             if (!is_numeric($k)) continue;
             echo "<th class=''>{$mfields[$k]}[en]</th>";
@@ -261,7 +296,10 @@ EOF;
         $iid = $row[2];
         $title = $row[3];
         $ih = $row[4];
-        $col = 4;
+        $fdiscoverable = $row[5];
+        $fwithdrawn = $row[6];
+        $fstatus = ($fdiscoverable ? "" : "Private ") . ($fwithdrawn ? "Withdrawn" : ""); 
+        $col = 6;
         if ($isCSV) {
             echo "{$iid},{$ch}" .',"' . $title . '"';
             foreach($dfield as $k) {
@@ -286,6 +324,7 @@ EOF;
             $disp = $ih;
     
             echo "<td><a href='{$href}'>{$disp}</a></td>";         
+            echo "<td>{$fstatus}</td>";         
             foreach($dfield as $k) {
                 if (!is_numeric($k)) continue;
                 $col++;
