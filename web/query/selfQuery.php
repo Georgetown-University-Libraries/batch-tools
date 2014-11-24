@@ -26,6 +26,8 @@ $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
 $CUSTOM->getCommunityInit()->initCollections();
 
+$MAX = 2000;
+
 $coll  = util::getPostArg("coll","");
 $comm  = util::getPostArg("comm","");
 $op    = util::getPostArg("op","");
@@ -33,6 +35,14 @@ $field = util::getPostArg("field","");
 $dfield = util::getPostArg("dfield",array());
 $val    = util::getPostArg("val","");
 $isCSV  = (util::getPostArg("query","") == "CSV Extract");
+$offset    = util::getPostArg("offset","0");
+
+if (util::getPostArg("query","") == "Prev Results") {
+    $offset -= $MAX;
+    if ($offset < 0) $offset = 0;
+} else if (util::getPostArg("query","") == "Next Results") {
+    $offset += $MAX;    
+}
 
 $sql = <<< EOF
 select 
@@ -60,8 +70,8 @@ if (!$result) {
 }       
 
 $mfields = array();
-$dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
-$sel = "<select id='field' name='field'><option value='0'>All</option>";
+$dsel = "<select id='dfield' name='dfield[]' multiple size='10' disabled>";
+$sel = "<select id='field' name='field' disabled><option value='0'>All</option>";
 foreach ($result as $row) {
     $mfi = $row[0];
     $mfn = $row[4];
@@ -85,19 +95,54 @@ if ($isCSV) {
    
 if (!$isCSV) {
 ?>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <body>
 <?php
 $header = new LitHeader("Query Construction");
 $header->litPageHeader();
 ?>
+<script type="text/javascript">
+$(document).ready(function(){
+   if ($("#cstart").val() > 1) $("#querySubmitPrev").attr("disabled", false); 
+   if ($("#rescount").val() == <?php echo $MAX?>) $("#querySubmitNext").attr("disabled", false); 
+   if ($("#rescount").val() > 1) {
+       $("#queryform input,#queryform select").attr("disabled", true);
+       $("button.edit").attr("disabled", false);
+       $("#queryCsv").attr("disabled", false);
+   } else {
+       $("#queryform input,#queryform select").attr("disabled", false);       
+   }
+   $("#dfield").attr("disabled", false);       
+   $("#spinner").hide();
+});
+
+function doedit() {
+    $('#queryform input,#queryform select').attr('disabled',false);
+    $("#offset").val(0);
+    $("#queryCsv,#querySubmitPrev,#querySubmitNext,button.edit").attr("disabled", true);
+}
+
+function prepSubmit() {
+    $('#queryform input,#queryform select').attr('disabled',false);
+    $("#spinner").show();
+}
+</script>
+<style type="text/css">
+body{width: 1000px;}
+button.edit {float: right;}
+#spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
+fieldset.fields {width: 40%; display:inline;float: left; margin: 20px;}
+div.clear {clear: both;}
+</style>
 </head>
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
-<form method="POST" action="">
-<p>Use this option to construct a quality control query</p>
+<form method="POST" action="" onsubmit="prepSubmit();">
+<fieldset id="queryform">
+<legend>Use this option to construct a quality control query </legend>
+<button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
@@ -105,7 +150,7 @@ $header->litPageHeader();
   <label for="field">Field to query</label>
   <?php echo $sel?>
   <label for="op">; Operator: </label>
-  <select id="op" name="op" onchange="$('#val').val($(this).find('option:selected').attr('example'));">
+  <select id="op" name="op" onchange="$('#val').val($(this).find('option:selected').attr('example'));" disabled>
     <option value="exists" example="" <?php echo sel($op,'exists')?>>Exists</value>
     <option value="not exists" example="" <?php echo sel($op,'not exists')?>>Doesn't exist</value>
     <option value="equals" example="val" <?php echo sel($op,'equals')?>>Equals</value>
@@ -116,18 +161,26 @@ $header->litPageHeader();
     <option value="doesn't match" example="^.*(val1|val2).*$" <?php echo sel($op,"doesn't match")?>>Doesn't Matches</value>
   </select>
   <label for="val">; Value: </label>
-  <input name="val" id="val" type="text" value="<?php echo $val?>"/>
+  <input name="val" id="val" type="text" value="<?php echo $val?>" disabled/>
 </p>
+</fieldset>
 <p>
-  <label for="dfield">Fields to display</label>
+  <fieldset class="fields">
+  <legend>Fields to display</legend>
   <br/>
   <?php echo $dsel?>
+  </fieldset>
+  <iframe id="spinner" src="spinner.html"></iframe>
+  <div class="clear"/>
 </p>
 <p align="center">
-	<input id="querySubmit" name="query" value="Show Results" type="submit"/>
-    <input id="queryCsv" name="query" value="CSV Extract" type="submit"/>
+    <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
+    <input id="querySubmitPrev" name="query" value="Prev Results" type="submit" disabled/>
+    <input id="querySubmit" name="query" value="Show Results" type="submit"/>
+	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
+    <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
 </p>
-<p><em>* Up to 2000 results will be returned</em></p>
+<p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
 </div>
 <?php 
@@ -245,7 +298,7 @@ EOF;
     }
     
     
-    $sql .= $where . " limit 2000";
+    $sql .= $where . " limit {$MAX} offset {$offset}";
 
     $dbh = $CUSTOM->getPdoDb();
     $stmt = $dbh->prepare($sql);
@@ -260,14 +313,18 @@ EOF;
 
     $result = $stmt->fetchAll();
     $rescount = count($result);
+    $cstart = $offset + 1;
+    $cend = $offset + $rescount;
 
     if (!$isCSV) {
         echo "<div id='export'>";
-        echo "<div>{$rescount} items found</div>";
+        echo "<input type='hidden' id='rescount' name='rescount' value='{$rescount}' readonly size='6'/>";
+        echo "<div><input type='text' id='cstart' name='cstart' value='{$cstart}' readonly size='6'/> to ";
+        echo "<input type='text' id='cend' name='cend' value='{$cend}' readonly size='6'/> items</div>";
         echo "<table class='sortable'>";
         echo "<tbody>";
         echo "<tr class='header'>";
-        echo "<th>Item Num</th>";
+        echo "<th>Result Num</th>";
         echo "<th class='title''>Collection</th>";
         echo "<th>Collection Handle</th>";
         echo "<th class='title''>Title</th>";
