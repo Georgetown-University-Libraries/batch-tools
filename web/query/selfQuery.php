@@ -21,6 +21,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 */
 include '../header.php';
 include 'queries.php';
+include 'selfQueryCommon.php';
 
 $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
@@ -44,38 +45,10 @@ if (util::getPostArg("query","") == "Prev Results") {
     $offset += $MAX;    
 }
 
-$sql = <<< EOF
-select 
-  mfr.metadata_field_id, 
-  msr.short_id, 
-  mfr.element, 
-  mfr.qualifier, 
-  (msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end) as name
-from metadatafieldregistry mfr
-inner join metadataschemaregistry msr on msr.metadata_schema_id=mfr.metadata_schema_id
-order by msr.short_id, mfr.element, mfr.qualifier;
-EOF;
-
-$dbh = $CUSTOM->getPdoDb();
-$stmt = $dbh->prepare($sql);
-
-$result = $stmt->execute(array());
-
-$result = $stmt->fetchAll();
-
-if (!$result) {
-    print($sql);
-    print_r($dbh->errorInfo());
-    die("Error in SQL query");
-}       
-
-$mfields = array();
+$mfields = initFields($CUSTOM);
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10' disabled>";
 $sel = "<select id='field' name='field' disabled><option value='0'>All</option>";
-foreach ($result as $row) {
-    $mfi = $row[0];
-    $mfn = $row[4];
-    $mfields[$mfi] = $mfn;
+foreach ($mfields as $mfi => $mfn) {
     $selected = sel($mfi, $field);
     $sel .= "<option value='{$mfi}' {$selected}>{$mfn}</option>";
     $selected = in_array($mfi, $dfield) ? "selected" : "";
@@ -93,7 +66,6 @@ if ($isCSV) {
     header('Content-type: text/html; charset=UTF-8');
 }
    
-if (!$isCSV) {
 ?>
 <!DOCTYPE html>
 <html>
@@ -104,17 +76,52 @@ $header->litPageHeader();
 ?>
 <script type="text/javascript">
 $(document).ready(function(){
-   if ($("#cstart").val() > 1) $("#querySubmitPrev").attr("disabled", false); 
-   if ($("#rescount").val() == <?php echo $MAX?>) $("#querySubmitNext").attr("disabled", false); 
-   if ($("#rescount").val() > 1) {
-       $("#queryform input,#queryform select").attr("disabled", true);
-       $("button.edit").attr("disabled", false);
-       $("#queryCsv").attr("disabled", false);
-   } else {
-       $("#queryform input,#queryform select").attr("disabled", false);       
-   }
-   $("#dfield").attr("disabled", false);       
-   $("#spinner").hide();
+    $("#spinner").hide();
+
+    $("input[name=query]").click(function(){
+        $("input[name=query]").removeClass("clicked");
+        $(this).addClass("clicked");
+    })
+
+    $("#myform").submit(function(event){
+        // Stop form from submitting normally
+        event.preventDefault();
+
+        prepSubmit();
+        // Get some values from elements on the page:
+        var form = $( this );
+        var dfield = [];
+        
+        form.find("select[name='dfield[]'] option:selected").each(function(){
+            dfield.push($(this).attr("value"));
+        });
+        
+        // Send the data using post
+        var posting = $.post("selfQueryData.php", 
+            {  
+                coll:  form.find("select[name=coll]").val(),
+                comm:  form.find("select[name=comm]").val(),
+                op:    form.find("select[name=op]").val(),
+                field: form.find("select[name=field]").val(),
+                val:   form.find("input[name=val]").val(),
+                query: form.find("input.clicked[name=query]").val(),
+                dfield : dfield,
+            }
+        ).done(function( data ) {
+            $( "#export" ).empty().append( data );
+            if ($("#cstart").val() > 1) $("#querySubmitPrev").attr("disabled", false); 
+            if ($("#rescount").val() == <?php echo $MAX?>) $("#querySubmitNext").attr("disabled", false); 
+            if ($("#rescount").val() > 1) {
+                $("#queryform input,#queryform select").attr("disabled", true);
+                $("button.edit").attr("disabled", false);
+                $("#queryCsv").attr("disabled", false);
+            } else {
+                $("#queryform input,#queryform select").attr("disabled", false);       
+            }
+            $("#dfield").attr("disabled", false);       
+            $("#spinner").hide();
+        });
+    });
 });
 
 function doedit() {
@@ -127,9 +134,10 @@ function prepSubmit() {
     $('#queryform input,#queryform select').attr('disabled',false);
     $("#spinner").show();
 }
+
 </script>
 <style type="text/css">
-body{width: 1000px;}
+form {width: 1000px;}
 button.edit {float: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 fieldset.fields {width: 40%; display:inline;float: left; margin: 20px;}
@@ -139,7 +147,7 @@ div.clear {clear: both;}
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
-<form method="POST" action="" onsubmit="prepSubmit();">
+<form id="myform" action="/">
 <fieldset id="queryform">
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
@@ -183,226 +191,8 @@ div.clear {clear: both;}
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
 </div>
-<?php 
-}
-
-if (count($_POST) > 0) {
-
-$sql = <<< EOF
-select 
-  c.name,
-  ch.handle, 
-  i.item_id,
-  regexp_replace(mv.text_value,E'[\r\n\t ]+',' ','g') as title,
-  ih.handle,
-  i.discoverable,
-  i.withdrawn,
-EOF;
-
-    $sep = $isCSV ? "||" : "<hr/>";
-    foreach($dfield as $k) {
-        if (is_numeric($k)) {
-            $sql .= "(select array_to_string(array_agg(text_value), '{$sep}') from metadatavalue m where i.item_id=m.item_id and m.metadata_field_id={$k}),";
-        }
-    }
-
-$sql .= <<< EOF
-  1
-from 
-  collection c
-inner join 
-  item i on i.owning_collection=c.collection_id
-inner join 
-  handle ih on i.item_id = ih.resource_id and ih.resource_type_id = 2
-inner join 
-  handle ch on c.collection_id = ch.resource_id and ch.resource_type_id = 3
-left join
-  metadatavalue mv on mv.item_id = i.item_id 
-inner join metadatafieldregistry mfr on mfr.metadata_field_id = mv.metadata_field_id
-  and mfr.element = 'title' and mfr.qualifier is null
-where 
-EOF;
-
-    $arr = array();
-    if ($coll != "") {
-        $sql .= " c.collection_id = :pid";
-        $arr[':pid'] = $coll;
-    } else if ($comm != ""){
-        $sql = query::comm2coll() . $sql . " c.collection_id in (select collection_id from r_comm2coll where community_id = :pid)";
-        $arr[':pid'] = $comm;
-    } else {
-        $sql .= " 1=1";
-    }
-
-    $where = "";
-    
-    if ($field == 0) {
-        if ($op == "exists") {        
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
-        } else if ($op == "not exists") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
-        } else if ($op == "equals") {
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val)";
-            $arr[':val'] = $val;
-        } else if ($op == "not equals") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val)";
-            $arr[':val'] = $val;
-        } else if ($op == "like") {
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val)";
-            $arr[':val'] = $val;
-        } else if ($op == "not like") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val)";
-            $arr[':val'] = $val;
-        } else if ($op == "matches") {
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val)";
-            $arr[':val'] = $val;
-        } else if ($op == "doesn't match") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val)";
-            $arr[':val'] = $val;
-        }
-        
-    } else {
-        if ($op == "exists") {        
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
-            $arr[':field'] = $field;
-        } else if ($op == "not exists") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
-            $arr[':field'] = $field;
-        } else if ($op == "equals") {
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "not equals") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "like") {
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "not like") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "matches") {
-            $where = " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "doesn't match") {
-            $where = " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        }
-        
-        
-    }
-    
-    
-    $sql .= $where . " limit {$MAX} offset {$offset}";
-
-    $dbh = $CUSTOM->getPdoDb();
-    $stmt = $dbh->prepare($sql);
-
-    $result = $stmt->execute($arr);
-
-    if (!$result) {
-        print($sql);
-        print_r($dbh->errorInfo());
-        die("Error in SQL query");
-    }       
-
-    $result = $stmt->fetchAll();
-    $rescount = count($result);
-    $cstart = $offset + 1;
-    $cend = $offset + $rescount;
-
-    if (!$isCSV) {
-        echo "<div id='export'>";
-        echo "<input type='hidden' id='rescount' name='rescount' value='{$rescount}' readonly size='6'/>";
-        echo "<div><input type='text' id='cstart' name='cstart' value='{$cstart}' readonly size='6'/> to ";
-        echo "<input type='text' id='cend' name='cend' value='{$cend}' readonly size='6'/> items</div>";
-        echo "<table class='sortable'>";
-        echo "<tbody>";
-        echo "<tr class='header'>";
-        echo "<th>Result Num</th>";
-        echo "<th class='title''>Collection</th>";
-        echo "<th>Collection Handle</th>";
-        echo "<th class='title''>Title</th>";
-        echo "<th>Item Handle</th>";
-        echo "<th>Item Status</th>";
-        foreach($dfield as $k) {
-            if (!is_numeric($k)) continue;
-            echo "<th class=''>{$mfields[$k]}[en]</th>";
-        }
-        echo "</tr>";
-    } else {
-        echo "id,collection,dc.title[en]";
-        foreach($dfield as $k) {
-           if (!is_numeric($k)) continue;
-           echo ",{$mfields[$k]}[en]";
-        }
-        echo "\n";
-    }
-
-    $handleContext =  isset($GLOBALS['handleContext']) ? $GLOBALS['handleContext'] : "";
-    $c = 0;
-    foreach ($result as $row) {
-        $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
-        $cname = $row[0];
-        $ch = $row[1];
-        $iid = $row[2];
-        $title = $row[3];
-        $ih = $row[4];
-        $fdiscoverable = $row[5];
-        $fwithdrawn = $row[6];
-        $fstatus = ($fdiscoverable ? "" : "Private ") . ($fwithdrawn ? "Withdrawn" : ""); 
-        $col = 6;
-        if ($isCSV) {
-            echo "{$iid},{$ch}" .',"' . $title . '"';
-            foreach($dfield as $k) {
-                if (!is_numeric($k)) continue;
-                $col++;
-                $val = $row[$col];
-                $val = preg_replace("/\n/"," ",$val);
-                $val = str_replace('/["]/',"",$val);
-                echo ',"' . $val . '"';
-            }
-            echo "\n";
-        } else {
-            echo "<tr class='{$class}'>";
-            echo "<td>{$c}</td>";
-            echo "<td>{$cname}</td>";
-            $href = $handleContext . '/handle/' .$ch . '?show=full';
-            $disp = $ch;
-    
-            echo "<td><a href='{$href}'>{$disp}</a></td>";
-            echo "<td>{$title}</td>";
-            $href = $handleContext . '/handle/' .$ih . '?show=full';
-            $disp = $ih;
-    
-            echo "<td><a href='{$href}'>{$disp}</a></td>";         
-            echo "<td>{$fstatus}</td>";         
-            foreach($dfield as $k) {
-                if (!is_numeric($k)) continue;
-                $col++;
-                echo "<td>{$row[$col]}</td>";
-            }
-            echo "</tr>";
-        }
-        if ($c > 2000) break;
-    }       
-
-    if (!$isCSV) { 
-        echo "</tbody>";
-        echo "</table>";
-        echo "</div>";
-        $header->litFooter();
-        echo "</body>";
-        echo "</html>";
-    }
-}
-
-function sel($val,$test) {
-    return ($val == $test) ? 'selected' : '';
-}
-?>
+<div id='export'>
+</div>
+<?php $header->litFooter();?>
+</body>
+</html> 
