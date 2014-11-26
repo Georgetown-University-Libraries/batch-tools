@@ -40,7 +40,7 @@ $offset = util::getPostArg("offset","0");
 
 $mfields = initFields($CUSTOM);
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
-$sel = "<select id='field' name='field' disabled><option value='0'>All</option>";
+$sel = "<select id='field' name='field'><option value='0'>All</option>";
 foreach ($mfields as $mfi => $mfn) {
     $selected = sel($mfi, $field);
     $sel .= "<option value='{$mfi}' {$selected}>{$mfn}</option>";
