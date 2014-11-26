@@ -40,13 +40,6 @@ $offset    = util::getPostArg("offset","0");
 
 $mfields = initFields($CUSTOM);
 
-if (util::getPostArg("query","") == "Prev Results") {
-    $offset -= $MAX;
-    if ($offset < 0) $offset = 0;
-} else if (util::getPostArg("query","") == "Next Results") {
-    $offset += $MAX;    
-}
-
 if ($isCSV) {
     header("Content-type: text/csv");
     header("Content-Disposition: attachment; filename=export.csv"); 

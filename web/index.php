@@ -62,6 +62,9 @@ if ($CUSTOM->showQueryTools()) {
 <li>
   <a href="javascript:qcLink('query/qcReportCommunity.php?foo')">QC Overview for Communities</a>
 </li>
+<li>
+  <a href="query/selfQuery.php">Self-Serivce Query</a>
+</li>
 <?php 
 }
 ?>

@@ -36,17 +36,10 @@ $field = util::getPostArg("field","");
 $dfield = util::getPostArg("dfield",array());
 $val    = util::getPostArg("val","");
 $isCSV  = (util::getPostArg("query","") == "CSV Extract");
-$offset    = util::getPostArg("offset","0");
-
-if (util::getPostArg("query","") == "Prev Results") {
-    $offset -= $MAX;
-    if ($offset < 0) $offset = 0;
-} else if (util::getPostArg("query","") == "Next Results") {
-    $offset += $MAX;    
-}
+$offset = util::getPostArg("offset","0");
 
 $mfields = initFields($CUSTOM);
-$dsel = "<select id='dfield' name='dfield[]' multiple size='10' disabled>";
+$dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
 $sel = "<select id='field' name='field' disabled><option value='0'>All</option>";
 foreach ($mfields as $mfi => $mfn) {
     $selected = sel($mfi, $field);
@@ -74,9 +67,29 @@ if ($isCSV) {
 $header = new LitHeader("Query Construction");
 $header->litPageHeader();
 ?>
+<script type="text/javascript" src="spin.js"></script>
 <script type="text/javascript">
+var spinner;
 $(document).ready(function(){
-    $("#spinner").hide();
+	var opts = {
+	    lines: 13, // The number of lines to draw
+	    length: 20, // The length of each line
+	    width: 10, // The line thickness
+	    radius: 30, // The radius of the inner circle
+	    corners: 1, // Corner roundness (0..1)
+	    rotate: 0, // The rotation offset
+	    direction: 1, // 1: clockwise, -1: counterclockwise
+	    color: '#000', // #rgb or #rrggbb or array of colors
+	    speed: 1, // Rounds per second
+	    trail: 60, // Afterglow percentage
+	    shadow: false, // Whether to render a shadow
+	    hwaccel: false, // Whether to use hardware acceleration
+	    className: 'spinner', // The CSS class to assign to the spinner
+	    zIndex: 2e9, // The z-index (defaults to 2000000000)
+	    top:  '400px', // Top position relative to parent
+	    left: '600px' // Left position relative to parent
+	};
+	spinner = new Spinner(opts);
 
     $("input[name=query]").click(function(){
         $("input[name=query]").removeClass("clicked");
@@ -99,28 +112,38 @@ $(document).ready(function(){
         // Send the data using post
         var posting = $.post("selfQueryData.php", 
             {  
-                coll:  form.find("select[name=coll]").val(),
-                comm:  form.find("select[name=comm]").val(),
-                op:    form.find("select[name=op]").val(),
-                field: form.find("select[name=field]").val(),
-                val:   form.find("input[name=val]").val(),
-                query: form.find("input.clicked[name=query]").val(),
+                coll:   form.find("select[name=coll]").val(),
+                comm:   form.find("select[name=comm]").val(),
+                op:     form.find("select[name=op]").val(),
+                field:  form.find("select[name=field]").val(),
+                val:    form.find("input[name=val]").val(),
+                query:  form.find("input.clicked[name=query]").val(),
+                offset: form.find("input[name=offset]").val(),
                 dfield : dfield,
             }
         ).done(function( data ) {
             $( "#export" ).empty().append( data );
-            if ($("#cstart").val() > 1) $("#querySubmitPrev").attr("disabled", false); 
-            if ($("#rescount").val() == <?php echo $MAX?>) $("#querySubmitNext").attr("disabled", false); 
-            if ($("#rescount").val() > 1) {
+            $("#myform select,#myform input").attr("disabled",false);
+
+	        var rescount = parseInt($("#rescount").val());
+	        var offset = parseInt($("#cstart").val());
+	        var MAX = parseInt($("#MAX").val());
+	        
+            if (offset == 1) $("#querySubmitPrev").attr("disabled", true); 
+            if (rescount < MAX) $("#querySubmitNext").attr("disabled", true); 
+            if (parseInt($("#rescount").val()) > 0) {
                 $("#queryform input,#queryform select").attr("disabled", true);
                 $("button.edit").attr("disabled", false);
-                $("#queryCsv").attr("disabled", false);
             } else {
-                $("#queryform input,#queryform select").attr("disabled", false);       
+                $("button.edit").attr("disabled", true);
+                $("#queryCsv").attr("disabled", true);
             }
-            $("#dfield").attr("disabled", false);       
-            $("#spinner").hide();
+            spinner.stop();
         });
+    });
+
+    $(document).ajaxSend(function(){
+        $("#myform select,#myform input").attr("disabled",true);
     });
 });
 
@@ -131,8 +154,18 @@ function doedit() {
 }
 
 function prepSubmit() {
+	var query = $("#myform input.clicked[name=query]").val();
+	var offset = parseInt($("#offset").val());
+	var MAX = parseInt($("#MAX").val());
+	if (query == "Prev Results") {
+	    offset -= MAX;
+	    if (offset < 0) offset = 0;
+	} else if (query == "Next Results") {
+	    offset += MAX;    
+	}
+	$("#offset").val(offset);
     $('#queryform input,#queryform select').attr('disabled',false);
-    $("#spinner").show();
+    spinner.spin($("#myform")[0]);
 }
 
 </script>
@@ -158,7 +191,7 @@ div.clear {clear: both;}
   <label for="field">Field to query</label>
   <?php echo $sel?>
   <label for="op">; Operator: </label>
-  <select id="op" name="op" onchange="$('#val').val($(this).find('option:selected').attr('example'));" disabled>
+  <select id="op" name="op" onchange="$('#val').val($(this).find('option:selected').attr('example'));">
     <option value="exists" example="" <?php echo sel($op,'exists')?>>Exists</value>
     <option value="not exists" example="" <?php echo sel($op,'not exists')?>>Doesn't exist</value>
     <option value="equals" example="val" <?php echo sel($op,'equals')?>>Equals</value>
@@ -169,7 +202,7 @@ div.clear {clear: both;}
     <option value="doesn't match" example="^.*(val1|val2).*$" <?php echo sel($op,"doesn't match")?>>Doesn't Matches</value>
   </select>
   <label for="val">; Value: </label>
-  <input name="val" id="val" type="text" value="<?php echo $val?>" disabled/>
+  <input name="val" id="val" type="text" value="<?php echo $val?>"/>
 </p>
 </fieldset>
 <p>
@@ -178,11 +211,11 @@ div.clear {clear: both;}
   <br/>
   <?php echo $dsel?>
   </fieldset>
-  <iframe id="spinner" src="spinner.html"></iframe>
   <div class="clear"/>
 </p>
 <p align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
+    <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>
     <input id="querySubmitPrev" name="query" value="Prev Results" type="submit" disabled/>
     <input id="querySubmit" name="query" value="Show Results" type="submit"/>
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
