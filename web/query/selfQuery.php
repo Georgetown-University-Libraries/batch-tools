@@ -102,9 +102,9 @@ $(document).ready(function(){
         var form = $( this );
         var query = form.find("input.clicked[name=query]").val();
         prepSubmit();
-        spinner.spin($("#myform")[0]);
         
         if (query == "CSV Extract") return true;
+        spinner.spin($("#myform")[0]);
         
         // Stop form from submitting normally
         event.preventDefault();
