@@ -185,7 +185,7 @@ div.clear {clear: both;}
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
-<form id="myform" action="/">
+<form id="myform" action="selfQuery.php" method="POST">
 <fieldset id="queryform">
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
