@@ -102,6 +102,7 @@ $(document).ready(function(){
         var form = $( this );
         var query = form.find("input.clicked[name=query]").val();
         prepSubmit();
+        spinner.spin($("#myform")[0]);
         
         if (query == "CSV Extract") return true;
         
@@ -170,7 +171,6 @@ function prepSubmit() {
 	}
 	$("#offset").val(offset);
     $('#queryform input,#queryform select').attr('disabled',false);
-    spinner.spin($("#myform")[0]);
 }
 
 </script>
@@ -185,7 +185,7 @@ div.clear {clear: both;}
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
-<form id="myform" action="selfQuery.php" method="POST">
+<form id="myform" action="selfQueryData.php" method="POST">
 <fieldset id="queryform">
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
