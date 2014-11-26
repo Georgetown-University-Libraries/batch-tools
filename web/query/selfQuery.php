@@ -97,12 +97,17 @@ $(document).ready(function(){
     })
 
     $("#myform").submit(function(event){
+        
+        // Get some values from elements on the page:
+        var form = $( this );
+        var query = form.find("input.clicked[name=query]").val();
+        prepSubmit();
+        
+        if (query == "CSV Extract") return true;
+        
         // Stop form from submitting normally
         event.preventDefault();
 
-        prepSubmit();
-        // Get some values from elements on the page:
-        var form = $( this );
         var dfield = [];
         
         form.find("select[name='dfield[]'] option:selected").each(function(){
@@ -117,7 +122,7 @@ $(document).ready(function(){
                 op:     form.find("select[name=op]").val(),
                 field:  form.find("select[name=field]").val(),
                 val:    form.find("input[name=val]").val(),
-                query:  form.find("input.clicked[name=query]").val(),
+                query:  query,
                 offset: form.find("input[name=offset]").val(),
                 dfield : dfield,
             }
