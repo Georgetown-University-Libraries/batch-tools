@@ -64,6 +64,148 @@ function initFilters() {
 	$FILTERS = array();
 	$FILTERS['xpriv'] = array('name' => 'Exclude Private', 'sql' => " and i.discoverable is true");
 	$FILTERS['xwithdrawn'] = array('name' => 'Exclude Withdrawn', 'sql' => " and i.withdrawn is false");
+
+    $q = <<< EOF
+    and not exists (
+      select 1 
+      from item2bundle i2b 
+      inner join bundle b 
+      on 
+	    i2b.bundle_id = b.bundle_id 
+	    and b.name = 'ORIGINAL' 
+        and i.item_id = i2b.item_id
+    )
+EOF;
+	$FILTERS['nooriginal'] = array(
+		'name' => 'No Original', 
+		'sql' => $q, 
+    );
+    
+    $q = <<< EOF
+    and exists (
+      select 1 
+      from item2bundle i2b 
+      inner join bundle b 
+      on 
+	    i2b.bundle_id = b.bundle_id 
+	    and b.name = 'ORIGINAL' 
+        and i.item_id = i2b.item_id
+    )
+EOF;
+	$FILTERS['hasoriginal'] = array(
+		'name' => 'Has Original', 
+		'sql' => $q,
+    );
+
+	$q = <<< EOF
+    and exists (
+      select 1 
+      from item2bundle i2b 
+      inner join bundle b 
+      on 
+	    i2b.bundle_id = b.bundle_id 
+	    and b.name = 'ORIGINAL' 
+        and i.item_id = i2b.item_id
+      where (
+	    select count(*) 
+	    from bundle2bitstream b2b 
+	    where b.bundle_id=b2b.bundle_id
+      ) > 1
+    )
+EOF;
+	$FILTERS['multoriginal'] = array(
+		'name' => 'Has Multiple Originals', 
+		'sql' => $q
+    );
+
+	$q = <<< EOF
+    and exists 
+    (
+	  select 1 
+  	  from resourcepolicy 
+  	  where resource_type_id=2
+  	    and i.item_id=resource_id
+  		and epersongroup_id = 0
+  		and (start_date is null or start_date <= current_date)
+  		and (end_date is null or start_date >= current_date)
+    ) 
+EOF;
+	$FILTERS['unrestitem'] = array(
+		'name' => 'Unrestricted Item', 
+		'sql' => $q
+    );
+	
+	$q = <<< EOF
+    and not exists 
+    (
+	  select 1 
+  	  from resourcepolicy 
+  	  where resource_type_id=2
+  	    and i.item_id=resource_id
+  		and epersongroup_id = 0
+  		and (start_date is null or start_date <= current_date)
+  		and (end_date is null or start_date >= current_date)
+    ) 
+EOF;
+	$FILTERS['restitem'] = array(
+		'name' => 'Restricted/Embargo Item', 
+		'sql' => $q
+    );
+
+	$q = <<< EOF
+    and exists 
+    (
+      select 1
+      from item2bundle i2b
+      inner join bundle b 
+        on i2b.bundle_id = b.bundle_id
+        and b.name = 'ORIGINAL'
+        and i.item_id = i2b.item_id
+      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
+      where exists (
+		select 1 
+  		from resourcepolicy 
+  		where resource_type_id=0
+  		and bit.bitstream_id=resource_id
+  		and epersongroup_id = 0
+  		and (start_date is null or start_date <= current_date)
+  		and (end_date is null or start_date >= current_date)
+      )
+    ) 
+EOF;
+	$FILTERS['unrestbit'] = array(
+		'name' => 'Unrestricted Bitstream', 
+		'sql' => $q
+    );
+	
+	$q = <<< EOF
+    and exists 
+    (
+      select 1
+      from item2bundle i2b
+      inner join bundle b 
+        on i2b.bundle_id = b.bundle_id
+        and b.name = 'ORIGINAL'
+        and i.item_id = i2b.item_id
+      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
+      where not exists (
+		select 1 
+  		from resourcepolicy 
+  		where resource_type_id=0
+  		and bit.bitstream_id=resource_id
+  		and epersongroup_id = 0
+  		and (start_date is null or start_date <= current_date)
+  		and (end_date is null or start_date >= current_date)
+      )
+    ) 
+EOF;
+	$FILTERS['restbit'] = array(
+		'name' => 'Restricted Bitstream', 
+		'sql' => $q
+    );
+	
 	return $FILTERS; 
 }
 

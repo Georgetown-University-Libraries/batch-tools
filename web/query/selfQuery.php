@@ -227,20 +227,18 @@ div.clear {clear: both;}
   <input name="val" id="val" type="text" value="<?php echo $val?>"/>
 </p>
 </fieldset>
-<p>
+<div>
   <fieldset class="fields">
-  <legend>Fields to display</legend>
-  <br/>
-  <?php echo $dsel?>
+    <legend>Fields to display</legend>
+    <?php echo $dsel?>
   </fieldset>
   <fieldset class="filters">
-  <legend>Filters</legend>
-  <br/>
-  <?php echo $filsel?>
+    <legend>Filters</legend>
+    <?php echo $filsel?>
   </fieldset>
   
   <div class="clear"/>
-</p>
+</div>
 <p align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
     <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>
