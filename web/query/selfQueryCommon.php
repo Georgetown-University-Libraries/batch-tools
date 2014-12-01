@@ -60,4 +60,11 @@ function sel($val,$test) {
     return ($val == $test) ? 'selected' : '';
 } 
 
+function initFilters() {
+	$FILTERS = array();
+	$FILTERS['xpriv'] = array('name' => 'Exclude Private', 'sql' => " and i.discoverable is true");
+	$FILTERS['xwithdrawn'] = array('name' => 'Exclude Withdrawn', 'sql' => " and i.withdrawn is false");
+	return $FILTERS; 
+}
+
 ?>

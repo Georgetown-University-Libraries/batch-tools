@@ -33,6 +33,7 @@ $coll  = util::getPostArg("coll","");
 $comm  = util::getPostArg("comm","");
 $op    = util::getPostArg("op","");
 $field = util::getPostArg("field","");
+$filter = util::getPostArg("filter",array());
 $dfield = util::getPostArg("dfield",array());
 $val    = util::getPostArg("val","");
 $isCSV  = (util::getPostArg("query","") == "CSV Extract");
@@ -49,6 +50,16 @@ foreach ($mfields as $mfi => $mfn) {
 }
 $sel .= "</select>";
 $dsel .= "</select>";
+
+$filters = initFilters();
+$filsel = "<div class='filters'>";
+foreach($filters as $key => $obj) {
+	$name = $obj['name'];
+	$fsel = in_array($key, $filter) ? "selected" : "";
+	$filsel .= "<div class='filter'><input name='filter[]' value='{$key}' type='checkbox' id='{$key}' {$fsel}><label for='{$key}'>{$name}</label></div>";
+}
+$filsel .= "</div>";
+
 
 $status = "";
 $hasPerm = $CUSTOM->isUserCollectionOwner();
@@ -110,9 +121,13 @@ $(document).ready(function(){
         event.preventDefault();
 
         var dfield = [];
+        var dfilter = [];
         
         form.find("select[name='dfield[]'] option:selected").each(function(){
             dfield.push($(this).attr("value"));
+        });
+        form.find("input[name='filter[]']:checked").each(function(){
+            dfilter.push($(this).attr("value"));
         });
         
         // Send the data using post
@@ -126,9 +141,10 @@ $(document).ready(function(){
                 query:  query,
                 offset: form.find("input[name=offset]").val(),
                 dfield : dfield,
-            }
+                filter : dfilter,
+}
         ).done(function( data ) {
-            $( "#export" ).empty().append( data );
+            $( "#exporthold" ).empty().append( data );
             $("#myform select,#myform input").attr("disabled",false);
 
 	        var rescount = parseInt($("#rescount").val());
@@ -145,6 +161,7 @@ $(document).ready(function(){
                 $("#queryCsv").attr("disabled", true);
             }
             spinner.stop();
+            sorttable.makeSortable($("#export table").get(0));
         });
     });
 
@@ -216,6 +233,12 @@ div.clear {clear: both;}
   <br/>
   <?php echo $dsel?>
   </fieldset>
+  <fieldset class="filters">
+  <legend>Filters</legend>
+  <br/>
+  <?php echo $filsel?>
+  </fieldset>
+  
   <div class="clear"/>
 </p>
 <p align="center">
@@ -229,7 +252,7 @@ div.clear {clear: both;}
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
 </div>
-<div id='export'>
+<div id='exporthold'>
 </div>
 <?php $header->litFooter();?>
 </body>
