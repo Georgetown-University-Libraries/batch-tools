@@ -131,7 +131,7 @@ EOF;
     ) 
 EOF;
 	$FILTERS['unrestitem'] = array(
-		'name' => 'Unrestricted Item', 
+		'name' => 'Is Unrestricted Item', 
 		'sql' => $q
     );
 	
@@ -148,7 +148,7 @@ EOF;
     ) 
 EOF;
 	$FILTERS['restitem'] = array(
-		'name' => 'Restricted/Embargo Item', 
+		'name' => 'Is Restricted/Embargo Item', 
 		'sql' => $q
     );
 
@@ -175,7 +175,7 @@ EOF;
     ) 
 EOF;
 	$FILTERS['unrestbit'] = array(
-		'name' => 'Unrestricted Bitstream', 
+		'name' => 'Has Unrestricted Bitstream', 
 		'sql' => $q
     );
 	
@@ -202,7 +202,7 @@ EOF;
     ) 
 EOF;
 	$FILTERS['restbit'] = array(
-		'name' => 'Restricted Bitstream', 
+		'name' => 'Has Restricted Bitstream', 
 		'sql' => $q
     );
 	

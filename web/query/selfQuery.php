@@ -89,8 +89,8 @@ div.clear {clear: both;}
 <div id="status"><?php echo $status?></div>
 <?php collection::getCollectionIdWidget("", "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget("", "comm", " to be queried*");?>
-<?php for($qc=0; $qc < 3; $qc++){?>
-<p>
+<div id="querylines">
+<p class="queryline">
   <label for="field">Field to query</label>
   <?php echo $sel?>
   <label for="op">; Operator: </label>
@@ -106,8 +106,9 @@ div.clear {clear: both;}
   </select>
   <label for="val">; Value: </label>
   <input name="val[]" type="text" value="<?php echo $val?>" class="qfield"/>
+  <input type="button" onclick="var line=$(this).parent('p.queryline').clone();$('#querylines').append(line);" value="+"/>
 </p>
-<?php }?>
+</div>
 </fieldset>
 <div>
   <fieldset class="fields">
