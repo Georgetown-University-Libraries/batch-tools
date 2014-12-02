@@ -29,24 +29,16 @@ $CUSTOM->getCommunityInit()->initCollections();
 
 $MAX = 2000;
 
-$coll  = util::getPostArg("coll","");
-$comm  = util::getPostArg("comm","");
-$op    = util::getPostArg("op","");
-$field = util::getPostArg("field","");
-$filter = util::getPostArg("filter",array());
-$dfield = util::getPostArg("dfield",array());
 $val    = util::getPostArg("val","");
 $isCSV  = (util::getPostArg("query","") == "CSV Extract");
 $offset = util::getPostArg("offset","0");
 
 $mfields = initFields($CUSTOM);
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
-$sel = "<select id='field' name='field'><option value='0'>All</option>";
+$sel = "<select name='field[]' class='qfield'><option value=''>N/A</option><option value='0'>All</option>";
 foreach ($mfields as $mfi => $mfn) {
-    $selected = sel($mfi, $field);
-    $sel .= "<option value='{$mfi}' {$selected}>{$mfn}</option>";
-    $selected = in_array($mfi, $dfield) ? "selected" : "";
-    $dsel .= "<option value='{$mfi}' {$selected}>{$mfn}</option>";
+    $sel .= "<option value='{$mfi}'>{$mfn}</option>";
+    $dsel .= "<option value='{$mfi}'>{$mfn}</option>";
 }
 $sel .= "</select>";
 $dsel .= "</select>";
@@ -55,8 +47,7 @@ $filters = initFilters();
 $filsel = "<div class='filters'>";
 foreach($filters as $key => $obj) {
 	$name = $obj['name'];
-	$fsel = in_array($key, $filter) ? "selected" : "";
-	$filsel .= "<div class='filter'><input name='filter[]' value='{$key}' type='checkbox' id='{$key}' {$fsel}><label for='{$key}'>{$name}</label></div>";
+	$filsel .= "<div class='filter'><input name='filter[]' value='{$key}' type='checkbox' id='{$key}'><label for='{$key}'>{$name}</label></div>";
 }
 $filsel .= "</div>";
 
@@ -96,25 +87,27 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
-<?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
-<?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
+<?php collection::getCollectionIdWidget("", "coll", " to be queried*");?>
+<?php collection::getSubcommunityIdWidget("", "comm", " to be queried*");?>
+<?php for($qc=0; $qc < 3; $qc++){?>
 <p>
   <label for="field">Field to query</label>
   <?php echo $sel?>
   <label for="op">; Operator: </label>
-  <select id="op" name="op" onchange="$('#val').val($(this).find('option:selected').attr('example'));">
-    <option value="exists" example="" <?php echo sel($op,'exists')?>>Exists</value>
-    <option value="not exists" example="" <?php echo sel($op,'not exists')?>>Doesn't exist</value>
-    <option value="equals" example="val" <?php echo sel($op,'equals')?>>Equals</value>
-    <option value="not equals" example="val" <?php echo sel($op,'not equals')?>>Not Equals</value>
-    <option value="like" example="%val%" <?php echo sel($op,'like')?>>Like</value>
-    <option value="not like" example="%val%" <?php echo sel($op,'not like')?>>Not Like</value>
-    <option value="matches" example="^.*(val1|val2).*$" <?php echo sel($op,'matches')?>>Matches</value>
-    <option value="doesn't match" example="^.*(val1|val2).*$" <?php echo sel($op,"doesn't match")?>>Doesn't Matches</value>
+  <select name="op[]" class="qfield" onchange="$(this).siblings('input.qfield').val($(this).find('option:selected').attr('example'));">
+    <option value="exists" example="">Exists</value>
+    <option value="not exists" example="">Doesn't exist</value>
+    <option value="equals" example="val">Equals</value>
+    <option value="not equals" example="val">Not Equals</value>
+    <option value="like" example="%val%">Like</value>
+    <option value="not like" example="%val%">Not Like</value>
+    <option value="matches" example="^.*(val1|val2).*$">Matches</value>
+    <option value="doesn't match" example="^.*(val1|val2).*$">Doesn't Matches</value>
   </select>
   <label for="val">; Value: </label>
-  <input name="val" id="val" type="text" value="<?php echo $val?>"/>
+  <input name="val[]" type="text" value="<?php echo $val?>" class="qfield"/>
 </p>
+<?php }?>
 </fieldset>
 <div>
   <fieldset class="fields">

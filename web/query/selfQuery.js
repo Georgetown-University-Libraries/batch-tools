@@ -40,6 +40,9 @@ $(document).ready(function(){
 
         var dfield = [];
         var dfilter = [];
+        var field = [];
+        var op = [];
+        var val = [];
         
         form.find("select[name='dfield[]'] option:selected").each(function(){
             dfield.push($(this).attr("value"));
@@ -47,15 +50,24 @@ $(document).ready(function(){
         form.find("input[name='filter[]']:checked").each(function(){
             dfilter.push($(this).attr("value"));
         });
+        form.find("select[name='field[]'] option:selected").each(function(){
+            field.push($(this).attr("value"));
+        });
+        form.find("select[name='op[]'] option:selected").each(function(){
+            op.push($(this).attr("value"));
+        });
+        form.find("input[name='val[]']").each(function(){
+            val.push($(this).attr("value"));
+        });
         
         // Send the data using post
         var posting = $.post("selfQueryData.php", 
             {  
                 coll:   form.find("select[name=coll]").val(),
                 comm:   form.find("select[name=comm]").val(),
-                op:     form.find("select[name=op]").val(),
-                field:  form.find("select[name=field]").val(),
-                val:    form.find("input[name=val]").val(),
+                op:     op,
+                field:  field,
+                val:    val,
                 query:  query,
                 offset: form.find("input[name=offset]").val(),
                 dfield : dfield,

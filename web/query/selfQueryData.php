@@ -31,11 +31,11 @@ $MAX = 2000;
 
 $coll  = util::getPostArg("coll","");
 $comm  = util::getPostArg("comm","");
-$op    = util::getPostArg("op","");
-$field = util::getPostArg("field","");
+$op    = util::getPostArg("op",array());
+$field = util::getPostArg("field",array());
 $dfield = util::getPostArg("dfield",array());
 $filter = util::getPostArg("filter",array());
-$val    = util::getPostArg("val","");
+$val    = util::getPostArg("val",array());
 $isCSV  = (util::getPostArg("query","") == "CSV Extract");
 $offset    = util::getPostArg("offset","0");
 
@@ -105,65 +105,65 @@ EOF;
     	}
     }
     
-    if ($field == 0) {
-        if ($op == "exists") {        
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
-        } else if ($op == "not exists") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
-        } else if ($op == "equals") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val)";
-            $arr[':val'] = $val;
-        } else if ($op == "not equals") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val)";
-            $arr[':val'] = $val;
-        } else if ($op == "like") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val)";
-            $arr[':val'] = $val;
-        } else if ($op == "not like") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val)";
-            $arr[':val'] = $val;
-        } else if ($op == "matches") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val)";
-            $arr[':val'] = $val;
-        } else if ($op == "doesn't match") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val)";
-            $arr[':val'] = $val;
+    for($i=0; $i<count($field); $i++) {
+      if ($field[$i] == "") {
+      } else if ($field[$i] == 0) {
+        if ($op[$i] == "exists") {        
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id)";
+        } else if ($op[$i] == "not exists") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id)";
+        } else if ($op[$i] == "equals") {
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and text_value=:val{$i})";
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "not equals") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and text_value=:val{$i})";
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "like") {
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and text_value like :val{$i})";
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "not like") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and text_value like :val{$i})";
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "matches") {
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and text_value ~ :val{$i})";
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "doesn't match") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and text_value ~ :val{$i})";
+            $arr[":val{$i}"] = $val[$i];
         }
-        
-    } else {
-        if ($op == "exists") {        
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
-            $arr[':field'] = $field;
-        } else if ($op == "not exists") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field)";
-            $arr[':field'] = $field;
-        } else if ($op == "equals") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "not equals") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value=:val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "like") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "not like") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value like :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "matches") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        } else if ($op == "doesn't match") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field and text_value ~ :val)";
-            $arr[':field'] = $field;
-            $arr[':val'] = $val;
-        }
-        
-        
+      } else {
+        if ($op[$i] == "exists") {        
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i})";
+            $arr[":field{$i}"] = $field[$i];
+        } else if ($op[$i] == "not exists") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i})";
+            $arr[":field{$i}"] = $field[$i];
+        } else if ($op[$i] == "equals") {
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i} and text_value=:val{$i})";
+            $arr[":field{$i}"] = $field[$i];
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "not equals") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i} and text_value=:val{$i})";
+            $arr[":field{$i}"] = $field[$i];
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "like") {
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i} and text_value like :val{$i})";
+            $arr[":field{$i}"] = $field;
+            $arr[":val{$i}"] = $val;
+        } else if ($op[$i] == "not like") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i} and text_value like :val{$i})";
+            $arr[":field{$i}"] = $field[$i];
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "matches") {
+            $where .= " and exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i} and text_value ~ :val{$i})";
+            $arr[":field{$i}"] = $field[$i];
+            $arr[":val{$i}"] = $val[$i];
+        } else if ($op[$i] == "doesn't match") {
+            $where .= " and not exists (select 1 from metadatavalue m{$i} where i.item_id = m{$i}.item_id and metadata_field_id = :field{$i} and text_value ~ :val{$i})";
+            $arr[":field{$i}"] = $field[$i];
+            $arr[":val{$i}"] = $val[$i];
+        }    
+      }    
     }
     
     
@@ -176,6 +176,7 @@ EOF;
 
     if (!$result) {
         print($sql);
+        print_r($arr);
         print_r($dbh->errorInfo());
         die("Error in SQL query");
     }       
