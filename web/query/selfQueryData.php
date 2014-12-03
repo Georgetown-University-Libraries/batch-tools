@@ -56,6 +56,7 @@ $sql = ($comm != "") ? query::comm2coll() : "";
 $csql = ($comm != "") ? query::comm2coll() : "";
 
 $csql .= "select count(*) from collection c inner join item i on i.owning_collection=c.collection_id where";
+$gsql .= "select mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id where item_id in (select item_id from collection c inner join item i on i.owning_collection=c.collection_id where";
 
 $sql .= <<< EOF
 select 
@@ -178,10 +179,12 @@ EOF;
     
     $sql .= $where . " limit {$MAX} offset {$offset}";
     $csql .= $where;
+    $gsql .= $where . ") group by mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end order by count(*) desc";
     
     $dbh = $CUSTOM->getPdoDb();
     
     $ccount = 0;
+    $tbl = "";
     if (!$isCSV) {
         $cstmt = $dbh->prepare($csql);
         $cresult = $cstmt->execute($arr);
@@ -195,6 +198,21 @@ EOF;
         foreach ($cresult as $row) {
         	$ccount = $row[0];
         }
+
+        $gstmt = $dbh->prepare($gsql);
+        $gresult = $gstmt->execute($arr);
+        if (!$gresult) {
+            print($gsql);
+            print_r($arr);
+            print_r($dbh->errorInfo());
+            die("Error in SQL query");
+        }
+        $gresult = $gstmt->fetchAll();
+        $tbl = "<table><tr><th>Field</th><th>Count</th></tr>";
+        foreach ($gresult as $row) {
+            $tbl = "<tr><td>$row[0]</td><td>$row[1]</td></tr>";
+        }
+        $tbl .= "</table>";
     }
     
     $stmt = $dbh->prepare($sql);
@@ -214,6 +232,7 @@ EOF;
 
     if (!$isCSV) {
         echo "<div id='export'>";
+        echo $tbl;
         echo "<input type='hidden' id='rescount' name='rescount' value='{$rescount}' readonly size='6'/>";
         echo "<div><input type='text' id='cstart' name='cstart' value='{$cstart}' readonly size='6'/> to ";
         echo "<input type='text' id='cend' name='cend' value='{$cend}' readonly size='6'/>";
