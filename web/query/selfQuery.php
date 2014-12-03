@@ -119,7 +119,7 @@ div.clear {clear: both;}
     <option value="like"          <?php echo sel($op[$i],'like','selected')?>          example="%val%">Like</value>
     <option value="not like"      <?php echo sel($op[$i],'not like','selected')?>      example="%val%">Not Like</value>
     <option value="matches"       <?php echo sel($op[$i],'matches','selected')?>       example="^.*(val1|val2).*$">Matches</value>
-    <option value="doesn't match" <?php echo sel($op[$i],"doesn't match",'selected')?> example="^.*(val1|val2).*$">Doesn't Matches</value>
+    <option value="doesn't match" <?php echo sel($op[$i],"doesn't match",'selected')?> example="^.*(val1|val2).*$">Doesn't Match</value>
   </select>
   <label for="val">; Value: </label>
   <input name="val[]" type="text" value="<?php echo $val[$i]?>" class="qfield"/>

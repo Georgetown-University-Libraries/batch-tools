@@ -157,8 +157,8 @@ EOF;
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "like") {
             $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value like :val{$i})";
-            $arr[":field{$i}"] = $field;
-            $arr[":val{$i}"] = $val;
+            $arr[":field{$i}"] = $field[$i];
+            $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "not like") {
             $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value like :val{$i})";
             $arr[":field{$i}"] = $field[$i];
