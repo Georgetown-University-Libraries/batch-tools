@@ -46,6 +46,7 @@ $MAX = 2000;
 $mfields = initFields($CUSTOM);
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
 foreach ($mfields as $mfi => $mfn) {
+    if (preg_match("/^dc\.(date\.accessioned|date\.available|description\.provenance).*/", $mfn)) continue;
     $t = arrsel($dfield,$mfi,'selected');
     $dsel .= "<option value='{$mfi}' {$t}>{$mfn}</option>";
 }
