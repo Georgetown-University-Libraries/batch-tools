@@ -27,27 +27,36 @@ $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
 $CUSTOM->getCommunityInit()->initCollections();
 
-$MAX = 2000;
+$coll  = util::getArg("coll","");
+$comm  = util::getArg("comm","");
+$op    = util::getArg("op",array());
+$field = util::getArg("field",array());
+$dfield = util::getArg("dfield",array());
+$filter = util::getArg("filter",array());
+$val    = util::getArg("val",array());
+$isCSV  = (util::getArg("query","") == "CSV Extract");
+$offset    = util::getArg("offset","0");
 
-$val    = util::getPostArg("val","");
-$isCSV  = (util::getPostArg("query","") == "CSV Extract");
-$offset = util::getPostArg("offset","0");
+if (count($field) == 0) array_push($field,"");
+if (count($op) == 0) array_push($op,"");
+if (count($val) == 0) array_push($val,"");
+
+$MAX = 2000;
 
 $mfields = initFields($CUSTOM);
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
-$sel = "<select name='field[]' class='qfield'><option value=''>N/A</option><option value='0'>All</option>";
 foreach ($mfields as $mfi => $mfn) {
-    $sel .= "<option value='{$mfi}'>{$mfn}</option>";
-    $dsel .= "<option value='{$mfi}'>{$mfn}</option>";
+    $t = arrsel($dfield,$mfi,'selected');
+    $dsel .= "<option value='{$mfi}' {$t}>{$mfn}</option>";
 }
-$sel .= "</select>";
 $dsel .= "</select>";
 
 $filters = initFilters();
 $filsel = "<div class='filters'>";
 foreach($filters as $key => $obj) {
 	$name = $obj['name'];
-	$filsel .= "<div class='filter'><input name='filter[]' value='{$key}' type='checkbox' id='{$key}'><label for='{$key}'>{$name}</label></div>";
+	$t = arrsel($filter,$key,'checked');
+	$filsel .= "<div class='filter'><input name='filter[]' value='{$key}' type='checkbox' id='{$key}' {$t}><label for='{$key}'>{$name}</label></div>";
 }
 $filsel .= "</div>";
 
@@ -87,27 +96,36 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
-<?php collection::getCollectionIdWidget("", "coll", " to be queried*");?>
-<?php collection::getSubcommunityIdWidget("", "comm", " to be queried*");?>
+<?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
+<?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
 <div id="querylines">
+<?php for($i=0; $i<count($field); $i++) {?>
 <p class="queryline">
   <label for="field">Field to query</label>
-  <?php echo $sel?>
+  <?php 
+  echo "<select name='field[]' class='qfield' onchange='changeField($(this));'><option value=''>N/A</option><option value='0'>All</option>";
+  foreach ($mfields as $mfi => $mfn) {
+  	$t = sel($field[$i],$mfi,'selected');
+  	echo "<option value='{$mfi}' {$t}>{$mfn}</option>";
+  }
+  echo "</select>";
+  ?>
   <label for="op">; Operator: </label>
-  <select name="op[]" class="qfield" onchange="$(this).siblings('input.qfield').val($(this).find('option:selected').attr('example'));">
-    <option value="exists" example="">Exists</value>
-    <option value="not exists" example="">Doesn't exist</value>
-    <option value="equals" example="val">Equals</value>
-    <option value="not equals" example="val">Not Equals</value>
-    <option value="like" example="%val%">Like</value>
-    <option value="not like" example="%val%">Not Like</value>
-    <option value="matches" example="^.*(val1|val2).*$">Matches</value>
-    <option value="doesn't match" example="^.*(val1|val2).*$">Doesn't Matches</value>
+  <select name="op[]" class="qfield" onchange="changeOperator($(this), true);">
+    <option value="exists"        <?php echo sel($op[$i],'exists','selected')?>        example="">Exists</value>
+    <option value="not exists"    <?php echo sel($op[$i],'not exists','selected')?>    example="">Doesn't exist</value>
+    <option value="equals"        <?php echo sel($op[$i],'equals','selected')?>        example="val">Equals</value>
+    <option value="not equals"    <?php echo sel($op[$i],'not equals','selected')?>    example="val">Not Equals</value>
+    <option value="like"          <?php echo sel($op[$i],'like','selected')?>          example="%val%">Like</value>
+    <option value="not like"      <?php echo sel($op[$i],'not like','selected')?>      example="%val%">Not Like</value>
+    <option value="matches"       <?php echo sel($op[$i],'matches','selected')?>       example="^.*(val1|val2).*$">Matches</value>
+    <option value="doesn't match" <?php echo sel($op[$i],"doesn't match",'selected')?> example="^.*(val1|val2).*$">Doesn't Matches</value>
   </select>
   <label for="val">; Value: </label>
-  <input name="val[]" type="text" value="<?php echo $val?>" class="qfield"/>
-  <input type="button" onclick="var line=$(this).parent('p.queryline').clone();$('#querylines').append(line);" value="+"/>
+  <input name="val[]" type="text" value="<?php echo $val[$i]?>" class="qfield"/>
+  <input type="button" onclick="copyQuery($(this))" value="+"/>
 </p>
+<?php }?>
 </div>
 </fieldset>
 <div>
@@ -129,7 +147,8 @@ div.clear {clear: both;}
     <input id="querySubmit" name="query" value="Show Results" type="submit"/>
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
-</p>
+    <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+    </p>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
 </div>

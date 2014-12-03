@@ -23,7 +23,9 @@ $(document).ready(function(){
     $("input[name=query]").click(function(){
         $("input[name=query]").removeClass("clicked");
         $(this).addClass("clicked");
-    })
+    });
+    
+    updateQueryFields();
 
     $("#myform").submit(function(event){
         
@@ -33,6 +35,11 @@ $(document).ready(function(){
         prepSubmit();
         
         if (query == "CSV Extract") return true;
+        if (query == "Permalink") {
+        	$("#myform").attr("method", "get");        	
+        	$("#myform").attr("action", "selfQuery.php");
+        	return true;
+        }
         spinner.spin($("#myform")[0]);
         
         // Stop form from submitting normally
@@ -93,11 +100,13 @@ $(document).ready(function(){
             spinner.stop();
             sorttable.makeSortable($("#export table").get(0));
         });
+        
     });
 
     $(document).ajaxSend(function(){
         $("#myform select,#myform input").attr("disabled",true);
     });
+    if (document.location.search != "") $("#myform").submit();
 });
 
 function doedit() {
@@ -120,3 +129,42 @@ function prepSubmit() {
     $('#queryform input,#queryform select').attr('disabled',false);
 }
 
+function changeOperator(thisnode, setval) {
+	var example = thisnode.find('option:selected').attr('example');
+	var ival = thisnode.siblings('input.qfield');
+	if (setval) ival.val(example);
+	if (example == "") {
+		ival.hide();
+		ival.siblings("label[for=val]").hide();
+	} else {
+		ival.show();
+		ival.siblings("label[for=val]").show();
+	}
+}
+
+function changeField(thisnode) {
+	var iop = thisnode.siblings("select['name=op[]']");
+	var ival = thisnode.siblings('input.qfield');
+	if (thisnode.val() == "") {
+		iop.hide();
+		iop.siblings("label[for=op]").hide();
+		ival.hide();
+		ival.siblings("label[for=val]").hide();
+	} else {
+		iop.show();
+		iop.siblings("label[for=op]").show();
+		ival.show();
+		ival.siblings("label[for=val]").show();
+		changeOperator(iop, false);
+	}
+}
+
+function updateQueryFields() {
+	$("select[name='field[]']").each(function(){changeField($(this))});
+}
+
+function copyQuery(thisnode) {
+	var line=thisnode.parent('p.queryline').clone();
+	$('#querylines').append(line);
+	changeField(line.find("select[name='field[]']"));
+}

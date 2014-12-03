@@ -56,9 +56,17 @@ foreach ($result as $row) {
 return $mfields;
 }
 
-function sel($val,$test) {
-    return ($val == $test) ? 'selected' : '';
+function sel($val,$test,$res) {
+    return ($val == $test) ? $res : '';
 } 
+
+function arrsel($arr,$test,$res) {
+	foreach($arr as $val) {
+		if ($val == $test) return $res;
+	}
+	return '';
+}
+
 
 function initFilters() {
 	$FILTERS = array();
