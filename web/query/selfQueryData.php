@@ -242,7 +242,7 @@ EOF;
         foreach($dfield as $k) {
             if (!is_numeric($k)) continue;
             $f = $mfields[$k];
-            $l = preg_match("^dc\.(date|identifier).*",$f) ? "" : "[en]";
+            $l = preg_match("/^dc\.(date|identifier).*/",$f) ? "" : "[en]";
            echo ",{$f}{$l}";
         }
         echo "\n";
