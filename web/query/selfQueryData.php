@@ -230,7 +230,9 @@ EOF;
         echo "<th>Item Status</th>";
         foreach($dfield as $k) {
             if (!is_numeric($k)) continue;
-            echo "<th class=''>{$mfields[$k]}[en]</th>";
+            $f = $mfields[$k];
+            $l = preg_match("^dc\.(date|identifier).*",$f) ? "" : "[en]";
+            echo "<th class=''>{$f}{$l}</th>";
         }
         echo "</tr>";
         echo "</thead>";
@@ -238,8 +240,10 @@ EOF;
     } else {
         echo "id,collection,dc.title[en]";
         foreach($dfield as $k) {
-           if (!is_numeric($k)) continue;
-           echo ",{$mfields[$k]}[en]";
+            if (!is_numeric($k)) continue;
+            $f = $mfields[$k];
+            $l = preg_match("^dc\.(date|identifier).*",$f) ? "" : "[en]";
+           echo ",{$f}{$l}";
         }
         echo "\n";
     }
