@@ -133,6 +133,7 @@ div.clear {clear: both;}
   <fieldset class="fields">
     <legend>Fields to display</legend>
     <?php echo $dsel?>
+    <div style="font-style:italic">Provenance, Accession Date, Available Date cannot be exported</div>
   </fieldset>
   <fieldset class="filters">
     <legend>Filters</legend>

@@ -174,5 +174,5 @@ function copyQuery(thisnode) {
 }
 
 function showUsage() {
-	$("#usage").dialog({height: 400, width: 300});
+	$("#usage").dialog({height: 400, width: 300, title: "Fields Used"});
 }

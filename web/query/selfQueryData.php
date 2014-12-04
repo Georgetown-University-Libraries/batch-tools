@@ -213,11 +213,11 @@ EOF;
             die("Error in SQL query");
         }
         $gresult = $gstmt->fetchAll();
-        $tbl = "<button onclick='showUsage()'>Usage</button><div id='usage' style='display:none'>";
+        $tbl = "<button onclick='showUsage()'>Usage</button><div id='usage' style='display:none'><ul>";
         foreach ($gresult as $row) {
-            $tbl .= "<div>{$row[0]}({$row[1]})</div>";
+            $tbl .= "<li>{$row[0]}({$row[1]})</li>";
         }
-        $tbl .= "</div>";
+        $tbl .= "</ul></div>";
 
     }
     
