@@ -202,6 +202,7 @@ EOF;
         	$ccount = $row[0];
         }
 
+/*
         $gstmt = $dbh->prepare($gsql);
         $gresult = $gstmt->execute($arr);
         if (!$gresult) {
@@ -216,6 +217,7 @@ EOF;
             $tbl .= "<tr><td>{$row[0]}</td><td>{$row[1]}</td></tr>";
         }
         $tbl .= "</table>";
+*/
     }
     
     $stmt = $dbh->prepare($sql);
