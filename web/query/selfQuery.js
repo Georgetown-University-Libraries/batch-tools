@@ -98,7 +98,7 @@ $(document).ready(function(){
                 $("#queryCsv").attr("disabled", true);
             }
             spinner.stop();
-            sorttable.makeSortable($("#export table").get(0));
+            sorttable.makeSortable($("#export table.sortable").get(0));
         });
         
     });
