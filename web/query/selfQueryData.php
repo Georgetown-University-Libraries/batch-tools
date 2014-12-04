@@ -212,7 +212,7 @@ EOF;
             die("Error in SQL query");
         }
         $gresult = $gstmt->fetchAll();
-        $tbl = "<div>";
+        $tbl = "<button onclick='showUsage()'>Usage</button><div id='usage' style='display:none'>";
         foreach ($gresult as $row) {
             $tbl .= "<div>{$row[0]}({$row[1]})</div>";
         }
@@ -237,11 +237,11 @@ EOF;
 
     if (!$isCSV) {
         echo "<div id='export'>";
-        echo $tbl;
         echo "<input type='hidden' id='rescount' name='rescount' value='{$rescount}' readonly size='6'/>";
         echo "<div><input type='text' id='cstart' name='cstart' value='{$cstart}' readonly size='6'/> to ";
         echo "<input type='text' id='cend' name='cend' value='{$cend}' readonly size='6'/>";
         echo " of <input type='text' id='ccount' name='ccount' value='{$ccount}' readonly size='6'/> items</div>";
+        echo $tbl;
         echo "</div>";
         echo "<table class='sortable'>";
         echo "<thead>";

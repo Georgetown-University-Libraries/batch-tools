@@ -172,3 +172,7 @@ function copyQuery(thisnode) {
 	$('#querylines').append(line);
 	changeField(line.find("select[name='field[]']"));
 }
+
+function showUsage() {
+	$("#usage").popup();
+}
