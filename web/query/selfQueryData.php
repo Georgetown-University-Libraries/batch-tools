@@ -213,7 +213,7 @@ EOF;
         $gresult = $gstmt->fetchAll();
         $tbl = "<table><tr><th>Field</th><th>Count</th></tr>";
         foreach ($gresult as $row) {
-            $tbl = "<tr><td>$row[0]</td><td>$row[1]</td></tr>";
+            $tbl .= "<tr><td>{$row[0]}</td><td>{$row[1]}</td></tr>";
         }
         $tbl .= "</table>";
     }
