@@ -57,8 +57,9 @@ $csql = $sql;
 $gsql = $sql;
 
 $csql .= "select count(*) from collection c inner join item i on i.owning_collection=c.collection_id where";
-$gsql .= "select mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) ".
+$gsql .= "select msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) ".
     "from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id ".
+    "inner join metadataschemaregistry msr on msr.metadata_schema_id=mfr.metadata_schema_id " .
     "inner join item i on mv.item_id=i.item_id inner join collection c on i.owning_collection=c.collection_id where";
 
 $sql .= <<< EOF
@@ -182,7 +183,7 @@ EOF;
     
     $sql .= $where . " limit {$MAX} offset {$offset}";
     $csql .= $where;
-    $gsql .= $where . " group by mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end order by count(*) desc";
+    $gsql .= $where . " group by msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end order by count(*) desc";
     
     $dbh = $CUSTOM->getPdoDb();
     
