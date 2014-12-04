@@ -59,7 +59,7 @@ $gsql = $sql;
 $csql .= "select count(*) from collection c inner join item i on i.owning_collection=c.collection_id where";
 $gsql .= "select mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) ".
     "from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id ".
-    "inner join i on mv.item_id=i.item_id inner join collection c on i.owning_collection=c.collection_id where";
+    "inner join item i on mv.item_id=i.item_id inner join collection c on i.owning_collection=c.collection_id where";
 
 $sql .= <<< EOF
 select 
