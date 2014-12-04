@@ -52,7 +52,7 @@ if (count($_POST) > 0) {
 
 $sep = $isCSV ? "||" : "<hr/>";
 
-$sql = ($comm != "") ? query::comm2coll() : "";
+$sql  = ($comm != "") ? query::comm2coll() : "";
 $csql = $sql;
 $gsql = $sql;
 
