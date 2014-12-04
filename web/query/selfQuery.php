@@ -85,7 +85,7 @@ $header->litPageHeader();
 form {width: 1000px;}
 button.edit {float: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
-fieldset.fields {width: 40%; display:inline;float: left; margin: 20px;}
+fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 </style>
 </head>
