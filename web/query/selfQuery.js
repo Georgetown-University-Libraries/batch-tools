@@ -98,7 +98,11 @@ $(document).ready(function(){
                 $("#queryCsv").attr("disabled", true);
             }
             spinner.stop();
-            sorttable.makeSortable($("#export table.sortable").get(0));
+            var sortt = $("#export table.sortable");
+            if (sortt.is("*")) {
+                sorttable.makeSortable(sortt.get(0));
+            	
+            }
         });
         
     });
