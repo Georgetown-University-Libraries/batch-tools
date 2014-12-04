@@ -140,8 +140,8 @@ div.clear {clear: both;}
     <?php echo $filsel?>
   </fieldset>
   
-  <div class="clear"/>
 </div>
+<div class="clear"/>
 <p align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
     <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>
