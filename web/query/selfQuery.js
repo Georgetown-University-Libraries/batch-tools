@@ -174,5 +174,5 @@ function copyQuery(thisnode) {
 }
 
 function showUsage() {
-	$("#usage").popup();
+	$("#usage").dialog();
 }
