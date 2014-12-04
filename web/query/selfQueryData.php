@@ -58,8 +58,8 @@ $gsql = $sql;
 
 $csql .= "select count(*) from collection c inner join item i on i.owning_collection=c.collection_id where";
 $gsql .= "select mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) ".
-    "from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id where item_id in ".
-    "(select item_id from collection c inner join item i on i.owning_collection=c.collection_id where";
+    "from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id ".
+    "inner join i on mv.item_id=i.item_id inner join collection c on i.owning_collection=c.collection_id where";
 
 $sql .= <<< EOF
 select 
@@ -182,7 +182,7 @@ EOF;
     
     $sql .= $where . " limit {$MAX} offset {$offset}";
     $csql .= $where;
-    $gsql .= $where . ") group by mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end order by count(*) desc";
+    $gsql .= $where . " group by mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end order by count(*) desc";
     
     $dbh = $CUSTOM->getPdoDb();
     
@@ -212,11 +212,11 @@ EOF;
             die("Error in SQL query");
         }
         $gresult = $gstmt->fetchAll();
-        $tbl = "<table><tr><th>Field</th><th>Count</th></tr>";
+        $tbl = "<div>";
         foreach ($gresult as $row) {
-            $tbl .= "<tr><td>{$row[0]}</td><td>{$row[1]}</td></tr>";
+            $tbl .= "<div>{$row[0]}({$row[1]})</div>";
         }
-        $tbl .= "</table>";
+        $tbl .= "</div>";
 
     }
     
