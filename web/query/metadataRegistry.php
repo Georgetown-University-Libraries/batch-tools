@@ -54,9 +54,10 @@ div.clear {clear: both;}
 </head>
 
 <body>
+<?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div>
   <fieldset class="fields">
-    <legend>Fields to display</legend>
+    <legend>Available MetadataRegistries</legend>
     <?php echo $table?>
   </fieldset>
     
