@@ -25,7 +25,7 @@ function initSchema($CUSTOM) {
 $sql = <<< EOF
 SELECT metadata_schema_id, namespace, short_id
 FROM metadatschemaregistry
-ORDER BY 
+ORDER BY metadata_schema_id
 EOF;
 
 $dbh = $CUSTOM->getPdoDb();
