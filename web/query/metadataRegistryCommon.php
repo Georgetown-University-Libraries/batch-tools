@@ -24,7 +24,7 @@ function initSchema($CUSTOM) {
 
 $sql = <<< EOF
 SELECT metadata_schema_id, namespace, short_id
-FROM metadatschemaregistry
+FROM metadataschemaregistry
 ORDER BY metadata_schema_id
 EOF;
 
