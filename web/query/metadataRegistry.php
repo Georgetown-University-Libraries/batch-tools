@@ -28,7 +28,7 @@ $CUSTOM = custom::instance();
 $hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
-$table = "<table><th>Metadata Registries</th>";
+$table = "<table><th colspan=3>Available Metadata Registries</th>";
 foreach ($mschemas as $mschema) {
     $table .= "<tr><td>$mschema[0]</td><td>$mschema[1]</td><td>$mschema[2]</td>";
 }
@@ -46,10 +46,7 @@ $header->litPageHeader();
 ?>
 
 <style type="text/css">
-form {width: 1000px;}
-button.edit {float: right;}
-#spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
-fieldset.fields {width: 40%; display:inline;float: left; margin: 20px;}
+fieldset.fields {width: 60%; display:inline; float: center; margin: 20px;}
 div.clear {clear: both;}
 </style>
 </head>
@@ -58,7 +55,7 @@ div.clear {clear: both;}
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div>
   <fieldset class="fields">
-    <legend>Available MetadataRegistries</legend>
+    <legend>MetadataRegistries</legend>
     <?php echo $table?>
   </fieldset>
     
