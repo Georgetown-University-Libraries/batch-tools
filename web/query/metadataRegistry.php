@@ -25,6 +25,7 @@ include 'queries.php';
 include 'metadataRegistryCommon.php';
 
 $CUSTOM = custom::instance();
+$hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
 $table = "<table><th>Metadata Registries</th>";
