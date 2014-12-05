@@ -45,10 +45,10 @@ foreach ($result as $row) {
 	$schema_namespace = $row[1];
 	$schema_name = $row[2];
 	
-	$mschema=array(array($id, $schema_namespace, $schema_name));
+	array_push($mschemas, array($id, $schema_namespace, $schema_name));
 }
 
-return $mschema;
+return $mschemas;
 
 }
 
