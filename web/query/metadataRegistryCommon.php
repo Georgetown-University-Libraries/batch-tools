@@ -39,7 +39,7 @@ if (!$result) {
 	die("Error in SQL query");
 }
 
-$mschemas = array(array());
+$mschemas = array();
 foreach ($result as $row) {
 	$id = $row[0];
 	$schema_namespace = $row[1];
