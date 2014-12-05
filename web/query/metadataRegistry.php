@@ -29,7 +29,7 @@ $CUSTOM = custom::instance();
 $mschemas = initSchema($CUSTOM);
 $table = "<table><th>Metadata Registries</th>";
 foreach ($mschemas as $mschema) {
-    $table .= "<tr><td>$mschema[0]</td><td>$mschema[1]</td><td>$schema[2]</td>";
+    $table .= "<tr><td>$mschema[0]</td><td>$mschema[1]</td><td>$mschema[2]</td>";
 }
 $table .= "</table>";
 
