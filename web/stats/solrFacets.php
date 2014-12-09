@@ -33,6 +33,11 @@ class solrFacets {
 			"colcount" => 8,
 			"query" => "&facet.date.start=NOW/YEAR/DAY-1YEAR&facet.date.end=NOW/YEAR/DAY" . urlencode("+1YEAR") . "&facet.date.gap=".urlencode("+3MONTHS")
 		),
+		"6YEAR" => array(
+			"desc" => "Yearly, 6 Years",
+			"colcount" => 6,
+			"query" => "&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW/YEAR/DAY" . urlencode("+1YEAR") . "&facet.date.gap=".urlencode("+1YEAR")
+		),
 	  );
 
 	  self::$TYPE = array(

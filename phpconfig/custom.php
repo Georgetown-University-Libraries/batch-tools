@@ -58,6 +58,19 @@ class custom {
 	public function showQueryTools() {return $this->isPdo();}
 	public function showStatsTools() {return true;}
 	public function getSolrPath() {return "https://localhost/solr/";}
+	public function getSolrDir() {return "/dspace/solr";}
+	public function getSolrShards() {
+		$shardpfx = preg_replace("|https?://|","", $this->getSolrPath());
+		$shard = array();
+		$myDirectory = opendir($this->getSolrDir());
+		while($entryName = readdir($myDirectory)) {
+			if (preg_match("|^statistics(-\d\d\d\d)?$|",$entryName)) {
+			    $shard[] = $shardpfx . $entryName;
+			}
+		}
+		closedir($myDirectory);
+		return implode(",", $shard);
+	}
 	public function getOaiPath() {return "https://localhost/oai/";}
 	public function getQueryVal($sql, $arg) {return "";}
 	
