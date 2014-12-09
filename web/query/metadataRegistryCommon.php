@@ -53,7 +53,7 @@ return $mschemas;
 }
 
 
-function initFields($CUSTOM) {
+function initField($CUSTOM) {
 
 $sql = <<< EOF
 SELECT mf.metadata_field_id, ms.short_id, mf.element, mf.qualifier, mf.scope_note,

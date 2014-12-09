@@ -35,7 +35,7 @@ foreach ($mschemas as $mschema) {
 }
 $tablems .= "</table>";
 
-$mfields = initSchema($CUSTOM);
+$mfields = initField($CUSTOM);
 $tablemf = "<table><th colspan=3>Metadata Fields</th>";
 $tablemf .= "<tr><td>Schema Name</td><td>Field Name</td><td>Field Description</td></tr>";
 foreach ($mfields as $mfield) {
