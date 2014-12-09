@@ -98,7 +98,11 @@ $(document).ready(function(){
                 $("#queryCsv").attr("disabled", true);
             }
             spinner.stop();
-            sorttable.makeSortable($("#export table").get(0));
+            var sortt = $("#export table.sortable");
+            if (sortt.is("*")) {
+                sorttable.makeSortable(sortt.get(0));
+            	
+            }
         });
         
     });
@@ -167,4 +171,8 @@ function copyQuery(thisnode) {
 	var line=thisnode.parent('p.queryline').clone();
 	$('#querylines').append(line);
 	changeField(line.find("select[name='field[]']"));
+}
+
+function showUsage() {
+	$("#usage").dialog({height: 500, width: 400, title: "Fields Used"});
 }

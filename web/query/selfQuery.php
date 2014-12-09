@@ -46,6 +46,7 @@ $MAX = 2000;
 $mfields = initFields($CUSTOM);
 $dsel = "<select id='dfield' name='dfield[]' multiple size='10'>";
 foreach ($mfields as $mfi => $mfn) {
+    if (preg_match("/^dc\.(date\.accessioned|date\.available|description\.provenance).*/", $mfn)) continue;
     $t = arrsel($dfield,$mfi,'selected');
     $dsel .= "<option value='{$mfi}' {$t}>{$mfn}</option>";
 }
@@ -84,7 +85,7 @@ $header->litPageHeader();
 form {width: 1000px;}
 button.edit {float: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
-fieldset.fields {width: 40%; display:inline;float: left; margin: 20px;}
+fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 </style>
 </head>
@@ -132,14 +133,15 @@ div.clear {clear: both;}
   <fieldset class="fields">
     <legend>Fields to display</legend>
     <?php echo $dsel?>
+    <div style="font-style:italic">Provenance, Accession Date, Available Date cannot be exported</div>
   </fieldset>
   <fieldset class="filters">
     <legend>Filters</legend>
     <?php echo $filsel?>
   </fieldset>
   
-  <div class="clear"/>
 </div>
+<div class="clear"/>
 <p align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
     <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>

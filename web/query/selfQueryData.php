@@ -52,10 +52,15 @@ if (count($_POST) > 0) {
 
 $sep = $isCSV ? "||" : "<hr/>";
 
-$sql = ($comm != "") ? query::comm2coll() : "";
-$csql = ($comm != "") ? query::comm2coll() : "";
+$sql  = ($comm != "") ? query::comm2coll() : "";
+$csql = $sql;
+$gsql = $sql;
 
 $csql .= "select count(*) from collection c inner join item i on i.owning_collection=c.collection_id where";
+$gsql .= "select msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) ".
+    "from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id ".
+    "inner join metadataschemaregistry msr on msr.metadata_schema_id=mfr.metadata_schema_id " .
+    "inner join item i on mv.item_id=i.item_id inner join collection c on i.owning_collection=c.collection_id where";
 
 $sql .= <<< EOF
 select 
@@ -178,10 +183,12 @@ EOF;
     
     $sql .= $where . " limit {$MAX} offset {$offset}";
     $csql .= $where;
+    $gsql .= $where . " group by msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end order by count(*) desc";
     
     $dbh = $CUSTOM->getPdoDb();
     
     $ccount = 0;
+    $tbl = "";
     if (!$isCSV) {
         $cstmt = $dbh->prepare($csql);
         $cresult = $cstmt->execute($arr);
@@ -195,6 +202,23 @@ EOF;
         foreach ($cresult as $row) {
         	$ccount = $row[0];
         }
+
+
+        $gstmt = $dbh->prepare($gsql);
+        $gresult = $gstmt->execute($arr);
+        if (!$gresult) {
+            print($gsql);
+            print_r($arr);
+            print_r($dbh->errorInfo());
+            die("Error in SQL query");
+        }
+        $gresult = $gstmt->fetchAll();
+        $tbl = "<button onclick='showUsage()'>Usage</button><div id='usage' style='display:none'><ul>";
+        foreach ($gresult as $row) {
+            $tbl .= "<li>{$row[0]}({$row[1]})</li>";
+        }
+        $tbl .= "</ul></div>";
+
     }
     
     $stmt = $dbh->prepare($sql);
@@ -217,8 +241,9 @@ EOF;
         echo "<input type='hidden' id='rescount' name='rescount' value='{$rescount}' readonly size='6'/>";
         echo "<div><input type='text' id='cstart' name='cstart' value='{$cstart}' readonly size='6'/> to ";
         echo "<input type='text' id='cend' name='cend' value='{$cend}' readonly size='6'/>";
-        echo " of <input type='text' id='ccount' name='ccount' value='{$ccount}' readonly size='6'/> items</div>";
-        echo "</div>";
+        echo " of <input type='text' id='ccount' name='ccount' value='{$ccount}' readonly size='6'/> items ";
+        echo $tbl;
+        echo "</div></div>";
         echo "<table class='sortable'>";
         echo "<thead>";
         echo "<tr class='header'>";
@@ -230,7 +255,9 @@ EOF;
         echo "<th>Item Status</th>";
         foreach($dfield as $k) {
             if (!is_numeric($k)) continue;
-            echo "<th class=''>{$mfields[$k]}[en]</th>";
+            $f = $mfields[$k];
+            $l = preg_match("/^dc\.(date|identifier).*/",$f) ? "" : "[en]";
+            echo "<th class=''>{$f}{$l}</th>";
         }
         echo "</tr>";
         echo "</thead>";
@@ -238,8 +265,10 @@ EOF;
     } else {
         echo "id,collection,dc.title[en]";
         foreach($dfield as $k) {
-           if (!is_numeric($k)) continue;
-           echo ",{$mfields[$k]}[en]";
+            if (!is_numeric($k)) continue;
+            $f = $mfields[$k];
+            $l = preg_match("/^dc\.(date|identifier).*/",$f) ? "" : "[en]";
+           echo ",{$f}{$l}";
         }
         echo "\n";
     }

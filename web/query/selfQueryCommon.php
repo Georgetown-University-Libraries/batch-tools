@@ -30,6 +30,7 @@ select
   (msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end) as name
 from metadatafieldregistry mfr
 inner join metadataschemaregistry msr on msr.metadata_schema_id=mfr.metadata_schema_id
+where mfr.metadata_field_id in (select metadata_field_id from metadatavalue)
 order by msr.short_id, mfr.element, mfr.qualifier;
 EOF;
 
