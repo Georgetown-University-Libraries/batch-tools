@@ -28,12 +28,12 @@ $CUSTOM = custom::instance();
 $hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
-$tablemr = "<table><th colspan=3>Available Metadata Registries</th>";
-$tablemr .= "<tr><td>schema id</td><td>namespace</td><td>schema name</td></tr>";
+$table = "<table><th colspan=3>Available Metadata Registries</th>";
+$table .= "<tr><td>schema id</td><td>namespace</td><td>schema name</td></tr>";
 foreach ($mschemas as $mschema) {
-    $tablemr .= "<tr><td>$mschema[0]</td><td>$mschema[1]</td><td><a href=\"metadataField.php?name={$mschemas}\">$mschema[2]</td></tr>";
+    $table .= "<tr><td>$mschema[0]</td><td>$mschema[1]</td><td><a href=\"metadataField.php?name={$mschemas}\">$mschema[2]</td></tr>";
 }
-$tablemr .= "</table>";
+$table .= "</table>";
 
 $status = "";
 ?>
