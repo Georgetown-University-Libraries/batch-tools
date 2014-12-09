@@ -58,11 +58,11 @@ class custom {
 	public function showQueryTools() {return $this->isPdo();}
 	public function showStatsTools() {return true;}
 	public function getSolrPath() {return "https://localhost/solr/";}
-	public function getSolrDir() {return "/dspace";}
+	public function getSolrDir() {return "/dspace/solr";}
 	public function getSolrShards() {
-		$shardpfx = preg_replace("|https?://|","", getSolrPath());
+		$shardpfx = preg_replace("|https?://|","", $this->getSolrPath());
 		$shard = array();
-		$myDirectory = opendir(getSolrPath());
+		$myDirectory = opendir($this->getSolrDir());
 		while($entryName = readdir($myDirectory)) {
 			if (preg_match("|^statistics(-\d\d\d\d)?|",$entry_name)) {
 			    $shard[] = $shardpfx . $entryName;
