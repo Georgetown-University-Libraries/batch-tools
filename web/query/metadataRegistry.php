@@ -63,7 +63,11 @@ div.clear {clear: both;}
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="table">
-    <?php echo $table?>
+    <?php echo $tablems?>
+</div>
+<br /><br />
+<div id="table">
+    <?php echo $tablemf?>
 </div>
     
 <div class="clear" />
