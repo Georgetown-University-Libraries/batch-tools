@@ -52,4 +52,39 @@ return $mschemas;
 
 }
 
+
+function initFields($CUSTOM) {
+
+$sql = <<< EOF
+SELECT mf.metadata_field_id, ms.short_id, mf.element, mf.qualifier, mf.scope_note,
+  (ms.short_id || '.' || mf.element || case when mf.qualifier is null then '' else '.' || mf.qualifier end) as name
+FROM metadatafieldregistry mf
+INNER JOIN metadataschemaregistry ms on ms.metadata_schema_id = mf.metadata_schema_id
+ORDER BY ms.short_id, mf.element, mf.qualifier;
+EOF;
+
+$dbh = $CUSTOM->getPdoDb();
+$stmt = $dbh->prepare($sql);
+$result = $stmt->execute(array());
+$result = $stmt->fetchAll();
+
+if (!$result) {
+	print($sql);
+	print_r($dbh->errorInfo());
+	die("Error in SQL query");
+}
+
+$mfields = array();
+foreach ($result as $row) {
+	$schema_name = $row[1];
+	$field_name = $row[5];
+	$field_description = $row[4];
+	
+	array_push($mfields, array($schema_name, $field_name, $field_description));
+}
+
+return $mfields;
+
+}
+
 ?>

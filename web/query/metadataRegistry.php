@@ -28,14 +28,21 @@ $CUSTOM = custom::instance();
 $hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
-$table = "<table><th colspan=3>Available Metadata Registries</th>";
-$table .= "<tr><td>schema id</td><td>namespace</td><td>schema name</td></tr>";
+$tablems = "<table><th colspan=3>Available Metadata Registries</th>";
+$tablems .= "<tr><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
 foreach ($mschemas as $mschema) {
-    $table .= "<tr><td>$mschema[0]</td><td>$mschema[1]</td><td><a href=\"metadataField.php?name={$mschemas}\">$mschema[2]</td></tr>";
+    $tablems .= "<tr><td>$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td>$mschema[2]</td></tr>";
 }
-$table .= "</table>";
+$tablems .= "</table>";
 
-$status = "";
+$mfields = initSchema($CUSTOM);
+$tablemf = "<table><th colspan=3>Metadata Fields</th>";
+$tablemf .= "<tr><td>Schema Name</td><td>Field Name</td><td>Field Description</td></tr>";
+foreach ($mfields as $mfield) {
+    $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td><td>$mfield[2]</td></tr>";
+}
+$tablemf .= "</table>";
+
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +54,8 @@ $header->litPageHeader();
 ?>
 
 <style type="text/css">
-table {width: 80%; margin: 20px;}
+div#table {margin: 10px; auto}
+table {width: 70%; margin: 20px;}
 div.clear {clear: both;}
 </style>
 </head>
