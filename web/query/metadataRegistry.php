@@ -29,7 +29,7 @@ $hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
 $tablems = "<h3>Available Metadata Registries</h3>";
-$tablems .= "<table><tr><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
+$tablems .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
 foreach ($mschemas as $mschema) {
     $tablems .= "<tr><td>$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td>$mschema[2]</td></tr>";
 }
@@ -37,7 +37,7 @@ $tablems .= "</table>";
 
 $mfields = initField($CUSTOM);
 $tablemf = "<h3>Metadata Fields</h3>";
-$tablemf .= "<table><tr><td>Field Name</td><td style=\"width: 70%\">Field Description</td></tr>";
+$tablemf .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Field Name</td><td style=\"width: 70%\">Field Description</td></tr>";
 foreach ($mfields as $mfield) {
     $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td></tr>";
 }
