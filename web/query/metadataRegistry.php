@@ -28,16 +28,16 @@ $CUSTOM = custom::instance();
 $hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
-$tablems = "<table><th colspan=3>Available Metadata Registries</th>";
-$tablems .= "<tr><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
+$tablems = "<h3>Available Metadata Registries</h3>";
+$tablems .= "<table><th><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></th>";
 foreach ($mschemas as $mschema) {
     $tablems .= "<tr><td>$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td>$mschema[2]</td></tr>";
 }
 $tablems .= "</table>";
 
 $mfields = initField($CUSTOM);
-$tablemf = "<table><th colspan=3>Metadata Fields</th>";
-$tablemf .= "<tr><td>Schema Name</td><td>Field Name</td><td>Field Description</td></tr>";
+$tablemf = "<h3><th colspan=3>Metadata Fields</h3>";
+$tablemf .= "<table><th><td>Schema Name</td><td>Field Name</td><td>Field Description</td></th>";
 foreach ($mfields as $mfield) {
     $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td><td>$mfield[2]</td></tr>";
 }
@@ -54,8 +54,8 @@ $header->litPageHeader();
 ?>
 
 <style type="text/css">
-div#table {margin: 10px; auto}
-table {width: 70%; margin: 20px;}
+div#table {margin: 10px auto;}
+table {width: 80%; margin: 20px;}
 div.clear {clear: both;}
 </style>
 </head>
