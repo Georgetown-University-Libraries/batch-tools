@@ -69,7 +69,7 @@ if (!isset($_GET["debug"])){
 } else {
   header('Content-type: text');
   $rows=100;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?indent=on&version=2.2&q=". $qparm . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards=localhost/solr&indent=on&version=2.2&q=". $qparm . 
        "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
