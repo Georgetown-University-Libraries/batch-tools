@@ -48,7 +48,7 @@ $qparm = $q . $type['query'] . $auth['query'] . $ip['query'] . $time . $botstr;
 if (!isset($_GET["debug"])){ 
   header('Content-type: application/json');
   $rows = 0;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?indent=on&version=2.2&q=". $qparm . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards=localhost/solr&indent=on&version=2.2&q=". $qparm . 
 	   "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
@@ -97,7 +97,7 @@ $header->litHeader(array());
 
 $rows=2000;
 
- $req = $CUSTOM->getSolrPath() . "statistics/select?shards=localhost/solr&indent=on&version=2.2&q=". $qparm . 
+ $req = $CUSTOM->getSolrPath() . "statistics/select?indent=on&version=2.2&q=". $qparm . 
        "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
