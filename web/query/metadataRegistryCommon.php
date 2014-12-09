@@ -76,11 +76,10 @@ if (!$result) {
 
 $mfields = array();
 foreach ($result as $row) {
-	$schema_name = $row[1];
 	$field_name = $row[5];
 	$field_description = $row[4];
 	
-	array_push($mfields, array($schema_name, $field_name, $field_description));
+	array_push($mfields, array($field_name, $field_description));
 }
 
 return $mfields;

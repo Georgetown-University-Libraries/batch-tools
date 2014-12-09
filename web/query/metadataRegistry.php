@@ -36,10 +36,10 @@ foreach ($mschemas as $mschema) {
 $tablems .= "</table>";
 
 $mfields = initField($CUSTOM);
-$tablemf = "<h3><th colspan=3>Metadata Fields</h3>";
+$tablemf = "<h3>Metadata Fields</h3>";
 $tablemf .= "<table><tr><td>Schema Name</td><td>Field Name</td><td>Field Description</td></tr>";
 foreach ($mfields as $mfield) {
-    $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td><td>$mfield[2]</td></tr>";
+    $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td></tr>";
 }
 $tablemf .= "</table>";
 
@@ -65,7 +65,7 @@ div.clear {clear: both;}
 <div id="table">
     <?php echo $tablems?>
 </div>
-<br /><br />
+<br />
 <div id="table">
     <?php echo $tablemf?>
 </div>
