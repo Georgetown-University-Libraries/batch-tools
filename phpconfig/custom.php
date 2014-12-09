@@ -64,7 +64,7 @@ class custom {
 		$shard = array();
 		$myDirectory = opendir($this->getSolrDir());
 		while($entryName = readdir($myDirectory)) {
-			if (preg_match("|^statistics(-\d\d\d\d)?|",$entry_name)) {
+			if (preg_match("|^statistics(-\d\d\d\d)?|",$entryName)) {
 			    $shard[] = $shardpfx . $entryName;
 			}
 		}
