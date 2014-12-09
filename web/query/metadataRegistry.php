@@ -37,7 +37,7 @@ $tablems .= "</table>";
 
 $mfields = initField($CUSTOM);
 $tablemf = "<h3>Metadata Fields</h3>";
-$tablemf .= "<table><tr><td>Field Name</td><td width=\"70%\">Field Description</td></tr>";
+$tablemf .= "<table><tr><td>Field Name</td><td style=\"width: 70%\">Field Description</td></tr>";
 foreach ($mfields as $mfield) {
     $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td></tr>";
 }
