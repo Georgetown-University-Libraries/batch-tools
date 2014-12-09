@@ -31,7 +31,7 @@ $mschemas = initSchema($CUSTOM);
 $tablems = "<h3>Available Metadata Registries</h3>";
 $tablems .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
 foreach ($mschemas as $mschema) {
-    $tablems .= "<tr><td>$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td>$mschema[2]</td></tr>";
+    $tablems .= "<tr><td style=\"text-align: center\">$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td style=\"text-align: center\">$mschema[2]</td></tr>";
 }
 $tablems .= "</table>";
 
@@ -56,6 +56,7 @@ $header->litPageHeader();
 <style type="text/css">
 div#table {margin: 10px auto;}
 table {width: 80%; margin: 20px;}
+table td {padding-left: 10px;}
 div.clear {clear: both;}
 </style>
 </head>
