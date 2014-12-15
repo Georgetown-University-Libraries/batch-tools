@@ -284,7 +284,13 @@ then
   export JAVA_OPTS=-Xmx1200m   
   echo ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
+elif [ "$1" = "normalize-lang" ]
+then
+  echo "Update lang from null to en" >> ${RUNNING} 2>&1 
+  /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang is null and metadata_field_id not in ( select metadata_field_id from metadatafieldregistry where element='date' or element='identifier');" >> ${RUNNING} 2>&1
 
+  echo "Update lang from '',en_US, en_us to en" >> ${RUNNING} 2>&1 
+  /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang in ('','en_US','en_us') and metadata_field_id not in ( select metadata_field_id from metadatafieldregistry where element='date' or element='identifier');" >> ${RUNNING} 2>&1
 else
   echo "Unsupported DSpace Command" >> ${RUNNING}
 fi
