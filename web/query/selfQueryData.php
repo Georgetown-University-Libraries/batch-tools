@@ -314,7 +314,7 @@ EOF;
             foreach($dfield as $k) {
                 if (!is_numeric($k)) continue;
                 $col++;
-                echo "<td>{$row[$col]}</td>";
+                echo "<td class='dataval'>{$row[$col]}</td>";
             }
             echo "</tr>";
         }

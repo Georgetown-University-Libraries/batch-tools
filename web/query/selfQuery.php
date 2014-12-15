@@ -87,6 +87,7 @@ button.edit {float: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
+.dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px;}
 </style>
 </head>
 <body>
