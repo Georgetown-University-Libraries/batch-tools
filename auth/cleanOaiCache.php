@@ -31,7 +31,7 @@ header('Content-type: text/html; charset=UTF-8');
 <html>
 <head>
 <?php 
-$header = new LitHeader("Clear OAI Cache");
+$header = new LitHeader("Update OAI and Clear OAI Cache");
 $header->litPageHeader();
 ?>
 </head>
