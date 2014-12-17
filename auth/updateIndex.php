@@ -40,7 +40,8 @@ $header->litPageHeader();
 <form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data" >
 <div id="status"><?php echo $status?></div>
 <fieldset class="mapfile">
-<p>The text and discovery indexes are updated on a nightly basis.  This option will refresh them immediately.</p>
+<p>The text, discovery, and OAI indexes are updated on a nightly basis.  This option will refresh them immediately.</p>
+<p>Note: In DSpace 4, the text index is no longer applicable.  That step will be skipped.</p>
 <input name="hidden" type="hidden" value="x"/>
 <p align="center">
 	<input id="submit" type="submit" title="Submit Job"/>
