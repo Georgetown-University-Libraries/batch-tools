@@ -46,6 +46,14 @@ function update_oai {
   fi 
 }
 
+function update_oai_opt {
+  if [ $VER -ge 3 ]
+  then
+    export JAVA_OPTS=-Xmx1200m   
+    echo "${DSROOT}/bin/dspace oai import -o" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace oai import -o >> ${RUNNING} 2>&1
+  fi 
+}
 
 function update_solr {
   $(update_discovery)
@@ -172,8 +180,9 @@ then
   $(discovery_opt)
 elif [ "$1" = "gu-update-index" ]
 then
-  ${index_update}
+  $(index_update)
   $(discovery_opt)
+  $(update_oai_opt)
 
 elif [ "$1" = "gu-change-parent" ]
 then
@@ -282,6 +291,10 @@ then
 elif [ "$1" = "gu-clean-oai-cache" ]
 then
   export JAVA_OPTS=-Xmx1200m   
+
+  echo ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1 
+
   echo ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
 elif [ "$1" = "normalize-lang" ]
