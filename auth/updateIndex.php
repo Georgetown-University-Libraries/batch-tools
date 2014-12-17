@@ -30,7 +30,7 @@ header('Content-type: text/html; charset=UTF-8');
 <html>
 <head>
 <?php 
-$header = new LitHeader("Update Text and Discovery Index");
+$header = new LitHeader("Update/Optimize Text, Discovery, and OAI Indicies");
 $header->litPageHeader();
 ?>
 </head>
