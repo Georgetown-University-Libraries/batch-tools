@@ -22,6 +22,9 @@ include '../header.php';
 $status = "";
 $CUSTOM = custom::instance();
 $shards = $CUSTOM->getSolrShardNames();
+
+echo $CUSTOM->getSolrShards();exit;
+
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
@@ -85,7 +88,6 @@ $header->litPageHeader();
   <select id="rep" name="rep">
     <option value="search" selected>Discovery/Search</option>
     <option value="oai">OAI</option>
-    <option value="statistics">Statistics</option>
     <?php 
     foreach($shards as $shard) {
         echo "<option value='{$shard}'>{$shard}</option>";
