@@ -61,7 +61,7 @@ class custom {
 	public function getSolrDir() {return "/dspace/solr";}
 	public function getSolrShards() {
 		$shardpfx = preg_replace("|https?://|","", $this->getSolrPath());
-		$shards = getSolrShardNames();
+		$shards = $this->getSolrShardNames();
         $shardurl = array();
         foreach($shards as $shard) {
             $shardurl[] = $shardpfx . $shard;
