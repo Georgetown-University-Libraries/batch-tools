@@ -20,6 +20,8 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 */
 include '../header.php';
 $status = "";
+$CUSTOM = custom::instance();
+$shards = $CUSTOM->getSolrShards();
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
@@ -84,12 +86,11 @@ $header->litPageHeader();
     <option value="search" selected>Discovery/Search</option>
     <option value="oai">OAI</option>
     <option value="statistics">Statistics</option>
-    <option value="tstatistics">Temp Statistics</option>
-    <option value="statistics-2010">Statistics 2010</option>
-    <option value="statistics-2011">Statistics 2011</option>
-    <option value="statistics-2012">Statistics 2012</option>
-    <option value="statistics-2013">Statistics 2013</option>
-    <option value="statistics-2014">Statistics 2014</option>
+    <?php 
+    foreach($shards as $shard) {
+        echo "<option value='{$shard}'>{$shard}</option>";
+    }
+    ?>
   </select>
 </p>
 <p>
