@@ -96,8 +96,13 @@ var getStatsFunc = function(cell, tbd) {
 };
 
 $(document).ready(function(){
-    var nodes = $("tr.comm .data-all,tr.scomm .data-all, tr.coll .data-all");
-    nodes.each(function(index){
+    $("tr.comm .data-all");.each(function(index){
+        setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
+    });
+    $("tr.scomm .data-all");.each(function(index){
+        setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
+    });
+    $("tr.coll .data-all");.each(function(index){
         setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
     });
 
