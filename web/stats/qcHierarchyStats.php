@@ -33,7 +33,7 @@ $header->litPageHeader();
 var first = true;
 var complete = 0;
 
-var getStatsFunc = function(cell) {  
+var getStatsFunc = function(cell, tbd) {  
     var id = cell.attr("id");
     var arr = /(comm|coll)-(\d+)-all/.exec(id);
     if (arr.length <= 2) return;
@@ -96,9 +96,9 @@ var getStatsFunc = function(cell) {
 };
 
 $(document).ready(function(){
-    var tbd = $("tr.comm .data-all,tr.scomm .data-all, tr.coll .data-all").length;
-    tbd.each(function(index){
-        setTimeout(getStatsFunc, index * 400, $(this));
+    var nodes = $("tr.comm .data-all,tr.scomm .data-all, tr.coll .data-all");
+    nodes.each(function(index){
+        setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
     });
 
     $("td.data").show();
