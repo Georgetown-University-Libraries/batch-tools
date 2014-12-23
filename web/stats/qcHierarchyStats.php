@@ -34,68 +34,70 @@ var first = true;
 var complete = 0;
 $(document).ready(function(){
     var tbd = $(".data-all").length;
-    $(".data-all").each(function(index){setTimeout(function(){  
-        var cell = $(this);
-        var id = cell.attr("id");
-        var arr = /(comm|coll)-(\d+)-all/.exec(id);
-        if (arr.length <= 2) return;
-        var prefix = id.replace("all","");
-          var req = "solrStats.php?" +
-            arr[1] + "=" + arr[2] +
-            "&duration=" + $("#duration").val() +
-            "&type=" + $("#type").val() +
-            "&auth=" + $("#auth").val() +
-            "&ip=" + $("#ip").val()
-            ;
+    $(".data-all").each(function(index){
+        var func = function(cell) {  
+            var id = cell.attr("id");
+            var arr = /(comm|coll)-(\d+)-all/.exec(id);
+            if (arr.length <= 2) return;
+            var prefix = id.replace("all","");
+            var req = "solrStats.php?" +
+                arr[1] + "=" + arr[2] +
+                "&duration=" + $("#duration").val() +
+                "&type=" + $("#type").val() +
+                "&auth=" + $("#auth").val() +
+                "&ip=" + $("#ip").val()
+                ;
             
-          $.getJSON(req,function(data){
-              var colcount = parseInt($("#colcount").val());  
-              var count=0;
-              var times = new Array();
-              for(var time in data.facet_counts.facet_dates.time) {
-                  times[count] = time;
-                $("#t"+count).text(time.substr(0,10));
-                count++;
-                if (count >= colcount) break;
-            }              
+            $.getJSON(req,function(data){
+                var colcount = parseInt($("#colcount").val());  
+                var count=0;
+                var times = new Array();
+                for(var time in data.facet_counts.facet_dates.time) {
+                    times[count] = time;
+                    $("#t"+count).text(time.substr(0,10));
+                    count++;
+                    if (count >= colcount) break;
+                }              
             
-            count = 0;
-              for(var time in data.facet_counts.facet_dates.time) {
-                  var range = "&time=[" + time + "+TO+" + ((count + 1 == times.length) ? "NOW" : times[count+1]) + "]";
-                  var val = parseInt(data.facet_counts.facet_dates.time[time]);
-                $("#"+prefix+count).html("<a href='"+req+range+"&debug=rpt'>0</a>");        
-                $("#"+prefix+count).find("a").text(val);        
-                count++;
-                if (count > colcount) break;
-              }
-            first = false;
-              cell.html("<a href='"+req+"&debug=rpt'>0</a>");
-              cell.find("a").text(parseInt(data.response.numFound));
-              complete++;
-              if (complete == tbd) {
-                  $(".tot").each(function(){
-                      var v = 0;
-                      var id = $(this).attr("id");
-                      var cid = id.replace("tot-",".");
-                      $("tr.comm").find(cid).each(
-                        function(){
-                            v += parseInt($(this).text());
-                        }
-                      )
-                      $(this).text(v);
-                  });
-                  $("#totall").each(function(){
-                      var v = 0;
-                      $("tr.comm").find(".data-all").each(
-                        function(){
-                            v += parseInt($(this).text());
-                        }
-                      )
-                      $(this).text(v);
-                  });
-              }
-          });
-    }, index * 1000)});
+                count = 0;
+                for(var time in data.facet_counts.facet_dates.time) {
+                    var range = "&time=[" + time + "+TO+" + ((count + 1 == times.length) ? "NOW" : times[count+1]) + "]";
+                    var val = parseInt(data.facet_counts.facet_dates.time[time]);
+                    $("#"+prefix+count).html("<a href='"+req+range+"&debug=rpt'>0</a>");        
+                    $("#"+prefix+count).find("a").text(val);        
+                    count++;
+                    if (count > colcount) break;
+                }
+                first = false;
+                cell.html("<a href='"+req+"&debug=rpt'>0</a>");
+                cell.find("a").text(parseInt(data.response.numFound));
+                complete++;
+                if (complete == tbd) {
+                    $(".tot").each(function(){
+                        var v = 0;
+                        var id = $(this).attr("id");
+                        var cid = id.replace("tot-",".");
+                        $("tr.comm").find(cid).each(
+                            function(){
+                                v += parseInt($(this).text());
+                            }
+                        );
+                        $(this).text(v);
+                    });
+                    $("#totall").each(function(){
+                        var v = 0;
+                        $("tr.comm").find(".data-all").each(
+                            function(){
+                                v += parseInt($(this).text());
+                            }
+                        );
+                        $(this).text(v);
+                    });
+                }
+            });
+        };
+        setTimeout(func, index * 1000, $(this));
+    });
 
     $("td.data").show();
     $("input.cfilter").change(
