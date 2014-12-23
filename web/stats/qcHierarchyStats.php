@@ -33,7 +33,7 @@ $header->litPageHeader();
 var first = true;
 var complete = 0;
 $(document).ready(function(){
-    var tbd = $(".data-all").length;
+    var tbd = $("tr.comm .data-all,tr.scomm .data-all, tr.coll .data-all").length;
     $(".data-all").each(function(index){
         var func = function(cell) {  
             var id = cell.attr("id");
@@ -96,7 +96,7 @@ $(document).ready(function(){
                 }
             });
         };
-        setTimeout(func, index * 1000, $(this));
+        setTimeout(func, index * 100, $(this));
     });
 
     $("td.data").show();
@@ -124,6 +124,7 @@ $(document).ready(function(){
 <style type="text/css">
   tr.comm {background-color: #e4c3f4;}
   tr.scomm {background-color: cyan;}
+  tr.coll {display: none;}
   td.data {display:none;}
 </style>
 
@@ -179,7 +180,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
 <b>Show:</b>
 <input type="checkbox" name="cfilter" class="cfilter" value="comm" id="cfcomm" checked><label for="cfcomm">Communities</label>
 <input type="checkbox" name="cfilter" class="cfilter" value="scomm" id="cfscomm"checked><label for="cfscomm">Sub-communities</label>
-<input type="checkbox" name="cfilter" class="cfilter" value="coll" id="cfcoll" checked><label for="cfcoll">Collections</label>
+<input type="checkbox" name="cfilter" class="cfilter" value="coll" id="cfcoll"><label for="cfcoll">Collections</label>
 </div>
 
 <div id="ins">
