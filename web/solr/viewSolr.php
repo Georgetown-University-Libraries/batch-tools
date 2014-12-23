@@ -22,7 +22,7 @@ include '../header.php';
 $status = "";
 $CUSTOM = custom::instance();
 $shards = $CUSTOM->getSolrShards();
-echo count($shards) + "shards";
+print_r($shards);
 exit;
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
