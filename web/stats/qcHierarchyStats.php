@@ -130,7 +130,7 @@ $(document).ready(function(){
 </script>
 <style type="text/css">
   tr.comm {background-color: #e4c3f4;}
-  tr.scomm {background-color: cyan;}
+  tr.scomm {background-color: cyan; display: none}
   tr.coll {display: none;}
   td.data {display:none;}
 </style>
@@ -186,7 +186,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
 <div>
 <b>Show:</b>
 <input type="checkbox" name="cfilter" class="cfilter" value="comm" id="cfcomm" checked><label for="cfcomm">Communities</label>
-<input type="checkbox" name="cfilter" class="cfilter" value="scomm" id="cfscomm"checked><label for="cfscomm">Sub-communities</label>
+<input type="checkbox" name="cfilter" class="cfilter" value="scomm" id="cfscomm"><label for="cfscomm">Sub-communities</label>
 <input type="checkbox" name="cfilter" class="cfilter" value="coll" id="cfcoll"><label for="cfcoll">Collections</label>
 </div>
 
