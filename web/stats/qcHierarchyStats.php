@@ -95,15 +95,30 @@ var getStatsFunc = function(cell, tbd) {
     });
 };
 
-$(document).ready(function(){
-    $("tr.comm .data-all").each(function(index){
-        setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
-    });
+var initScomm = false;
+var initColl = false;
+
+var doScomm = function() {
+    if (initScomm) return;
+    initScomm = true;
     $("tr.scomm .data-all").each(function(index){
-        setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
+        setTimeout(getStatsFunc, index * 400, $(this), 0);
     });
+}
+
+var doColl = function() {
+    if (initColl) return;
+    initColl = true;
     $("tr.coll .data-all").each(function(index){
-        setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
+        setTimeout(getStatsFunc, index * 400, $(this), 0);
+    });
+}
+
+$(document).ready(function(){
+    $("#cfscomm").click(doScomm);
+    $("#cfcoll").click(doColl);
+    $("tr.comm .data-all").each(function(index){
+        setTimeout(getStatsFunc, index * 400, $(this), $("tr.comm .data-all").length);
     });
 
     $("td.data").show();
