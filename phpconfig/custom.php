@@ -61,16 +61,24 @@ class custom {
 	public function getSolrDir() {return "/dspace/solr";}
 	public function getSolrShards() {
 		$shardpfx = preg_replace("|https?://|","", $this->getSolrPath());
-		$shard = array();
-		$myDirectory = opendir($this->getSolrDir());
-		while($entryName = readdir($myDirectory)) {
-			if (preg_match("|^statistics(-\d\d\d\d)?$|",$entryName)) {
-			    $shard[] = $shardpfx . $entryName;
-			}
-		}
-		closedir($myDirectory);
-		return implode(",", $shard);
+		$shards = getSolrShardNames();
+        $shardurl = array();
+        foreach($shards as $shard) {
+            $shardurl[] = $shardpfx . $shard;
+        }
+		return implode(",", $shardurl);
 	}
+    public function getSolrShardNames() {
+        $shard = array();
+        $myDirectory = opendir($this->getSolrDir());
+        while($entryName = readdir($myDirectory)) {
+            if (preg_match("|^statistics(-\d\d\d\d)?$|",$entryName)) {
+                $shard[] = $entryName;
+            }
+        }
+        closedir($myDirectory);
+        return $shard;
+    }
 	public function getOaiPath() {return "https://localhost/oai/";}
 	public function getQueryVal($sql, $arg) {return "";}
 	

@@ -21,9 +21,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 include '../header.php';
 $status = "";
 $CUSTOM = custom::instance();
-$shards = $CUSTOM->getSolrShards();
-print_r($shards);
-exit;
+$shards = $CUSTOM->getSolrShardNames();
 testArgs();
 header('Content-type: text/html; charset=UTF-8');
 ?>
