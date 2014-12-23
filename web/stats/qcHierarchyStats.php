@@ -96,13 +96,13 @@ var getStatsFunc = function(cell, tbd) {
 };
 
 $(document).ready(function(){
-    $("tr.comm .data-all");.each(function(index){
+    $("tr.comm .data-all").each(function(index){
         setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
     });
-    $("tr.scomm .data-all");.each(function(index){
+    $("tr.scomm .data-all").each(function(index){
         setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
     });
-    $("tr.coll .data-all");.each(function(index){
+    $("tr.coll .data-all").each(function(index){
         setTimeout(getStatsFunc, index * 400, $(this), $(".data-all").length);
     });
 
