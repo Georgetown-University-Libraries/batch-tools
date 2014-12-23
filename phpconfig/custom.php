@@ -77,6 +77,7 @@ class custom {
             }
         }
         closedir($myDirectory);
+        asort($shard);
         return $shard;
     }
 	public function getOaiPath() {return "https://localhost/oai/";}
