@@ -151,7 +151,7 @@ EOF;
        )
     )
 EOF;
-    $FILTERS['nothumb'] = array(
+    $FILTERS['notext'] = array(
         'name' => 'PDF, No Text', 
         'sql' => $q, 
     );
