@@ -108,9 +108,6 @@ EOF;
       inner join bundle2bitstream b2b
       on 
         b2b.bundle_id = b.bundle_id
-      inner join bitstream bit
-      on 
-        bit.bitstream_id = b2b.bitstream_id
     )
     and not exists (
       select 1 
@@ -123,13 +120,10 @@ EOF;
       inner join bundle2bitstream b2b
       on 
         b2b.bundle_id = b.bundle_id
-      inner join bitstream bit
-      on 
-        bit.bitstream_id = b2b.bitstream_id
     )
 EOF;
     $FILTERS['nothumb'] = array(
-        'name' => 'No Thumbnail', 
+        'name' => 'No Thumbnail for Original', 
         'sql' => $q, 
     );
 
@@ -182,7 +176,7 @@ EOF;
     )
 EOF;
     $FILTERS['notext'] = array(
-        'name' => 'PDF, No Text', 
+        'name' => 'No Text for Original Document', 
         'sql' => $q, 
     );
 
