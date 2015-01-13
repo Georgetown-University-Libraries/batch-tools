@@ -97,18 +97,6 @@ EOF;
     );
     
     $q = <<< EOF
-    and exists (
-      select 1 
-      from item2bundle i2b 
-      inner join bundle b 
-      on 
-        i2b.bundle_id = b.bundle_id 
-        and b.name = 'ORIGINAL' 
-        and i.item_id = i2b.item_id
-      inner join bundle2bitstream b2b
-      on 
-        b2b.bundle_id = b.bundle_id
-    )
     and not exists (
       select 1 
       from item2bundle i2b 
@@ -120,6 +108,24 @@ EOF;
       inner join bundle2bitstream b2b
       on 
         b2b.bundle_id = b.bundle_id
+      inner join bitstream bit
+      on 
+        bit.bitstream_id = b2b.bitstream_id
+    )
+    and exists (
+      select 1 
+      from item2bundle i2b 
+      inner join bundle b 
+      on 
+        i2b.bundle_id = b.bundle_id 
+        and b.name = 'ORIGINAL' 
+        and i.item_id = i2b.item_id
+      inner join bundle2bitstream b2b
+      on 
+        b2b.bundle_id = b.bundle_id
+      inner join bitstream bit
+      on 
+        bit.bitstream_id = b2b.bitstream_id
     )
 EOF;
     $FILTERS['nothumb'] = array(
