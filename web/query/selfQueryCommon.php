@@ -97,7 +97,7 @@ EOF;
     );
     
     $q = <<< EOF
-    and count(select 1 from item2bundle i2b where i.item_id = i2b.item_id) > 0
+    and exists (select 1 from item2bundle i2b where i.item_id = i2b.item_id) 
     and not exists (
       select 1 
       from item2bundle i2b 
