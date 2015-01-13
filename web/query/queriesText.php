@@ -78,6 +78,7 @@ $subq = <<< EOF
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       inner join bitstreamformatregistry bfr on bit.bitstream_format_id = bfr.bitstream_format_id
         and bfr.mimetype in (
+             'application/pdf',
              'text/plain',
              'text/html',
              'application/msword',
