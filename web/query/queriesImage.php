@@ -32,6 +32,10 @@ $subq = <<< EOF
         on i2b.bundle_id = b.bundle_id
         and b.name = 'ORIGINAL'
         and i.item_id = i2b.item_id
+      inner join bundle2bitstream b2b
+        on b2b.bundle_id=b.bundle_id
+      inner join bitstream bit
+        on bit.bitstream_id = b2b.bitstream_id 
     ) 
 EOF;
 new query("itemCountWithOriginal","Num Items with Original",$subq,"image", new testValTrue(),array("Accession")); 
@@ -45,6 +49,10 @@ $subq = <<< EOF
         on i2b.bundle_id = b.bundle_id
         and b.name = 'THUMBNAIL'
         and i.item_id = i2b.item_id
+      inner join bundle2bitstream b2b
+        on b2b.bundle_id=b.bundle_id
+      inner join bitstream bit
+        on bit.bitstream_id = b2b.bitstream_id 
     ) 
 EOF;
 new query("itemCountWithThumbnail","Num Items with Thumbnail",$subq,"image", new testValTrue(),array("Accession")); 
