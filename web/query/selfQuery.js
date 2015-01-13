@@ -98,7 +98,7 @@ $(document).ready(function(){
                 $("#queryCsv").attr("disabled", true);
             }
             spinner.stop();
-            var sortt = $("#export table.sortable");
+            var sortt = $("#export table.selfQuery");
             if (sortt.is("*")) {
                 sorttable.makeSortable(sortt.get(0));
             	
