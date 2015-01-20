@@ -63,7 +63,7 @@ $filsel .= "</div>";
 
 
 $status = "";
-$hasPerm = $CUSTOM->isUserCollectionOwner();
+$hasPerm = $CUSTOM->isUserViewer();
 if ($isCSV) {
     header("Content-type: text/csv");
     header("Content-Disposition: attachment; filename=export.csv"); 
