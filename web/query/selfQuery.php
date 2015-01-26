@@ -185,6 +185,7 @@ div.clear {clear: both;}
     <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
     <div class="clear"/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+    <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
     </div>
   </fieldset>  
 </div>
