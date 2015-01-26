@@ -165,7 +165,7 @@ div.clear {clear: both;}
   <fieldset id="savebox">
     <select id="saved" name="saved">
       <option> - Choose Saved Search -</option>
-      <optgroup label="My Saved Searches">
+      <optgroup label="My Saved Searches" id="mysaved">
       </optgroup>
       <optgroup label="Common Searches">
       <?php

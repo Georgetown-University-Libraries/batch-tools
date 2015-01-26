@@ -26,9 +26,12 @@ function save(&$saved, $name, $desc, $permalink) {
 
 function initSavedSearches() {
     $saved = array();
-    save($saved, "Mult Original 2000", "...", "saved=&savename=2015-01-26_15%3A40%3A00&savedesc=&coll=&comm=&field%5B%5D=&op%5B%5D=exists&val%5B%5D=&filter%5B%5D=multoriginal&offset=0&MAX=2000");
-    save($saved, "Mult Original 20", "2...", "saved=&savename=2015-01-26_15%3A40%3A00&savedesc=&coll=&comm=&field%5B%5D=&op%5B%5D=exists&val%5B%5D=&filter%5B%5D=multoriginal&offset=0&MAX=20");
-    save($saved, "Mult Original 10", "3...", "saved=&savename=2015-01-26_15%3A40%3A00&savedesc=&coll=&comm=&field%5B%5D=&op%5B%5D=exists&val%5B%5D=&filter%5B%5D=multoriginal&offset=0&MAX=10");
+    save(
+      $saved, 
+      "Mult Original", 
+      "This is an example of a saved search for illustrative purposes", 
+      "coll=&comm=&field%5B%5D=&op%5B%5D=exists&val%5B%5D=&filter%5B%5D=multoriginal"
+    );
     return $saved;
 }
 

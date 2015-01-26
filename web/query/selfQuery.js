@@ -112,7 +112,22 @@ $(document).ready(function(){
     });
     if (document.location.search != "") $("#myform").submit();
     
-    $("#saved").change(function(){document.location.search =  $("#saved").val();})
+    $("#saved").change(function(){document.location.search =  $("#saved").val();});
+    var savename = $("#savename").val(); 
+    if (savename != "") {
+    	localStorage[savename] = JSON.stringify({
+      	  "desc" : $("#savedesc").val(),
+    	  "permalink" : document.location.query    		
+    	}); 
+    }
+    for(var name in localStorage) {
+    	var obj = JSON.parse(localStorage[name]);
+    	var opt = $("<option/>");
+    	opt.append(name);
+    	opt.attr("value",obj.permalink);
+    	opt.attr("title",obj.desc);
+    	$("#mysaved")append(opt);
+    }
 });
 
 function doedit() {
