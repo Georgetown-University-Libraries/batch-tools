@@ -117,7 +117,7 @@ div.clear {clear: both;}
     ?>
     </optgroup>
   </select>
-  <input type="text" name="savename" id="savename" value="<?echo $curdate?>"/>
+  <input type="text" name="savename" id="savename" value="<?php echo $curdate?>"/>
   <button type="button" name="saveit" id="saveit">Save Search</button>
 </div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
