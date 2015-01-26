@@ -96,6 +96,8 @@ div.clear {clear: both;}
 #savebox {display:inline; padding: 15px;}
 #savebox label {display: block; float: left; width: 150px;}
 #savebox input {display: block; float: left; }
+#savecontent {display: none;}
+#savebox:hover #savecontent {display: block;}
 </style>
 </head>
 <body>
@@ -106,19 +108,6 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
-<div>
-  <fieldset id="savebox">
-    <div class="clear"/>
-    <label for="savename">Search Name:</label>
-    <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
-    <div class="clear"/>
-    <label for="savedesc">Search Desc:</label>
-    <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
-    <div class="clear"/>
-    <button type="button" name="saveit" id="saveit">Save Search</button>
-  </fieldset>
-  
-</div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
 <div id="querylines">
@@ -171,7 +160,11 @@ div.clear {clear: both;}
     <input id="querySubmit" name="query" value="Show Results" type="submit"/>
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
-    <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+</p>
+<div>
+  <fieldset id="savebox">
+    <label>Saved Searches and Permalinks<label>
+    <div id="savecontent">
     <select id="saved" name="saved">
       <option> - Choose Saved Search -</option>
       <optgroup label="My Saved Searches">
@@ -184,7 +177,17 @@ div.clear {clear: both;}
       ?>
       </optgroup>
     </select>
-</p>
+    <div class="clear"/>
+    <label for="savename">Search Name:</label>
+    <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
+    <div class="clear"/>
+    <label for="savedesc">Search Desc:</label>
+    <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
+    <div class="clear"/>
+    <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+    </div>
+  </fieldset>  
+</div>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
 </div>
