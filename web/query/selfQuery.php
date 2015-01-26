@@ -94,8 +94,8 @@ fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
 #savebox {display:inline; padding: 15px;}
-#savebox label {display: block, float: left; width: 250px;}
-#savebox input {display: block, float: left; }
+#savebox label {display: block; float: left; width: 250px;}
+#savebox input {display: block; float: left; }
 </style>
 </head>
 <body>
