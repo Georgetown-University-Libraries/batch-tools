@@ -177,15 +177,18 @@ div.clear {clear: both;}
     </select>
     <label>Saved Searches and Permalinks<label>
     <div id="savecontent">
-    <div class="clear"/>
-    <label for="savename" class="field">Search Name:</label>
-    <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
-    <div class="clear"/>
-    <label for="savedesc" class="field">Search Desc:</label>
-    <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
-    <div class="clear"/>
-    <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
-    <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
+      <div>
+        <label for="savename" class="field">Search Name:</label>
+        <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
+        <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+        <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
+        <div class="clear"/>
+      </div>
+      <div>
+        <label for="savedesc" class="field">Search Desc:</label>
+        <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
+        <div class="clear"/>
+      </div>
     </div>
   </fieldset>  
 </div>
