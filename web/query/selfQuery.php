@@ -39,7 +39,8 @@ $isCSV  = (util::getArg("query","") == "CSV Extract");
 $offset    = util::getArg("offset","0");
 
 $saved = initSavedSearches();
-$curdate = date("Y-m-d_H:i:s");
+$curname = date("Y-m-d_H:i:s");
+$cursearch = "";
 
 if (count($field) == 0) array_push($field,"");
 if (count($op) == 0) array_push($op,"");
@@ -117,7 +118,10 @@ div.clear {clear: both;}
     ?>
     </optgroup>
   </select>
-  <input type="text" name="savename" id="savename" value="<?php echo $curdate?>"/>
+  <label for="savename">Search Name</label>
+  <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
+  <label for="savedesc">Search Desc</label>
+  <input type="text" name="savedesc" id="savedesc" value="<?php echo $curdesc?>"/>
   <button type="button" name="saveit" id="saveit">Save Search</button>
 </div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
