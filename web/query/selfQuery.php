@@ -93,9 +93,9 @@ button.edit {float: right;}
 fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox {display:inline; padding: 15px;}
-#savebox label {display: block; float: left; width: 150px;}
-#savebox input {display: block; float: left; margin: 0 auto; width: 80%; }
+#savebox {display:inline; padding: 15px; margin: 0 auto; width: 80%; }
+#savebox label.field {display: block; float: left; width: 150px;}
+#savebox input {display: block; float: left;}
 #savecontent {display: none;}
 #savebox:hover #savecontent {display: block;}
 </style>
@@ -178,10 +178,10 @@ div.clear {clear: both;}
       </optgroup>
     </select>
     <div class="clear"/>
-    <label for="savename">Search Name:</label>
+    <label for="savename" class="field">Search Name:</label>
     <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
     <div class="clear"/>
-    <label for="savedesc">Search Desc:</label>
+    <label for="savedesc" class="field">Search Desc:</label>
     <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
     <div class="clear"/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
