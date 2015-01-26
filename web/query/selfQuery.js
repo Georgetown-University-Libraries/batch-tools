@@ -79,7 +79,7 @@ $(document).ready(function(){
                 offset: form.find("input[name=offset]").val(),
                 dfield : dfield,
                 filter : dfilter,
-}
+            }
         ).done(function( data ) {
             $( "#exporthold" ).empty().append( data );
             $("#myform select,#myform input").attr("disabled",false);
@@ -111,6 +111,8 @@ $(document).ready(function(){
         $("#myform select,#myform input").attr("disabled",true);
     });
     if (document.location.search != "") $("#myform").submit();
+    
+    $("#saved").change(function(){document.location.search =  $("#saved").val();})
 });
 
 function doedit() {
