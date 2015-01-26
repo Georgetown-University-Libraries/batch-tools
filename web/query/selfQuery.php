@@ -93,7 +93,8 @@ button.edit {float: right;}
 fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox {display:inline;}
+#savebox {display:inline; padding: 15px;}
+#savebox label {width: 200px;}
 </style>
 </head>
 <body>
@@ -121,10 +122,10 @@ div.clear {clear: both;}
       </optgroup>
     </select>
     <br/>
-    <label for="savename">Search Name</label>
+    <label for="savename">Search Name:</label>
     <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
     <br/>
-    <label for="savedesc">Search Desc</label>
+    <label for="savedesc">Search Desc:</label>
     <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
     <br/>
     <button type="button" name="saveit" id="saveit">Save Search</button>
