@@ -93,7 +93,7 @@ button.edit {float: right;}
 fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox {display:inline; padding: 15px; margin: 0 auto; width: 80%; }
+#savebox {padding: 15px; margin: 0 auto; width: 80%; }
 #savebox label.field {display: block; float: left; width: 150px;}
 #savebox input {display: block; float: left;}
 #savecontent {display: none;}
