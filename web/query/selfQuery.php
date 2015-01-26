@@ -94,7 +94,6 @@ fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
 #savebox {display:inline;}
-#saved, #savebox {float: left;}
 </style>
 </head>
 <body>
@@ -106,21 +105,22 @@ div.clear {clear: both;}
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
 <div>
-  <select id="saved" name="saved">
-    <option/>
-    <optgroup label="Recent Searches">
-    </optgroup>
-    <optgroup label="My Saved Searches">
-    </optgroup>
-    <optgroup label="Common Searches">
-    <?php
-      foreach($saved as $name => $search) {
-          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
-      }
-    ?>
-    </optgroup>
-  </select>
   <fieldset id="savebox">
+    <select id="saved" name="saved">
+      <option/>
+      <optgroup label="Recent Searches">
+      </optgroup>
+      <optgroup label="My Saved Searches">
+      </optgroup>
+      <optgroup label="Common Searches">
+      <?php
+        foreach($saved as $name => $search) {
+          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
+        }
+      ?>
+      </optgroup>
+    </select>
+    <br/>
     <label for="savename">Search Name</label>
     <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
     <br/>
