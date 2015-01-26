@@ -93,7 +93,8 @@ button.edit {float: right;}
 fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox {display:inline; float: right;}
+#savebox {display:inline;}
+#saved, #savebox {float: left;}
 </style>
 </head>
 <body>
@@ -119,7 +120,7 @@ div.clear {clear: both;}
     ?>
     </optgroup>
   </select>
-  <div id="savebox">
+  <fieldset id="savebox">
     <label for="savename">Search Name</label>
     <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
     <br/>
@@ -127,7 +128,7 @@ div.clear {clear: both;}
     <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
     <br/>
     <button type="button" name="saveit" id="saveit">Save Search</button>
-  </div>
+  </fieldset>
   <div class="clear"/>
 </div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
