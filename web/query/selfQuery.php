@@ -93,6 +93,7 @@ button.edit {float: right;}
 fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
+#savebox {display:inline; float: left;}
 </style>
 </head>
 <body>
@@ -103,7 +104,7 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
-<div id="savebox">
+<div>
   <select id="saved" name="saved">
     <option/>
     <optgroup label="Recent Searches">
@@ -118,7 +119,7 @@ div.clear {clear: both;}
     ?>
     </optgroup>
   </select>
-  <br/>
+  <div id="savebox">
   <label for="savename">Search Name</label>
   <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
   <br/>
@@ -126,6 +127,7 @@ div.clear {clear: both;}
   <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
   <br/>
   <button type="button" name="saveit" id="saveit">Save Search</button>
+  </div>
 </div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
