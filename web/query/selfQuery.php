@@ -39,8 +39,8 @@ $isCSV  = (util::getArg("query","") == "CSV Extract");
 $offset    = util::getArg("offset","0");
 
 $saved = initSavedSearches();
-$curname = date("Y-m-d_H:i:s");
-$cursearch = "";
+$savename = util::getArg("savename","");
+$savedesc = util::getArg("savedesc","");
 
 if (count($field) == 0) array_push($field,"");
 if (count($op) == 0) array_push($op,"");
@@ -163,8 +163,6 @@ div.clear {clear: both;}
 </p>
 <div>
   <fieldset id="savebox">
-    <label>Saved Searches and Permalinks<label>
-    <div id="savecontent">
     <select id="saved" name="saved">
       <option> - Choose Saved Search -</option>
       <optgroup label="My Saved Searches">
@@ -177,12 +175,14 @@ div.clear {clear: both;}
       ?>
       </optgroup>
     </select>
+    <label>Saved Searches and Permalinks<label>
+    <div id="savecontent">
     <div class="clear"/>
     <label for="savename" class="field">Search Name:</label>
-    <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
+    <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>"/>
     <div class="clear"/>
     <label for="savedesc" class="field">Search Desc:</label>
-    <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
+    <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>"/>
     <div class="clear"/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
     </div>
