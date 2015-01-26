@@ -22,6 +22,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 include '../header.php';
 include 'queries.php';
 include 'selfQueryCommon.php';
+include 'selfQuerySaved.php';
 
 $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
@@ -36,6 +37,8 @@ $filter = util::getArg("filter",array());
 $val    = util::getArg("val",array());
 $isCSV  = (util::getArg("query","") == "CSV Extract");
 $offset    = util::getArg("offset","0");
+
+$saved = initSavedSearches();
 
 if (count($field) == 0) array_push($field,"");
 if (count($op) == 0) array_push($op,"");
@@ -105,6 +108,11 @@ div.clear {clear: both;}
     <optgroup label="My Saved Searches">
     </optgroup>
     <optgroup label="Common Searches">
+    <?php
+      foreach($saved as $name => $search) {
+          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
+      }
+    ?>
     </optgroup>
   </select>
   <input type="text" name="savename" id="savename"/>
