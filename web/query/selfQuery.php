@@ -95,7 +95,7 @@ div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
 #savebox {display:inline; padding: 15px;}
 #savebox label {display: block; float: left; width: 150px;}
-#savebox input {display: block; float: left; }
+#savebox input {display: block; float: left; margin: 0 auto; width: 80%; }
 #savecontent {display: none;}
 #savebox:hover #savecontent {display: block;}
 </style>
