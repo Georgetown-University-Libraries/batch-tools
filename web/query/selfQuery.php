@@ -103,7 +103,7 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
-<div>
+<div id="savebox">
   <select id="saved" name="saved">
     <option/>
     <optgroup label="Recent Searches">
@@ -118,10 +118,13 @@ div.clear {clear: both;}
     ?>
     </optgroup>
   </select>
+  <br/>
   <label for="savename">Search Name</label>
   <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
+  <br/>
   <label for="savedesc">Search Desc</label>
-  <input type="text" name="savedesc" id="savedesc" value="<?php echo $curdesc?>"/>
+  <input type="text" name="savedesc" id="savedesc" size="50" value="<?php echo $curdesc?>"/>
+  <br/>
   <button type="button" name="saveit" id="saveit">Save Search</button>
 </div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
