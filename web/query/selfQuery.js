@@ -126,7 +126,7 @@ $(document).ready(function(){
     	opt.append(name);
     	opt.attr("value",obj.permalink);
     	opt.attr("title",obj.desc);
-    	$("#mysaved")append(opt);
+    	$("#mysaved").append(opt);
     }
 });
 
