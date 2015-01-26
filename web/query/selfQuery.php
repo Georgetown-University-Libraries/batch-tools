@@ -98,6 +98,18 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
+<div>
+  <select id="saved" name="saved">
+    <optgroup label="Recent Searches">
+    </optgroup>
+    <optgroup label="My Saved Searches">
+    </optgroup>
+    <optgroup label="Common Searches">
+    </optgroup>
+  </select>
+  <input type="text" name="savename" id="savename"/>
+  <button type="button" name="saveit" id="saveit">Save Search</button>
+</div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
 <div id="querylines">
@@ -151,7 +163,7 @@ div.clear {clear: both;}
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
-    </p>
+</p>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
 </div>
