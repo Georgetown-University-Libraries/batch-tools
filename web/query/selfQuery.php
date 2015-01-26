@@ -108,20 +108,6 @@ div.clear {clear: both;}
 <div id="status"><?php echo $status?></div>
 <div>
   <fieldset id="savebox">
-    <select id="saved" name="saved">
-      <option/>
-      <optgroup label="Recent Searches">
-      </optgroup>
-      <optgroup label="My Saved Searches">
-      </optgroup>
-      <optgroup label="Common Searches">
-      <?php
-        foreach($saved as $name => $search) {
-          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
-        }
-      ?>
-      </optgroup>
-    </select>
     <div class="clear"/>
     <label for="savename">Search Name:</label>
     <input type="text" name="savename" id="savename" value="<?php echo $curname?>"/>
@@ -186,6 +172,18 @@ div.clear {clear: both;}
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+    <select id="saved" name="saved">
+      <option> - Choose Saved Search -</option>
+      <optgroup label="My Saved Searches">
+      </optgroup>
+      <optgroup label="Common Searches">
+      <?php
+        foreach($saved as $name => $search) {
+          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
+        }
+      ?>
+      </optgroup>
+    </select>
 </p>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
