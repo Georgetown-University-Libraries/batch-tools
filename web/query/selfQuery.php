@@ -85,25 +85,39 @@ $header->litPageHeader();
 ?>
 <script type="text/javascript" src="spin.js"></script>
 <script type="text/javascript" src="selfQuery.js"></script>
-<style type="text/css">
-form {width: 1000px;text-align: center;}
-div.edit {width: 100%;text-align: right;}
-#spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
-div.clear {clear: both;}
-.dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox {padding: 15px; margin: 0 auto; width: 80%; }
-#savebox label.field {display: block; float: left; width:250px;}
-</style>
+<link type="text/css" rel="stylesheet" href="selfQuery.css"></link>
 </head>
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
-<form id="myform" action="selfQueryData.php" method="POST">
-<div class="edit">
-<button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit Query</button>
+  <form id="myform" action="selfQueryData.php" method="POST">
+    <div class="edit">
+      <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit Query</button>
+    </div>
+    <div id="status"><?php echo $status?></div>
+    <div id="accordion">
+    <?php
+      doScope($coll, $comm, $field, $mfields, $op, $val);
+      doFields($dsel);
+      doFields($filsel);
+      doShow($offset, $MAX);
+      doSave($saved, $savename, $savedesc);
+    ?>
+    </div>
+    <div>
+      <em>* Up to <?php echo $MAX?> results will be returned</em>
+    </div>
+  </form>
 </div>
-<div id="status"><?php echo $status?></div>
-<div id="accordion">
+<div id='exporthold'>
+</div>
+<?php $header->litFooter();?>
+</body>
+</html> 
+
+<?php
+function doScope($coll, $comm, $field, $mfields, $op, $val) {
+?>
 <h3>Search Scope</h3>
 <div>
   <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
@@ -138,17 +152,32 @@ div.clear {clear: both;}
     <?php }?>
   </div>
 </div>
+<?php    
+}
+
+function doFields($dsel) {
+?>
 <h3>Fields to Display</h3>
 <div>
   <legend>Fields to display</legend>
   <?php echo $dsel?>
   <div style="font-style:italic">Provenance, Accession Date, Available Date cannot be exported</div>
 </div>
+<?php    
+}
+
+function doFields($filsel) {
+?>
 <h3>Filter Query Results</h3>
 <div>
   <legend>Filters</legend>
   <?php echo $filsel?>
 </div>
+<?php    
+}
+
+function doShow($offset, $MAX) {
+?>
 <h3>Show Results</h3>
 <div align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
@@ -158,6 +187,11 @@ div.clear {clear: both;}
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
 </div>
+<?php    
+}
+
+function doSave($saved, $savename, $savedesc) {
+?>
 <h3>Save Results</h3>
 <div>
   <div id="savebox">
@@ -189,12 +223,7 @@ div.clear {clear: both;}
     <div class="clear">&nbsp;</div>
   </div>
 </div>
-</div>
-<div><em>* Up to <?php echo $MAX?> results will be returned</em></div>
-</form>
-</div>
-<div id='exporthold'>
-</div>
-<?php $header->litFooter();?>
-</body>
-</html> 
+<?php    
+}
+?>
+
