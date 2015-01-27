@@ -37,7 +37,7 @@ class LitHeader {
  		<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 		<script	src="{$WEBROOT}/web/qcReport.js"></script>
 		<script	src="{$WEBROOT}/web/sorttable.js"></script>
-		<link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/ui-lightness/jquery-ui.css"></link>
+		<link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css"></link>
 		<link rel="stylesheet" type="text/css" href="{$WEBROOT}/web/qcReport.css"></link>
 		<title>{$this->title}</title>
 HERE;
