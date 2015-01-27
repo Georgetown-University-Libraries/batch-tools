@@ -87,8 +87,7 @@ $header->litPageHeader();
 <script type="text/javascript" src="spin.js"></script>
 <script type="text/javascript" src="selfQuery.js"></script>
 <style type="text/css">
-form {width: 1000px;}
-button.edit {float: right;}
+form {width: 1000px;text-align: ceneter;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
@@ -150,16 +149,16 @@ div.clear {clear: both;}
   <?php echo $filsel?>
 </div>
 <h3>Show Results</h3>
-<div>
-  <div align="center">
+<div align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
     <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>
     <input id="querySubmitPrev" name="query" value="Prev Results" type="submit" disabled/>
     <input id="querySubmit" name="query" value="Show Results" type="submit"/>
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
-  </div>
-  <div>
+</div>
+<h3>Save Results</h3>
+<div>
     <select id="saved" name="saved">
       <option> - Choose Saved Search -</option>
       <optgroup label="My Saved Searches" id="mysaved">
@@ -179,13 +178,14 @@ div.clear {clear: both;}
         <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
         <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
         <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
+        <div class="clear"/>
       </div>
       <div>
         <label for="savedesc" class="field">Search Desc:</label>
         <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
+        <div class="clear"/>
       </div>
     </div>
-  </div>
 </div>
 </div>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
