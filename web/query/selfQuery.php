@@ -110,6 +110,8 @@ div.clear {clear: both;}
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
 <div id="accordion">
+<h3>Search Scope</h3>
+<div>
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
 <div id="querylines">
