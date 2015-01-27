@@ -95,21 +95,15 @@ div.clear {clear: both;}
 #savebox {padding: 15px; margin: 0 auto; width: 80%; }
 #savebox label.field {display: block; float: left; width: 150px;}
 #savebox input {display: block; float: left;}
-#savecontent {display: none;}
-#savebox:hover #savecontent {display: block;}
 </style>
 </head>
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
 <form id="myform" action="selfQueryData.php" method="POST">
-<h3>Search Scope</h3>
 <div>
-<fieldset id="queryform">
-<legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
-</fieldset>
 <div id="accordion">
 <h3>Search Scope</h3>
 <div>
@@ -147,18 +141,14 @@ div.clear {clear: both;}
 </div>
 <h3>Fields to Display</h3>
 <div>
-  <fieldset class="fields">
-    <legend>Fields to display</legend>
-    <?php echo $dsel?>
-    <div style="font-style:italic">Provenance, Accession Date, Available Date cannot be exported</div>
-  </fieldset>
+  <legend>Fields to display</legend>
+  <?php echo $dsel?>
+  <div style="font-style:italic">Provenance, Accession Date, Available Date cannot be exported</div>
 </div>
 <h3>Filter Query Results</h3>
 <div>
-  <fieldset class="filters">
-    <legend>Filters</legend>
-    <?php echo $filsel?>
-  </fieldset>
+  <legend>Filters</legend>
+  <?php echo $filsel?>
 </div>
 <h3>Show Results</h3>
 <div align="center">
@@ -171,35 +161,33 @@ div.clear {clear: both;}
 </div>
 <h3>Save Search</h3>
 <div>
-  <fieldset id="savebox">
-    <select id="saved" name="saved">
-      <option> - Choose Saved Search -</option>
-      <optgroup label="My Saved Searches" id="mysaved">
-      </optgroup>
-      <optgroup label="Common Searches">
-      <?php
-        foreach($saved as $name => $search) {
-          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
-        }
-      ?>
-      </optgroup>
-    </select>
-    <label>Saved Searches and Permalinks<label>
-    <div id="savecontent">
-      <div>
-        <label for="savename" class="field">Search Name:</label>
-        <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
-        <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
-        <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
-        <div class="clear"/>
-      </div>
-      <div>
-        <label for="savedesc" class="field">Search Desc:</label>
-        <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
-        <div class="clear"/>
-      </div>
+  <select id="saved" name="saved">
+    <option> - Choose Saved Search -</option>
+    <optgroup label="My Saved Searches" id="mysaved">
+    </optgroup>
+    <optgroup label="Common Searches">
+    <?php
+      foreach($saved as $name => $search) {
+        echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
+      }
+    ?>
+    </optgroup>
+  </select>
+  <label>Saved Searches and Permalinks<label>
+  <div id="savecontent">
+    <div>
+      <label for="savename" class="field">Search Name:</label>
+      <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
+      <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+      <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
+      <div class="clear"/>
     </div>
-  </fieldset>  
+    <div>
+      <label for="savedesc" class="field">Search Desc:</label>
+      <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
+      <div class="clear"/>
+    </div>
+  </div>
 </div>
 </div>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
