@@ -151,41 +151,42 @@ div.clear {clear: both;}
   <?php echo $filsel?>
 </div>
 <h3>Show Results</h3>
-<div align="center">
+<div>
+  <div align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
     <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>
     <input id="querySubmitPrev" name="query" value="Prev Results" type="submit" disabled/>
     <input id="querySubmit" name="query" value="Show Results" type="submit"/>
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
-</div>
-<h3>Save Search</h3>
-<div>
-  <select id="saved" name="saved">
-    <option> - Choose Saved Search -</option>
-    <optgroup label="My Saved Searches" id="mysaved">
-    </optgroup>
-    <optgroup label="Common Searches">
-    <?php
-      foreach($saved as $name => $search) {
-        echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
-      }
-    ?>
-    </optgroup>
-  </select>
-  <label>Saved Searches and Permalinks<label>
-  <div id="savecontent">
-    <div>
-      <label for="savename" class="field">Search Name:</label>
-      <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
-      <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
-      <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
-      <div class="clear"/>
-    </div>
-    <div>
-      <label for="savedesc" class="field">Search Desc:</label>
-      <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
-      <div class="clear"/>
+  </div>
+  <div>
+    <select id="saved" name="saved">
+      <option> - Choose Saved Search -</option>
+      <optgroup label="My Saved Searches" id="mysaved">
+      </optgroup>
+      <optgroup label="Common Searches">
+      <?php
+        foreach($saved as $name => $search) {
+          echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
+        }
+      ?>
+      </optgroup>
+    </select>
+    <label>Saved Searches and Permalinks<label>
+    <div id="savecontent">
+      <div>
+        <label for="savename" class="field">Search Name:</label>
+        <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
+        <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+        <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
+        <div class="clear"/>
+      </div>
+      <div>
+        <label for="savedesc" class="field">Search Desc:</label>
+        <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
+        <div class="clear"/>
+      </div>
     </div>
   </div>
 </div>
