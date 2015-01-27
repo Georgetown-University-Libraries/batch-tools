@@ -109,41 +109,41 @@ div.clear {clear: both;}
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
+</fieldset>
 <div id="accordion">
 <h3>Search Scope</h3>
 <div>
-<?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
-<?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
-<div id="querylines">
-<?php for($i=0; $i<count($field); $i++) {?>
-<p class="queryline">
-  <label for="field">Field to query</label>
-  <?php 
-  echo "<select name='field[]' class='qfield' onchange='changeField($(this));'><option value=''>N/A</option><option value='0'>All</option>";
-  foreach ($mfields as $mfi => $mfn) {
-  	$t = sel($field[$i],$mfi,'selected');
-  	echo "<option value='{$mfi}' {$t}>{$mfn}</option>";
-  }
-  echo "</select>";
-  ?>
-  <label for="op">; Operator: </label>
-  <select name="op[]" class="qfield" onchange="changeOperator($(this), true);">
-    <option value="exists"        <?php echo sel($op[$i],'exists','selected')?>        example="">Exists</value>
-    <option value="not exists"    <?php echo sel($op[$i],'not exists','selected')?>    example="">Doesn't exist</value>
-    <option value="equals"        <?php echo sel($op[$i],'equals','selected')?>        example="val">Equals</value>
-    <option value="not equals"    <?php echo sel($op[$i],'not equals','selected')?>    example="val">Not Equals</value>
-    <option value="like"          <?php echo sel($op[$i],'like','selected')?>          example="%val%">Like</value>
-    <option value="not like"      <?php echo sel($op[$i],'not like','selected')?>      example="%val%">Not Like</value>
-    <option value="matches"       <?php echo sel($op[$i],'matches','selected')?>       example="^.*(val1|val2).*$">Matches</value>
-    <option value="doesn't match" <?php echo sel($op[$i],"doesn't match",'selected')?> example="^.*(val1|val2).*$">Doesn't Match</value>
-  </select>
-  <label for="val">; Value: </label>
-  <input name="val[]" type="text" value="<?php echo $val[$i]?>" class="qfield"/>
-  <input type="button" onclick="copyQuery($(this))" value="+"/>
-</p>
-<?php }?>
-</div>
-</fieldset>
+  <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
+  <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
+  <div id="querylines">
+    <?php for($i=0; $i<count($field); $i++) {?>
+      <p class="queryline">
+      <label for="field">Field to query</label>
+      <?php 
+        echo "<select name='field[]' class='qfield' onchange='changeField($(this));'><option value=''>N/A</option><option value='0'>All</option>";
+        foreach ($mfields as $mfi => $mfn) {
+          $t = sel($field[$i],$mfi,'selected');
+          echo "<option value='{$mfi}' {$t}>{$mfn}</option>";
+        }
+        echo "</select>";
+      ?>
+      <label for="op">; Operator: </label>
+      <select name="op[]" class="qfield" onchange="changeOperator($(this), true);">
+        <option value="exists"        <?php echo sel($op[$i],'exists','selected')?>        example="">Exists</value>
+        <option value="not exists"    <?php echo sel($op[$i],'not exists','selected')?>    example="">Doesn't exist</value>
+        <option value="equals"        <?php echo sel($op[$i],'equals','selected')?>        example="val">Equals</value>
+        <option value="not equals"    <?php echo sel($op[$i],'not equals','selected')?>    example="val">Not Equals</value>
+        <option value="like"          <?php echo sel($op[$i],'like','selected')?>          example="%val%">Like</value>
+        <option value="not like"      <?php echo sel($op[$i],'not like','selected')?>      example="%val%">Not Like</value>
+        <option value="matches"       <?php echo sel($op[$i],'matches','selected')?>       example="^.*(val1|val2).*$">Matches</value>
+        <option value="doesn't match" <?php echo sel($op[$i],"doesn't match",'selected')?> example="^.*(val1|val2).*$">Doesn't Match</value>
+      </select>
+      <label for="val">; Value: </label>
+      <input name="val[]" type="text" value="<?php echo $val[$i]?>" class="qfield"/>
+      <input type="button" onclick="copyQuery($(this))" value="+"/>
+      </p>
+    <?php }?>
+  </div>
 </div>
 <h3>Fields to Display</h3>
 <div>
