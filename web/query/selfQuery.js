@@ -134,6 +134,7 @@ $(document).ready(function(){
         opt.attr("title",obj.desc);
         $("#mysaved").append(opt);
     }
+    $("#accordion").accordion();
 });
 
 function doedit() {

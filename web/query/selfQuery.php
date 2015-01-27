@@ -90,7 +90,6 @@ $header->litPageHeader();
 form {width: 1000px;}
 button.edit {float: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
-fieldset.fields,fieldset.filters {width: 40%; display:inline;float: left; margin: 20px;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
 #savebox {padding: 15px; margin: 0 auto; width: 80%; }
@@ -104,10 +103,13 @@ div.clear {clear: both;}
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
 <form id="myform" action="selfQueryData.php" method="POST">
+<h3>Search Scope</h3>
+<div>
 <fieldset id="queryform">
 <legend>Use this option to construct a quality control query </legend>
 <button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
 <div id="status"><?php echo $status?></div>
+<div id="accordion">
 <?php collection::getCollectionIdWidget($coll, "coll", " to be queried*");?>
 <?php collection::getSubcommunityIdWidget($comm, "comm", " to be queried*");?>
 <div id="querylines">
@@ -140,27 +142,32 @@ div.clear {clear: both;}
 <?php }?>
 </div>
 </fieldset>
+</div>
+<h3>Fields to Display</h3>
 <div>
   <fieldset class="fields">
     <legend>Fields to display</legend>
     <?php echo $dsel?>
     <div style="font-style:italic">Provenance, Accession Date, Available Date cannot be exported</div>
   </fieldset>
+</div>
+<h3>Filter Query Results</h3>
+<div>
   <fieldset class="filters">
     <legend>Filters</legend>
     <?php echo $filsel?>
   </fieldset>
-  
 </div>
-<div class="clear"/>
-<p align="center">
+<h3>Show Results</h3>
+<div align="center">
     <input id="offset" name="offset" type="hidden" value="<?php echo $offset?>"/>
     <input id="MAX" name="MAX" type="hidden" value="<?php echo $MAX?>"/>
     <input id="querySubmitPrev" name="query" value="Prev Results" type="submit" disabled/>
     <input id="querySubmit" name="query" value="Show Results" type="submit"/>
 	<input id="querySubmitNext" name="query" value="Next Results" type="submit" disabled/>
     <input id="queryCsv" name="query" value="CSV Extract" type="submit" disabled/>
-</p>
+</div>
+<h3>Save Search</h3>
 <div>
   <fieldset id="savebox">
     <select id="saved" name="saved">
@@ -191,6 +198,7 @@ div.clear {clear: both;}
       </div>
     </div>
   </fieldset>  
+</div>
 </div>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
 </form>
