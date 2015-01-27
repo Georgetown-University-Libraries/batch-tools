@@ -66,7 +66,6 @@ foreach($filters as $key => $obj) {
 }
 $filsel .= "</div>";
 
-
 $status = "";
 $hasPerm = $CUSTOM->isUserViewer();
 if ($isCSV) {
@@ -88,7 +87,7 @@ $header->litPageHeader();
 <script type="text/javascript" src="selfQuery.js"></script>
 <style type="text/css">
 form {width: 1000px;text-align: ceneter;}
-button.edit {right: 20px;}
+button.edit {position:relative; right: 20px;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
@@ -160,6 +159,8 @@ div.clear {clear: both;}
 </div>
 <h3>Save Results</h3>
 <div>
+  <div>
+    <label for="saved" class="field">Open Saved Search<label>
     <select id="saved" name="saved">
       <option> - Choose Saved Search -</option>
       <optgroup label="My Saved Searches" id="mysaved">
@@ -172,25 +173,22 @@ div.clear {clear: both;}
       ?>
       </optgroup>
     </select>
-    <label>Saved Searches and Permalinks<label>
-    <div id="savecontent">
-      <div>
-        <label for="savename" class="field">Search Name:</label>
-        <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
-        <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
-        <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
-        <div class="clear"/>
-      </div>
-      <div>
-        <label for="savedesc" class="field">Search Desc:</label>
-        <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
-        <div class="clear"/>
-      </div>
-    </div>
+  </div>
+  <div>
+    <label for="savename" class="field">Search Name:</label>
+    <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
+    <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
+    <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
+    <div class="clear"/>
+  </div>
+  <div>
+    <label for="savedesc" class="field">Search Desc:</label>
+    <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
+    <div class="clear"/>
+  </div>
 </div>
 </div>
-</div>
-<p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
+<div><em>* Up to <?php echo $MAX?> results will be returned</em></div>
 </form>
 </div>
 <div id='exporthold'>
