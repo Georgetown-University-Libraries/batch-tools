@@ -86,15 +86,13 @@ $header->litPageHeader();
 <script type="text/javascript" src="spin.js"></script>
 <script type="text/javascript" src="selfQuery.js"></script>
 <style type="text/css">
-form {width: 1000px;text-align: ceneter;}
-button.edit {position:relative; right: 20px;}
-div.edit {width: 100%;}
+form {width: 1000px;text-align: center;}
+div.edit {width: 100%;text-align: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
 #savebox {padding: 15px; margin: 0 auto; width: 80%; }
-#savebox label.field {display: block; float: left; width: 150px;}
-#savebox input {display: block; float: left;}
+#savebox label.field {display: block; float: left; width:250px;}
 </style>
 </head>
 <body>
@@ -162,9 +160,9 @@ div.clear {clear: both;}
 </div>
 <h3>Save Results</h3>
 <div>
-  <div>
-    <label for="saved" class="field">Open Saved Search<label>
-    <select id="saved" name="saved">
+  <div id="savebox">
+    <label for="saved" class="field">Open Saved Search:<label>
+    <select class="field" id="saved" name="saved">
       <option> - Choose Saved Search -</option>
       <optgroup label="My Saved Searches" id="mysaved">
       </optgroup>
@@ -176,6 +174,7 @@ div.clear {clear: both;}
       ?>
       </optgroup>
     </select>
+    <div class="clear">&nbsp;</div>
   </div>
   <div>
     <label for="savename" class="field">Search Name:</label>
