@@ -134,7 +134,7 @@ $(document).ready(function(){
         opt.attr("title",obj.desc);
         $("#mysaved").append(opt);
     }
-    $("#accordion").accordion();
+    $("#accordion").accordion({heightStyle: "content"});
 });
 
 function doedit() {
