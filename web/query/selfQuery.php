@@ -88,6 +88,7 @@ $header->litPageHeader();
 <script type="text/javascript" src="selfQuery.js"></script>
 <style type="text/css">
 form {width: 1000px;text-align: ceneter;}
+button.edit {right: 20px;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
@@ -100,7 +101,7 @@ div.clear {clear: both;}
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="selfQuery">
 <form id="myform" action="selfQueryData.php" method="POST">
-<button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit</button>
+<button type="button" class="edit" name="edit" onclick="doedit();" disabled>Edit Query</button>
 <div id="status"><?php echo $status?></div>
 <div id="accordion">
 <h3>Search Scope</h3>
@@ -186,6 +187,7 @@ div.clear {clear: both;}
         <div class="clear"/>
       </div>
     </div>
+</div>
 </div>
 </div>
 <p><em>* Up to <?php echo $MAX?> results will be returned</em></p>
