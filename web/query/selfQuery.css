@@ -4,4 +4,5 @@ div.edit {width: 100%;text-align: right;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
 #savebox label.field {display: block; float: left; width:250px;}
+#savebox div.clear {margin-bottom: 15px;}
 #accordion {margin: 15px;}
