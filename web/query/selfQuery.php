@@ -169,7 +169,7 @@ function doFields($dsel) {
 function doFilters($filsel) {
 ?>
 <h3>Filter Query Results</h3>
-<div>
+<div style="text-align: left;">
   <legend>Filters</legend>
   <?php echo $filsel?>
 </div>
@@ -193,8 +193,8 @@ function doShow($offset, $MAX) {
 function doSave($saved, $savename, $savedesc) {
 ?>
 <h3>Save Results</h3>
-<div>
-  <div id="savebox">
+<div id="savebox">
+  <div>
     <label for="saved" class="field">Open Saved Search:<label>
     <select class="field" id="saved" name="saved">
       <option> - Choose Saved Search -</option>
