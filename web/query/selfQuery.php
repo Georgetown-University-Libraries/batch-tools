@@ -195,7 +195,7 @@ function doSave($saved, $savename, $savedesc) {
 <h3>Save Results</h3>
 <div id="savebox">
   <div>
-    <label for="saved" class="field">Open Saved Search:<label>
+    <label for="saved" class="field">Open Saved Search:</label>
     <select class="field" id="saved" name="saved">
       <option> - Choose Saved Search -</option>
       <optgroup label="My Saved Searches" id="mysaved">
