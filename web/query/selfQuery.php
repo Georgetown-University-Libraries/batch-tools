@@ -198,9 +198,9 @@ function doSave($saved, $savename, $savedesc) {
     <label for="saved" class="field">Open Saved Search:</label>
     <select class="field" id="saved" name="saved">
       <option> - Choose Saved Search -</option>
-      <optgroup label="My Saved Searches" id="mysaved" title="These queries have been saved locally in your browser">
+      <optgroup label="My Saved Searches" id="mysaved">
       </optgroup>
-      <optgroup label="Common Searches" title="File a ticket with the permalink associated with your query to propose a query to add to this list">
+      <optgroup label="Common Searches">
       <?php
         foreach($saved as $name => $search) {
           echo "<option value='{$search['permalink']}' title='{$search['desc']}'>{$name}</option>";
@@ -212,9 +212,9 @@ function doSave($saved, $savename, $savedesc) {
   <div class="clear">
     <label for="savename" class="field">Save Search As:</label>
     <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
-    <input id="queryLink" name="query" value="Permalink" type="submit" title="Create a hyperlink to this query that can be saved and shared" disabled/>
+    <input id="queryLink" name="query" value="Permalink/Save Search" type="submit" title="Create a hyperlink to this query that can be saved and shared" disabled/>
     <?php if ($savename != "") {?>
-      <input id="queryRemlink" name="query" value="Remove link" type="button" title="Remove this saved query" disabled/>
+      <input id="queryRemlink" name="query" value="Remove Saved Search" type="button" title="Remove this saved query" disabled/>
     <?php }?>
   </div>
   <div class="clear">
