@@ -117,6 +117,7 @@ $(document).ready(function(){
         var savename = $("#savename").val();
         if (savename != "") {
             localStorage.removeItem(savename);
+            document.location.search = "";
         }
     });
     var savename = $("#savename").val(); 
