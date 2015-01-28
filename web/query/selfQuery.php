@@ -99,7 +99,7 @@ $header->litPageHeader();
     <?php
       doScope($coll, $comm, $field, $mfields, $op, $val);
       doFields($dsel);
-      doFields($filsel);
+      doFilters($filsel);
       doShow($offset, $MAX);
       doSave($saved, $savename, $savedesc);
     ?>
@@ -166,7 +166,7 @@ function doFields($dsel) {
 <?php    
 }
 
-function doFields($filsel) {
+function doFilters($filsel) {
 ?>
 <h3>Filter Query Results</h3>
 <div>
