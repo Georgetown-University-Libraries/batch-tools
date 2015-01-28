@@ -6,4 +6,4 @@ div.clear {clear: both;}
 #savebox label.field {display: block; float: left; width:250px;}
 #savebox div.clear {margin-bottom: 15px;}
 #accordion {margin: 8px;}
-#accordion .ui-widget {font-size: .8em;}
+#accordion .ui-widget {font-size: .8em!important;}
