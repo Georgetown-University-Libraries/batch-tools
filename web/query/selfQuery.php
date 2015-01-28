@@ -169,7 +169,7 @@ function doFields($dsel) {
 function doFilters($filsel) {
 ?>
 <h3>Filter Query Results</h3>
-<div style="text-align: left;">
+<div>
   <legend>Filters</legend>
   <?php echo $filsel?>
 </div>
@@ -208,19 +208,19 @@ function doSave($saved, $savename, $savedesc) {
       ?>
       </optgroup>
     </select>
-    <div class="clear">&nbsp;</div>
+    <div class="clear"/>
   </div>
   <div>
     <label for="savename" class="field">Search Name:</label>
     <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
     <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
-    <div class="clear">&nbsp;</div>
+    <div class="clear"/>
   </div>
   <div>
     <label for="savedesc" class="field">Search Desc:</label>
     <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
-    <div class="clear">&nbsp;</div>
+    <div class="clear"/>
   </div>
 </div>
 <?php    
