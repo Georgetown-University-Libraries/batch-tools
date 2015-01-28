@@ -3,5 +3,5 @@ div.edit {width: 100%;text-align: right;}
 #spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
 div.clear {clear: both;}
 .dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox label.field {display: block; float: left; width:250px;}
+#savebox label.field {display: block; float: left; width:250px; text-align: left;}
 #accordion {margin: 15px;}
