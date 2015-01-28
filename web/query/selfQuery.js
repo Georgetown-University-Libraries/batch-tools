@@ -35,7 +35,7 @@ $(document).ready(function(){
         prepSubmit();
         
         if (query == "CSV Extract") return true;
-        if (query == "Permalink") {
+        if (query == "Permalink/Save Search") {
             $("#myform").attr("method", "get");            
             $("#myform").attr("action", "selfQuery.php");
             return true;
