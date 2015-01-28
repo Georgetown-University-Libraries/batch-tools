@@ -194,7 +194,7 @@ function doSave($saved, $savename, $savedesc) {
 ?>
 <h3>Save Results</h3>
 <div id="savebox">
-  <div>
+  <div class="clear">
     <label for="saved" class="field">Open Saved Search:</label>
     <select class="field" id="saved" name="saved">
       <option> - Choose Saved Search -</option>
@@ -208,19 +208,16 @@ function doSave($saved, $savename, $savedesc) {
       ?>
       </optgroup>
     </select>
-    <div class="clear"/>
   </div>
-  <div>
+  <div class="clear">
     <label for="savename" class="field">Search Name:</label>
     <input type="text" name="savename" id="savename" title="Name your search if you would like to save it for the future" value="<?php echo $savename?>" disabled/>
     <input id="queryLink" name="query" value="Permalink" type="submit" disabled/>
     <input id="queryRemlink" name="query" value="Remove link" type="button" disabled/>
-    <div class="clear"/>
   </div>
-  <div>
+  <div class="clear">
     <label for="savedesc" class="field">Search Desc:</label>
     <input type="text" name="savedesc" id="savedesc" title="Optional - describe your search for future use" size="50" value="<?php echo $savedesc?>" disabled/>
-    <div class="clear"/>
   </div>
 </div>
 <?php    
