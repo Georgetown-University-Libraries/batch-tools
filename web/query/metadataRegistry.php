@@ -82,6 +82,7 @@ div.clear {clear: both;}
   foreach ($mschemas as $mschema) {
     $fields = array();
     foreach ($mfields as $mfield) {
+      $matches = array();
       if ($preg_match("^{$mschema[2]}\.([^\.]+)(\.([^\.]+))?$", $mfield[0], $matches)) {
         if (count($matches) ==2) {
           $fields[] = array("name" => $mfield[0], "description" => $mfield[1], "element" => $matches[0], "qualifier" => $matches[1]);            
