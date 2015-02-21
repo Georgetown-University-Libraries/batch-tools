@@ -28,23 +28,24 @@ $CUSTOM = custom::instance();
 $hasPerm = $CUSTOM->isUserCollectionOwner();
 
 $mschemas = initSchema($CUSTOM);
-$tablems = "<h3>Available Metadata Registries</h3>";
-$tablems .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
-foreach ($mschemas as $mschema) {
-    $tablems .= "<tr><td style=\"text-align: center\">$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td style=\"text-align: center\">$mschema[2]</td></tr>";
-}
-$tablems .= "</table>";
-
 $mfields = initField($CUSTOM);
-$tablemf = "<h3>Metadata Fields</h3>";
-$tablemf .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Field Name</td><td style=\"width: 70%\">Field Description</td></tr>";
-foreach ($mfields as $mfield) {
+
+if (util::getPostArg("JSON","") == "") {
+  $tablems = "<h3>Available Metadata Registries</h3>";
+  $tablems .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
+  foreach ($mschemas as $mschema) {
+    $tablems .= "<tr><td style=\"text-align: center\">$mschema[0]</td><td><a href=\"{$mschema[1]}\">$mschema[1]</td><td style=\"text-align: center\">$mschema[2]</td></tr>";
+  }
+  $tablems .= "</table>";
+
+  $tablemf = "<h3>Metadata Fields</h3>";
+  $tablemf .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Field Name</td><td style=\"width: 70%\">Field Description</td></tr>";
+  foreach ($mfields as $mfield) {
     $tablemf .= "<tr><td>$mfield[0]</td><td>$mfield[1]</td></tr>";
-}
-$tablemf .= "</table>";
+  }
+  $tablemf .= "</table>";
 
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -74,4 +75,20 @@ div.clear {clear: both;}
 <div class="clear" />
 <?php $header->litFooter();?>
 </body>
-</html> 
+</html>
+<?php
+} else {
+  $data = array();
+  foreach ($mschemas as $mschema) {
+    $fields = array();
+    foreach ($mfields as $mfield) {
+      $fields[] = array("name" => $mfield[0], "description" => $mfield[1]);
+    }
+    $data[] = array("prefix" => $mschema[2], "namespace" => $mschema[1], "fields" => $fields);
+  }
+  
+  header('Content-Type: application/json');
+  echo json_encode($data);
+     
+}
+?> 
