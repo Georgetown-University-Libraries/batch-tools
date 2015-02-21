@@ -86,11 +86,14 @@ div.clear {clear: both;}
       $patt = "/^{$mschema[2]}\.([^\.]+)(\.([^\.]+))?$/";
       
       if (preg_match($patt, $mfield[0], $matches)) {
-        if (count($matches) == 4) {
-          $fields[] = array("name" => $mfield[0], "description" => $mfield[1], "element" => $matches[1], "qualifier" => $matches[3]);            
-        } else {
-          $fields[] = array("name" => $mfield[0], "description" => $mfield[1], "element" => $matches[1]);            
+        $field = array("name" => $mfield[0], "element" => $matches[1]);
+        if ($mfield[1] != null) {
+            $field["description"] = $mfield[1];
         }
+        if (count($matches) == 4) {
+          $field["qualifier"] = $matches[3];            
+        } 
+        $fields[] = $field;            
       } 
     }
     $data[] = array("prefix" => $mschema[2], "namespace" => $mschema[1], "fields" => $fields);
