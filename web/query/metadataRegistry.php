@@ -83,17 +83,15 @@ div.clear {clear: both;}
     $fields = array();
     foreach ($mfields as $mfield) {
       $matches = array();
-      $patt = "^{$mschema[2]}\.([^\.]+)(\.([^\.]+))?$";
+      $patt = "/^{$mschema[2]}\.([^\.]+)(\.([^\.]+))?$/";
       
-      if (preg_match("^{$mschema[2]}\.([^\.]+)(\.([^\.]+))?$", $mfield[0], $matches)) {
-        if (count($matches) == 2) {
-          $fields[] = array("name" => $mfield[0], "description" => $mfield[1], "element" => $matches[0], "qualifier" => $matches[1]);            
+      if (preg_match($patt, $mfield[0], $matches)) {
+        if (count($matches) == 3) {
+          $fields[] = array("name" => $mfield[0], "description" => $mfield[1], "element" => $matches[0], "qualifier" => $matches[2]);            
         } else {
           $fields[] = array("name" => $mfield[0], "description" => $mfield[1], "element" => $matches[0]);            
         }
-      } else {
-        $fields[] = array("patt" => $patt);
-      }
+      } 
     }
     $data[] = array("prefix" => $mschema[2], "namespace" => $mschema[1], "fields" => $fields);
   }
