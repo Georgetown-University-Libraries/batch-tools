@@ -30,7 +30,7 @@ $hasPerm = $CUSTOM->isUserCollectionOwner();
 $mschemas = initSchema($CUSTOM);
 $mfields = initField($CUSTOM);
 
-if (util::getPostArg("JSON","") == "") {
+if (util::getArg("JSON","") == "") {
   $tablems = "<h3>Available Metadata Registries</h3>";
   $tablems .= "<table><tr style=\"font-weight: bold; text-align: center\"><td>Schema No</td><td>Schema Namespace</td><td>Schema Name</td></tr>";
   foreach ($mschemas as $mschema) {
