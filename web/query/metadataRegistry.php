@@ -64,6 +64,8 @@ div.clear {clear: both;}
 
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
+
+<div><a href="metadataRegistry.php?JSON=Y">JSON Registry</a></div>
 <div id="table">
     <?php echo $tablems?>
 </div>
