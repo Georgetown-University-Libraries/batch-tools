@@ -102,7 +102,7 @@ div.clear {clear: both;}
   }
   
   header('Content-Type: application/json');
-  echo json_encode($data);
-     
+  header("Content-Disposition: attachment; metadataRegistry.json"); 
+  echo json_encode($data);     
 }
 ?> 
