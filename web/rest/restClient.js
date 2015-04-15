@@ -18,10 +18,10 @@ $(document).ready(function(){
 				addTd(tr, "").addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTd(tr, coll.numberItems).addClass("num");
-				doRow(index);
 			});
 		}
 	);
+	doRow(0);
 });
 
 function doRow(row) {
