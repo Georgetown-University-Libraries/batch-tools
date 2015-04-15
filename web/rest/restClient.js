@@ -2,8 +2,10 @@ $(document).ready(function(){
 	$("#report").append($("<div>Hello!</div>"));
 	$.getJSON(
 		"/rest/collections",
-		function(){
-			$("#report").append($("<div>Hello2!</div>"));
+		function(data){
+			data.each(function(coll){
+				$("#report").append($("<div>"+coll.name+"</div>"));
+			});
 		}
 	);
 });
