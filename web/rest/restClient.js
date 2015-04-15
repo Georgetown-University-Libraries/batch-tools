@@ -2,8 +2,8 @@ $(document).ready(function(){
 	var tbl = $("<table id='table'/>");
 	$("#report").replace(tbl);
 	var tr = addTr(tbl);
-	addTd(tr, "Num"));
-	addTd(tr, "Collection"));
+	addTd(tr, "Num");
+	addTd(tr, "Collection");
 	
 	
 	$("#table").append()
