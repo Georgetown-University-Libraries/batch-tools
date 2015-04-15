@@ -12,7 +12,7 @@ $(document).ready(function(){
 		function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
-				tr.attr("cid", coll.id).addClass(index % 2 == 0: "odd" : "even");
+				tr.attr("cid", coll.id).addClass(index % 2 == 0 ? "odd" : "even");
 				addTd(tr, index).addClass("num");
 				addTd(tr, "").addClass("title");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
