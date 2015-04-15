@@ -21,7 +21,8 @@ $(document).ready(function(){
 				$.getJSON(
 					"/rest/collections/"+coll.id+"?expand=parentCommunityList",
 					function(data) {
-						tr.find("td.comm").append(data.parentCommunityList[data.parentCommunityList.length-1].name);
+						var par = parentCommunityList[data.parentCommunityList.length-1];
+						tr.find("td.comm").append(getAnchor(par.name, par.handle));
 					}
 				)
 			});
@@ -45,8 +46,12 @@ function addTd(tr, val) {
 }
 
 function addTdAnchor(tr, val, href) {
+	return addTd(tr, getAnchor(val, href));
+}
+
+function getAnchor(val, href) {
 	var a = $("<a/>");
 	a.append(val);
 	a.attr("href", href);
-	return addTd(tr, a);
+	return a;
 }
