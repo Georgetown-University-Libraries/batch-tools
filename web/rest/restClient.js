@@ -21,7 +21,7 @@ $(document).ready(function(){
 				$.getJSON(
 					"/rest/collections/"+coll.id+"?expand=parentCommunityList",
 					function(data) {
-						var par = parentCommunityList[data.parentCommunityList.length-1];
+						var par = data.parentCommunityList[data.parentCommunityList.length-1];
 						tr.find("td.comm").append(getAnchor(par.name, par.handle));
 					}
 				)
