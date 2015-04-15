@@ -15,9 +15,15 @@ $(document).ready(function(){
 				var tr = addTr($("#table"));
 				tr.attr("cid", coll.id).addClass(index % 2 == 0 ? "odd" : "even");
 				addTd(tr, index).addClass("num");
-				addTd(tr, "").addClass("title");
+				addTd(tr, "").addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTd(tr, coll.numberItems).addClass("num");
+				$.getJSON(
+					"/rest/collection/"+coll.id,
+					function(data) {
+						tr.find("td.comm").append("foo");
+					}
+				)
 			});
 		}
 	);
