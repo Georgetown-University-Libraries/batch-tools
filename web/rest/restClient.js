@@ -21,7 +21,7 @@ $(document).ready(function(){
 				$.getJSON(
 					"/rest/collections/"+coll.id+"?expand=parentCommunityList",
 					function(data) {
-						tr.find("td.comm").append(data.parentCommunityList[0].name);
+						tr.find("td.comm").append(data.parentCommunityList[data.parentCommunityList.length-1].name);
 					}
 				)
 			});
