@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var tbl = $("<table id='table'/>");
-	$("#report").replace(tbl);
+	$("#report").replaceWith(tbl);
 	var tr = addTr(tbl);
 	addTd(tr, "Num");
 	addTd(tr, "Collection");
