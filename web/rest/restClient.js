@@ -1,6 +1,6 @@
 $(document).ready(function(){
 	var tbl = $("<table>");
-	tbl.attr("id","table").addClass("sorttable");
+	tbl.attr("id","table").addClass("sortable");
 	$("#report").replaceWith(tbl);
 	var tr = addTr(tbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
