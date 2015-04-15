@@ -22,7 +22,7 @@ $(document).ready(function(){
 					"/rest/collections/"+coll.id+"?expand=parentCommunityList",
 					function(data) {
 						var par = data.parentCommunityList[data.parentCommunityList.length-1];
-						tr.find("td.comm").append(getAnchor(par.name, par.handle));
+						tr.find("td.comm").append(getAnchor(par.name, /handle/" + par.handle));
 					}
 				)
 			});
@@ -53,5 +53,6 @@ function getAnchor(val, href) {
 	var a = $("<a/>");
 	a.append(val);
 	a.attr("href", href);
+	a.attr("target", "_blank");
 	return a;
 }
