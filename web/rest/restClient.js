@@ -19,13 +19,13 @@ $(document).ready(function(){
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTd(tr, coll.numberItems).addClass("num");
 			});
-			doRow(0);
+			doRow(0, 5);
 		}
 	);
 
 });
 
-function doRow(row) {
+function doRow(row, threads) {
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
@@ -34,7 +34,10 @@ function doRow(row) {
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm").append(getAnchor(par.name, "/handle/" + par.handle));
-			doRow(row+1);
+			if (row % threads != 0) return;
+			for(var i=1; i<=threads; i++) {
+				doRow(row+i, threads);
+			}
 		}
 	);
 }			
