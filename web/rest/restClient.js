@@ -3,7 +3,7 @@ $(document).ready(function(){
 	$.getJSON(
 		"/rest/collections",
 		function(data){
-			data.each(function(coll){
+			$.each(data, function(coll){
 				$("#report").append($("<div>"+coll.name+"</div>"));
 			});
 		}
