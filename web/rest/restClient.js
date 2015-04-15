@@ -3,15 +3,20 @@ $(document).ready(function(){
 	$("#report").replaceWith(tbl);
 	var tr = addTr(tbl);
 	addTd(tr, "Num");
+	addTd(tr, "Community");
 	addTd(tr, "Collection");
+	addTd(tr, "Num Items");
 
 	$.getJSON(
 		"/rest/collections",
 		function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
+				td.add("cid", coll.id);
 				addTd(tr, index);
+				addTd(tr, "");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle);
+				addTd(tr, coll.numberItems);
 			});
 		}
 	);
