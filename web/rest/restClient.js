@@ -4,9 +4,7 @@ $(document).ready(function(){
 	var tr = addTr(tbl);
 	addTd(tr, "Num");
 	addTd(tr, "Collection");
-	
-	
-	$("#table").append()
+
 	$.getJSON(
 		"/rest/collections",
 		function(data){
