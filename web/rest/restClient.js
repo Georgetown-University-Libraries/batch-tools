@@ -19,7 +19,7 @@ $(document).ready(function(){
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTd(tr, coll.numberItems).addClass("num");
 				$.getJSON(
-					"/rest/collection/"+coll.id,
+					"/rest/collections/"+coll.id,
 					function(data) {
 						tr.find("td.comm").append("foo");
 					}
