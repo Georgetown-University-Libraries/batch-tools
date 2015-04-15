@@ -12,7 +12,7 @@ $(document).ready(function(){
 		function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
-				td.add("cid", coll.id);
+				tr.attr("cid", coll.id);
 				addTd(tr, index);
 				addTd(tr, "");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle);
