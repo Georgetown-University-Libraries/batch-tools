@@ -19,9 +19,9 @@ $(document).ready(function(){
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTd(tr, coll.numberItems).addClass("num");
 				$.getJSON(
-					"/rest/collections/"+coll.id+"?expand=all",
+					"/rest/collections/"+coll.id+"?expand=parentCommunityList",
 					function(data) {
-						tr.find("td.comm").append(data.parentCommunity);
+						tr.find("td.comm").append(data.parentCommunityList[0].name);
 					}
 				)
 			});
