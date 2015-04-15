@@ -27,7 +27,7 @@ $(document).ready(function(){
 
 function doRow(row) {
 	var tr = $("tr[index="+row+"]");
-	if (tr.not("*")) return; 
+	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
 		"/rest/collections/"+cid+"?expand=parentCommunityList",
