@@ -1,7 +1,7 @@
 table {border-collapse: collapse;border-right:solid thin black;}
 table td, table th {border: thin solid black; padding: 4px;}
 tr.header {background-color: #EEEEEE;}
-tr.focus {background-color: yellow;}
+tr:hover td, tr:hover th {background-color: #DDDDDD;}
 tr.even td {border-bottom: thin dotted black;}
 tr.odd td {border-top: thin dotted black;}
 td.even {background-color: #EEFFEE;}
