@@ -1,0 +1,13 @@
+table {border-collapse: collapse;border-right:solid thin black;}
+table td, table th {border: thin solid black; padding: 4px;}
+tr.header {background-color: #EEEEEE;}
+tr.focus {background-color: yellow;}
+tr.even td {border-bottom: thin dotted black;}
+tr.odd td {border-top: thin dotted black;}
+td.even {background-color: #EEFFEE;}
+td.head {background-color: #EEEEFF;}
+td.num {text-align: right;}
+td, th {width: 100px;}
+td.error {color: red;background-color: yellow;}
+td.title, th.title {width: 300px;}
+td.mod, th.mod {width: 200px;}

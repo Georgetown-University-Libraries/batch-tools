@@ -1,10 +1,10 @@
 $(document).ready(function(){
 	var tbl = $("<table id='table'/>");
 	$("#report").replaceWith(tbl);
-	var tr = addTr(tbl);
-	addTd(tr, "Num");
-	addTd(tr, "Community");
-	addTd(tr, "Collection");
+	var tr = addTr(tbl).addClass("header");
+	addTd(tr, "Num").addClass("num");
+	addTd(tr, "Community").addClass("title");
+	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
 
 	$.getJSON(
@@ -12,11 +12,11 @@ $(document).ready(function(){
 		function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
-				tr.attr("cid", coll.id);
-				addTd(tr, index);
-				addTd(tr, "");
-				addTdAnchor(tr, coll.name, "/handle/" + coll.handle);
-				addTd(tr, coll.numberItems);
+				tr.attr("cid", coll.id).addClass(index % 2 == 0: "odd" : "even");
+				addTd(tr, index).addClass("num");
+				addTd(tr, "").addClass("title");
+				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
+				addTd(tr, coll.numberItems).addClass("num");
 			});
 		}
 	);
