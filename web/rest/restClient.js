@@ -1,3 +1,3 @@
 $(document).ready(function(){
-	$("#report").append($("Hello!"));
+	$("#report").append($("<div>Hello!</div>"));
 });
