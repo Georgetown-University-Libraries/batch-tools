@@ -1,12 +1,17 @@
 $(document).ready(function(){
-	var tbl = $("<table>");
+	var tbl = $("<table/>");
 	tbl.attr("id","table").addClass("sortable");
 	$("#report").replaceWith(tbl);
+
 	var tr = addTr(tbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Community").addClass("title");
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
+
+	var itbl = $("<table/>");
+	itbl.attr("id","itemtable").addClass("sortable");
+	$("#report").append(itbl);
 
 	$.getJSON(
 		"/rest/collections",
@@ -17,13 +22,22 @@ $(document).ready(function(){
 				addTd(tr, index).addClass("num");
 				addTd(tr, "").addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
-				addTd(tr, coll.numberItems).addClass("num");
+				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+")").addClass("num");
 			});
 			doRow(0, 5);
 		}
 	);
 
 });
+
+function drawItemTable(coll) {
+	var itbl = $("#itemtable");
+	itbl.removeAll();
+	var tr = addTr(itbl).addClass("header");
+	addTd(tr, "Num").addClass("num");
+	addTd(tr, "Item").addClass("title");
+	$("#itemtable").dialog();
+}
 
 function doRow(row, threads) {
 	var tr = $("tr[index="+row+"]");
@@ -41,7 +55,6 @@ function doRow(row, threads) {
 		}
 	);
 }			
-			
 			
 function addTr(tbl) {
 	var tr = $("<tr/>");
