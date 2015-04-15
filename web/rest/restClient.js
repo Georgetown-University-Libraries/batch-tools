@@ -32,7 +32,7 @@ function addTd(tr, val) {
 	return td;
 }
 
-function getTdAnchor(tr, val, href) {
+function addTdAnchor(tr, val, href) {
 	var a = $("<a/>");
 	a.append(val);
 	a.attr("href", href);
