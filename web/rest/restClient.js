@@ -19,9 +19,10 @@ $(document).ready(function(){
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTd(tr, coll.numberItems).addClass("num");
 			});
+			doRow(0);
 		}
 	);
-	doRow(0);
+
 });
 
 function doRow(row) {
