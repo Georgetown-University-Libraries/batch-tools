@@ -39,7 +39,7 @@ function drawItemTable(cid) {
 				var tr = addTr(itbl);
 				tr.addClass(index % 2 == 0 ? "odd" : "even");
 				addTd(tr, index).addClass("num");
-				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("title");
+				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("ititle");
 			});
 			$("#itemdiv").dialog({title: "Items", width: "80%", minHeight: 500, modal: true});
 		}
