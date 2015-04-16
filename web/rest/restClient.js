@@ -9,9 +9,6 @@ $(document).ready(function(){
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
 
-	var itbl = $("<div id='itemdiv'><h1>Items</h1><table/></div>");
-	itbl.attr("id","itemtable").addClass("sortable");
-	$("#report").append(itbl);
 	$("#itemdiv").dialog();
 
 	$.getJSON(
