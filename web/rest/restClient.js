@@ -37,7 +37,7 @@ function drawItemTable(cid) {
 	$.getJSON(
 		"/rest/collections/"+cid+"?expand=items",
 		function(data){
-			$.each(data, function(index, item){
+			$.each(data.items, function(index, item){
 				var tr = addTr(itbl);
 				tr.addClass(index % 2 == 0 ? "odd" : "even");
 				addTd(tr, index).addClass("num");
