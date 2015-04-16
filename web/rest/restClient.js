@@ -9,7 +9,7 @@ $(document).ready(function(){
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
 
-	$("#itemdiv").dialog().hide();
+	$("#itemdiv").dialog({title: "Items"}).hide();
 
 	$.getJSON(
 		"/rest/collections",
