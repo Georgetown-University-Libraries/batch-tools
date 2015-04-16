@@ -33,10 +33,11 @@ $(document).ready(function(){
 
 function drawItemTable(coll) {
 	var itbl = $("#itemtable");
-	itbl.remove("*");
+	itbl.remove("tr");
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
+	itbl.dialog();
 	itbl.show();
 }
 
