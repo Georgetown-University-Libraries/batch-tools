@@ -41,7 +41,7 @@ function drawItemTable(cid) {
 				addTd(tr, index).addClass("num");
 				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("title");
 			});
-			$("#itemdiv").dialog({title: "Items", width: "80%", height: "80%", modal: true});
+			$("#itemdiv").dialog({title: "Items", width: "80%", minHeight: 500, modal: true});
 		}
 	);
 }
