@@ -11,3 +11,4 @@ td, th {width: 100px;}
 td.error {color: red;background-color: yellow;}
 td.title, th.title {width: 300px;}
 td.mod, th.mod {width: 200px;}
+#itemdiv {text-align: center;}
