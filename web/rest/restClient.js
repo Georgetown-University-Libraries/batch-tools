@@ -9,7 +9,7 @@ $(document).ready(function(){
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
 
-	$("#itemdiv").dialog();
+	$("#itemdiv").dialog().hide();
 
 	$.getJSON(
 		"/rest/collections",
@@ -28,13 +28,24 @@ $(document).ready(function(){
 
 });
 
-function drawItemTable(coll) {
+function drawItemTable(cid) {
 	var itbl = $("#itemtable");
 	itbl.remove("tr");
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
-	$("#itemdiv").show();
+	$.getJSON(
+		"/rest/collections/"+cid+"?expand=items",
+		function(data){
+			$.each(data, function(index, item){
+				var tr = addTr(itbl);
+				tr.addClass(index % 2 == 0 ? "odd" : "even");
+				addTd(tr, index).addClass("num");
+				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("title");
+			});
+			$("#itemdiv").show();
+		}
+	);
 }
 
 function doRow(row, threads) {
