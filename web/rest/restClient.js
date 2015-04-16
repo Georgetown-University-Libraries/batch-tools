@@ -12,6 +12,7 @@ $(document).ready(function(){
 	var itbl = $("<table/>");
 	itbl.attr("id","itemtable").addClass("sortable");
 	$("#report").append(itbl);
+	$("#itemtable").dialog();
 
 	$.getJSON(
 		"/rest/collections",
@@ -32,11 +33,11 @@ $(document).ready(function(){
 
 function drawItemTable(coll) {
 	var itbl = $("#itemtable");
-	itbl.removeAll();
+	itbl.remove("*");
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
-	$("#itemtable").dialog();
+	itbl.show();
 }
 
 function doRow(row, threads) {
