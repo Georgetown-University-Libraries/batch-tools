@@ -9,8 +9,8 @@ td.head {background-color: #EEEEFF;}
 td.num {text-align: right;}
 td, th {width: 100px;}
 td.error {color: red;background-color: yellow;}
-td.title, th.title {width: 300px;}
+td.title, th.title {width: 400px;}
 td.mod, th.mod {width: 200px;}
-#itemtable {align: center;}
+#itemtable {margin: 0 auto;}
 td.ititle, th.ititle {width: 600px;}
 
