@@ -30,7 +30,7 @@ $(document).ready(function(){
 
 function drawItemTable(cid) {
 	var itbl = $("#itemtable");
-	itbl.remove("*");
+	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
