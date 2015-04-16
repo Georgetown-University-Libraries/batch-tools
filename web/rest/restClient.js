@@ -9,10 +9,10 @@ $(document).ready(function(){
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
 
-	var itbl = $("<table/>");
+	var itbl = $("<div id='itemdiv'><table/></div>");
 	itbl.attr("id","itemtable").addClass("sortable");
 	$("#report").append(itbl);
-	$("#itemtable").dialog();
+	$("#itemdiv").dialog();
 
 	$.getJSON(
 		"/rest/collections",
@@ -37,8 +37,7 @@ function drawItemTable(coll) {
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
-	itbl.dialog();
-	itbl.show();
+	$("#itemdiv").show();
 }
 
 function doRow(row, threads) {
