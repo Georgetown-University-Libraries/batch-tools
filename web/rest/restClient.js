@@ -1,5 +1,3 @@
-var itemDialog;
-
 $(document).ready(function(){
 	var tbl = $("<table/>");
 	tbl.attr("id","table").addClass("sortable");
@@ -10,8 +8,6 @@ $(document).ready(function(){
 	addTd(tr, "Community").addClass("title");
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
-
-	itemDialog = $("#itemdiv").dialog({title: "Items", width: "400px", modal: true, hide: true});
 
 	$.getJSON(
 		"/rest/collections",
@@ -45,7 +41,7 @@ function drawItemTable(cid) {
 				addTd(tr, index).addClass("num");
 				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("title");
 			});
-			itemDialog.show();
+			$("#itemdiv").dialog({title: "Items", width: "400px", modal: true});
 		}
 	);
 }
