@@ -9,7 +9,7 @@ $(document).ready(function(){
 	addTd(tr, "Collection").addClass("title");
 	addTd(tr, "Num Items");
 
-	$("#itemdiv").dialog({title: "Items", width: "400px"}).hide();
+	$("#itemdiv").dialog({title: "Items", width: "400px", modal: true}).hide();
 
 	$.getJSON(
 		"/rest/collections",
@@ -35,7 +35,7 @@ function drawItemTable(cid) {
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=items",
+		"/rest/collections/"+cid+"?expand=items&limit=5000",
 		function(data){
 			$.each(data.items, function(index, item){
 				var tr = addTr(itbl);
