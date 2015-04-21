@@ -80,7 +80,7 @@ function loadData() {
 
 function getFilterList() {
 	var list="";
-	$("input[name='filters[]']").each(
+	$("input:checked[name='filters[]']").each(
 		function(){
 			if (list != "") {
 				list += ",";
