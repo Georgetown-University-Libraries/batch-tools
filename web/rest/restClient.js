@@ -4,10 +4,10 @@ $(document).ready(function(){
 	$("#report").replaceWith(tbl);
 
 	var tr = addTr(tbl).addClass("header");
-	addTd(tr, "Num").addClass("num");
-	addTd(tr, "Community").addClass("title");
-	addTd(tr, "Collection").addClass("title");
-	addTd(tr, "Num Items");
+	addTh(tr, "Num").addClass("num");
+	addTh(tr, "Community").addClass("title");
+	addTh(tr, "Collection").addClass("title");
+	addTh(tr, "Num Items");
 
 	$.getJSON(
 		"/rest/collections",
@@ -61,7 +61,7 @@ function doRow(row, threads) {
 				var filterName = itemFilter["filter-name"];
 				var icount = itemFilter.items.length;
 				if (!trh.find("th."+filterName).is("*")) {
-					var th = addTh(trh, filterName);
+					var th = addTh(trh, filterName.replaceAll(/_/," "));
 					th.addClass(filterName);
 
 					$("tr.data").each(function(){
