@@ -30,7 +30,12 @@ $(document).ready(function(){
 				);
 			});
 			var button = $("<button>Reload</button>");
-			button.click(function(){loadData();});
+			button.click(
+				function(){
+					alert(getFilterList());
+					loadData();
+				}
+			);
 			$("#filterdiv").append(button);
 			$("#filterbutton").click(function(){
 				$("#filterdiv").dialog({title: "Choose filters to display"});
@@ -73,15 +78,19 @@ function loadData() {
 	doRow(0, 5);
 }
 
+function getFilterList() {
+	return $("input[name=filters]").val();
+}
+
 function doRow(row, threads) {
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters="+$("input.filters").val(),
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=" + getFilterList(),
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
-			tr.find("td.comm").remove().append(getAnchor(par.name, "/handle/" + par.handle));
+			tr.find("td.comm").remove("a").append(getAnchor(par.name, "/handle/" + par.handle));
 
 			$.each(data.itemFilters, function(index, itemFilter){
 				var trh = $("tr.header");
