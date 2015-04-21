@@ -9,6 +9,17 @@ $(document).ready(function(){
 	addTh(tr, "Collection").addClass("title");
 	addTh(tr, "Num Items");
 
+	addFilter("","None","none").click(function(){$("input.filter,input.all").attr("selected",false);});
+	addFilter("all","All","all").click(function(){$("input.filter,input.none").attr("selected",false);});
+	$.getJSON(
+		"/rest/filters",
+		function(data){
+			$.each(data, function(index, filter){
+				addFilter(filter["filter-name"], filter["filter-name"], "filter").click(function(){$("input.none,input.all").attr("selected",false);});
+			});
+		}
+	);
+
 	$.getJSON(
 		"/rest/collections",
 		function(data){
@@ -26,28 +37,17 @@ $(document).ready(function(){
 
 });
 
-function drawItemTable(cid, filter, collname) {
-	var itbl = $("#itemtable");
-	itbl.find("tr").remove("*");
-	var tr = addTr(itbl).addClass("header");
-	addTd(tr, "Num").addClass("num");
-	addTd(tr, "Handle");
-	addTd(tr, "Item").addClass("title");
-	$.getJSON(
-		"/rest/collections/"+cid+"?expand=items,filters&limit=5000&filters="+filter,
-		function(data){
-			var source = filter == "" ? data.items : data.itemFilters[0].items;
-			
-			$.each(source, function(index, item){
-				var tr = addTr(itbl);
-				tr.addClass(index % 2 == 0 ? "odd data" : "even data");
-				addTd(tr, index+1).addClass("num");
-				addTdAnchor(tr, item.handle, "/handle/" + item.handle);
-				addTd(tr, item.name).addClass("ititle");
-			});
-			$("#itemdiv").dialog({title: filter + " Items in " + data.name, width: "80%", minHeight: 500, modal: true});
-		}
-	);
+function addFilter(val, name, cname) {
+	var div = $("<div/>");
+	var input = $("<input name='filters' type='checkbox'/>");
+	input.attr("id",val);
+	input.val(val);
+	input.addClass(cname);
+	div.append(input);
+	var label = $("<label>"+name+"</label>");
+	div.append(label);
+	$("#filterdiv").append(div);
+	return input;
 }
 
 function doRow(row, threads) {
@@ -84,6 +84,30 @@ function doRow(row, threads) {
 	);
 }			
 			
+function drawItemTable(cid, filter, collname) {
+	var itbl = $("#itemtable");
+	itbl.find("tr").remove("*");
+	var tr = addTr(itbl).addClass("header");
+	addTd(tr, "Num").addClass("num");
+	addTd(tr, "Handle");
+	addTd(tr, "Item").addClass("title");
+	$.getJSON(
+		"/rest/collections/"+cid+"?expand=items,filters&limit=5000&filters="+filter,
+		function(data){
+			var source = filter == "" ? data.items : data.itemFilters[0].items;
+			
+			$.each(source, function(index, item){
+				var tr = addTr(itbl);
+				tr.addClass(index % 2 == 0 ? "odd data" : "even data");
+				addTd(tr, index+1).addClass("num");
+				addTdAnchor(tr, item.handle, "/handle/" + item.handle);
+				addTd(tr, item.name).addClass("ititle");
+			});
+			$("#itemdiv").dialog({title: filter + " Items in " + data.name, width: "80%", minHeight: 500, modal: true});
+		}
+	);
+}
+
 function addTr(tbl) {
 	var tr = $("<tr/>");
 	tbl.append(tr);
