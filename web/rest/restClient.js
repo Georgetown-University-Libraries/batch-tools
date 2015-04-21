@@ -31,6 +31,9 @@ $(document).ready(function(){
 			});
 		}
 	);
+	var button = $("<button>Reload</button>");
+	button.click(function(){loadData();});
+	$("#filterdiv").append(button);
 	$("#filterbutton").click(function(){
 		$("#filterdiv").dialog({title: "Choose filters to display"});
 	});
@@ -46,7 +49,7 @@ $(document).ready(function(){
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num");
 			});
-			doRow(0, 5);
+			loadData();
 		}
 	);
 
@@ -65,12 +68,17 @@ function addFilter(val, name, cname) {
 	return input;
 }
 
+function loadData() {
+	$("td.datacol,th.datacol").remove();
+	doRow(0, 5);
+}
+
 function doRow(row, threads) {
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=all",
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters="+$(input.filters).val(),
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm").append(getAnchor(par.name, "/handle/" + par.handle));
@@ -81,11 +89,11 @@ function doRow(row, threads) {
 				var icount = itemFilter.items.length;
 				if (!trh.find("th."+filterName).is("*")) {
 					var th = addTh(trh, filterName.replace(/_/g," "));
-					th.addClass(filterName);
+					th.addClass(filterName).addClass("datacol");;
 
 					$("tr.data").each(function(){
 						var td = addTd($(this), "");
-						td.addClass(filterName).addClass("num");
+						td.addClass(filterName).addClass("num").addClass("datacol");
 					});
 				}
 				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));
