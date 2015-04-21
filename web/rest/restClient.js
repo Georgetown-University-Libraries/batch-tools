@@ -31,6 +31,7 @@ function drawItemTable(cid,filter) {
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
+	addTd(tr, "Handle");
 	addTd(tr, "Item").addClass("title");
 	$.getJSON(
 		"/rest/collections/"+cid+"?expand=items,filters&limit=5000",
@@ -48,7 +49,8 @@ function drawItemTable(cid,filter) {
 				var tr = addTr(itbl);
 				tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 				addTd(tr, index+1).addClass("num");
-				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("ititle");
+				addTdAnchor(tr, item.handle, "/handle/" + item.handle);
+				addTd(tr, item.name).addClass("ititle");
 			});
 			$("#itemdiv").dialog({title: "Items", width: "80%", minHeight: 500, modal: true});
 		}
