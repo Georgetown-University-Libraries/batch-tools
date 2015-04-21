@@ -51,7 +51,7 @@ function doRow(row, threads) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList",
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters",
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm").append(getAnchor(par.name, "/handle/" + par.handle));
@@ -59,6 +59,23 @@ function doRow(row, threads) {
 			for(var i=1; i<=threads; i++) {
 				doRow(row+i, threads);
 			}
+			$.each(data.itemFilters, function(index, itemFilter){
+				var trh = $("tr.header");
+				var filterName = itemFilter.attr("filter-name");
+				var icount = itemFilter.items.length;
+				var index = trh.find("th."+filterName).index();
+				if (index == -1) {
+					var th = addTh(trh, filterName);
+					th.addClass(filterName);
+					trh.find("th."+filterName).index();
+				}
+				var numCols = trh.find("th").length;
+				var rowCols = tr.find("td").length;
+				for(var i=rowCols; i<numCols; i++) {
+					addTd(tr,"");
+				}
+				tr.find("td")[index].append(getAnchor(icount,"#"));
+			});
 		}
 	);
 }			
@@ -76,6 +93,15 @@ function addTd(tr, val) {
 	}
 	tr.append(td);
 	return td;
+}
+
+function addTh(tr, val) {
+	var th = $("<th/>");
+	if (val != null) {
+		th.append(val);
+	}
+	tr.append(th);
+	return th;
 }
 
 function addTdAnchor(tr, val, href) {
