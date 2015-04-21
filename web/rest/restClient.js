@@ -63,16 +63,16 @@ function doRow(row, threads) {
 				var trh = $("tr.header");
 				var filterName = itemFilter["filter-name"];
 				var icount = itemFilter.items.length;
-				var index = trh.find("th."+filterName).index();
-				if (index == -1) {
-					var th = $("<th/>");
+				if (!trh.find("th."+filterName).is("*")) {
+					var th = addTh(trh, filterName);
 					th.addClass(filterName);
-					trh.append(th);
-					trh.find("th."+filterName).index();
-					var td = $("<td/>");
-					$("tr.data").append(td);
+
+					$("tr.data").each(function(index, trow){
+						var td = addTd(trow, "--");
+						td.addClass(filterName);
+					});
 				}
-				tr.find("td")[index].append(getAnchor(icount,"#"));
+				tr.find("td."+filterName).append(getAnchor(icount,"#"));
 			});
 		}
 	);
