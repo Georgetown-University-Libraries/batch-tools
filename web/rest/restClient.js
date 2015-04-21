@@ -1,4 +1,5 @@
 var stop = false;
+var dialog;
 
 $(document).ready(function(){
 	var tbl = $("<table/>");
@@ -34,12 +35,13 @@ $(document).ready(function(){
 			var button = $("<button>Reload</button>");
 			button.click(
 				function(){
+					dialog.close();
 					stop = true;
 				}
 			);
 			$("#filterdiv").append(button);
 			$("#filterbutton").click(function(){
-				$("#filterdiv").dialog({title: "Choose filters to display"});
+				dialog = $("#filterdiv").dialog({title: "Choose filters to display"});
 			});
 		}
 	);
