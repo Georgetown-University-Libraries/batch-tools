@@ -87,8 +87,8 @@ function getFilterList() {
 			}
 			list += $(this).val();
 		}
-		return list;
 	);
+	return list;
 }
 
 function doRow(row, threads) {
