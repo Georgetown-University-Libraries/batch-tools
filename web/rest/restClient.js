@@ -36,7 +36,7 @@ function drawItemTable(cid,filter) {
 	$.getJSON(
 		"/rest/collections/"+cid+"?expand=items,filters&limit=5000&filters="+filter,
 		function(data){
-			var source = filter == "" ? data.items : data.itemFilter.items;
+			var source = filter == "" ? data.items : data.itemFilters.items;
 			
 			$.each(source, function(index, item){
 				var tr = addTr(itbl);
