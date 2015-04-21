@@ -9,16 +9,31 @@ $(document).ready(function(){
 	addTh(tr, "Collection").addClass("title");
 	addTh(tr, "Num Items");
 
-	addFilter("","None","none").click(function(){$("input.filter,input.all").attr("selected",false);});
-	addFilter("all","All","all").click(function(){$("input.filter,input.none").attr("selected",false);});
+	addFilter("","None","none").click(
+		function(){
+			$("input.filter,input.all").attr("checked",false);
+		}
+	);
+	addFilter("all","All","all").click(
+		function(){
+			$("input.filter,input.none").attr("checked",false);
+		}
+	);
 	$.getJSON(
 		"/rest/filters",
 		function(data){
 			$.each(data, function(index, filter){
-				addFilter(filter["filter-name"], filter["filter-name"], "filter").click(function(){$("input.none,input.all").attr("selected",false);});
+				addFilter(filter["filter-name"], filter["filter-name"], "filter").click(
+					function(){
+						$("input.none,input.all").attr("checked",false);
+					}
+				);
 			});
 		}
 	);
+	$("#filterbutton").click(function(){
+		$("#filterdiv").dialog({title: "Choose filters to display"});
+	});
 
 	$.getJSON(
 		"/rest/collections",
