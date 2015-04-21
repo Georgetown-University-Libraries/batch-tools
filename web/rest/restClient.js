@@ -37,7 +37,7 @@ function drawItemTable(cid) {
 		function(data){
 			$.each(data.items, function(index, item){
 				var tr = addTr(itbl);
-				tr.addClass(index % 2 == 0 ? "odd" : "even");
+				tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 				addTd(tr, index).addClass("num");
 				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("ititle");
 			});
@@ -65,14 +65,12 @@ function doRow(row, threads) {
 				var icount = itemFilter.items.length;
 				var index = trh.find("th."+filterName).index();
 				if (index == -1) {
-					var th = addTh(trh, filterName);
+					var th = $("<th/>");
 					th.addClass(filterName);
+					trh.append(th);
 					trh.find("th."+filterName).index();
-				}
-				var numCols = trh.find("th").length;
-				var rowCols = tr.find("td").length;
-				for(var i=rowCols; i<numCols; i++) {
-					addTd(tr,"");
+					var td = $("<td/>");
+					$("tr.data").append(td);
 				}
 				tr.find("td")[index].append(getAnchor(icount,"#"));
 			});
