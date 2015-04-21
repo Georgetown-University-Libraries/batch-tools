@@ -79,7 +79,7 @@ function loadData() {
 }
 
 function getFilterList() {
-	return $("input[name=filters[]]").val();
+	return $("input[name='filters[]']").val();
 }
 
 function doRow(row, threads) {
