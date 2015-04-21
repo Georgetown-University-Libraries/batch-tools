@@ -62,7 +62,7 @@ $(document).ready(function(){
 
 function addFilter(val, name, cname) {
 	var div = $("<div/>");
-	var input = $("<input name='filters' type='checkbox'/>");
+	var input = $("<input name='filters[]' type='checkbox'/>");
 	input.attr("id",val);
 	input.val(val);
 	input.addClass(cname);
@@ -79,7 +79,7 @@ function loadData() {
 }
 
 function getFilterList() {
-	return $("input[name=filters]").val();
+	return $("input[name=filters[]]").val();
 }
 
 function doRow(row, threads) {
