@@ -18,7 +18,7 @@ $(document).ready(function(){
 				addTd(tr, index).addClass("num");
 				addTd(tr, "").addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
-				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+")").addClass("num");
+				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num");
 			});
 			doRow(0, 5);
 		}
@@ -26,15 +26,24 @@ $(document).ready(function(){
 
 });
 
-function drawItemTable(cid) {
+function drawItemTable(cid,filter) {
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
 	addTd(tr, "Num").addClass("num");
 	addTd(tr, "Item").addClass("title");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=items&limit=5000",
+		"/rest/collections/"+cid+"?expand=items,filters&limit=5000",
 		function(data){
+			var source = data.items;
+			if (filter != "") {
+				$.each(data.filterItems, function(index, filterItem){
+					if (filterItem["filter-name"] == filter) {
+						source = filterItem.items;
+					}
+				});
+			}
+			
 			$.each(data.items, function(index, item){
 				var tr = addTr(itbl);
 				tr.addClass(index % 2 == 0 ? "odd data" : "even data");
@@ -61,15 +70,15 @@ function doRow(row, threads) {
 				var filterName = itemFilter["filter-name"];
 				var icount = itemFilter.items.length;
 				if (!trh.find("th."+filterName).is("*")) {
-					var th = addTh(trh, filterName.replaceAll(/_/," "));
+					var th = addTh(trh, filterName.replaceAll("_"," "));
 					th.addClass(filterName);
 
 					$("tr.data").each(function(){
 						var td = addTd($(this), "");
-						td.addClass(filterName);
+						td.addClass(filterName).addClass("num");
 					});
 				}
-				tr.find("td."+filterName).append(getAnchor(icount,"#"));
+				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));
 			});
 
 			if (row % threads != 0) return;
