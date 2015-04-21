@@ -37,9 +37,9 @@ function drawItemTable(cid,filter) {
 		function(data){
 			var source = data.items;
 			if (filter != "") {
-				$.each(data.filterItems, function(index, filterItem){
-					if (filterItem["filter-name"] == filter) {
-						source = filterItem.items;
+				$.each(data.itemFilters, function(index, itemFilter){
+					if (itemFilter["filter-name"] == filter) {
+						source = itemFilter.items;
 					}
 				});
 			}
