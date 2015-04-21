@@ -55,10 +55,7 @@ function doRow(row, threads) {
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm").append(getAnchor(par.name, "/handle/" + par.handle));
-			if (row % threads != 0) return;
-			for(var i=1; i<=threads; i++) {
-				doRow(row+i, threads);
-			}
+
 			$.each(data.itemFilters, function(index, itemFilter){
 				var trh = $("tr.header");
 				var filterName = itemFilter["filter-name"];
@@ -68,12 +65,17 @@ function doRow(row, threads) {
 					th.addClass(filterName);
 
 					$("tr.data").each(function(){
-						var td = addTd($(this), "--");
+						var td = addTd($(this), "");
 						td.addClass(filterName);
 					});
 				}
 				tr.find("td."+filterName).append(getAnchor(icount,"#"));
 			});
+
+			if (row % threads != 0) return;
+			for(var i=1; i<=threads; i++) {
+				doRow(row+i, threads);
+			}
 		}
 	);
 }			
