@@ -44,10 +44,10 @@ function drawItemTable(cid,filter) {
 				});
 			}
 			
-			$.each(data.items, function(index, item){
+			$.each(source, function(index, item){
 				var tr = addTr(itbl);
 				tr.addClass(index % 2 == 0 ? "odd data" : "even data");
-				addTd(tr, index).addClass("num");
+				addTd(tr, index+1).addClass("num");
 				addTdAnchor(tr, item.name, "/handle/" + item.handle).addClass("ititle");
 			});
 			$("#itemdiv").dialog({title: "Items", width: "80%", minHeight: 500, modal: true});
