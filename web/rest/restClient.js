@@ -79,7 +79,16 @@ function loadData() {
 }
 
 function getFilterList() {
-	return $("input[name='filters[]']").val();
+	var list="";
+	$("input[name='filters[]']").each(
+		function(){
+			if (list != "") {
+				list += ",";
+			}
+			list += $(this).val();
+		}
+		return list;
+	);
 }
 
 function doRow(row, threads) {
