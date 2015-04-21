@@ -34,16 +34,9 @@ function drawItemTable(cid,filter) {
 	addTd(tr, "Handle");
 	addTd(tr, "Item").addClass("title");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=items,filters&limit=5000",
+		"/rest/collections/"+cid+"?expand=items,filters&limit=5000&filters="+filter,
 		function(data){
-			var source = data.items;
-			if (filter != "") {
-				$.each(data.itemFilters, function(index, itemFilter){
-					if (itemFilter["filter-name"] == filter) {
-						source = itemFilter.items;
-					}
-				});
-			}
+			var source = filter == "" ? data.items : data.itemFilter.items;
 			
 			$.each(source, function(index, item){
 				var tr = addTr(itbl);
