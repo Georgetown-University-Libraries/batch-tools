@@ -61,7 +61,7 @@ function doRow(row, threads) {
 			}
 			$.each(data.itemFilters, function(index, itemFilter){
 				var trh = $("tr.header");
-				var filterName = itemFilter.attr("filter-name");
+				var filterName = itemFilter["filter-name"];
 				var icount = itemFilter.items.length;
 				var index = trh.find("th."+filterName).index();
 				if (index == -1) {
