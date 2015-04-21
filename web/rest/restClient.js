@@ -70,7 +70,7 @@ function doRow(row, threads) {
 				var filterName = itemFilter["filter-name"];
 				var icount = itemFilter.items.length;
 				if (!trh.find("th."+filterName).is("*")) {
-					var th = addTh(trh, filterName.replaceAll("_"," "));
+					var th = addTh(trh, filterName.replace(/_/g," "));
 					th.addClass(filterName);
 
 					$("tr.data").each(function(){
