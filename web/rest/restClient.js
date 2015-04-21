@@ -1,3 +1,5 @@
+var stop = false;
+
 $(document).ready(function(){
 	var tbl = $("<table/>");
 	tbl.attr("id","table").addClass("sortable");
@@ -32,8 +34,7 @@ $(document).ready(function(){
 			var button = $("<button>Reload</button>");
 			button.click(
 				function(){
-					alert(getFilterList());
-					loadData();
+					stop = true;
 				}
 			);
 			$("#filterdiv").append(button);
@@ -99,7 +100,7 @@ function doRow(row, threads) {
 		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=" + getFilterList(),
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
-			tr.find("td.comm").remove("a").append(getAnchor(par.name, "/handle/" + par.handle));
+			tr.find("td.comm").replaceWith(getAnchor(par.name, "/handle/" + par.handle));
 
 			$.each(data.itemFilters, function(index, itemFilter){
 				var trh = $("tr.header");
@@ -118,6 +119,11 @@ function doRow(row, threads) {
 			});
 
 			if (row % threads != 0) return;
+			if (stop == true) {
+				loadData();
+				return;
+			}
+			
 			for(var i=1; i<=threads; i++) {
 				doRow(row+i, threads);
 			}
