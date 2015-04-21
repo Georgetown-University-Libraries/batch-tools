@@ -1,4 +1,5 @@
 var stop = false;
+var filterString = "";
 var dialog;
 
 $(document).ready(function(){
@@ -78,6 +79,7 @@ function addFilter(val, name, cname) {
 
 function loadData() {
 	$("td.datacol,th.datacol").remove();
+	filterString = getFilterList();
 	doRow(0, 5);
 }
 
@@ -99,7 +101,7 @@ function doRow(row, threads) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=" + getFilterList(),
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=" + filterString,
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm").replaceWith(getAnchor(par.name, "/handle/" + par.handle));
