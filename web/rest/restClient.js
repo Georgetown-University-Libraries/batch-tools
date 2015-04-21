@@ -26,7 +26,7 @@ $(document).ready(function(){
 
 });
 
-function drawItemTable(cid,filter) {
+function drawItemTable(cid, filter, collname) {
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
@@ -45,7 +45,7 @@ function drawItemTable(cid,filter) {
 				addTdAnchor(tr, item.handle, "/handle/" + item.handle);
 				addTd(tr, item.name).addClass("ititle");
 			});
-			$("#itemdiv").dialog({title: "Items", width: "80%", minHeight: 500, modal: true});
+			$("#itemdiv").dialog({title: filter + " Items in " + data.name, width: "80%", minHeight: 500, modal: true});
 		}
 	);
 }
