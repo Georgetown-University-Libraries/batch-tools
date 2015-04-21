@@ -67,8 +67,8 @@ function doRow(row, threads) {
 					var th = addTh(trh, filterName);
 					th.addClass(filterName);
 
-					$("tr.data").each(function(index, trow){
-						var td = addTd(trow, "--");
+					$("tr.data").each(function(){
+						var td = addTd($(this), "--");
 						td.addClass(filterName);
 					});
 				}
