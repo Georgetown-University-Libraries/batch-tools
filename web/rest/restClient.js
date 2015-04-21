@@ -62,7 +62,7 @@ function doRow(row, threads) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters",
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=all",
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm").append(getAnchor(par.name, "/handle/" + par.handle));
