@@ -81,7 +81,7 @@ function doRow(row, threads) {
 		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters="+$("input.filters").val(),
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
-			tr.find("td.comm").append(getAnchor(par.name, "/handle/" + par.handle));
+			tr.find("td.comm").remove().append(getAnchor(par.name, "/handle/" + par.handle));
 
 			$.each(data.itemFilters, function(index, itemFilter){
 				var trh = $("tr.header");
