@@ -133,12 +133,12 @@ function doRow(row, threads, curLoadId) {
 			if (row % threads != 0) return;
 			if (stop == true) {
 				stop = false;
-				setloadData();
+				loadData();
 				return;
 			}
 			
 			for(var i=1; i<=threads; i++) {
-				doRow(row+i, threads);
+				doRow(row+i, threads, curLoadId);
 			}
 		}
 	);
