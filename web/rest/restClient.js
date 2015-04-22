@@ -85,7 +85,7 @@ function loadData() {
 	loadId++;
 	$("td.datacol,th.datacol").remove();
 	filterString = getFilterList();
-	doRow(0, 5, loadId);
+	doRow(0, 1, loadId);
 }
 
 function getFilterList() {
@@ -107,7 +107,7 @@ function doRow(row, threads, curLoadId) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&limit=50000&filters=" + filterString,
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&limit=5000&filters=" + filterString,
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
@@ -128,19 +128,13 @@ function doRow(row, threads, curLoadId) {
 						td.addClass(filterName).addClass("num").addClass("datacol");
 					});
 				}
-				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));					
+				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));	
+				
+				if (row % threads != 0) return;
+				for(var i=1; i<=threads; i++) {
+					doRow(row+i, threads, curLoadId);
+				}
 			});
-
-			if (row % threads != 0) return;
-			
-			setTimeout(
-				function(){
-					for(var i=1; i<=threads; i++) {
-						doRow(row+i, threads, curLoadId);
-					}					
-				}, 
-				row == 0 ? 0 : 1000
-			);
 		}
 	);
 }			
