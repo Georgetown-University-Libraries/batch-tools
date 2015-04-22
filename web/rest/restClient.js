@@ -131,11 +131,12 @@ function doRow(row, threads, curLoadId) {
 			});
 
 			if (row % threads != 0) return;
-			if (loadId != curLoadId) return;
 			
 			for(var i=1; i<=threads; i++) {
-				setTimeout(function(){doRow(row+i, threads, curLoadId);}, 1000);
+				doRow(row+i, threads, curLoadId);
 			}
+			if (loadId != curLoadId) return;
+			setTimeout(function(){doRow(row+threads,threads, curLoadId);},1000);
 		}
 	);
 }			
