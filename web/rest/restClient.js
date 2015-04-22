@@ -106,7 +106,7 @@ function doRow(row, threads, curLoadId) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&filters=" + filterString,
+		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&limit=50000&filters=" + filterString,
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
@@ -117,7 +117,7 @@ function doRow(row, threads, curLoadId) {
 				}
 				var trh = $("tr.header");
 				var filterName = itemFilter["filter-name"];
-				var icount = itemFilter.items.length;
+				var icount = itemFilter["item-count"];
 				if (!trh.find("th."+filterName).is("*")) {
 					var th = addTh(trh, filterName.replace(/_/g," "));
 					th.addClass(filterName).addClass("datacol");;
