@@ -1,4 +1,3 @@
-var stop = false;
 var filterString = "";
 var loadId = 0;
 
@@ -41,7 +40,6 @@ $(document).ready(function(){
 				function(){
 					$("#filterdiv").dialog("close");
 					$("#filter-reload").attr("disabled", true);
-					stop = true;
 					loadData();
 				}
 			);
