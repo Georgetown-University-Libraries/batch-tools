@@ -130,9 +130,10 @@ function doRow(row, threads, curLoadId) {
 				}
 				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));	
 				
-				if (row % threads != 0) return;
-				for(var i=1; i<=threads; i++) {
-					doRow(row+i, threads, curLoadId);
+				if (row % threads == 0 || threads == 1) {
+					for(var i=1; i<=threads; i++) {
+						doRow(row+i, threads, curLoadId);
+					}					
 				}
 			});
 		}
