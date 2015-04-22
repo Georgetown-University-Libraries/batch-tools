@@ -44,7 +44,7 @@ $(document).ready(function(){
 				}
 			);
 			$("#filterdiv").append(button);
-			$("#filterdiv").dialog({title: "Choose filters to display", hide: true);
+			$("#filterdiv").dialog({title: "Choose filters to display", hide: true});
 			$("#filterbutton").click(function(){
 				$("#filterdiv").dialog("open");
 			});
