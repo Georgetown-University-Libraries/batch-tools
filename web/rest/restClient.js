@@ -131,9 +131,10 @@ function doRow(row, threads, curLoadId) {
 			});
 
 			if (row % threads != 0) return;
+			if (loadId != curLoadId) return;
 			
 			for(var i=1; i<=threads; i++) {
-				doRow(row+i, threads, curLoadId);
+				setTimout(function(){doRow(row+i, threads, curLoadId);}, 1000);
 			}
 		}
 	);
