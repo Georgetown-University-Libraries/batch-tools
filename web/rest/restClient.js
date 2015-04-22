@@ -36,7 +36,7 @@ $(document).ready(function(){
 			var button = $("<button>Reload</button>");
 			button.click(
 				function(){
-					dialog.close();
+					dialog.hide();
 					stop = true;
 				}
 			);
