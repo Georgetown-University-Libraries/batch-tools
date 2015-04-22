@@ -1,6 +1,5 @@
 var stop = false;
 var filterString = "";
-var dialog;
 
 $(document).ready(function(){
 	var tbl = $("<table/>");
@@ -16,11 +15,13 @@ $(document).ready(function(){
 	addFilter("","None","none").click(
 		function(){
 			$("input.filter,input.all").attr("checked",false);
+			$("#filter-reload").attr("disabled", false);
 		}
 	);
 	addFilter("all","All","all").click(
 		function(){
 			$("input.filter,input.none").attr("checked",false);
+			$("#filter-reload").attr("disabled", false);
 		}
 	);
 	$.getJSON(
@@ -30,19 +31,21 @@ $(document).ready(function(){
 				addFilter(filter["filter-name"], filter["filter-name"], "filter").click(
 					function(){
 						$("input.none,input.all").attr("checked",false);
+						$("#filter-reload").attr("disabled", false);
 					}
 				);
 			});
-			var button = $("<button>Reload</button>");
+			var button = $("<button id='filter-reload' disabled='true'>Reload</button>");
 			button.click(
 				function(){
-					dialog.hide();
+					$("#filterdiv").dialog().hide();
+					$("#filter-reload").attr("disabled", true);
 					stop = true;
 				}
 			);
 			$("#filterdiv").append(button);
 			$("#filterbutton").click(function(){
-				dialog = $("#filterdiv").dialog({title: "Choose filters to display"});
+				$("#filterdiv").dialog({title: "Choose filters to display"});
 			});
 		}
 	);
