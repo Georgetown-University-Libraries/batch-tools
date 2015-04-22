@@ -7,7 +7,7 @@ $(document).ready(function(){
 	$("#report").replaceWith(tbl);
 
 	var tr = addTr(tbl).addClass("header");
-	addTh(tr, "Num").addClass("num");
+	addTh(tr, "Num").addClass("num").addClass("sorttable_numeric");
 	addTh(tr, "Community").addClass("title");
 	addTh(tr, "Collection").addClass("title");
 	addTh(tr, "Num Items").addClass("sorttable_numeric");
