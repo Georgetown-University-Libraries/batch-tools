@@ -1,5 +1,6 @@
 var stop = false;
 var filterString = "";
+var loadId = 0;
 
 $(document).ready(function(){
 	var tbl = $("<table/>");
@@ -82,9 +83,10 @@ function addFilter(val, name, cname) {
 }
 
 function loadData() {
+	loadId++;
 	$("td.datacol,th.datacol").remove();
 	filterString = getFilterList();
-	doRow(0, 5);
+	doRow(0, 5, loadId);
 }
 
 function getFilterList() {
@@ -100,7 +102,7 @@ function getFilterList() {
 	return list;
 }
 
-function doRow(row, threads) {
+function doRow(row, threads, curLoadId) {
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
@@ -111,25 +113,27 @@ function doRow(row, threads) {
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
 
 			$.each(data.itemFilters, function(index, itemFilter){
-				var trh = $("tr.header");
-				var filterName = itemFilter["filter-name"];
-				var icount = itemFilter.items.length;
-				if (!trh.find("th."+filterName).is("*")) {
-					var th = addTh(trh, filterName.replace(/_/g," "));
-					th.addClass(filterName).addClass("datacol");;
+				if (loadId == curLoadId) {
+					var trh = $("tr.header");
+					var filterName = itemFilter["filter-name"];
+					var icount = itemFilter.items.length;
+					if (!trh.find("th."+filterName).is("*")) {
+						var th = addTh(trh, filterName.replace(/_/g," "));
+						th.addClass(filterName).addClass("datacol");;
 
-					$("tr.data").each(function(){
-						var td = addTd($(this), "");
-						td.addClass(filterName).addClass("num").addClass("datacol");
-					});
+						$("tr.data").each(function(){
+							var td = addTd($(this), "");
+							td.addClass(filterName).addClass("num").addClass("datacol");
+						});
+					}
+					tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));					
 				}
-				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));
 			});
 
 			if (row % threads != 0) return;
 			if (stop == true) {
 				stop = false;
-				loadData();
+				setloadData();
 				return;
 			}
 			
