@@ -102,6 +102,7 @@ function getFilterList() {
 }
 
 function doRow(row, threads, curLoadId) {
+	if (loadId != curLoadId) return;
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
@@ -132,11 +133,14 @@ function doRow(row, threads, curLoadId) {
 
 			if (row % threads != 0) return;
 			
-			for(var i=1; i<=threads; i++) {
-				doRow(row+i, threads, curLoadId);
-			}
-			if (loadId != curLoadId) return;
-			setTimeout(function(){doRow(row+threads,threads, curLoadId);},1000);
+			setTimeout(
+				function(){
+					for(var i=1; i<=threads; i++) {
+						doRow(row+i, threads, curLoadId);
+					}					
+				}, 
+				1000
+			);
 		}
 	);
 }			
