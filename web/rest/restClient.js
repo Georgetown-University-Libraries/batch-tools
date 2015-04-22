@@ -139,7 +139,7 @@ function doRow(row, threads, curLoadId) {
 						doRow(row+i, threads, curLoadId);
 					}					
 				}, 
-				1000
+				row == 0 ? 0 : 1000
 			);
 		}
 	);
