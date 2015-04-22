@@ -42,6 +42,7 @@ $(document).ready(function(){
 					$("#filterdiv").dialog("close");
 					$("#filter-reload").attr("disabled", true);
 					stop = true;
+					loadData();
 				}
 			);
 			$("#filterdiv").append(button);
@@ -113,29 +114,25 @@ function doRow(row, threads, curLoadId) {
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
 
 			$.each(data.itemFilters, function(index, itemFilter){
-				if (loadId == curLoadId) {
-					var trh = $("tr.header");
-					var filterName = itemFilter["filter-name"];
-					var icount = itemFilter.items.length;
-					if (!trh.find("th."+filterName).is("*")) {
-						var th = addTh(trh, filterName.replace(/_/g," "));
-						th.addClass(filterName).addClass("datacol");;
-
-						$("tr.data").each(function(){
-							var td = addTd($(this), "");
-							td.addClass(filterName).addClass("num").addClass("datacol");
-						});
-					}
-					tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));					
+				if (loadId != curLoadId) {
+					return;
 				}
+				var trh = $("tr.header");
+				var filterName = itemFilter["filter-name"];
+				var icount = itemFilter.items.length;
+				if (!trh.find("th."+filterName).is("*")) {
+					var th = addTh(trh, filterName.replace(/_/g," "));
+					th.addClass(filterName).addClass("datacol");;
+
+					$("tr.data").each(function(){
+						var td = addTd($(this), "");
+						td.addClass(filterName).addClass("num").addClass("datacol");
+					});
+				}
+				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));					
 			});
 
 			if (row % threads != 0) return;
-			if (stop == true) {
-				stop = false;
-				loadData();
-				return;
-			}
 			
 			for(var i=1; i<=threads; i++) {
 				doRow(row+i, threads, curLoadId);
