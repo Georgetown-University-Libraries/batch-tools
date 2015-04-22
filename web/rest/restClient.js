@@ -10,7 +10,7 @@ $(document).ready(function(){
 	addTh(tr, "Num").addClass("num");
 	addTh(tr, "Community").addClass("title");
 	addTh(tr, "Collection").addClass("title");
-	addTh(tr, "Num Items");
+	addTh(tr, "Num Items").addClass("sorttable_numeric");
 
 	addFilter("","None","none").click(
 		function(){
@@ -60,7 +60,7 @@ $(document).ready(function(){
 				addTd(tr, index).addClass("num");
 				addTd(tr, "").addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
-				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num").addClass("sorttable_numeric");
+				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num");
 			});
 			loadData();
 		}
