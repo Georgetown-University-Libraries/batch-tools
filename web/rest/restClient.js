@@ -128,6 +128,7 @@ function doRow(row, threads) {
 
 			if (row % threads != 0) return;
 			if (stop == true) {
+				stop = false;
 				loadData();
 				return;
 			}
