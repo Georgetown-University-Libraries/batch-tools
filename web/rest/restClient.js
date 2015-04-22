@@ -121,7 +121,7 @@ function doRow(row, threads, curLoadId) {
 				var icount = itemFilter["item-count"];
 				if (!trh.find("th."+filterName).is("*")) {
 					var th = addTh(trh, filterName.replace(/_/g," "));
-					th.addClass(filterName).addClass("datacol");;
+					th.addClass(filterName).addClass("datacol").addClass("sorttable_numeric");
 
 					$("tr.data").each(function(){
 						var td = addTd($(this), "");
