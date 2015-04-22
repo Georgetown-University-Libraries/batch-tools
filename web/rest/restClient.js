@@ -60,7 +60,7 @@ $(document).ready(function(){
 				addTd(tr, index).addClass("num");
 				addTd(tr, "").addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
-				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num");
+				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num").addClass("sorttable_numeric");
 			});
 			loadData();
 		}
