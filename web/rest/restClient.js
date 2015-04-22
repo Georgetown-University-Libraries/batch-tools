@@ -38,15 +38,15 @@ $(document).ready(function(){
 			var button = $("<button id='filter-reload' disabled='true'>Reload</button>");
 			button.click(
 				function(){
-					$("#filterdiv").dialog({hide : {effect: "explode", duration: 1000}});
+					$("#filterdiv").dialog("hide");
 					$("#filter-reload").attr("disabled", true);
 					stop = true;
 				}
 			);
 			$("#filterdiv").append(button);
-			$("#filterdiv").dialog({title: "Choose filters to display", hide: true});
+			$("#filterdiv").dialog({title: "Choose filters to display", hide: {effect: "explode", duration: 1000}});
 			$("#filterbutton").click(function(){
-				$("#filterdiv").dialog({show : {effect: "explode", duration: 1000}});
+				$("#filterdiv").dialog("show");
 			});
 		}
 	);
