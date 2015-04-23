@@ -12,13 +12,13 @@ $(document).ready(function(){
 	addTh(tr, "Collection").addClass("title");
 	addTh(tr, "Num Items").addClass("sorttable_numeric");
 
-	addFilter("","None","none").click(
+	addFilter("","None","De-select all filters","none").click(
 		function(){
 			$("input.filter,input.all").attr("checked",false);
 			$("#filter-reload").attr("disabled", false);
 		}
 	);
-	addFilter("all","All","all").click(
+	addFilter("all","All","Show all filters","all").click(
 		function(){
 			$("input.filter,input.none").attr("checked",false);
 			$("#filter-reload").attr("disabled", false);
@@ -28,7 +28,7 @@ $(document).ready(function(){
 		"/rest/filters",
 		function(data){
 			$.each(data, function(index, filter){
-				addFilter(filter["filter-name"], filter["filter-name"], "filter").click(
+				addFilter(filter["filter-name"], filter.title, filter.description, "filter").click(
 					function(){
 						$("input.none,input.all").attr("checked",false);
 						$("#filter-reload").attr("disabled", false);
@@ -68,14 +68,16 @@ $(document).ready(function(){
 
 });
 
-function addFilter(val, name, cname) {
+function addFilter(val, title, description, cname) {
 	var div = $("<div/>");
 	var input = $("<input name='filters[]' type='checkbox'/>");
 	input.attr("id",val);
 	input.val(val);
 	input.addClass(cname);
 	div.append(input);
-	var label = $("<label>"+name+"</label>");
+	var ftitle = (title == null) ? val : title;
+	var label = $("<label>" + ftitle + "</label>");
+	label.attr("title", description);
 	div.append(label);
 	$("#filterdiv").append(div);
 	return input;
