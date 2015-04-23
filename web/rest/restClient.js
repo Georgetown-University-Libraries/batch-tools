@@ -107,7 +107,7 @@ function doRow(row, threads, curLoadId) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList,filters&limit=5000&filters=" + filterString,
+		"/rest/filtered-collections/"+cid+"?expand=parentCommunityList&filters=" + filterString,
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
@@ -148,7 +148,7 @@ function drawItemTable(cid, filter, collname) {
 	addTh(tr, "Handle");
 	addTh(tr, "Item").addClass("title");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=items,filters&limit=5000&filters="+filter,
+		"/rest/filtered-collections/"+cid+"?expand=items&filters="+filter,
 		function(data){
 			var source = filter == "" ? data.items : data.itemFilters[0].items;
 			
