@@ -122,6 +122,10 @@ function doRow(row, threads, curLoadId) {
 				if (!trh.find("th."+filterName).is("*")) {
 					var th = addTh(trh, filterName.replace(/_/g," "));
 					th.addClass(filterName).addClass("datacol").addClass("sorttable_numeric");
+					
+					var title = itemFitler.title == null ? "" : itemFilter.title;
+					title += itemFilter.description == null ? "" : ": " + itemFilter.description;
+					th.attr("title", title);					
 
 					$("tr.data").each(function(){
 						var td = addTd($(this), "");
