@@ -118,14 +118,15 @@ function doRow(row, threads, curLoadId) {
 				}
 				var trh = $("tr.header");
 				var filterName = itemFilter["filter-name"];
+				var filterTitle = itemFilter.title == null ? filterName : itemFilter.title;
 				var icount = itemFilter["item-count"];
 				if (!trh.find("th."+filterName).is("*")) {
-					var th = addTh(trh, filterName.replace(/_/g," "));
+					var th = addTh(trh, filterTitle);
 					th.addClass(filterName).addClass("datacol").addClass("sorttable_numeric");
 					
-					var title = itemFilter.title == null ? "" : itemFilter.title;
-					title += itemFilter.description == null ? "" : ": " + itemFilter.description;
-					th.attr("title", title);					
+					if (itemFilter.description != null) {
+						th.attr("title", itemFilter.description);											
+					}
 
 					$("tr.data").each(function(){
 						var td = addTd($(this), "");
