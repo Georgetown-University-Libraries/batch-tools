@@ -144,9 +144,9 @@ function drawItemTable(cid, filter, collname) {
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
-	addTd(tr, "Num").addClass("num");
-	addTd(tr, "Handle");
-	addTd(tr, "Item").addClass("title");
+	addTh(tr, "Num").addClass("num").addClass("sorttable_numeric");
+	addTh(tr, "Handle");
+	addTh(tr, "Item").addClass("title");
 	$.getJSON(
 		"/rest/collections/"+cid+"?expand=items,filters&limit=5000&filters="+filter,
 		function(data){
