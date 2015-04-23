@@ -123,7 +123,7 @@ function doRow(row, threads, curLoadId) {
 					var th = addTh(trh, filterName.replace(/_/g," "));
 					th.addClass(filterName).addClass("datacol").addClass("sorttable_numeric");
 					
-					var title = itemFitler.title == null ? "" : itemFilter.title;
+					var title = itemFilter.title == null ? "" : itemFilter.title;
 					title += itemFilter.description == null ? "" : ": " + itemFilter.description;
 					th.attr("title", title);					
 
