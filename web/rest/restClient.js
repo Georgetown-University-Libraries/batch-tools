@@ -136,12 +136,13 @@ function doRow(row, threads, curLoadId) {
 					});
 				}
 				
-				var anchor = getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')");
 				if (icount == null || icount == "0") {
-					anchor = $("0");
+					tr.find("td."+filterName).text("0");
+				} else {
+					var anchor = getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')");
+					tr.find("td."+filterName).append(anchor);						
 				}
 				
-				tr.find("td."+filterName).append(anchor);	
 				
 			});
 			
