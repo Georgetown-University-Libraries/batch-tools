@@ -52,7 +52,7 @@ $(document).ready(function(){
 	);
 
 	$.getJSON(
-		"/rest/collections",
+		"/rest/collections?limit=500",
 		function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
