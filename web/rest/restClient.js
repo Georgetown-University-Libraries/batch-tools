@@ -135,7 +135,13 @@ function doRow(row, threads, curLoadId) {
 						td.addClass(filterName).addClass("num").addClass("datacol");
 					});
 				}
-				tr.find("td."+filterName).append(getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')"));	
+				
+				var anchor = getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')");
+				if (icount == null || icount == "0") {
+					anchor = $("0");
+				}
+				
+				tr.find("td."+filterName).append(anchor);	
 				
 			});
 			
