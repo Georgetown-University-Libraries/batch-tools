@@ -81,13 +81,13 @@ function loadMetadataFields() {
 						metadataFields.push(field.name);
 					});
 				});
-				drawMetadata();
+				drawMetadataFields();
 			}
 		);
 	}	
 }
 
-function drawMetadataField() {
+function drawMetadataFields() {
 	var sel = $("<select name='query_field[]'/>");
 	
 	var opt = $("<option/>");
