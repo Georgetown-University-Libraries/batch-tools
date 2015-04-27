@@ -77,10 +77,10 @@ function loadMetadataFields() {
 			"/rest/metadataregistry",
 			function(data){
 				$.each(data, function(index, schema){
-					$.each(schema, function(findex, field)) {
+					$.each(schema, function(findex, field) {
 						metadataFields[] = field.name;
-					}
-				}
+					});
+				});
 				drawMetadata(metadataFields());
 			}
 		);
