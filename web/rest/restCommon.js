@@ -79,7 +79,7 @@ function loadMetadataFields() {
 				$.each(schema.fields, function(findex, field) {
 					var name = field.name;
 					var opt = $("<option/>");
-					opt.attr("value",name).append($(name));
+					opt.attr("value",name).text(name);
 					sel.append(opt);
 				});
 			});
