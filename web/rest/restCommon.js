@@ -78,7 +78,7 @@ function loadMetadataFields() {
 			function(data){
 				$.each(data, function(index, schema){
 					$.each(schema, function(findex, field) {
-						metadataFields[] = field.name;
+						metadataFields.push(field.name);
 					});
 				});
 				drawMetadata(metadataFields());
