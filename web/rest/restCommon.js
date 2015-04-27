@@ -1,5 +1,6 @@
 var filterString = "";
 var loadId = 0;
+var metadataFields = [];
 
 function createCollectionTable() {
 	var tbl = $("<table/>");
@@ -70,8 +71,37 @@ function createFilterTable() {
 	);
 }
 
-function createQueryTable() {
+function loadMetadataFields() {
+	if (metadataFields.length == 0) {
+		$.getJSON(
+			"/rest/metadataregistry",
+			function(data){
+				$.each(data, function(index, schema){
+					$.each(schema, function(findex, field)) {
+						metadataFields[] = field.name;
+					}
+				}
+				drawMetadata(metadataFields());
+			}
+		);
+	}	
+}
+
+function drawMetadataField() {
+	var sel = $("<select name='query_field[]'/>");
 	
+	var opt = $("<option/>");
+	sel.append(opt);
+	for(var i=0; i<metadataFields.length; i++) {
+		var opt = $("<option/>")
+		opt.attr("value",metadataFields[i]).append($(metadataFields[i]));
+		sel.append(opt);
+	}
+	$("#metadatadiv.append").append(sel);
+}
+
+function createQueryTable() {
+	loadMetadataFields();
 }
 
 function addFilter(val, title, description, cname) {
