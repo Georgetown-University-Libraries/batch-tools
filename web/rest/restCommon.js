@@ -81,7 +81,7 @@ function loadMetadataFields() {
 						metadataFields.push(field.name);
 					});
 				});
-				drawMetadata(metadataFields());
+				drawMetadata();
 			}
 		);
 	}	
