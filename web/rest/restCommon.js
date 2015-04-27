@@ -76,7 +76,7 @@ function loadMetadataFields() {
 		function(data){
 			var sel = $("select[name='query_field[]']");
 			$.each(data, function(index, schema){
-				$.each(schema.field, function(findex, field) {
+				$.each(schema.fields, function(findex, field) {
 					var name = field.name;
 					var opt = $("<option/>");
 					opt.attr("value",name).append($(name));
