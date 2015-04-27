@@ -1,6 +1,5 @@
 var filterString = "";
 var loadId = 0;
-var metadataFields;
 
 function createCollectionTable() {
 	var tbl = $("<table/>");
@@ -72,23 +71,21 @@ function createFilterTable() {
 }
 
 function loadMetadataFields() {
-	if (metadataFields.length == 0) {
-		$.getJSON(
-			"/rest/metadataregistry",
-			function(data){
-				metadataFields = data;
-				var sel = $("select[name=query_field[]]");
-				$.each(data.metadataSchemas, function(index, schema){
-					$.each(schema, function(findex, field) {
-						var name = field.name;
-						var opt = $("<option/>");
-						opt.attr("value",name).append($(name));
-						sel.append(opt);
-					});
+	$.getJSON(
+		"/rest/metadataregistry",
+		function(data){
+			metadataFields = data;
+			var sel = $("select[name=query_field[]]");
+			$.each(data.metadataSchemas, function(index, schema){
+				$.each(schema, function(findex, field) {
+					var name = field.name;
+					var opt = $("<option/>");
+					opt.attr("value",name).append($(name));
+					sel.append(opt);
 				});
-			}
-		);
-	}	
+			});
+		}
+	);
 }
 
 function createQueryTable() {
