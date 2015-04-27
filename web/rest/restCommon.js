@@ -74,7 +74,6 @@ function loadMetadataFields() {
 	$.getJSON(
 		"/rest/metadataregistry",
 		function(data){
-			metadataFields = data;
 			var sel = $("select[name='query_field[]']");
 			$.each(data.metadataSchemas, function(index, schema){
 				$.each(schema, function(findex, field) {
