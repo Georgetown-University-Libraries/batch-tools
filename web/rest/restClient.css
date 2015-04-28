@@ -21,3 +21,9 @@ button:disabled {
 input:read-only {
 	background-color: gray;
 }
+div.metadata {
+	padding: 8px;
+}
+div.metadata select, div.metadata input {
+	padding: 4px;
+}
