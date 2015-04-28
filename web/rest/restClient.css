@@ -25,5 +25,6 @@ div.metadata {
 	padding: 8px;
 }
 div.metadata select, div.metadata input {
-	padding: 4px;
+	padding: 2px;
+	margin: 4px;
 }
