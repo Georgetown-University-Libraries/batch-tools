@@ -32,12 +32,17 @@ function drawFilterQuery() {
 	sel = $("<select name='query_op[]'/>");
 	$("<option>exists</option>").val("exists").appendTo(sel);
 	$("<option>does not exist</option>").val("not_exists").appendTo(sel);
-	$("<option>equals</option>").val("equals").appendTo(sel);
+	$("<option selected>equals</option>").val("equals").appendTo(sel);
 	$("<option>does not equals</option>").val("not_equals").appendTo(sel);
 	$("<option>like</option>").val("like").appendTo(sel);
 	$("<option>not like</option>").val("not_like").appendTo(sel);
 	$("<option>matches</option>").val("like").appendTo(sel);
 	$("<option>does not mat</option>").val("not_like").appendTo(sel);
+	sel.change(function(){
+		var val = $(this).val();
+		var disableval = (val == "exists" || val == "not_exists");
+		$(this).parent("div.metadata input[name='query_val[]']").val().attr("readonly",disableval);
+	});
 	div.append(sel);
 	var input = $("<input name='field_val[]'/>");
 	div.append(input);
