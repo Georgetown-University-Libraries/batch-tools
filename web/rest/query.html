@@ -15,11 +15,26 @@
 <button id="filterbutton">Filters</button>
 <div id="querydiv">
   <div id='metadatadiv'>
+    <fieldset id="queries">
+      <label>Metadata Field Queries</label>
+    </fieldset>
+    <fieldset id="queries-page">
+      <label>Limit/Paginate Queries</label>
+      <div>
+        <label for="limit">Limit:</label><input id="limit" name="limit" value="100"/>
+      </div>
+      <div>
+        <label for="offset">Offset:</label><input id="offset" name="offset" value="0"/>
+      </div>
+    </fieldset>
+    <fieldset id="queries-aux">
+      <label>Additional data to return</label>
+      <div id="show-fields"></div>
+    </fieldset>
   </div>
-  <div><label for="limit">Limit:</label><input id="limit" name="limit" value="100"/></div>
-  <div><label for="offset">Offset:</label><input id="offset" name="offset" value="0"/></div>
-  <div id="show-fields"></div>
-  <div><button id="query-button">Query</button></div>
+  <div>
+    <button id="query-button">Query</button>
+  </div>
 </div>
 <div id='itemdiv'>
   <table id="itemtable" class="sortable"/>

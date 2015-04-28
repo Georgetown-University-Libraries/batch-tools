@@ -29,7 +29,7 @@ function drawShowFields() {
 }
 
 function drawFilterQuery() {
-	var div = $("<div class='metadata'/>").appendTo("#metadatadiv");
+	var div = $("<div class='metadata'/>").appendTo("#queries");
 	var sel = $("<select name='query_field[]'/>");
 	var opt = $("<option/>");
 	sel.append(opt);
