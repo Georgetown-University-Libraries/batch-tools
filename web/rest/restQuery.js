@@ -17,7 +17,7 @@ function loadMetadataFields() {
 }
 
 function drawShowFields() {
-	var sel = $("<select name='show-fields'/>").attr("multiple","true").appendTo("#show-fields");
+	var sel = $("<select name='show-fields'/>").attr("multiple","true").attr("size","8").appendTo("#show-fields");
 	$.each(metadataSchemas, function(index, schema){
 		$.each(schema.fields, function(findex, field) {
 			var name = field.name;

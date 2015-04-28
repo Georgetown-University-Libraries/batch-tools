@@ -22,7 +22,7 @@ input:read-only {
 	background-color: gray;
 }
 div.metadata {
-	padding: 5px;
+	padding: 2px;
     width: 650px;
 }
 #metadatadiv select, #metadatadiv input {
