@@ -18,6 +18,6 @@ td.ititle, th.ititle {width: 600px;}
 button:disabled {
 	display:none;
 }
-input:readonly {
+input:read-only {
 	background-color: gray;
 }
