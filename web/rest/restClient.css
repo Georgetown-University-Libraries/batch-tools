@@ -23,7 +23,7 @@ input:read-only {
 }
 div.metadata {
 	padding: 5px;
-    width: 450px;
+    width: 650px;
 }
 #metadatadiv select, #metadatadiv input {
 	padding: 2px;
@@ -31,4 +31,5 @@ div.metadata {
 }
 #metadatadiv fieldset {
 	margin: 6px 15px;
+    width: 750px;
 }
