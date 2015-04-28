@@ -44,7 +44,7 @@ function drawFilterQuery() {
 		$(this).parent("div.metadata").find("input[name='query_val[]']").val("").attr("readonly",disableval);
 	});
 	div.append(sel);
-	var input = $("<input name='field_val[]'/>");
+	var input = $("<input name='query_val[]'/>");
 	div.append(input);
 	$("<button class='field_plus'>+</button>").appendTo(div).click(function(){
 		drawFilterQuery(metadataSchemas);
