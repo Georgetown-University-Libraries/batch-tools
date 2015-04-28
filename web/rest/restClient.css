@@ -22,9 +22,13 @@ input:read-only {
 	background-color: gray;
 }
 div.metadata {
-	padding: 8px;
+	padding: 5px;
 }
 #metadatadiv select, #metadatadiv input {
 	padding: 2px;
+	margin: 4px;
+}
+#metadatadiv fieldset {
+	width: 350px;
 	margin: 4px;
 }
