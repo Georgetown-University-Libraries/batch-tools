@@ -107,12 +107,12 @@ function drawFilterQuery() {
 	div.append(sel);
 	var input = $("<input name='field_val[]'/>");
 	div.append(input);
-	$("<button name="field_plus">+</button>").appendTo(div).click(function(){drawFilterQuery(metadataSchemas);});
-	$("<button name="field_minus">-</button>").appendTo(div).click(function(){$(this).parent("div.metadata").remove();});
-	$("button[name=field_plus]").attr("disabled",true);
-	$("button[name=field_plus]:last").attr("disabled",false);
-	$("button[name=field_minus]").attr("disabled",false);
-	$("button[name=field_minus]:first").attr("disabled",true);
+	$("<button class='field_plus'>+</button>").appendTo(div).click(function(){drawFilterQuery(metadataSchemas);});
+	$("<button class='field_minus'>-</button>").appendTo(div).click(function(){$(this).parent("div.metadata").remove();});
+	$("button.field_plus").attr("disabled",true);
+	$("button.field_plus:last").attr("disabled",false);
+	$("button.field_minus").attr("disabled",false);
+	$("button.field_minus:first").attr("disabled",true);
 }
 
 function createQueryTable() {
