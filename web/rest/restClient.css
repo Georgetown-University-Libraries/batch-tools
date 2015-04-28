@@ -33,3 +33,7 @@ div.metadata {
 	margin: 6px 15px;
     width: 750px;
 }
+
+#metadatadiv label {
+	font-weight: bold;
+}
