@@ -13,7 +13,13 @@
 <h1>DSpace REST Query Client</h1>
 <a href="index.html">Collection Filter</a>
 <button id="filterbutton">Filters</button>
-<div id='metadatadiv'>
+<div id="querydiv">
+  <div id='metadatadiv'>
+  </div>
+  <div><label for="limit">Limit:</label><input id="limit" name="limit" value="100"/></div>
+  <div><label for="offset">Offset:</label><input id="offset" name="offset" value="0"/></div>
+  <div id="show-fields"></div>
+  <div><button id="query-button">Query</button></div>
 </div>
 <div id='itemdiv'>
   <table id="itemtable" class="sortable"/>

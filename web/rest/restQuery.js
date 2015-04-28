@@ -11,8 +11,21 @@ function loadMetadataFields() {
 		function(data){
 			metadataSchemas = data;
 			drawFilterQuery();
+			drawShowFields();
 		}
 	);
+}
+
+function drawShowFields() {
+	var sel = $("<select name='show-fields'/>").attr("multiple","true").appendTo("#show-fields");
+	$.each(metadataSchemas, function(index, schema){
+		$.each(schema.fields, function(findex, field) {
+			var name = field.name;
+			var opt = $("<option/>");
+			opt.attr("value",name).text(name);
+			sel.append(opt);
+		});
+	});
 }
 
 function drawFilterQuery() {
