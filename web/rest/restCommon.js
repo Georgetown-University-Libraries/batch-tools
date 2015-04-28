@@ -112,7 +112,7 @@ function drawFilterQuery() {
 	$("button.field_plus").attr("disabled",true);
 	$("button.field_plus:last").attr("disabled",false);
 	$("button.field_minus").attr("disabled",false);
-	$("button.field_minus:first").attr("disabled",true);
+	$("div.metadata:first button.field_minus").attr("disabled",true);
 }
 
 function createQueryTable() {
