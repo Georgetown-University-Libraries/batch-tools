@@ -76,17 +76,17 @@ function loadMetadataFields() {
 		"/rest/metadataregistry",
 		function(data){
 			metadataSchemas = data;
-			drawFilterQuery(metadataSchemas);
+			drawFilterQuery();
 		}
 	);
 }
 
-function drawFilterQuery(data) {
+function drawFilterQuery() {
 	var div = $("<div class'metadata'/>").appendTo("#metadatadiv");
 	var sel = $("<select name='query_field[]'/>");
 	var opt = $("<option/>");
 	sel.append(opt);
-	$.each(data, function(index, schema){
+	$.each(metadataSchemas, function(index, schema){
 		$.each(schema.fields, function(findex, field) {
 			var name = field.name;
 			var opt = $("<option/>");
