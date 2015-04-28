@@ -41,7 +41,7 @@ function drawFilterQuery() {
 	sel.change(function(){
 		var val = $(this).val();
 		var disableval = (val == "exists" || val == "not_exists");
-		$(this).parent("div.metadata input[name='query_val[]']").val("").attr("readonly",disableval);
+		$(this).parent("div.metadata").find("input[name='query_val[]']").val("").attr("readonly",disableval);
 	});
 	div.append(sel);
 	var input = $("<input name='field_val[]'/>");
