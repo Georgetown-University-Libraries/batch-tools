@@ -112,7 +112,7 @@ function drawItemFilterTable(data) {
 	addTh(tr, "Title");
 	
 	mdCols = [];
-	$.each(data["return-fields"].metadataentry, function(index, field)) {
+	$.each(data.metadata.metadataentry, function(index, field)) {
 		addTh(tr,field.key).addClass("returnFields");
 		mdCols[mdCols.length] = field.key;
 	}
