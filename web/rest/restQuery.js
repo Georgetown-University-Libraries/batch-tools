@@ -84,7 +84,7 @@ function runQuery() {
 		"query_field[]" : [],
 		"query_op[]"    : [],
 		"query_val[]"   : [],
-		"show_fields"   : $("#show_fields select").val(),
+		"show_fields"   : $("#show-fields select").val(),
 		"limit"         : $("#limit").val(),
 		"offset"        : $("#offset").val(),
 		"expand"        : "parentCollection,metadata"
