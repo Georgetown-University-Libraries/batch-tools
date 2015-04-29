@@ -113,7 +113,7 @@ function drawItemFilterTable(data) {
 		tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 		addTd(tr, index+1).addClass("num");
 		addTdAnchor(tr, item.parentCollection.handle, "/handle/" + item.parentCollection.handle);
-		addTd(tr, parentCollection.name).addClass("ititle");
+		addTd(tr, item.parentCollection.name).addClass("ititle");
 		addTdAnchor(tr, item.handle, "/handle/" + item.handle);
 		addTd(tr, item.name).addClass("ititle");
 	});
