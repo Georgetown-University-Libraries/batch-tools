@@ -17,7 +17,7 @@ function loadMetadataFields() {
 }
 
 function drawShowFields() {
-	var sel = $("<select class='query-tool' name='show_fields'/>").attr("multiple","true").attr("size","8").appendTo("#show-fields");
+	var sel = $("<select name='show_fields'/>").attr("multiple","true").attr("size","8").appendTo("#show-fields");
 	$.each(metadataSchemas, function(index, schema){
 		$.each(schema.fields, function(findex, field) {
 			var name = field.name;
@@ -84,9 +84,9 @@ function runQuery() {
 		"query_field[]" : [],
 		"query_op[]"    : [],
 		"query_val[]"   : [],
-		"show_fields"   : "",
-		"limit"         : 100,
-		"offset"        : 0,
+		"show_fields"   : $("#show_fields select").val(),
+		"limit"         : $("#limit").val(),
+		"offset"        : $("#offset").val(),
 		"expand"        : "parentCollection,metadata"
 	};
 	$("select.query-tool,input.query-tool").each(function() {
