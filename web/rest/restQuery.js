@@ -95,6 +95,6 @@ function runQuery() {
 	params.limit = $("#limit").val();
 	params.offset = $("#offset").val();
 	$.getJSON("/rest/filtered-items", params, function(data, status, xhdr){
-		alert(status);
+		alert($(this).attr("url"));
 	});
 }
