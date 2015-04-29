@@ -87,10 +87,10 @@ function runQuery() {
 		"limit"         : 100,
 		"offset"        : 0,
 	};
-	$("select.query-tool,input.query-tool").each() {
+	$("select.query-tool,input.query-tool").each(function() {
 		var paramArr = params[$(this).attr("name")];
 		paramArr[paramArr.length] = $(this).val();
-	}
+	});
 	params.limit = $("#limit").val();
 	params.offset = $("#offset").val();
 	$.getJSON("/rest/filtered-items", params);
