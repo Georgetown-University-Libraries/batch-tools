@@ -100,14 +100,22 @@ function runQuery() {
 	});
 }
 
+var mdCols = [];
+
 function drawItemFilterTable(data) {
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
 	addTh(tr, "Num").addClass("num").addClass("sorttable_numeric");
-	addTh(tr, "Collection").addClass("title");
-	addTh(tr, "Item Handle").addClass("title");
-	addTh(tr, "Title").addClass("title");
+	addTh(tr, "Collection");
+	addTh(tr, "Item Handle");
+	addTh(tr, "Title");
+	
+	mdCols = [];
+	$.each(data["return-fields"].metadataentry, function(index, field)) {
+		addTh(tr,field.key).addClass("returnFields");
+		mdCols[mdCols.length] = field.key;
+	}
 
 	$.each(data.items, function(index, item){
 		var tr = addTr(itbl);
@@ -116,6 +124,19 @@ function drawItemFilterTable(data) {
 		addTdAnchor(tr, item.parentCollection.name, "/handle/" + item.parentCollection.handle).addClass("ititle");
 		addTdAnchor(tr, item.handle, "/handle/" + item.handle);
 		addTd(tr, item.name).addClass("ititle");
+		
+		for(var i=0; i<mdCols.length; i++) {
+			var key =  mdCols[i];
+			var td = addTd(tr, "-");
+			$.each(data.metadata, function(index, metadata) {
+				if (metadata.key == key) {
+					if (metadata.value != null) {
+						td.append(metadata.value);
+					}
+				}
+			});
+		}
+		
 	});
 
 	$("#itemdiv").dialog({title: data["query-annotation"], width: "80%", minHeight: 500, modal: true});
