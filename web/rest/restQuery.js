@@ -49,8 +49,10 @@ function drawFilterQuery() {
 	$("<option>does not equals</option>").val("not_equals").appendTo(sel);
 	$("<option>like</option>").val("like").appendTo(sel);
 	$("<option>not like</option>").val("not_like").appendTo(sel);
-	$("<option>matches</option>").val("like").appendTo(sel);
-	$("<option>does not mat</option>").val("not_like").appendTo(sel);
+	$("<option>contains</option>").val("contains").appendTo(sel);
+	$("<option>does not contain</option>").val("doesnt_contain").appendTo(sel);
+	$("<option>matches</option>").val("matches").appendTo(sel);
+	$("<option>does not match</option>").val("doesnt_match").appendTo(sel);
 	sel.change(function(){
 		var val = $(this).val();
 		var disableval = (val == "exists" || val == "not_exists");
