@@ -86,6 +86,7 @@ function runQuery() {
 		"show_fields[]" : [],
 		"limit"         : 100,
 		"offset"        : 0,
+		"expand"        : "parentCollection,metadata"
 	};
 	$("select.query-tool,input.query-tool").each(function() {
 		var paramArr = params[$(this).attr("name")];
@@ -93,5 +94,7 @@ function runQuery() {
 	});
 	params.limit = $("#limit").val();
 	params.offset = $("#offset").val();
-	$.getJSON("/rest/filtered-items", params);
+	$.getJSON("/rest/filtered-items", params, function(data, status, xhdr){
+		alert(status);
+	});
 }
