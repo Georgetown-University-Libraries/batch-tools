@@ -106,14 +106,14 @@ function drawItemFilterTable(data) {
 	var tr = addTr(itbl).addClass("header");
 	addTh(tr, "Num").addClass("num").addClass("sorttable_numeric");
 	addTh(tr, "Collection").addClass("title");
-	addTh(tr, "Item").addClass("title");
+	addTh(tr, "Item Handle").addClass("title");
+	addTh(tr, "Title").addClass("title");
 
 	$.each(data.items, function(index, item){
 		var tr = addTr(itbl);
 		tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 		addTd(tr, index+1).addClass("num");
-		addTdAnchor(tr, item.parentCollection.handle, "/handle/" + item.parentCollection.handle);
-		addTd(tr, item.parentCollection.name).addClass("ititle");
+		addTdAnchor(tr, item.parentCollection.name, "/handle/" + item.parentCollection.handle).addClass("ititle");
 		addTdAnchor(tr, item.handle, "/handle/" + item.handle);
 		addTd(tr, item.name).addClass("ititle");
 	});
