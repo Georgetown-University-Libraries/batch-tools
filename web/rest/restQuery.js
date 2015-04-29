@@ -1,8 +1,36 @@
 var metadataSchemas;
 
+/*
+ * http://stackoverflow.com/questions/5448545/how-to-retrieve-get-parameters-from-javascript
+ */
+function getSearchParameters() {
+    var prmstr = window.location.search.substr(1);
+    return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {
+    	"query_field[]" : [],
+		"query_op[]"    : [],
+		"query_val[]"   : [],
+		"show_fields"   : [],
+		"limit"         : 100,
+		"offset"        : 0,
+	};
+}
+
+function transformToAssocArray( prmstr ) {
+  var params = {};
+  var prmarr = prmstr.split("&");
+  for ( var i = 0; i < prmarr.length; i++) {
+      var tmparr = prmarr[i].split("=");
+      params[tmparr[0]] = tmparr[1];
+  }
+  return params;
+}
+
 $(document).ready(function(){
 	createFilterTable();
 	createQueryTable();
+	var params = getSearchParameters();
+	$("#limit").val(params.limit);  
+    $("#offset").val(params.offset);  
 });
 
 function loadMetadataFields() {
@@ -131,7 +159,8 @@ function drawItemFilterTable(data) {
 			$.each(data.metadata, function(index, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
-						td.append(metadata.value);
+						var div = $("<div>"+metadata.value+"</div>");
+						td.append(div);
 					}
 				}
 			});
