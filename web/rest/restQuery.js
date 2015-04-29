@@ -116,5 +116,5 @@ function drawItemFilterTable(data) {
 		addTd(tr, item.name).addClass("ititle");
 	});
 
-	$("#itemdiv").dialog({title: filter + " Items in " + data.name, width: "80%", minHeight: 500, modal: true});
+	$("#itemdiv").dialog({title: data["query-annotation"], width: "80%", minHeight: 500, modal: true});
 }
