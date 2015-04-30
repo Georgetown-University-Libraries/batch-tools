@@ -39,6 +39,6 @@ div.metadata {
 	font-weight: bold;
 }
 
-#itemtable td div {
+#itemtable td div:not(:first-child) {
 	border-top: thin solid gray;
 }
