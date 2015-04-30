@@ -115,7 +115,7 @@ function drawFilterQuery(pField, pOp, pVal) {
 	$("<option>matches</option>").val("matches").appendTo(sel);
 	$("<option>does not match</option>").val("doesnt_match").appendTo(sel);
 	sel.change(function(){
-		valfield(sel);
+		valField($(this));
 	});
 	div.append(sel);
 	valfield(sel);
