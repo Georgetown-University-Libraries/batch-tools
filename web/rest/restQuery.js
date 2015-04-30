@@ -135,7 +135,7 @@ function drawFilterQuery(pField, pOp, pVal) {
 }
 
 function valField(valop) {
-	var val = valinput.val();
+	var val = valop.val();
 	var disableval = (val == "exists" || val == "not_exists");
 	var valinput = valop.parent("div.metadata").find("input[name='query_val[]']");
 	valinput.attr("readonly",disableval);
