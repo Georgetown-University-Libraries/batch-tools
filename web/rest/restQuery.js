@@ -115,11 +115,10 @@ function drawFilterQuery(pField, pOp, pVal) {
 	$("<option>matches</option>").val("matches").appendTo(sel);
 	$("<option>does not match</option>").val("doesnt_match").appendTo(sel);
 	sel.change(function(){
-		var val = $(this).val();
-		var disableval = (val == "exists" || val == "not_exists");
-		$(this).parent("div.metadata").find("input[name='query_val[]']").val("").attr("readonly",disableval);
+		valfield(sel);
 	});
 	div.append(sel);
+	valfield(sel);
 	sel.val(pOp);
 	var input = $("<input class='query-tool' name='query_val[]'/>");
 	div.append(input);
@@ -133,6 +132,12 @@ function drawFilterQuery(pField, pOp, pVal) {
 		queryButtons();
 	});
 	queryButtons();
+}
+
+function valField(valinput) {
+	var val = valinput.val();
+	var disableval = (val == "exists" || val == "not_exists");
+	valinput.parent("div.metadata").find("input[name='query_val[]']").val("").attr("readonly",disableval);	
 }
 
 function queryButtons() {
