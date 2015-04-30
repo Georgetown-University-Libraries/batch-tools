@@ -2,6 +2,7 @@ var metadataSchemas;
 
 /*
  * http://stackoverflow.com/questions/5448545/how-to-retrieve-get-parameters-from-javascript
+ * getSearchParameters() and transformToAssocArray()
  */
 function getSearchParameters() {
     var prmstr = window.location.search.substr(1);
@@ -27,36 +28,52 @@ function transformToAssocArray( prmstr ) {
 
 $(document).ready(function(){
 	createFilterTable();
-	createQueryTable();
 	var params = getSearchParameters();
-	$("#limit").val(params.limit);  
-    $("#offset").val(params.offset);  
+	loadMetadataFields(params);
 });
 
-function loadMetadataFields() {
+function loadMetadataFields(params) {
 	$.getJSON(
 		"/rest/metadataregistry",
 		function(data){
 			metadataSchemas = data;
-			drawFilterQuery();
-			drawShowFields();
+			$("#limit").val(params.limit);  
+		    $("#offset").val(params.offset);
+		    var fields = params["query_field[]"];
+		    var ops = params["query_op[]"];
+		    var vals = params["query_val[]"];
+		    if (fields.length == 0) {
+				drawFilterQuery("","","");
+		    } else {
+		    	for(var i=0; i<fields.length; i++) {
+		    		var op = ops.length > i ? op[i] : "";
+		    		var val = vals.length > i ? val[i] : "";
+					drawFilterQuery(fields[i],op,val);
+		    	} 
+		    }
+			drawShowFields(params["show_field"]);
 		}
 	);
 }
 
-function drawShowFields() {
+function drawShowFields(fields) {
 	var sel = $("<select name='show_fields'/>").attr("multiple","true").attr("size","8").appendTo("#show-fields");
 	$.each(metadataSchemas, function(index, schema){
 		$.each(schema.fields, function(findex, field) {
 			var name = field.name;
 			var opt = $("<option/>");
 			opt.attr("value",name).text(name);
+			for(var i=0; i<fields.length; i++) {
+				if (fields[i] == name) {
+					opt.attr("selected", true);
+				}
+			}
 			sel.append(opt);
 		});
 	});
 }
 
-function drawFilterQuery() {
+function drawFilterQuery(pField, pOp, pVal) {
 	var div = $("<div class='metadata'/>").appendTo("#queries");
 	var sel = $("<select class='query-tool' name='query_field[]'/>");
 	var opt = $("<option/>");
@@ -69,6 +86,7 @@ function drawFilterQuery() {
 			sel.append(opt);
 		});
 	});
+	sel.val(pField);
 	div.append(sel);
 	sel = $("<select class='query-tool' name='query_op[]'/>");
 	$("<option>exists</option>").val("exists").appendTo(sel);
@@ -87,8 +105,10 @@ function drawFilterQuery() {
 		$(this).parent("div.metadata").find("input[name='query_val[]']").val("").attr("readonly",disableval);
 	});
 	div.append(sel);
+	sel.val(pOp);
 	var input = $("<input class='query-tool' name='query_val[]'/>");
 	div.append(input);
+	input.val(pVal);
 	$("<button class='field_plus'>+</button>").appendTo(div).click(function(){
 		drawFilterQuery();
 		queryButtons();

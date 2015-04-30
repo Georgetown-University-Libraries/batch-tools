@@ -70,11 +70,6 @@ function createFilterTable() {
 	);
 }
 
-
-function createQueryTable() {
-	loadMetadataFields();
-}
-
 function addFilter(val, title, description, cname) {
 	var div = $("<div/>");
 	var input = $("<input name='filters[]' type='checkbox'/>");
