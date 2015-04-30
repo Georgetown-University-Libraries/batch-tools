@@ -190,9 +190,9 @@ function drawItemFilterTable(data) {
 		tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 		addTd(tr, index+1).addClass("num");
 		itemrow = item.id + "," + item.parentCollection.handle + ',"' + item.name + '"';
-		addTdAnchor(tr, item.parentCollection.name, "/handle/" + item.parentCollection.handle).addClass("ititle");
+		addTdAnchor(tr, item.parentCollection.name, "/handle/" + item.parentCollection.handle);
 		addTdAnchor(tr, item.handle, "/handle/" + item.handle);
-		addTd(tr, item.name).addClass("ititle");
+		addTd(tr, item.name);
 		
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
