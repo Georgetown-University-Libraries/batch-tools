@@ -161,8 +161,11 @@ function runQuery() {
 }
 
 var mdCols = [];
+var itemdata;
 
 function drawItemFilterTable(data) {
+	itemdata = "data:text/csv;charset=utf-8,";
+	itemdata .= "id,collection,dc.title";
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
@@ -174,13 +177,15 @@ function drawItemFilterTable(data) {
 	mdCols = [];
 	$.each(data.metadata, function(index, field) {
 		addTh(tr,field.key).addClass("returnFields");
+		itemdata .= "," + field.key;
 		mdCols[mdCols.length] = field.key;
 	});
-
+	
 	$.each(data.items, function(index, item){
 		var tr = addTr(itbl);
 		tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 		addTd(tr, index+1).addClass("num");
+		itemrow = item.id + "," + item.parentCollection.handle + "," + item.name;
 		addTdAnchor(tr, item.parentCollection.name, "/handle/" + item.parentCollection.handle).addClass("ititle");
 		addTdAnchor(tr, item.handle, "/handle/" + item.handle);
 		addTd(tr, item.name).addClass("ititle");
@@ -188,17 +193,25 @@ function drawItemFilterTable(data) {
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
 			var td = addTd(tr, "");
+			itemrow .= ",";
 			$.each(item.metadata, function(index, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
 						var div = $("<div>"+metadata.value+"</div>");
+						if (index > 0) itemrow .= "||";
+						itemrow .= metadata.value;
 						td.append(div);
 					}
 				}
 			});
 		}
+		itemdata .= "\n" + itemrow;
 		
 	});
+	$("#item-button").click(function(){
+		var encodedUri = encodeURI(itemdata);
+        window.open(encodedUri);
+    });
 
 	$("#itemdiv").dialog({title: data["query-annotation"], width: "80%", minHeight: 500, modal: true});
 }
