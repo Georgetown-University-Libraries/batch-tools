@@ -90,7 +90,7 @@ function drawFilterQuery() {
 	var input = $("<input class='query-tool' name='query_val[]'/>");
 	div.append(input);
 	$("<button class='field_plus'>+</button>").appendTo(div).click(function(){
-		drawFilterQuery(metadataSchemas);
+		drawFilterQuery();
 		queryButtons();
 	});
 	$("<button class='field_minus'>-</button>").appendTo(div).click(function(){
@@ -156,7 +156,7 @@ function drawItemFilterTable(data) {
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
 			var td = addTd(tr, "-");
-			$.each(data.metadata, function(index, metadata) {
+			$.each(item.metadata, function(index, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
 						var div = $("<div>"+metadata.value+"</div>");
