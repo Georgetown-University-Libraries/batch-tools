@@ -161,7 +161,8 @@ function runQuery() {
 		"show_fields"   : $("#show-fields select").val(),
 		"limit"         : $("#limit").val(),
 		"offset"        : $("#offset").val(),
-		"expand"        : "parentCollection,metadata"
+		"expand"        : "parentCollection,metadata",
+		"filters[]"     : $("input.filter:selected").val(),
 	};
 	$("select.query-tool,input.query-tool").each(function() {
 		var paramArr = params[$(this).attr("name")];
