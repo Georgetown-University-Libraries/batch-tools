@@ -104,16 +104,16 @@ function drawFilterQuery(pField, pOp, pVal) {
 	sel.val(pField);
 	div.append(sel);
 	var opsel = $("<select class='query-tool' name='query_op[]'/>");
-	$("<option>exists</option>").val("exists").appendTo(sel);
-	$("<option>does not exist</option>").val("doesnt_exist").appendTo(sel);
-	$("<option selected>equals</option>").val("equals").appendTo(sel);
-	$("<option>does not equals</option>").val("not_equals").appendTo(sel);
-	$("<option>like</option>").val("like").appendTo(sel);
-	$("<option>not like</option>").val("not_like").appendTo(sel);
-	$("<option>contains</option>").val("contains").appendTo(sel);
-	$("<option>does not contain</option>").val("doesnt_contain").appendTo(sel);
-	$("<option>matches</option>").val("matches").appendTo(sel);
-	$("<option>does not match</option>").val("doesnt_match").appendTo(sel);
+	$("<option>exists</option>").val("exists").appendTo(opsel);
+	$("<option>does not exist</option>").val("doesnt_exist").appendTo(opsel);
+	$("<option selected>equals</option>").val("equals").appendTo(opsel);
+	$("<option>does not equals</option>").val("not_equals").appendTo(opsel);
+	$("<option>like</option>").val("like").appendTo(opsel);
+	$("<option>not like</option>").val("not_like").appendTo(opsel);
+	$("<option>contains</option>").val("contains").appendTo(opsel);
+	$("<option>does not contain</option>").val("doesnt_contain").appendTo(opsel);
+	$("<option>matches</option>").val("matches").appendTo(opsel);
+	$("<option>does not match</option>").val("doesnt_match").appendTo(opsel);
 	opsel.val(pOp);
 	opsel.change(function(){
 		valField($(this));
