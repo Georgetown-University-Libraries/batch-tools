@@ -134,10 +134,14 @@ function drawFilterQuery(pField, pOp, pVal) {
 	queryButtons();
 }
 
-function valField(valinput) {
+function valField(valop) {
 	var val = valinput.val();
 	var disableval = (val == "exists" || val == "not_exists");
-	valinput.parent("div.metadata").find("input[name='query_val[]']").val("").attr("readonly",disableval);	
+	var valinput = valop.parent("div.metadata").find("input[name='query_val[]']");
+	valinput.attr("readonly",disableval);
+	if (disableval) {
+		valinput.val("");		
+	}
 }
 
 function queryButtons() {
