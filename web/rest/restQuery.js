@@ -185,7 +185,7 @@ function drawItemFilterTable(data) {
 		var tr = addTr(itbl);
 		tr.addClass(index % 2 == 0 ? "odd data" : "even data");
 		addTd(tr, index+1).addClass("num");
-		itemrow = item.id + "," + item.parentCollection.handle + "," + item.name;
+		itemrow = item.id + "," + item.parentCollection.handle + ","" + item.name + """;
 		addTdAnchor(tr, item.parentCollection.name, "/handle/" + item.parentCollection.handle).addClass("ititle");
 		addTdAnchor(tr, item.handle, "/handle/" + item.handle);
 		addTd(tr, item.name).addClass("ititle");
@@ -193,7 +193,7 @@ function drawItemFilterTable(data) {
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
 			var td = addTd(tr, "");
-			itemrow += ",";
+			itemrow += ","";
 			$.each(item.metadata, function(index, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
@@ -204,6 +204,7 @@ function drawItemFilterTable(data) {
 					}
 				}
 			});
+			itemrow += """;
 		}
 		itemdata += "\n" + itemrow;
 		
