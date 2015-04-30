@@ -164,8 +164,8 @@ var mdCols = [];
 var itemdata;
 
 function drawItemFilterTable(data) {
-	itemdata = "data:text/csv;charset=utf-8,";
-	itemdata .= "id,collection,dc.title";
+	itemdata += "data:text/csv;charset=utf-8,";
+	itemdata += "id,collection,dc.title";
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
 	var tr = addTr(itbl).addClass("header");
@@ -177,7 +177,7 @@ function drawItemFilterTable(data) {
 	mdCols = [];
 	$.each(data.metadata, function(index, field) {
 		addTh(tr,field.key).addClass("returnFields");
-		itemdata .= "," + field.key;
+		itemdata += "," + field.key;
 		mdCols[mdCols.length] = field.key;
 	});
 	
@@ -193,19 +193,19 @@ function drawItemFilterTable(data) {
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
 			var td = addTd(tr, "");
-			itemrow .= ",";
+			itemrow += ",";
 			$.each(item.metadata, function(index, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
 						var div = $("<div>"+metadata.value+"</div>");
-						if (index > 0) itemrow .= "||";
-						itemrow .= metadata.value;
+						if (index > 0) itemrow += "||";
+						itemrow += metadata.value;
 						td.append(div);
 					}
 				}
 			});
 		}
-		itemdata .= "\n" + itemrow;
+		itemdata += "\n" + itemrow;
 		
 	});
 	$("#item-button").click(function(){
