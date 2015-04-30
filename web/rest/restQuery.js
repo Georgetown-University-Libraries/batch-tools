@@ -6,18 +6,19 @@ var metadataSchemas;
  */
 function getSearchParameters() {
     var prmstr = window.location.search.substr(1);
-    return prmstr != null && prmstr != "" ? transformToAssocArray(prmstr) : {
-    	"query_field[]" : [],
-		"query_op[]"    : [],
-		"query_val[]"   : [],
-		"show_fields"   : [],
-		"limit"         : 100,
-		"offset"        : 0,
-	};
+    return transformToAssocArray(prmstr);
 }
 
 function transformToAssocArray( prmstr ) {
-  var params = {};
+  if (prmstr == null) prmstr = "";
+  var params = {
+	"query_field[]" : [],
+	"query_op[]"    : [],
+	"query_val[]"   : [],
+	"show_fields"   : [],
+	"limit"         : 100,
+	"offset"        : 0,		  
+  };
   var prmarr = prmstr.split("&");
   for ( var i = 0; i < prmarr.length; i++) {
       var tmparr = prmarr[i].split("=");
