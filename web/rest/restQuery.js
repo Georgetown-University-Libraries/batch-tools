@@ -156,7 +156,7 @@ function runQuery() {
 	$.getJSON("/rest/filtered-items", params, function(data){
 		drawItemFilterTable(data);
 	});
-	$("#this-search").attr("href", window.location.pathname + $.param(params));
+	$("#this-search").attr("href", window.location.pathname +"?" + $.param(params));
 }
 
 var mdCols = [];
