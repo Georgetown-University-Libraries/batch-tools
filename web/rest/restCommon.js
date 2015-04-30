@@ -62,7 +62,8 @@ function createFilterTable() {
 				}
 			);
 			$("#filterdiv").append(button);
-			$("#filterdiv").dialog({title: "Choose filters to display", hide: false, width : 450});
+			$("#filterdiv").dialog({title: "Choose filters to display", width : 450});
+			$("#filterdiv").dialog("close");
 			$("#filterbutton").click(function(){
 				$("#filterdiv").dialog("open");
 			});
