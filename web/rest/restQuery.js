@@ -164,7 +164,7 @@ var mdCols = [];
 var itemdata;
 
 function drawItemFilterTable(data) {
-	itemdata += "data:text/csv;charset=utf-8,";
+	itemdata = "data:text/csv;charset=utf-8,";
 	itemdata += "id,collection,dc.title";
 	var itbl = $("#itemtable");
 	itbl.find("tr").remove("*");
