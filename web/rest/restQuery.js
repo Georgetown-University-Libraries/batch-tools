@@ -118,7 +118,7 @@ function drawFilterQuery(pField, pOp, pVal) {
 		valField($(this));
 	});
 	div.append(sel);
-	valfield(sel);
+	valField(sel);
 	sel.val(pOp);
 	var input = $("<input class='query-tool' name='query_val[]'/>");
 	div.append(input);
