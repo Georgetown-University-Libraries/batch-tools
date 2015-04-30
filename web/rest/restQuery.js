@@ -15,14 +15,22 @@ function transformToAssocArray( prmstr ) {
 	"query_field[]" : [],
 	"query_op[]"    : [],
 	"query_val[]"   : [],
-	"show_fields"   : [],
+	"show_fields[]"   : [],
 	"limit"         : 100,
 	"offset"        : 0,		  
   };
   var prmarr = prmstr.split("&");
   for ( var i = 0; i < prmarr.length; i++) {
       var tmparr = prmarr[i].split("=");
-      params[tmparr[0]] = tmparr[1];
+      var field = tmparr[0];
+      var val = tmparr[1];
+      var pval = params[field];
+      
+      if ($.isArray(pval)) {
+    	  pval[pval.length] = val;    	  
+      } else {
+    	  pval = val;
+      }
   }
   return params;
 }
@@ -52,20 +60,20 @@ function loadMetadataFields(params) {
 					drawFilterQuery(fields[i],op,val);
 		    	} 
 		    }
-			drawShowFields(params["show_fields"]);
+			drawShowFields(params["show_fields[]"]);
 		}
 	);
 }
 
-function drawShowFields(fields) {
+function drawShowFields(pfields) {
 	var sel = $("<select name='show_fields'/>").attr("multiple","true").attr("size","8").appendTo("#show-fields");
 	$.each(metadataSchemas, function(index, schema){
 		$.each(schema.fields, function(findex, field) {
 			var name = field.name;
 			var opt = $("<option/>");
 			opt.attr("value",name).text(name);
-			for(var i=0; i<fields.length; i++) {
-				if (fields[i] == name) {
+			for(var i=0; i<pfields.length; i++) {
+				if (pfields[i] == name) {
 					opt.attr("selected", true);
 				}
 			}
