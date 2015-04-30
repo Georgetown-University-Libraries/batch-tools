@@ -155,7 +155,7 @@ function drawItemFilterTable(data) {
 		
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
-			var td = addTd(tr, "-");
+			var td = addTd(tr, "");
 			$.each(item.metadata, function(index, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
