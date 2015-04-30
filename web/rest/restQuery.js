@@ -148,7 +148,9 @@ function queryButtons() {
 	$("button.field_plus").attr("disabled",true);
 	$("button.field_plus:last").attr("disabled",false);
 	$("button.field_minus").attr("disabled",false);
-	$("div.metadata:first button.field_minus").attr("disabled",true);		
+	if ($("button.field_minus").length == 1) {
+		$("button.field_minus").attr("disabled",true);				
+	}
 }
 
 function runQuery() {
