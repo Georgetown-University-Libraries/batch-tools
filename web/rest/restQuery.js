@@ -40,6 +40,10 @@ $(document).ready(function(){
 	createFilterTable();
 	var params = getSearchParameters();
 	loadMetadataFields(params);
+	$("#item-button").click(function(){
+		var encodedUri = encodeURI(itemdata);
+        window.open(encodedUri);
+    });
 });
 
 function loadMetadataFields(params) {
@@ -193,26 +197,25 @@ function drawItemFilterTable(data) {
 		for(var i=0; i<mdCols.length; i++) {
 			var key =  mdCols[i];
 			var td = addTd(tr, "");
-			itemrow += ',"';
+			itemrow += ',';
+			var itemcol = "";
 			$.each(item.metadata, function(colindex, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
 						var div = $("<div>"+metadata.value+"</div>");
-						if (colindex > 0) itemrow += "||";
-						itemrow += metadata.value;
+						if (itemcol != "") itemcol += "||";
+						itemcol += metadata.value;
 						td.append(div);
 					}
 				}
 			});
-			itemrow += '"';
+			if (itemcol != "") {
+				itemrow += '"' + itemcol + '"';				
+			}
 		}
 		itemdata += "\n" + itemrow;
 		
 	});
-	$("#item-button").click(function(){
-		var encodedUri = encodeURI(itemdata);
-        window.open(encodedUri);
-    });
 
 	$("#itemdiv").dialog({title: data["query-annotation"], width: "80%", minHeight: 500, modal: true});
 }
