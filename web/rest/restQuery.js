@@ -19,6 +19,7 @@ function transformToAssocArray( prmstr ) {
 	"limit"         : 100,
 	"offset"        : 0,		  
   };
+  $("#this-search").attr("href",window.location + window.location.search);
   var prmarr = prmstr.split("&");
   for ( var i = 0; i < prmarr.length; i++) {
       var tmparr = prmarr[i].split("=");
