@@ -162,7 +162,7 @@ function runQuery() {
 		"limit"         : $("#limit").val(),
 		"offset"        : $("#offset").val(),
 		"expand"        : "parentCollection,metadata",
-		"filters[]"     : $("input.filter:selected").val(),
+		"filters[]"     :getFilterList(),
 	};
 	$("select.query-tool,input.query-tool").each(function() {
 		var paramArr = params[$(this).attr("name")];
@@ -179,6 +179,14 @@ function runQuery() {
 
 var mdCols = [];
 var itemdata;
+
+function getFilterList() {
+	var list = "";
+	$("input.filter:checked").each(function(){
+		list += $(this).val() + ",";
+	});
+	return list;
+}
 
 function drawItemFilterTable(data) {
 	itemdata = "data:text/csv;charset=utf-8,";
