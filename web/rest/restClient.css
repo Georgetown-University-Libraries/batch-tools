@@ -38,3 +38,7 @@ div.metadata {
 #metadatadiv label {
 	font-weight: bold;
 }
+
+#itemtable td div {
+	border-top: thin solid gray;
+}
