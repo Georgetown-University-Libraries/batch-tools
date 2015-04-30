@@ -185,6 +185,7 @@ function getFilterList() {
 	$("input.filter:checked").each(function(){
 		list += $(this).val() + ",";
 	});
+	list += "all_filters";
 	return list;
 }
 
