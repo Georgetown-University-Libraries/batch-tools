@@ -29,7 +29,7 @@ function transformToAssocArray( prmstr ) {
       if ($.isArray(pval)) {
     	  pval[pval.length] = val;    	  
       } else {
-    	  pval = val;
+    	  params[field] = val;
       }
   }
   return params;
