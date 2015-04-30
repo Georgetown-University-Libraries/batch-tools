@@ -19,7 +19,7 @@ function transformToAssocArray( prmstr ) {
 	"limit"         : 100,
 	"offset"        : 0,		  
   };
-  $("#this-search").attr("href",window.location + window.location.search);
+  $("#this-search").attr("href",window.location.href);
   var prmarr = prmstr.split("&");
   for ( var i = 0; i < prmarr.length; i++) {
       var tmparr = prmarr[i].split("=");
@@ -156,7 +156,7 @@ function runQuery() {
 	$.getJSON("/rest/filtered-items", params, function(data){
 		drawItemFilterTable(data);
 	});
-	$("#this-search").attr("href", window.location + $.param(params));
+	$("#this-search").attr("href", window.location.pathname + $.param(params));
 }
 
 var mdCols = [];
