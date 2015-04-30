@@ -44,6 +44,7 @@ $(document).ready(function(){
 		var encodedUri = encodeURI(itemdata);
         window.open(encodedUri);
     });
+	$("#query-button").click(function(){runQuery();})
 });
 
 function loadMetadataFields(params) {
@@ -104,7 +105,7 @@ function drawFilterQuery(pField, pOp, pVal) {
 	div.append(sel);
 	sel = $("<select class='query-tool' name='query_op[]'/>");
 	$("<option>exists</option>").val("exists").appendTo(sel);
-	$("<option>does not exist</option>").val("not_exists").appendTo(sel);
+	$("<option>does not exist</option>").val("doesnt_exist").appendTo(sel);
 	$("<option selected>equals</option>").val("equals").appendTo(sel);
 	$("<option>does not equals</option>").val("not_equals").appendTo(sel);
 	$("<option>like</option>").val("like").appendTo(sel);
@@ -131,7 +132,7 @@ function drawFilterQuery(pField, pOp, pVal) {
 		$(this).parent("div.metadata").remove();
 		queryButtons();
 	});
-	$("#query-button").click(function(){runQuery();})
+	queryButtons();
 }
 
 function queryButtons() {
