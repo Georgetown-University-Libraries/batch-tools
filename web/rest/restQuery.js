@@ -114,11 +114,11 @@ function drawFilterQuery(pField, pOp, pVal) {
 	$("<option>does not contain</option>").val("doesnt_contain").appendTo(sel);
 	$("<option>matches</option>").val("matches").appendTo(sel);
 	$("<option>does not match</option>").val("doesnt_match").appendTo(sel);
+	opsel.val(pOp);
 	opsel.change(function(){
 		valField($(this));
 	});
 	div.append(opsel);
-	opsel.val(pOp);
 	var input = $("<input class='query-tool' name='query_val[]'/>");
 	div.append(input);
 	input.val(pVal);
