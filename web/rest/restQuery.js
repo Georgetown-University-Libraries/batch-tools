@@ -194,11 +194,11 @@ function drawItemFilterTable(data) {
 			var key =  mdCols[i];
 			var td = addTd(tr, "");
 			itemrow += ',"';
-			$.each(item.metadata, function(index, metadata) {
+			$.each(item.metadata, function(colindex, metadata) {
 				if (metadata.key == key) {
 					if (metadata.value != null) {
 						var div = $("<div>"+metadata.value+"</div>");
-						if (index > 0) itemrow += "||";
+						if (colindex > 0) itemrow += "||";
 						itemrow += metadata.value;
 						td.append(div);
 					}
