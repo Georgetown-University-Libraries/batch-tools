@@ -47,8 +47,8 @@ function loadMetadataFields(params) {
 				drawFilterQuery("","","");
 		    } else {
 		    	for(var i=0; i<fields.length; i++) {
-		    		var op = ops.length > i ? op[i] : "";
-		    		var val = vals.length > i ? val[i] : "";
+		    		var op = ops.length > i ? ops[i] : "";
+		    		var val = vals.length > i ? vals[i] : "";
 					drawFilterQuery(fields[i],op,val);
 		    	} 
 		    }
