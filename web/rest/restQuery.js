@@ -52,7 +52,7 @@ function loadMetadataFields(params) {
 					drawFilterQuery(fields[i],op,val);
 		    	} 
 		    }
-			drawShowFields(params["show_field"]);
+			drawShowFields(params["show_fields"]);
 		}
 	);
 }
