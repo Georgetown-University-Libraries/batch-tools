@@ -103,7 +103,7 @@ function drawFilterQuery(pField, pOp, pVal) {
 	});
 	sel.val(pField);
 	div.append(sel);
-	sel = $("<select class='query-tool' name='query_op[]'/>");
+	var opsel = $("<select class='query-tool' name='query_op[]'/>");
 	$("<option>exists</option>").val("exists").appendTo(sel);
 	$("<option>does not exist</option>").val("doesnt_exist").appendTo(sel);
 	$("<option selected>equals</option>").val("equals").appendTo(sel);
@@ -114,15 +114,15 @@ function drawFilterQuery(pField, pOp, pVal) {
 	$("<option>does not contain</option>").val("doesnt_contain").appendTo(sel);
 	$("<option>matches</option>").val("matches").appendTo(sel);
 	$("<option>does not match</option>").val("doesnt_match").appendTo(sel);
-	sel.change(function(){
+	opsel.change(function(){
 		valField($(this));
 	});
-	div.append(sel);
-	valField(sel);
-	sel.val(pOp);
+	div.append(opsel);
+	opsel.val(pOp);
 	var input = $("<input class='query-tool' name='query_val[]'/>");
 	div.append(input);
 	input.val(pVal);
+	valField(opsel);
 	$("<button class='field_plus'>+</button>").appendTo(div).click(function(){
 		drawFilterQuery();
 		queryButtons();
