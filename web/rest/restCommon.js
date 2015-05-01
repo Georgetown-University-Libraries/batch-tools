@@ -1,4 +1,4 @@
-var filterString = "";
+var filterString = "none";
 var loadId = 0;
 
 function createCollectionTable() {
