@@ -103,6 +103,9 @@ function getFilterList() {
 			list += $(this).val();
 		}
 	);
+	if (list == "") {
+		list = "none";
+	}
 	return list;
 }
 
