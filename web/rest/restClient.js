@@ -1,7 +1,7 @@
 var loadId = 0;
 var THREADS = 4;
 var THREADSP = 10;
-var COUNT_LIMIT = 10000;
+var COUNT_LIMIT = 100;
 var ITEM_LIMIT = 1000;
 var COLL_LIMIT = 500;
 
@@ -112,7 +112,8 @@ function doRow(row, threads, curLoadId) {
 				if (icount == null || icount == "0") {
 					tr.find("td."+filterName).text("0");
 				} else {
-					var anchor = getAnchor(icount,"javascript:drawItemTable("+cid+",'"+ filterName +"')");
+					var disp = (icount == COUNT_LIMIT) ? icount + "+" : icount;
+					var anchor = getAnchor(disp,"javascript:drawItemTable("+cid+",'"+ filterName +"')");
 					tr.find("td."+filterName).append(anchor);						
 				}
 				
