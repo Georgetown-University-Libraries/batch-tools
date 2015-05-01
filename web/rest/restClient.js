@@ -59,7 +59,7 @@ function doRowParent(row, threads) {
 	$.getJSON(
 		"/rest/collections/"+cid,
 		{
-			expand : parentCommunityList
+			expand : "parentCommunityList",
 		},
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
