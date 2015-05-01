@@ -1,6 +1,4 @@
 var filterString = "none";
-var loadId = 0;
-var THREADS = 1;
 
 function createFilterTable() {
 	addFilter("","None","De-select all filters","none").click(
