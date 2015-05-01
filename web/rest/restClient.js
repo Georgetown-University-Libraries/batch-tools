@@ -1,5 +1,6 @@
 var loadId = 0;
 var THREADS = 1;
+var THREADSP = 5;
 
 $(document).ready(function(){
 	createCollectionTable();
@@ -42,7 +43,7 @@ function loadData() {
 }
 
 function loadParent() {
-	doRowParent(0, THREADS);
+	doRowParent(0, THREADSP);
 }
 
 function doRowParent(row, threads) {
