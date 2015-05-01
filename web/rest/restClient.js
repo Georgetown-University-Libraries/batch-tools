@@ -1,8 +1,8 @@
 var loadId = 0;
 var THREADS = 4;
 var THREADSP = 10;
-var COUNT_LIMIT = 10_000;
-var ITEM_LIMIT = 1_000;
+var COUNT_LIMIT = 10000;
+var ITEM_LIMIT = 1000;
 var COLL_LIMIT = 500;
 
 $(document).ready(function(){
