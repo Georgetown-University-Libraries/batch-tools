@@ -72,7 +72,7 @@ function doRow(row, threads, curLoadId) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/filtered-collections/"+cid+"?filters=" + filterString,
+		"/rest/filtered-collections/"+cid+"?limit=0&filters=" + filterString,
 		function(data) {
 			$.each(data.itemFilters, function(index, itemFilter){
 				if (loadId != curLoadId) {
