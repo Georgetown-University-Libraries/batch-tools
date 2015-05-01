@@ -90,7 +90,7 @@ function loadData() {
 	loadId++;
 	$("td.datacol,th.datacol").remove();
 	filterString = getFilterList();
-	doRow(0, 1, loadId);
+	doRow(0, 10, loadId);
 }
 
 function getFilterList() {
