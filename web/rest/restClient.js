@@ -1,6 +1,9 @@
 var loadId = 0;
 var THREADS = 4;
 var THREADSP = 10;
+var COUNT_LIMIT = 10_000;
+var ITEM_LIMIT = 1_000;
+var COLL_LIMIT = 500;
 
 $(document).ready(function(){
 	createCollectionTable();
@@ -20,7 +23,10 @@ function createCollectionTable() {
 
 
 	$.getJSON(
-		"/rest/collections?limit=500",
+		"/rest/collections",
+		{
+			limit : COLL_LIMIT,
+		},
 		function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
@@ -51,7 +57,10 @@ function doRowParent(row, threads) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/collections/"+cid+"?expand=parentCommunityList",
+		"/rest/collections/"+cid,
+		{
+			expand : parentCommunityList
+		},
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
@@ -72,7 +81,11 @@ function doRow(row, threads, curLoadId) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/filtered-collections/"+cid+"?limit=0&filters=" + filterString,
+		"/rest/filtered-collections/"+cid,
+		{
+			limit : COUNT_LIMIT,
+			filters : filterString,
+		},
 		function(data) {
 			$.each(data.itemFilters, function(index, itemFilter){
 				if (loadId != curLoadId) {
@@ -124,7 +137,12 @@ function drawItemTable(cid, filter, collname) {
 	addTh(tr, "Handle");
 	addTh(tr, "Item").addClass("title");
 	$.getJSON(
-		"/rest/filtered-collections/"+cid+"?expand=items&filters="+filter,
+		"/rest/filtered-collections/"+cid,
+		{
+			expand: "items",
+			limit: ITEM_LIMIT,
+			filters: filter,
+		},
 		function(data){
 			var source = filter == "" ? data.items : data.itemFilters[0].items;
 			
