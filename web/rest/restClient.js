@@ -1,6 +1,6 @@
 var loadId = 0;
-var THREADS = 1;
-var THREADSP = 5;
+var THREADS = 4;
+var THREADSP = 10;
 
 $(document).ready(function(){
 	createCollectionTable();
