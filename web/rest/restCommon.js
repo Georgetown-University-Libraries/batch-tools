@@ -120,7 +120,7 @@ function doRowParent(row, threads) {
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/filtered-collections/"+cid+"?expand=parentCommunityList",
+		"/rest/collections/"+cid+"?expand=parentCommunityList",
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
