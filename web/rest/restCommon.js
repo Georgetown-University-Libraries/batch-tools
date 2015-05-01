@@ -1,5 +1,6 @@
 var filterString = "none";
 var loadId = 0;
+var THREADS = 1;
 
 function createCollectionTable() {
 	var tbl = $("<table/>");
@@ -90,8 +91,13 @@ function loadData() {
 	loadId++;
 	$("td.datacol,th.datacol").remove();
 	filterString = getFilterList();
-	doRow(0, 1, loadId);
+	doRow(0, THREADS, loadId);
 }
+
+function loadParent() {
+	doRowParent(0, THREADS);
+}
+
 
 function getFilterList() {
 	var list="";
@@ -109,17 +115,34 @@ function getFilterList() {
 	return list;
 }
 
+function doRowParent(row, threads) {
+	var tr = $("tr[index="+row+"]");
+	if (!tr.is("*")) return; 
+	var cid = tr.attr("cid");
+	$.getJSON(
+		"/rest/filtered-collections/"+cid+"?expand=parentCommunityList",
+		function(data) {
+			var par = data.parentCommunityList[data.parentCommunityList.length-1];
+			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
+			
+			sorttable.makeSortable($("#table")[0]);
+			if (row % threads == 0 || threads == 1) {
+				for(var i=1; i<=threads; i++) {
+					doRowParent(row+i, threads);
+				}					
+			}
+ 		}
+	);
+}			
+
 function doRow(row, threads, curLoadId) {
 	if (loadId != curLoadId) return;
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
 	$.getJSON(
-		"/rest/filtered-collections/"+cid+"?expand=parentCommunityList&filters=" + filterString,
+		"/rest/filtered-collections/"+cid+"?filters=" + filterString,
 		function(data) {
-			var par = data.parentCommunityList[data.parentCommunityList.length-1];
-			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
-
 			$.each(data.itemFilters, function(index, itemFilter){
 				if (loadId != curLoadId) {
 					return;
