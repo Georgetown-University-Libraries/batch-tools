@@ -50,8 +50,8 @@ if ($fname != ""){
 /*  Detect multi-byte encoding and convert appropriately when displaying file contents */
 /*	echo file_get_contents($qroot . $fname); */
 	$content = file_get_contents($qroot . $fname);
-	echo mb_convert_encoding($content, 'UTF-8', 
-		mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true));
+	echo $content;
+	echo mb_detect_encoding($content, 'UTF-8, ISO-8859-1', true);
 	echo "</pre>";
 } else if ($fname2 != "") {
 	echo "Illegal file name: " . $fname2; 
