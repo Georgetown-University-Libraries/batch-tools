@@ -51,7 +51,7 @@ if ($fname != ""){
 /*	echo file_get_contents($qroot . $fname); */
 	$content = file_get_contents($qroot . $fname);
 	echo $content;
-	echo mb_detect_encoding($content, 'UTF-8, ISO-8859-1', false);
+	echo mb_detect_encoding($content, "UTF-8, ISO-8859-1", false);
 	echo "</pre>";
 } else if ($fname2 != "") {
 	echo "Illegal file name: " . $fname2; 
