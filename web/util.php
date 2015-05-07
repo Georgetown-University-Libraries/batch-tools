@@ -1,6 +1,6 @@
 <?php
 /*
-Utility Class
+Utility Class...
 
 License information is contained below.
 

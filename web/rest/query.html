@@ -1,0 +1,52 @@
+<html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
+
+    <!-- sortable.js can be obtained at http://www.kryogenix.org/code/browser/sorttable/ -->
+    <script src="/batch-tools/web/sorttable.js"></script>
+
+    <script src="restCommon.js"></script>
+    <script src="restQuery.js"></script>
+    <link rel="stylesheet" type="text/css" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.3/themes/smoothness/jquery-ui.css"></link>
+    <link rel="stylesheet" type="text/css" href="restClient.css"></link>
+    <title>DSpace REST Query Client</title>
+</head>
+<body>
+<h1>DSpace REST Query Client</h1>
+<a href="index.html">Collection Filter</a>
+<button id="filterbutton">Filters</button>
+<a id="this-search" href="#">URL to current search</a>
+<div id="querydiv">
+  <div id='metadatadiv'>
+    <fieldset id="queries">
+      <label>Metadata Field Queries</label>
+    </fieldset>
+    <fieldset id="queries-page">
+      <label>Limit/Paginate Queries</label>
+      <div>
+        <label for="limit">Limit:</label><input id="limit" name="limit" value="100"/>
+        <label for="offset"> Offset:</label><input id="offset" name="offset" value="0"/>
+      </div>
+    </fieldset>
+    <fieldset id="queries-aux">
+      <label>Additional data to return</label>
+      <div id="show-fields"></div>
+    </fieldset>
+    <fieldset>
+      <div>
+        <button id="query-button">Run Item Query</button>
+      </div>
+    </fieldset>
+  </div>
+</div>
+<div id='itemdiv'>
+  
+  <table id="itemtable" class="sortable">
+  <caption><a id="item-button" download="export">Create CSV</a></caption>
+  </table>
+</div>
+<div id='filterdiv'>
+</div>
+</body>
+</html>
