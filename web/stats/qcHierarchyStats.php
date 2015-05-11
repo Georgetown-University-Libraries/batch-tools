@@ -243,7 +243,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-    $colls = isset($commColls[$id]) ? $obj->id : implode(",", $commColls[$obj->id]);
+    $colls = isset($commColls[$id]) ? 'a'.$obj->id : 'b'.implode(",", $commColls[$obj->id]);
       
     echo "<tr class='".$obj->rclass."' colls='" . $colls . "'>";
       
