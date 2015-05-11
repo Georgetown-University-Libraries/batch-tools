@@ -50,7 +50,7 @@ $shards = $CUSTOM->getSolrShards();
 if (!isset($_GET["debug"])){ 
   header('Content-type: application/json');
   $rows = 0;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&version=2.2&q=". $qparm . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
 	   "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
@@ -61,7 +61,7 @@ if (!isset($_GET["debug"])){
 } else if ($_GET["debug"] == "xml"){
   header('Content-type: text');
   $rows=2000;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&version=2.2&q=". $qparm . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
        "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet . 
        $duration['query'];
@@ -71,7 +71,7 @@ if (!isset($_GET["debug"])){
 } else {
   header('Content-type: text');
   $rows=100;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&version=2.2&q=". $qparm . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
        "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
@@ -99,7 +99,7 @@ $header->litHeader(array());
 
 $rows=2000;
 
- $req = $CUSTOM->getSolrPath() . "statistics/select?indent=on&version=2.2&q=". $qparm . 
+ $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
        "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
