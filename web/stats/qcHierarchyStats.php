@@ -15,7 +15,7 @@ foreach(collection::$COLLECTIONS as $c) {
 
 function addCommParent($coll, $parent) {
     global $commColls;
-    if (!isset($commColls[$parent->community_id])){
+    if (!array_key_exists($commColls, $parent->community_id)){
         $commColls[$parent->community_id] = array();
     }
     $commColls[$parent->community_id][] = $coll->collection_id;
@@ -243,7 +243,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-    $colls = isset($commColls[$id]) ? implode(",", $commColls[$obj->id]) : $obj->id;
+    $colls = array_key_exists($commColls, $id) ? implode(",", $commColls[$obj->id]) : $obj->id;
       
     echo "<tr class='".$obj->rclass."' colls='" . $colls . "'>";
       
