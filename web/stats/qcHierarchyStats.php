@@ -15,6 +15,7 @@ foreach(collection::$COLLECTIONS as $c) {
 
 function addCommParent($coll, $parent) {
     global $commColls;
+    echo $coll->collection_id ."--" . $parent->community_id . "<br/>";
     if (!array_key_exists($commColls, $parent->community_id)){
         $commColls[$parent->community_id] = array();
     }
