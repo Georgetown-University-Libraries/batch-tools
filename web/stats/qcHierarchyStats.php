@@ -10,7 +10,7 @@ $CUSTOM->getCommunityInit()->initCollections();
 
 $commColls = array();
 foreach(collection::$COLLECTIONS as $c) {
-    addCommParent($c, $parent);
+    addCommParent($c, $c->getParent());
 }
 
 function addCommParent($coll, $parent) {
