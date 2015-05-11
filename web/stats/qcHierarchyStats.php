@@ -8,6 +8,23 @@ $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
 $CUSTOM->getCommunityInit()->initCollections();
 
+$commColls = array();
+foreach(collection::$COLLECTIONS as $c) {
+    addCommParent($c, $parent);
+}
+
+function addCommParent($coll, $parent) {
+    global $commColls;
+    if (!isset($commColls[$parent->community_id])){
+        $commColls[$parent->community_id] = array();
+    }
+    $commColls[$parent->community_id] = $c->collection_id;
+    $gparent = $parent->getParent();
+    if ($gparent != $parent) {
+        addCommParent($coll, $gparent);
+    }
+}
+
 solrFacets::init($CUSTOM);
 $duration=solrFacets::getDurationArg();
 $type=solrFacets::getTypeArg();
@@ -224,18 +241,20 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  // print each row
  $c = 0;
  foreach (hierarchy::$OBJECTS as $obj) {
-      $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
+    $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-      echo "<tr class='".$obj->rclass."'>";
+    $colls = isset($commColls[$id]) ? $obj->id : implode(",", $commColls[$obj->id]);
       
-     echo "<td>" . $obj->path . "</td>";
-        echo "<td><a href='/handle/" . $obj->handle . "'>" . $obj->handle . "</td>";
-     for($i=0; $i<$colcount; $i++){
-         echo "<td class='data data-" . $i . "' id='" . $obj->hid . "-" . $i . "'>";
-         echo "-</td>";
-     } 
-        echo "<td class='data data-all' id='".$obj->hid."-all'>-</td>";
-     echo "</tr>";
+    echo "<tr class='".$obj->rclass."' colls='" . $colls . "'>";
+      
+    echo "<td>" . $obj->path . "</td>";
+    echo "<td><a href='/handle/" . $obj->handle . "'>" . $obj->handle . "</td>";
+    for($i=0; $i<$colcount; $i++){
+        echo "<td class='data data-" . $i . "' id='" . $obj->hid . "-" . $i . "'>";
+        echo "-</td>";
+    } 
+    echo "<td class='data data-all' id='".$obj->hid."-all'>-</td>";
+    echo "</tr>";
  }       
 ?>
 <tr class='total'>
