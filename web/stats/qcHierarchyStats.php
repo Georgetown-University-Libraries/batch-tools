@@ -18,7 +18,7 @@ function addCommParent($coll, $parent) {
     if (!isset($commColls[$parent->community_id])){
         $commColls[$parent->community_id] = array();
     }
-    $commColls[$parent->community_id] = $c->collection_id;
+    $commColls[$parent->community_id] = $coll->collection_id;
     $gparent = $parent->getParent();
     if ($gparent != $parent) {
         addCommParent($coll, $gparent);
@@ -243,7 +243,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-    $colls = isset($commColls[$id]) ? 'a'.$obj->id : 'b'.implode(",", $commColls[$obj->id]);
+    $colls = isset($commColls[$id]) ? implode(",", $commColls[$obj->id]) : $obj->id;
       
     echo "<tr class='".$obj->rclass."' colls='" . $colls . "'>";
       
