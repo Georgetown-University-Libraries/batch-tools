@@ -22,6 +22,7 @@ function addCommParent($coll, $parent) {
     echo(implode(",",$commColls[$parent->community_id])."<br/>");
     $gparent = $parent->getParent();
     if ($gparent != $parent) {
+        echo "Parent<br/>";
         addCommParent($coll, $gparent);
     }
 }
