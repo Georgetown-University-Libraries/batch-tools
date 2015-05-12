@@ -224,7 +224,8 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-    echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getChildCollections()) . "'>";
+    //echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getChildCollections()) . "'>";
+    echo "<tr class='".$obj->rclass."' colls='"  . "'>";
       
     echo "<td>" . $obj->path . "</td>";
     echo "<td><a href='/handle/" . $obj->handle . "'>" . $obj->handle . "</td>";
