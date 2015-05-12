@@ -227,7 +227,6 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
     if ($obj->type == "community") {
-        var_dump($obj->getMyChildCollections());
         echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getMyChildCollections()) . "'>";
     } else {
         echo "<tr class='".$obj->rclass."'>";        

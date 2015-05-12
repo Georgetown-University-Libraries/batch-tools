@@ -415,7 +415,7 @@ class hierarchy {
             if ($child->type == "community") {
                 $child->getChildCollections($root);
             } else {
-                array_push($root->collList, $obj->id);
+                array_push($root->collList, $child->id);
             }
         }
         return $root->collList;
