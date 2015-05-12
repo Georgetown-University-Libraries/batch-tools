@@ -405,14 +405,9 @@ class hierarchy {
 		uasort(self::$OBJECTS, 'hiercmp');
 	}
     
-    function getChildCollections() {
-        $colls = array();
-        return getChildCollections($colls);
-    }
-    
-    function getChildCollections($arr) {
+    function getChildCollections($arr = array()) {
         foreach($this->children as $child) {
-            $arr = $child->getChildCollections($arr);
+            $arr = array_merge($arr, $child->getChildCollections($arr));
         }
         return $arr;
     }
