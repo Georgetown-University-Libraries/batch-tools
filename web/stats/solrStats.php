@@ -11,6 +11,7 @@ solrFacets::init($CUSTOM);
 $comm=util::getArg("comm","");
 $coll=util::getArg("coll","");
 $time=util::getArg("time","");
+$colls=util::getArg("colls",array());
 if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
 $typearg = solrFacets::getTypeArg();
@@ -18,8 +19,16 @@ $typearg = solrFacets::getTypeArg();
 if ($comm != "") {
     if ($typearg == "COMMV")
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
-    else
-	    $q="owningComm:".$comm;
+    else {
+        $q="(";
+        foreach($colls as $col) {
+            if ($q != "(") {
+                $q .= "+OR+";
+            }
+            $q .= "owningColl:" . $col;
+        }
+        $q .= ")";
+    }
 } else if ($coll != "") {
     if ($typearg == "COLLV")
   	    $q="id:".$coll;
