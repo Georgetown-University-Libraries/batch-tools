@@ -405,11 +405,16 @@ class hierarchy {
 		uasort(self::$OBJECTS, 'hiercmp');
 	}
     
-    function getChildCollections($arr = array()) {
+    function getChildCollections(&$arr = array()) {
         foreach($this->children as $child) {
-            $arr = array_merge($arr, $child->getChildCollections($arr));
+            if ($child instanceof community) {
+                $child->getChildCollections($arr);
+            } else {
+                $arr[] = $obj->id;
+            }
         }
         return $arr;
     }
+
 }
 ?>
