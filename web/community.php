@@ -348,6 +348,7 @@ class hierarchy {
 	public $sname;
 	
 	public $children;
+    public $collList;
 
 	function __construct($obj) {
 		if ($obj instanceof community) {
@@ -405,15 +406,19 @@ class hierarchy {
 		uasort(self::$OBJECTS, 'hiercmp');
 	}
     
-    function getChildCollections(&$arr = array()) {
+    function getMyChildCollections() {
+        $this->collList = array();
+        return $this->getChildCollections($this);
+    }
+    function getChildCollections($root) {
         foreach($this->children as $child) {
             if ($child->type == "community") {
-                $child->getChildCollections($arr);
+                $child->getChildCollections($root);
             } else {
-                array_push($arr, $obj->id);
+                array_push($root->collList, $obj->id);
             }
         }
-        return $arr;
+        return $root->collList;
     }
 
 }
