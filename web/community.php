@@ -410,7 +410,7 @@ class hierarchy {
             if ($child instanceof community) {
                 $child->getChildCollections($arr);
             } else {
-                $arr[] = $obj->id;
+                array_push($arr, $obj->id);
             }
         }
         return $arr;
