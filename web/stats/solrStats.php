@@ -17,9 +17,11 @@ if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 $typearg = solrFacets::getTypeArg();
 
 if ($comm != "") {
-    if ($typearg == "COMMV")
+    if ($typearg == "COMMV") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
-    else {
+    } else if ($typearg == "COLLV") {
+        $q="(owningComm:".$comm . ")";
+    } else {
         $q="(";
         foreach(explode(",",$colls) as $col) {
             if ($q != "(") {
