@@ -5,6 +5,8 @@ include 'solrFacets.php';
 ini_set('max_execution_time', 120);
 
 $CUSTOM = custom::instance();
+$CUSTOM->getCommunityInit()->initCommunities();
+$CUSTOM->getCommunityInit()->initCollections();
 
 solrFacets::init($CUSTOM);
 $duration=solrFacets::getDurationArg();
