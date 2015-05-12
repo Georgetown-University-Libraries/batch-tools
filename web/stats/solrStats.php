@@ -11,7 +11,7 @@ solrFacets::init($CUSTOM);
 $comm=util::getArg("comm","");
 $coll=util::getArg("coll","");
 $time=util::getArg("time","");
-$colls=util::getArg("colls",array());
+$colls=util::getArg("colls","");
 if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
 $typearg = solrFacets::getTypeArg();
@@ -21,7 +21,7 @@ if ($comm != "") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     else {
         $q="(";
-        foreach($colls as $col) {
+        foreach(explode(",",$colls) as $col) {
             if ($q != "(") {
                 $q .= "+OR+";
             }
