@@ -40,6 +40,7 @@ var getStatsFunc = function(cell, tbd) {
     var prefix = id.replace("all","");
     var req = "solrStats.php?" +
         arr[1] + "=" + arr[2] +  
+        "&colls=" + $(cell).parent("tr").attr("colls") +
         "&duration=" + $("#duration").val() +
         "&type=" + $("#type").val() +
         "&auth=" + $("#auth").val() +
