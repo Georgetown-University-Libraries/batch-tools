@@ -230,7 +230,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
     if ($obj->type == "community") {
         echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getMyChildCollections()) . "'>";
     } else {
-        echo "<tr class='".$obj->rclass."'>";        
+        echo "<tr class='".$obj->rclass."' colls=''>";        
     }
       
     echo "<td>" . $obj->path . "</td>";

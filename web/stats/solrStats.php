@@ -20,7 +20,14 @@ if ($comm != "") {
     if ($typearg == "COMMV") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
-        $q="(owningComm:".$comm . ")";
+        $q="(";
+        foreach(explode(",",$colls) as $col) {
+            if ($q != "(") {
+                $q .= "+OR+";
+            }
+            $q .= "id:" . $col;
+        }
+        $q .= ")";
     } else {
         $q="(";
         foreach(explode(",",$colls) as $col) {
