@@ -5,28 +5,6 @@ include 'solrFacets.php';
 ini_set('max_execution_time', 120);
 
 $CUSTOM = custom::instance();
-$CUSTOM->getCommunityInit()->initCommunities();
-$CUSTOM->getCommunityInit()->initCollections();
-
-$commColls = array();
-foreach(collection::$COLLECTIONS as $c) {
-    addCommParent($c, $c->getParent());
-}
-
-function addCommParent($coll, $parent) {
-    global $commColls;
-    echo $coll->collection_id ."--" . $parent->community_id . "<br/>";
-    if (!array_key_exists($commColls, $parent->community_id)){
-        $commColls[$parent->community_id] = array();
-    }
-    array_push($commColls[$parent->community_id], $coll->collection_id);
-    echo(implode(",",$commColls[$parent->community_id])."<br/>");
-    $gparent = $parent->getParent();
-    if ($gparent != $parent) {
-        echo "Parent<br/>";
-        addCommParent($coll, $gparent);
-    }
-}
 
 solrFacets::init($CUSTOM);
 $duration=solrFacets::getDurationArg();
@@ -246,9 +224,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-    $colls = array_key_exists($commColls, $id) ? implode(",", $commColls[$obj->id]) : $obj->id;
-      
-    echo "<tr class='".$obj->rclass."' colls='" . $colls . "'>";
+    echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getChildCollections()) . "'>";
       
     echo "<td>" . $obj->path . "</td>";
     echo "<td><a href='/handle/" . $obj->handle . "'>" . $obj->handle . "</td>";

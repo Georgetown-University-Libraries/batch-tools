@@ -404,5 +404,17 @@ class hierarchy {
 		}
 		uasort(self::$OBJECTS, 'hiercmp');
 	}
+    
+    function getChildCollections() {
+        $colls = array();
+        return getChildCollections($colls);
+    }
+    
+    function getChildCollections($arr) {
+        foreach($this->children as $child) {
+            $arr = $child->getChildCollections($arr);
+        }
+        return $arr;
+    }
 }
 ?>
