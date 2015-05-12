@@ -407,7 +407,7 @@ class hierarchy {
     
     function getChildCollections(&$arr = array()) {
         foreach($this->children as $child) {
-            if ($child instanceof community) {
+            if ($child->type == "community") {
                 $child->getChildCollections($arr);
             } else {
                 array_push($arr, $obj->id);
