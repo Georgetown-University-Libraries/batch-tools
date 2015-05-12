@@ -226,7 +226,12 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
       
-    echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getMyChildCollections()) . "'>";
+    if ($obj->type == "community") {
+        var_dump($obj->getMyChildCollections());
+        echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getMyChildCollections()) . "'>";
+    } else {
+        echo "<tr class='".$obj->rclass."'>";        
+    }
       
     echo "<td>" . $obj->path . "</td>";
     echo "<td><a href='/handle/" . $obj->handle . "'>" . $obj->handle . "</td>";
