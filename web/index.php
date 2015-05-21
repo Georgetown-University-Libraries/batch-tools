@@ -113,7 +113,7 @@ echo <<< HERE
     <legend>Exclude Large Collections</legend>
 HERE;
     foreach($CUSTOM->getExcludeCollections() as $k => $v) {
-        $kid = getQueryVal("select resource_id from handle where handle=?",$k);
+        $kid = $CUSTOM->getQueryVal("select resource_id from handle where handle=?",$k);
         echo <<< HERE
       <input name="collex" type="checkbox" id="collex-{$kid}" value="{$kid}" checked><label for="collex-{$kid}">{$v}</label>
 HERE;
