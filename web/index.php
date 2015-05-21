@@ -114,6 +114,7 @@ echo <<< HERE
 HERE;
     foreach($CUSTOM->getExcludeCollections() as $k => $v) {
         $kid = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h",array(":h"=>$k));
+        if ($kid == "") continue;
         echo <<< HERE
       <input name="collex" type="checkbox" id="collex-{$kid}" value="{$kid}" checked><label for="collex-{$kid}">{$v}</label>
 HERE;
