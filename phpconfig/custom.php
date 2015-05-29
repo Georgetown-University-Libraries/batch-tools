@@ -229,11 +229,6 @@ EOF;
 	public function getExcludeCollections() {
 		return array();
 	}
-
-	public function getSite() {
-		return "";
-	}
-
 }
 
 class DefaultInitializer {
