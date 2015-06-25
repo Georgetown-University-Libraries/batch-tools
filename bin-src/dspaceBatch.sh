@@ -144,6 +144,7 @@ then
 
 elif [ "$1" = "metadata-import" ]
 then
+  export JAVA_OPTS="-Dfile.encoding=UTF-8"
   ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
 
   while [ $# -ge 1 ]
