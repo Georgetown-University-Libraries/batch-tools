@@ -202,7 +202,7 @@ new query("itemCountWithMultText","Num Items with Multiple Text Streams",$subq,"
 $subq = <<< EOF
   and i.in_archive is not true
 EOF;
-new query("withdrawn","Withdrawn Item",$subq,"embargo", new testValZero(),array("Accession","Withdrawn")); 
+new query("withdrawn","Withdrawn Item",$subq,"basic", new testValZero(),array("Accession","Withdrawn")); 
 
 }
 ?>
