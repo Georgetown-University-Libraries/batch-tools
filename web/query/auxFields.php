@@ -150,6 +150,7 @@ inner join item2bundle i2b
 EOF;
     self::addAuxField("OrigId", "Assetstore Id", "({$origId})", "", false);
     self::addAuxField("Private", "Private Item", "case when i.discoverable = false then 'Private' else 'Discoverable' end", "", false);
+    self::addAuxField("Withdrawn", "Withdrawn Item", "case when i.in_archive = true then 'In Archive' else 'Withdrawn' end", "", false);
 
     $bitRestricted = <<< EOF
 select case when count(*) > 0 then 'Unrestricted' else 'Restricted' end
