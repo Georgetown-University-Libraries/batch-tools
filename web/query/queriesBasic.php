@@ -200,7 +200,7 @@ EOF;
 new query("itemCountWithMultText","Num Items with Multiple Text Streams",$subq,"basic", new testValZero(),array("Accession","Text")); 
 
 $subq = <<< EOF
-  and i.in_archive is not true
+  and i.in_archive != true
 EOF;
 new query("withdrawn","Withdrawn Item",$subq,"basic", new testValZero(),array("Accession","Withdrawn")); 
 
