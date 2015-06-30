@@ -252,7 +252,7 @@ HERE;
      		$name = $q->name;
      		$header = $q->header;
      		$classes = $q->classes;
-     		$checked = ($name == "itemCount") ? "checked" : "";
+     		$checked = ($name == "itemCount" || $name == "withdrawn" || $name == "private") ? "checked" : "";
      		echo "<li><input class='qccol $classes' name='qcCol' type='checkbox' $checked id='$name' value='$name'><label for='$name'>$header</label></li>";
 		  }	
 		  echo "</ul>";    	
