@@ -102,7 +102,7 @@ class query {
     inner join collection2item c2i 
       on c2i.item_id = i.item_id 
       and c2i.collection_id = coll.collection_id
-    where (i.in_archive is true or i.discoverable = false)
+    where 1=1
     {$this->subq}
   ) as {$this->name},
 ";		
