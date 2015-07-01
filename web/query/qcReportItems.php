@@ -98,7 +98,7 @@ $result = $stmt->fetchAll();
 //$header->sqlDump($sql);
 
 
-if (!$result == null) {
+if (!$result) {
 	print($sql);
 	print_r($dbh->errorInfo());
     print_r($dbh->errorCode());
