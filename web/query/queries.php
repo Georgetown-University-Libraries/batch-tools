@@ -136,7 +136,6 @@ class query {
     from r_comm2coll r
     inner join item i 
     on i.owning_collection = r.collection_id 
-    and i.in_archive is true 
     where r.community_id = comm.community_id
     {$this->subq} 
     {$filter}
