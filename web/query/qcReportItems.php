@@ -98,7 +98,7 @@ $result = $stmt->fetchAll();
 //$header->sqlDump($sql);
 
 
-if (!$result == null && $dph->errorInfo()) {
+if (!$result == null && $dbh->errorInfo()) {
 	print($sql);
 	print_r($dbh->errorInfo());
      die("Error in SQL query");
