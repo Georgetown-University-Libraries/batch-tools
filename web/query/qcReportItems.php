@@ -89,7 +89,7 @@ else
 <?php //$header->sqlDump($sql);?>
 <?php
 $dbh = $CUSTOM->getPdoDb();
-$stmt = $dbh->prepare($sql);
+$stmt = $dbh->prepare('x'.$sql);
 
 $result = $stmt->execute(array(':pid' => $id));
 
