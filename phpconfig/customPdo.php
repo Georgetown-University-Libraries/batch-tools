@@ -67,10 +67,10 @@ class PdoInitializer {
 	
 	public function initCommunities() {
 		$sql = <<< EOF
-		select community_id, metadatavalue.text_value as name, handle, parent_comm_id 
+		select community_id, m.text_value as name, handle, parent_comm_id 
 		from community
-		inner join metadatavalue on community_id = resource_id and resource_type_id = 4
-		inner join handle on community_id = resource_id and resource_type_id = 4
+		inner join metadatavalue m on community_id = m.resource_id and m.resource_type_id = 4
+		inner join handle h on community_id = h.resource_id and h.resource_type_id = 4
 		left join community2community on child_comm_id = community_id
 		order by name;  
 EOF;
@@ -92,10 +92,10 @@ EOF;
 	
 	public function initCollections() {
 		$sql = <<< EOF
-		select c.collection_id, metadatavalue.text_value as name, handle, c2c.community_id 
+		select c.collection_id, m.text_value as name, handle, c2c.community_id 
 		from collection c
-		inner join metadatavalue on collection_id = resource_id and resource_type_id = 3
-		inner join handle on collection_id = resource_id and resource_type_id = 3
+		inner join metadatavalue m on collection_id = m.resource_id and m.resource_type_id = 3
+		inner join handle h on collection_id = h.resource_id and h.resource_type_id = 3
 		left join community2collection c2c on c2c.collection_id = c.collection_id
 		order by c.name;  
 EOF;
