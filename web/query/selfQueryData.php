@@ -65,7 +65,7 @@ $gsql .= "select msr.short_id || '.' || mfr.element || case when mfr.qualifier i
 
 $sql .= <<< EOF
 select 
-  c.name,
+  cn.text_value as name,
   ch.handle, 
   i.item_id,
   (
@@ -99,6 +99,12 @@ inner join
   handle ih on i.item_id = ih.resource_id and ih.resource_type_id = 2
 inner join 
   handle ch on c.collection_id = ch.resource_id and ch.resource_type_id = 3
+inner join 
+  metadatavalue cn on c.collection_id = cn.resource_id and cn.resource_type_id = 3
+inner join metadatafieldregistry mfr 
+  on mfr.metadata_field_id = cn.metadata_field_id
+  and mfr.element = 'title' and mfr.qualifier is null
+
 where 
 EOF;
 

@@ -26,8 +26,10 @@ select
 from 
   community comm
 inner join 
-  metadatavalue commname as commname.resource_id=comm.community_id and commname.resource_type_id = 4
-
+  metadatavalue commname on commname.resource_id=comm.community_id and commname.resource_type_id = 4
+inner join metadatafieldregistry mfr on mfr.metadata_field_id = commname.metadata_field_id
+  and mfr.element = 'title' and mfr.qualifier is null
+  
 order by communityName
 ;
   

@@ -70,6 +70,9 @@ class PdoInitializer {
 		select community_id, m.text_value as name, handle, parent_comm_id 
 		from community
 		inner join metadatavalue m on community_id = m.resource_id and m.resource_type_id = 4
+        inner join metadatafieldregistry mfr 
+          on mfr.metadata_field_id = m.metadata_field_id
+          and mfr.element = 'title' and mfr.qualifier is null
 		inner join handle h on community_id = h.resource_id and h.resource_type_id = 4
 		left join community2community on child_comm_id = community_id
 		order by name;  
@@ -95,6 +98,9 @@ EOF;
 		select c.collection_id, m.text_value as name, handle, c2c.community_id 
 		from collection c
 		inner join metadatavalue m on collection_id = m.resource_id and m.resource_type_id = 3
+        inner join metadatafieldregistry mfr 
+          on mfr.metadata_field_id = m.metadata_field_id
+          and mfr.element = 'title' and mfr.qualifier is null
 		inner join handle h on collection_id = h.resource_id and h.resource_type_id = 3
 		left join community2collection c2c on c2c.collection_id = c.collection_id
 		order by c.name;  
