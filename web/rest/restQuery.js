@@ -49,7 +49,7 @@ $(document).ready(function(){
 
 function loadMetadataFields(params) {
 	$.getJSON(
-		"/rest/metadataregistry",
+		"/rest/registries/schema",
 		function(data){
 			metadataSchemas = data;
 			$("#limit").val(params.limit);  
