@@ -7,7 +7,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'creator'
@@ -21,7 +21,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'contributor' and mfr.qualifier = 'author'
@@ -35,7 +35,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'contributor' and mfr.qualifier = 'other'
@@ -50,7 +50,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'creator'
@@ -60,7 +60,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'contributor' and mfr.qualifier = 'author'
@@ -74,7 +74,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'title' and mfr.qualifier is null
@@ -88,7 +88,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'identifier' and mfr.qualifier = 'uri'
@@ -102,7 +102,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'publisher'
@@ -116,7 +116,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'subject' and mfr.qualifier is null
@@ -130,7 +130,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'subject' and mfr.qualifier is null
@@ -145,7 +145,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and (text_value is null or text_value = '')
     ) 
 EOF;
@@ -156,7 +156,7 @@ $subq = <<< EOF
     (
       select count(*)
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'description' and mfr.qualifier is null
@@ -170,7 +170,7 @@ $subq = <<< EOF
     (
       select count(*)
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'identifier' and mfr.qualifier = 'uri'
@@ -184,7 +184,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'identifier' and mfr.qualifier = 'bibliographicCitation'

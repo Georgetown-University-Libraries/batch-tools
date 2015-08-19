@@ -6,7 +6,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'created'
@@ -22,7 +22,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'created'
@@ -36,7 +36,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'issued'
@@ -53,7 +53,7 @@ $subq = <<< EOF
       (
         select count(*)
         from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'created'
@@ -63,7 +63,7 @@ $subq = <<< EOF
       (
         select count(*)
         from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'issued'
@@ -73,7 +73,7 @@ $subq = <<< EOF
       (
         select count(*)
         from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'available'
@@ -83,7 +83,7 @@ $subq = <<< EOF
       (
         select count(*)
         from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier = 'accessioned'
@@ -98,7 +98,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'date' and mfr.qualifier is null

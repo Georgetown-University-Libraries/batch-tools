@@ -37,7 +37,7 @@ select
   '' as blank
 from item i2
 inner join
-  metadatavalue mv on mv.item_id = i2.item_id 
+  metadatavalue mv on mv.resource_id = i2.item_id and mv.resource_type_id = 2 
 inner join metadatafieldregistry mfr on mfr.metadata_field_id = mv.metadata_field_id
   and mfr.element = 'title' and mfr.qualifier is null
 inner join handle h on h.resource_id = i2.item_id and resource_type_id = 2

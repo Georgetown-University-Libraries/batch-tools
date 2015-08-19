@@ -60,7 +60,8 @@ $csql .= "select count(*) from collection c inner join item i on i.owning_collec
 $gsql .= "select msr.short_id || '.' || mfr.element || case when mfr.qualifier is null then '' else '.' || mfr.qualifier end, count(*) ".
     "from metadatavalue mv inner join metadatafieldregistry mfr on mfr.metadata_field_id=mv.metadata_field_id ".
     "inner join metadataschemaregistry msr on msr.metadata_schema_id=mfr.metadata_schema_id " .
-    "inner join item i on mv.item_id=i.item_id inner join collection c on i.owning_collection=c.collection_id where";
+    "inner join item i on mv.resource_id=i.item_id and mv.resource_type_id = 2 " .
+	"inner join collection c on i.owning_collection=c.collection_id where";
 
 $sql .= <<< EOF
 select 
@@ -75,7 +76,7 @@ $sql .= <<< EOF
     inner join metadatafieldregistry mfr 
     on mfr.metadata_field_id = mv.metadata_field_id
     and mfr.element = 'title' and mfr.qualifier is null
-    where mv.item_id = i.item_id
+    where mv.resource_id = i.item_id and mv.resource_type_id = 2
   ),  		
   ih.handle,
   i.discoverable,
@@ -84,7 +85,7 @@ EOF;
 
     foreach($dfield as $k) {
         if (is_numeric($k)) {
-            $sql .= "(select array_to_string(array_agg(text_value), '{$sep}') from metadatavalue m where i.item_id=m.item_id and m.metadata_field_id={$k}),";
+            $sql .= "(select array_to_string(array_agg(text_value), '{$sep}') from metadatavalue m where i.item_id=m.resource_id and m.resource_type_id = 2 and m.metadata_field_id={$k}),";
         }
     }
 
@@ -123,57 +124,57 @@ EOF;
       if ($field[$i] == "") {
       } else if ($field[$i] == 0) {
         if ($op[$i] == "exists") {        
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2)";
         } else if ($op[$i] == "not exists") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id)";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2)";
         } else if ($op[$i] == "equals") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and text_value=:val{$i})";
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "not equals") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value=:val{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and text_value=:val{$i})";
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "like") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and text_value like :val{$i})";
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "not like") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value like :val{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and text_value like :val{$i})";
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "matches") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and text_value ~ :val{$i})";
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "doesn't match") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and text_value ~ :val{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and text_value ~ :val{$i})";
             $arr[":val{$i}"] = $val[$i];
         }
       } else {
         if ($op[$i] == "exists") {        
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i})";
             $arr[":field{$i}"] = $field[$i];
         } else if ($op[$i] == "not exists") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i})";
             $arr[":field{$i}"] = $field[$i];
         } else if ($op[$i] == "equals") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value=:val{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i} and text_value=:val{$i})";
             $arr[":field{$i}"] = $field[$i];
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "not equals") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value=:val{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i} and text_value=:val{$i})";
             $arr[":field{$i}"] = $field[$i];
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "like") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value like :val{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i} and text_value like :val{$i})";
             $arr[":field{$i}"] = $field[$i];
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "not like") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value like :val{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i} and text_value like :val{$i})";
             $arr[":field{$i}"] = $field[$i];
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "matches") {
-            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value ~ :val{$i})";
+            $where .= " and exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i} and text_value ~ :val{$i})";
             $arr[":field{$i}"] = $field[$i];
             $arr[":val{$i}"] = $val[$i];
         } else if ($op[$i] == "doesn't match") {
-            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.item_id and metadata_field_id = :field{$i} and text_value ~ :val{$i})";
+            $where .= " and not exists (select 1 from metadatavalue m where i.item_id = m.resource_id and m.resource_type_id = 2 and metadata_field_id = :field{$i} and text_value ~ :val{$i})";
             $arr[":field{$i}"] = $field[$i];
             $arr[":val{$i}"] = $val[$i];
         }    

@@ -20,11 +20,13 @@ foreach(query::$QUERIES as $q) {
 $sql = <<< EOF
 select 
   comm.community_id, 
-  comm.name as communityName,
+  commname.text_value as communityName,
   {$querycol}
   '' as blank
 from 
   community comm
+inner join 
+  metadatavalue commname as commname.resource_id=comm.community_id and commname.resource_type_id = 4
 
 order by communityName
 ;

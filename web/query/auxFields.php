@@ -252,7 +252,7 @@ EOF;
 			"inner join metadatafieldregistry mfr on mx.metadata_field_id=mfr.metadata_field_id " .
 			"and element='" . $element . "' and " .
   			(($qualifier == null) ?	"qualifier is null" : "qualifier='" . $qualifier . "'") .
-			" and mx.item_id=i.item_id)";
+			" and mx.resource_id=i.item_id and mx.resource_type_id=2)";
   }
 
   public static function getShowOptCb() {

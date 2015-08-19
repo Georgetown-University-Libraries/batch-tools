@@ -66,7 +66,7 @@ from
 inner join 
   handle on i.item_id = resource_id and resource_type_id = 2
 left join
-  metadatavalue mv on mv.item_id = i.item_id 
+  metadatavalue mv on mv.resource_id = i.item_id and mv.resource_type_id = 2 
 inner join metadatafieldregistry mfr on mfr.metadata_field_id = mv.metadata_field_id
   and mfr.element = 'title' and mfr.qualifier is null
 EOF;

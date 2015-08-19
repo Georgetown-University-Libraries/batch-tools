@@ -2,21 +2,21 @@
 
 function initQueriesMisc() {
 $m = <<< EOF
-(select max(length(text_value)) from metadatavalue mx where mx.item_id=i.item_id)
+(select max(length(text_value)) from metadatavalue mx where mx.resource_id=i.item_id and mx.resource_type_id = 2)
 EOF;
 auxFields::addAuxField("maxmeta", "Longest metadata field", "{$m}", "", false);
 $m = <<< EOF
       (select array_to_string(array_agg('...' || substring(text_value,'(.{0,10}[^[:ascii:]].{0,10})') || '...'),'<br/>') 
   			from metadatavalue mx 
   			inner join metadatafieldregistry mfr on mx.metadata_field_id=mfr.metadata_field_id 
-  			 and mx.item_id=i.item_id)
+  			 and mx.resource_id=i.item_id and mx.resource_type_id =2)
 EOF;
 auxFields::addAuxField("NonAscii", "Non-Ascii characters in metadata", "{$m}", "", false);
 $m = <<< EOF
       (select array_to_string(array_agg('...' || substring(text_value,'(.{0,10}&#.{0,10})') || '...'),'<br/>') 
   			from metadatavalue mx 
   			inner join metadatafieldregistry mfr on mx.metadata_field_id=mfr.metadata_field_id 
-  			 and mx.item_id=i.item_id)
+  			 and mx.resource_id=i.item_id and mx.resource_type_id =2)
 EOF;
 auxFields::addAuxField("AmperPound", "Chacters escaped with Amper Pound", "{$m}", "", false);
 
@@ -25,7 +25,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and (text_value ~ '^.*[^ ]{50,50}.*$')
     ) 
 EOF;
@@ -36,7 +36,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'description' and mfr.qualifier in ('','abstract')
@@ -51,7 +51,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'description' and mfr.qualifier = 'provenance'
@@ -66,7 +66,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and m.metadata_field_id = (
         select metadata_field_id from metadatafieldregistry mfr
         where mfr.element = 'description' and mfr.qualifier = 'provenance'
@@ -81,7 +81,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and (length(text_value) > 6000)
     ) 
 EOF;
@@ -92,7 +92,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and text_value like '%&#%'
     ) 
 EOF;
@@ -103,7 +103,7 @@ $subq = <<< EOF
     (
       select 1
       from metadatavalue m 
-      where m.item_id = i.item_id
+      where m.resource_id = i.item_id and m.resource_type_id = 2
       and text_value ~ '^.*[^[:ascii:]].*$'
     ) 
 EOF;
