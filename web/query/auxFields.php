@@ -36,8 +36,13 @@ class auxFields {
     self::addAuxField("BibliographicCitation", "", self::getFieldByName("identifier","bibliographicCitation"), "", false);
 
     $thumb = <<< EOF
-select array_to_string(array_agg(text('{$handleContext}/bitstream/id/' || bit.bitstream_id || '/' || bit.name)), '<hr/>') 
+select array_to_string(array_agg(text('{$handleContext}/bitstream/id/' || bit.bitstream_id || '/' || bitmv.text_value)), '<hr/>') 
 from bitstream bit
+inner join metadatavalue bitmv
+  on bitmv.resource_id = bit.bitstream_id and bitmv.resource_type_id = 0
+inner join metadatafieldregistry bitmfr
+  on bitmfr.metadata_field_id = bitmv.metadata_field_id 
+  and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
 inner join bundle b
@@ -50,8 +55,13 @@ EOF;
     self::addAuxField("GenThumb", "Thumbnail", "({$thumb})", "", true);
 
     $thumbName = <<< EOF
-select array_to_string(array_agg(text(bit.name)), '<hr/>')
+select array_to_string(array_agg(text(bitmv.text_value)), '<hr/>')
 from bitstream bit
+inner join metadatavalue bitmv
+  on bitmv.resource_id = bit.bitstream_id and bitmv.resource_type_id = 0
+inner join metadatafieldregistry bitmfr
+  on bitmfr.metadata_field_id = bitmv.metadata_field_id 
+  and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
 inner join bundle b
@@ -64,8 +74,13 @@ EOF;
     self::addAuxField("ThumbName", "Name of the thumbnail file", "({$thumbName})", "", false);
 
     $origName = <<< EOF
-select array_to_string(array_agg(text(bit.name)), '<hr/>')
+select array_to_string(array_agg(text(bitmv.text_value)), '<hr/>')
 from bitstream bit
+inner join metadatavalue bitmv
+  on bitmv.resource_id = bit.bitstream_id and bitmv.resource_type_id = 0
+inner join metadatafieldregistry bitmfr
+  on bitmfr.metadata_field_id = bitmv.metadata_field_id 
+  and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
 inner join bundle b
@@ -79,8 +94,13 @@ EOF;
 
     /*Note that this rule contains a filter to ignore @mire zoom tiles, disregard if not applicable*/
     $otherName = <<< EOF
-select array_to_string(array_agg(text(bit.name)), '<hr/>')
+select array_to_string(array_agg(text(bitmv.text_value)), '<hr/>')
 from bitstream bit
+inner join metadatavalue bitmv
+  on bitmv.resource_id = bit.bitstream_id and bitmv.resource_type_id = 0
+inner join metadatafieldregistry bitmfr
+  on bitmfr.metadata_field_id = bitmv.metadata_field_id 
+  and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
 inner join bundle b
@@ -95,8 +115,13 @@ EOF;
     self::addAuxField("OtherName", "Name of auxilliary files", "({$otherName})", "", false);
 
     $textName = <<< EOF
-select array_to_string(array_agg(text(bit.name)), '<hr/>')
+select array_to_string(array_agg(text(bitmv.text_value)), '<hr/>')
 from bitstream bit
+inner join metadatavalue bitmv
+  on bitmv.resource_id = bit.bitstream_id and bitmv.resource_type_id = 0
+inner join metadatafieldregistry bitmfr
+  on bitmfr.metadata_field_id = bitmv.metadata_field_id 
+  and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
 inner join bundle b
