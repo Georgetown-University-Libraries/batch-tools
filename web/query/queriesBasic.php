@@ -9,16 +9,14 @@ $subq = <<< EOF
     (
       select 1
       from item2bundle i2b
-      inner join bundle2bitstream b2b
-        on b2b.bitstream_id = bit.bitstream_id
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
         on bunmfr.metadata_field_id = bunmv.metdata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
-      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bundle2bitstream b2b on i2b.bundle_id = b2b.bundle_id
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       inner join bitstreamformatregistry bfr on bit.bitstream_format_id = bfr.bitstream_format_id
         and bfr.mimetype in (
@@ -44,16 +42,14 @@ $subq = <<< EOF
     (
       select 1
       from item2bundle i2b
-      inner join bundle2bitstream b2b
-        on b2b.bitstream_id = bit.bitstream_id
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
         on bunmfr.metadata_field_id = bunmv.metdata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
-      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bundle2bitstream b2b on i2b.bundle_id = b2b.bundle_id
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       inner join bitstreamformatregistry bfr on bit.bitstream_format_id = bfr.bitstream_format_id
         and bfr.mimetype in (
@@ -70,13 +66,13 @@ $subq = <<< EOF
       select 1
       from item2bundle i2b
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
         on bunmfr.metadata_field_id = bunmv.metdata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
-      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bundle2bitstream b2b on i2b.bundle_id = b2b.bundle_id
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       inner join bitstreamformatregistry bfr on bit.bitstream_format_id = bfr.bitstream_format_id
         and bfr.mimetype like 'image/%' and bfr.mimetype not in (
@@ -93,13 +89,13 @@ $subq = <<< EOF
       select 1
       from item2bundle i2b
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
         on bunmfr.metadata_field_id = bunmv.metdata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
-      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bundle2bitstream b2b on i2b.bundle_id = b2b.bundle_id
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       inner join bitstreamformatregistry bfr on bit.bitstream_format_id = bfr.bitstream_format_id
         and not (
@@ -129,13 +125,13 @@ $subq = <<< EOF
       select 1
       from item2bundle i2b
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
         on bunmfr.metadata_field_id = bunmv.metdata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
-      inner join bundle2bitstream b2b on b.bundle_id = b2b.bundle_id
+      inner join bundle2bitstream b2b on i2b.bundle_id = b2b.bundle_id
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
         and bit.size_bytes > 10000000
     ) 
@@ -149,7 +145,7 @@ $subq = <<< EOF
       select 1
       from item2bundle i2b
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
@@ -189,7 +185,7 @@ $subq = <<< EOF
       select 1
       from item2bundle i2b
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
@@ -199,7 +195,7 @@ $subq = <<< EOF
         select count(*)
         from bundle2bitstream b2b
         inner join bitstream bit on b2b.bitstream_id = bit.bitstream_id
-        where b2b.bundle_id = b.bundle_id 
+        where b2b.bundle_id = i2b.bundle_id 
       ) > 1
     ) 
 EOF;
@@ -211,7 +207,7 @@ $subq = <<< EOF
       select 1
       from item2bundle i2b
       inner join metadatavalue bunmv
-        on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+        on i2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
         and bunmv.text_value = 'TEXT'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
@@ -221,7 +217,7 @@ $subq = <<< EOF
         select count(*)
         from bundle2bitstream b2b
         inner join bitstream bit on b2b.bitstream_id = bit.bitstream_id
-        where b2b.bundle_id = b.bundle_id 
+        where b2b.bundle_id = i2b.bundle_id 
       ) > 1
     ) 
 EOF;

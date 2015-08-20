@@ -52,7 +52,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("GenThumb", "Thumbnail", "({$thumb})", "", true);
@@ -76,7 +76,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("ThumbName", "Name of the thumbnail file", "({$thumbName})", "", false);
@@ -100,7 +100,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("OrigName", "Name of the original file", "({$origName})", "", false);
@@ -125,9 +125,14 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
-where bit.name != 'license.txt'
+inner join metadatavalue bitmv
+  on b2b.bitstream_id = bitmv.resource_id and bitmv.resource_type_id = 0
+  and bitmv.text_value != 'license.txt'
+inner join metadatafieldregistry bitmfr
+  on bitm.metadata_field_id = bitmfr.metdata_field_id
+  and bitmfr.element = 'title' and bitmfr.qualifier is null
 EOF;
     self::addAuxField("OtherName", "Name of auxilliary files", "({$otherName})", "", false);
 
@@ -150,7 +155,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("Text", "Text bundle file name", "({$textName})", "", false);
@@ -169,7 +174,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("SizeMB", "Size of the original file MB", "({$size})", "", false);
@@ -188,7 +193,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("SizeKB", "Size of the original file KB", "({$size})", "", false);
@@ -207,7 +212,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("OrigId", "Assetstore Id", "({$origId})", "", false);
@@ -228,7 +233,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 where exists (
   select 1 
@@ -256,7 +261,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 where exists (
   select 1 
@@ -287,7 +292,7 @@ inner join metadatafieldregistry bunmfr
   on bunmfr.metadata_field_id = bunmv.metdata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
-  on i2b.bundle_id = b.bundle_id
+  on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
 EOF;
     self::addAuxField("Mime", "Bitstream Mime Time", "({$mime})", "", false);
