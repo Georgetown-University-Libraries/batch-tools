@@ -125,7 +125,7 @@ $subq = <<< EOF
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       inner join bundle2bitstream b2b on b2b.bundle_id = i2b.bundle_id
       inner join metadatavalue bitmv
-        on b2b.bitstream_id = bunmv.resource_id and bunmv.resource_type_id = 0
+        on b2b.bitstream_id = bunmv.resource_id and bitmv.resource_type_id = 0
         and bitmv.text_value != (
           select bit2.name || '.jpg'
           from bitstream bit2
