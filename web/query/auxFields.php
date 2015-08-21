@@ -221,9 +221,9 @@ inner join item2bundle i2b
   and i2b.item_id=i.item_id
 where exists (
   select 1 
-  from resourcepolicy 
-  where resource_type_id=0
-  and bit.bitstream_id=resource_id
+  from resourcepolicy rp
+  where rp.resource_type_id=0
+  and bit.bitstream_id=rp.resource_id
   and epersongroup_id = 0
   and (start_date is null or start_date <= current_date)
   and (end_date is null or start_date >= current_date)
@@ -248,8 +248,8 @@ inner join item2bundle i2b
 where exists (
   select 1 
   from resourcepolicy 
-  where resource_type_id=0
-  and bit.bitstream_id=resource_id
+  where rp.resource_type_id=0 rp
+  and bit.bitstream_id=rp.resource_id
   and epersongroup_id = 0
   and (start_date is null or start_date <= current_date)
   and (end_date is null or start_date >= current_date)

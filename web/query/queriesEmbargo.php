@@ -11,9 +11,9 @@ $subq = <<< EOF
     and not exists 
     (
 	  select 1 
-  	  from resourcepolicy 
-  	  where resource_type_id=2
-  	    and i.item_id=resource_id
+  	  from resourcepolicy rp
+  	  where rp.resource_type_id=2
+  	    and i.item_id=rp.resource_id
   		and epersongroup_id = 0
   		and (start_date is null or start_date <= current_date)
   		and (end_date is null or start_date >= current_date)
@@ -37,9 +37,9 @@ $subq = <<< EOF
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       where not exists (
 		select 1 
-  		from resourcepolicy 
-  		where resource_type_id=0
-  		and bit.bitstream_id=resource_id
+  		from resourcepolicy rp
+  		where rp.resource_type_id=0
+  		and bit.bitstream_id=rp.resource_id
   		and epersongroup_id = 0
   		and (start_date is null or start_date <= current_date)
   		and (end_date is null or start_date >= current_date)
@@ -64,9 +64,9 @@ $subq = <<< EOF
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       where exists (
 		select 1 
-  		from resourcepolicy 
-  		where resource_type_id=0
-  		and bit.bitstream_id=resource_id
+  		from resourcepolicy rp
+  		where rp.resource_type_id=0
+  		and bit.bitstream_id=rp.resource_id
   		and epersongroup_id != 0
   		and (start_date is null or start_date <= current_date)
   		and (end_date is null or start_date >= current_date)
@@ -91,9 +91,9 @@ $subq = <<< EOF
       inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
       where not exists (
 		select 1 
-  		from resourcepolicy 
-  		where resource_type_id=0
-  		and bit.bitstream_id=resource_id
+  		from resourcepolicy rp
+  		where rp.resource_type_id=0
+  		and bit.bitstream_id=rp.resource_id
   		and epersongroup_id = 0
   		and (start_date is null or start_date <= current_date)
   		and (end_date is null or start_date >= current_date)
