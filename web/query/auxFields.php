@@ -242,7 +242,7 @@ inner join item2bundle i2b
   and i2b.item_id=i.item_id
 where exists (
   select 1 
-  from resourcepolicy 
+  from resourcepolicy rp
   where rp.resource_type_id=0 
   and bit.bitstream_id=rp.resource_id
   and epersongroup_id = 0
