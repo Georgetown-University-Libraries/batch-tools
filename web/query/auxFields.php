@@ -49,7 +49,7 @@ inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'THUMBNAIL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -67,13 +67,11 @@ inner join metadatafieldregistry bitmfr
   and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'THUMBNAIL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -91,13 +89,11 @@ inner join metadatafieldregistry bitmfr
   and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'ORIGINAL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -116,13 +112,11 @@ inner join metadatafieldregistry bitmfr
   and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value not in ('ORIGINAL', 'THUMBNAIL','TEXT')
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -131,7 +125,7 @@ inner join metadatavalue bitmv
   on b2b.bitstream_id = bitmv.resource_id and bitmv.resource_type_id = 0
   and bitmv.text_value != 'license.txt'
 inner join metadatafieldregistry bitmfr
-  on bitm.metadata_field_id = bitmfr.metdata_field_id
+  on bitm.metadata_field_id = bitmfr.metadata_field_id
   and bitmfr.element = 'title' and bitmfr.qualifier is null
 EOF;
     self::addAuxField("OtherName", "Name of auxilliary files", "({$otherName})", "", false);
@@ -146,13 +140,11 @@ inner join metadatafieldregistry bitmfr
   and bitmfr.element = 'title' and bitmfr.qualifier is null
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'TEXT'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -165,13 +157,11 @@ select array_to_string(array_agg(to_char(bit.size_bytes/1000/1000.0,'999G999G999
 from bitstream bit
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'ORIGINAL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -184,13 +174,11 @@ select array_to_string(array_agg(to_char(bit.size_bytes/1000.0,'999G999G999D9'))
 from bitstream bit
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'ORIGINAL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -203,13 +191,11 @@ select array_to_string(array_agg(text(bit.internal_id)), '<hr/>')
 from bitstream bit
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'ORIGINAL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -224,13 +210,11 @@ select case when count(*) > 0 then 'Unrestricted' else 'Restricted' end
 from bitstream bit
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'ORIGINAL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -252,13 +236,11 @@ select case when count(*) > 0 then 'Unrestricted' else 'Restricted' end
 from bitstream bit
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'THUMBNAIL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
@@ -283,13 +265,11 @@ inner join bitstreamformatregistry bfr
   on bit.bitstream_format_id = bfr.bitstream_format_id
 inner join bundle2bitstream b2b
   on b2b.bitstream_id = bit.bitstream_id
-inner join bundle2bitstream b2b
-  on b2b.bitstream_id = bit.bitstream_id
 inner join metadatavalue bunmv
   on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
   and bunmv.text_value = 'ORIGINAL'
 inner join metadatafieldregistry bunmfr
-  on bunmfr.metadata_field_id = bunmv.metdata_field_id
+  on bunmfr.metadata_field_id = bunmv.metadata_field_id
   and bunmfr.element = 'title' and bunmfr.qualifier is null
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
