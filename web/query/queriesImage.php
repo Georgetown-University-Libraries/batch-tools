@@ -11,7 +11,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
     ) 
     and not exists 
@@ -23,7 +23,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'THUMBNAIL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
     ) 
 EOF;
@@ -39,7 +39,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'ORIGINAL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       inner join bundle2bitstream b2b
         on b2b.bundle_id=i2b.bundle_id
@@ -59,7 +59,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'THUMBNAIL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       inner join bundle2bitstream b2b
         on b2b.bundle_id=i2b.bundle_id
@@ -80,7 +80,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'THUMBNAIL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       where (
         select count(*)
@@ -102,7 +102,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'THUMBNAIL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       inner join bundle2bitstream b2b on b2b.bundle_id = i2b.bundle_id
       inner join bitstream bit on b2b.bitstream_id = bit.bitstream_id
@@ -121,7 +121,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'THUMBNAIL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       inner join bundle2bitstream b2b on b2b.bundle_id = i2b.bundle_id
       inner join metadatavalue bitmv
@@ -135,7 +135,7 @@ $subq = <<< EOF
           limit 1
         ) 
       inner join metadatafieldregistry bitmfr
-        on bitmfr.metadata_field_id = bitmv.metdata_field_id
+        on bitmfr.metadata_field_id = bitmv.metadata_field_id
         and bitmfr.element = 'title' and bitmfr.qualifier is null
     ) 
     and exists 
@@ -147,7 +147,7 @@ $subq = <<< EOF
         and bunmv.text_value = 'THUMBNAIL'
         and i.item_id = i2b.item_id
       inner join metadatafieldregistry bunmfr
-        on bunmfr.metadata_field_id = bunmv.metdata_field_id
+        on bunmfr.metadata_field_id = bunmv.metadata_field_id
         and bunmfr.element = 'title' and bunmfr.qualifier is null      
       where (
         select count(*)
