@@ -34,7 +34,7 @@ $subq = <<< EOF
         on b2b.bitstream_id = bitmv.resource_id and bitmv.resource_type_id = 0
         and bitmv.text_value != 'license.txt'
       inner join metadatafieldregistry bitmfr
-        on bitm.metadata_field_id = bitmfr.metadata_field_id
+        on bitmv.metadata_field_id = bitmfr.metadata_field_id
         and bitmfr.element = 'title' and bitmfr.qualifier is null      inner join bitstream bit on bit.bitstream_id = b2b.bitstream_id
     ) 
 EOF;
