@@ -107,6 +107,7 @@ select array_to_string(array_agg(text(bitmv.text_value)), '<hr/>')
 from bitstream bit
 inner join metadatavalue bitmv
   on bitmv.resource_id = bit.bitstream_id and bitmv.resource_type_id = 0
+  and bitmv.text_value != 'license.txt'
 inner join metadatafieldregistry bitmfr
   on bitmfr.metadata_field_id = bitmv.metadata_field_id 
   and bitmfr.element = 'title' and bitmfr.qualifier is null
@@ -121,9 +122,6 @@ inner join metadatafieldregistry bunmfr
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
-inner join metadatavalue bitmv
-  on b2b.bitstream_id = bitmv.resource_id and bitmv.resource_type_id = 0
-  and bitmv.text_value != 'license.txt'
 inner join metadatafieldregistry bitmfr
   on bitmv.metadata_field_id = bitmfr.metadata_field_id
   and bitmfr.element = 'title' and bitmfr.qualifier is null
