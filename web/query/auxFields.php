@@ -122,9 +122,6 @@ inner join metadatafieldregistry bunmfr
 inner join item2bundle i2b
   on i2b.bundle_id = b2b.bundle_id
   and i2b.item_id=i.item_id
-inner join metadatafieldregistry bitmfr
-  on bitmv.metadata_field_id = bitmfr.metadata_field_id
-  and bitmfr.element = 'title' and bitmfr.qualifier is null
 EOF;
     self::addAuxField("OtherName", "Name of auxilliary files", "({$otherName})", "", false);
 
