@@ -60,6 +60,7 @@ function doRowParent(row, threads) {
 		"/rest/collections/"+cid,
 		{
 			expand : "parentCommunityList",
+			filters : "is_item"
 		},
 		function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
