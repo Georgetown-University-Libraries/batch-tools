@@ -58,7 +58,7 @@ $cols .= "1";
 $sel = <<< EOF
 select 
   i.item_id,
-  regexp_replace('--'||mv.text_value,E'[\r\n\t ]+',' ','g') as title,
+  regexp_replace(case when mv.text_value is null then '--' else mv.text_value end,E'[\r\n\t ]+',' ','g') as title,
   handle,
   {$cols}
 from 
