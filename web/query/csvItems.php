@@ -37,17 +37,19 @@ $cols .= "1";
 $sel = <<< EOF
 select 
   i.item_id,
-  regexp_replace(mv.text_value,E'[\r\n\t ]+',' ','g') as title,
+  (
+    select regexp_replace(mv.text_value,E'[\r\n\t ]+',' ','g')
+    from metadatavalue mv  
+    inner join metadatafieldregistry mfr on mfr.metadata_field_id = mv.metadata_field_id
+      and mfr.element = 'title' and mfr.qualifier is null
+    where mv.resource_id = i.item_id and mv.resource_type_id = 2 
+  ) as title,
   handle,
   {$cols}
 from 
   item i
 inner join 
   handle on i.item_id = handle.resource_id and handle.resource_type_id = 2
-left join
-  metadatavalue mv on mv.resource_id = i.item_id and mv.resource_type_id=2 
-inner join metadatafieldregistry mfr on mfr.metadata_field_id = mv.metadata_field_id
-  and mfr.element = 'title' and mfr.qualifier is null
 EOF;
 
 if (collectionArg::isCollection()) {
