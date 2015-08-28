@@ -6,8 +6,11 @@ var ITEM_LIMIT = 1000;
 var COLL_LIMIT = 500;
 
 $(document).ready(function(){
-	createCollectionTable();
-	createFilterTable();
+	$("#showCollections").bind("click", function(){
+      $("#showCollections").attr("disabled", true);
+	  createCollectionTable();
+	  createFilterTable();
+	});
 });
 
 function createCollectionTable() {
@@ -22,12 +25,14 @@ function createCollectionTable() {
 	addTh(tr, "Num Items").addClass("sorttable_numeric");
 
 
-	$.getJSON(
-		"/rest/collections",
-		{
+	$.ajax({
+		url: "/rest/filtered-collections",
+		data: {
 			limit : COLL_LIMIT,
 		},
-		function(data){
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
 				tr.attr("cid", coll.id).attr("index",index).addClass(index % 2 == 0 ? "odd data" : "even data");
@@ -38,7 +43,7 @@ function createCollectionTable() {
 			});
 			loadParent();
 		}
-	);	
+	});	
 }
 
 function loadData() {
@@ -56,13 +61,15 @@ function doRowParent(row, threads) {
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
-	$.getJSON(
-		"/rest/collections/"+cid,
-		{
+	$.ajax({
+		url: "/rest/collections/"+cid,
+		data: {
 			expand : "parentCommunityList",
 			filters : "is_item"
 		},
-		function(data) {
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data) {
 			var par = data.parentCommunityList[data.parentCommunityList.length-1];
 			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
 			
@@ -73,7 +80,7 @@ function doRowParent(row, threads) {
 				}					
 			}
  		}
-	);
+	});
 }			
 
 function doRow(row, threads, curLoadId) {
@@ -81,13 +88,15 @@ function doRow(row, threads, curLoadId) {
 	var tr = $("tr[index="+row+"]");
 	if (!tr.is("*")) return; 
 	var cid = tr.attr("cid");
-	$.getJSON(
-		"/rest/filtered-collections/"+cid,
-		{
+	$.ajax({
+		url: "/rest/filtered-collections/"+cid,
+		data: {
 			limit : COUNT_LIMIT,
 			filters : filterString,
 		},
-		function(data) {
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data) {
 			$.each(data.itemFilters, function(index, itemFilter){
 				if (loadId != curLoadId) {
 					return;
@@ -128,7 +137,7 @@ function doRow(row, threads, curLoadId) {
 				}					
 			}
  		}
-	);
+	});
 }			
 			
 function drawItemTable(cid, filter, collname) {
@@ -138,14 +147,16 @@ function drawItemTable(cid, filter, collname) {
 	addTh(tr, "Num").addClass("num").addClass("sorttable_numeric");
 	addTh(tr, "Handle");
 	addTh(tr, "Item").addClass("title");
-	$.getJSON(
-		"/rest/filtered-collections/"+cid,
-		{
+	$.ajax({
+		url: "/rest/filtered-collections/"+cid,
+		data: {
 			expand: "items",
 			limit: ITEM_LIMIT,
 			filters: filter,
 		},
-		function(data){
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data){
 			var source = filter == "" ? data.items : data.itemFilters[0].items;
 			
 			$.each(source, function(index, item){
@@ -157,6 +168,6 @@ function drawItemTable(cid, filter, collname) {
 			});
 			$("#itemdiv").dialog({title: filter + " Items in " + data.name, width: "80%", minHeight: 500, modal: true});
 		}
-	);
+	});
 }
 
