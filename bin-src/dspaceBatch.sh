@@ -5,13 +5,6 @@ SOLR=SOLRROOT
 VER=DSPACEVER
 SCRIBD=
 
-if [ $VER = 4 ]
-then
-  FMNDEF=-n
-else
-  FMNDEF=
-fi
-
 USERNAME=$1
 shift
 BATCH=`date +"%Y-%m-%d_%H:%M:%S"`
@@ -24,35 +17,21 @@ COMPLETE=${QDIR}/${FNAME}.complete.txt
 RUN=false
 
 function update_discovery {
-  if [ $VER = 3 ]
-  then
-    export JAVA_OPTS=-Xmx1200m   
-    echo "${DSROOT}/bin/dspace update-discovery-index" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace update-discovery-index >> ${RUNNING} 2>&1 
-  elif [ $VER = 4 ]
-  then
     export JAVA_OPTS=-Xmx1200m   
     echo "${DSROOT}/bin/dspace index-discovery" >> ${RUNNING} 2>&1 
     ${DSROOT}/bin/dspace index-discovery >> ${RUNNING} 2>&1 
-  fi 
 }
 
 function update_oai {
-  if [ $VER -ge 3 ]
-  then
     export JAVA_OPTS=-Xmx1200m   
     echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
     ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
-  fi 
 }
 
 function update_oai_opt {
-  if [ $VER -ge 3 ]
-  then
     export JAVA_OPTS=-Xmx1200m   
     echo "${DSROOT}/bin/dspace oai import -o" >> ${RUNNING} 2>&1
     ${DSROOT}/bin/dspace oai import -o >> ${RUNNING} 2>&1
-  fi 
 }
 
 function update_solr {
@@ -61,27 +40,12 @@ function update_solr {
 }
 
 function discovery_opt {
-  if [ $VER = 3 ]
-  then
-    export JAVA_OPTS=-Xmx1200m   
-    ${DSROOT}/bin/dspace update-discovery-index -o >> ${RUNNING} 2>&1 
-  elif [ $VER = 4 ]
-  then
     echo "${DSROOT}/bin/dspace index-discovery -o" >> ${RUNNING} 2>&1 
     ${DSROOT}/bin/dspace index-discovery -o >> ${RUNNING} 2>&1 
-  fi
 }
 
 function index_update {
-  if [ $VER = 3 ]
-  then
-    export JAVA_OPTS=-Xmx1200m   
-    echo ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace index-update >> ${RUNNING} 2>&1 
-  elif [ $VER = 4 ]
-  then
-    echo "Index update is N/A in DSpace 4" >> ${RUNNING} 2>&1 
-  fi
+    echo "Index update is N/A since DSpace 4" >> ${RUNNING} 2>&1 
 }
 
 function bulk_ingest {
@@ -100,8 +64,8 @@ function bulk_ingest {
   fi
      
   export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media ${FMN} -i $COLL >> ${RUNNING} 2>&1         
+  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
+  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1         
 }
 
 function download_zip {
@@ -147,19 +111,6 @@ then
   export JAVA_OPTS="-Dfile.encoding=UTF-8"
   ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
 
-  while [ $# -ge 1 ]
-  do 
-    x=$1
-    shift
-    
-    if [ "$x" = "-s" ]
-    then
-      if [ $VER = 3 ]
-      then
-        $(update_solr)
-      fi
-    fi
-  done
 elif [ "$1" = "gu-refresh-statistics" ]
 then
   export JAVA_OPTS=-Xmx1200m   
@@ -209,7 +160,6 @@ then
   COLL=$3
   LOC=$4
   MAP=$5
-  FMN=$FMNDEF
   
   $(bulk_ingest)
   $(update_solr)
@@ -220,7 +170,6 @@ then
   ZIP=$4
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$5
-  FMN=$FMNDEF
 
   $(unzip_ingest)
   $(bulk_ingest)
@@ -233,7 +182,6 @@ then
   ZIP=$5
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$6
-  FMN=$FMNDEF
 
   $(download_zip)
   $(unzip_ingest)
@@ -245,7 +193,6 @@ then
   COLL=$3
   LOC=$4
   MAP=$5
-  FMN=-n
   
   $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zip-skipindex" ]
@@ -255,7 +202,6 @@ then
   ZIP=$4
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$5
-  FMN=-n
 
   $(unzip_ingest)
   $(bulk_ingest)
@@ -267,7 +213,6 @@ then
   ZIP=$5
   LOC=${ZIP%\.[Zz][Ii][Pp]}
   MAP=$6
-  FMN=-n
 
   $(download_zip)
   $(unzip_ingest)
