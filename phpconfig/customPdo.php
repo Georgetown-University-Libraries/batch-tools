@@ -103,7 +103,7 @@ EOF;
           and mfr.element = 'title' and mfr.qualifier is null
 		inner join handle h on collection_id = h.resource_id and h.resource_type_id = 3
 		left join community2collection c2c on c2c.collection_id = c.collection_id
-		order by c.name;  
+		order by name;  
 EOF;
 
 		$result = $this->dbh->query($sql);
