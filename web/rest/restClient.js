@@ -29,6 +29,7 @@ function createCollectionTable() {
 		url: "/rest/filtered-collections",
 		data: {
 			limit : COLL_LIMIT,
+			expand: "topCommunity"
 		},
 		dataType: "json",
 		headers: getHeaders(),
@@ -37,11 +38,20 @@ function createCollectionTable() {
 				var tr = addTr($("#table"));
 				tr.attr("cid", coll.id).attr("index",index).addClass(index % 2 == 0 ? "odd data" : "even data");
 				addTd(tr, index).addClass("num");
-				addTd(tr, "").addClass("title comm");
+				var parval = ""; 
+				
+				if ("topCommunity" in coll) {
+					var par = coll.topCommunity;
+					parval = getAnchor(par.name, "/handle/" + par.handle)					
+				} else if ("parCommunityList" in coll) {
+					var par = coll.parentCommunityList[coll.parentCommunityList.length-1];
+					parval = getAnchor(par.name, "/handle/" + par.handle)
+				}
+				addTd(tr, parval).addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num");
 			});
-			loadParent();
+			sorttable.makeSortable($("#table")[0]);
 		}
 	});	
 }
@@ -53,40 +63,13 @@ function loadData() {
 	doRow(0, THREADS, loadId);
 }
 
-function loadParent() {
-	doRowParent(0, THREADSP);
-}
-
-function doRowParent(row, threads) {
-	var tr = $("tr[index="+row+"]");
-	if (!tr.is("*")) return; 
-	var cid = tr.attr("cid");
-	$.ajax({
-		url: "/rest/collections/"+cid,
-		data: {
-			expand : "parentCommunityList",
-			filters : "is_item"
-		},
-		dataType: "json",
-		headers: getHeaders(),
-		success: function(data) {
-			var par = data.parentCommunityList[data.parentCommunityList.length-1];
-			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
-			
-			sorttable.makeSortable($("#table")[0]);
-			if (row % threads == 0 || threads == 1) {
-				for(var i=1; i<=threads; i++) {
-					doRowParent(row+i, threads);
-				}					
-			}
- 		}
-	});
-}			
-
 function doRow(row, threads, curLoadId) {
 	if (loadId != curLoadId) return;
 	var tr = $("tr[index="+row+"]");
-	if (!tr.is("*")) return; 
+	if (!tr.is("*")) {
+		sorttable.makeSortable($("#table")[0]);
+		return; 
+	}
 	var cid = tr.attr("cid");
 	$.ajax({
 		url: "/rest/filtered-collections/"+cid,
@@ -130,7 +113,6 @@ function doRow(row, threads, curLoadId) {
 				
 			});
 			
-			sorttable.makeSortable($("#table")[0]);
 			if (row % threads == 0 || threads == 1) {
 				for(var i=1; i<=threads; i++) {
 					doRow(row+i, threads, curLoadId);
