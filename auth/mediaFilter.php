@@ -80,12 +80,6 @@ $header->litPageHeader();
   <input type="checkbox" class="checkbox" name="optForce" value="optForce" id="optForce" <?php checkedPost("optForce", "optForce")?>/>
   <label for="optForce">Force re-creation of items</label>
 </p>
-<?php if ($CUSTOM->ver < 4) {?>
-<p>
-  <input type="checkbox" class="checkbox" name="optIndex" value="optIndex" id="optIndex" <?php uncheckedPost("optIndex", "optIndex")?> />
-  <label for="optIndex">Update text index</label>
-</p>
-<?php }?>
 </fieldset>
 </p>
 <p align="center">
@@ -148,7 +142,6 @@ function testArgs(){
     }
 	
 	if (util::getPostArg("optForce", false)) $args .= " -f";
-	if (util::getPostArg("optIndex", false) == false) $args .= " -n";
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$cmd = <<< HERE
