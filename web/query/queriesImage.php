@@ -127,8 +127,9 @@ $subq = <<< EOF
       inner join metadatavalue bitmv
         on b2b.bitstream_id = bunmv.resource_id and bitmv.resource_type_id = 0
         and bitmv.text_value != (
-          select bit2.name || '.jpg'
+          select bitmv.text_value || '.jpg'
           from bitstream bit2
+          inner join metadatavalue bitmv on bit2.bitstream_id = bitmv.resource_id and bitmv.resource_type_id = 0
           inner join bundle2bitstream b2b2 on bit2.bitstream_id = b2b2.bitstream_id
           inner join metadatavalue bunmv
             on b2b2.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
