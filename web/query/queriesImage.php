@@ -130,7 +130,9 @@ $subq = <<< EOF
           select bit2.name || '.jpg'
           from bitstream bit2
           inner join bundle2bitstream b2b2 on bit2.bitstream_id = b2b2.bitstream_id
-          inner join bundle b2 on b2b2.bundle_id=b2.bundle_id and b2.name = 'ORIGINAL'
+          inner join metadatavalue bunmv
+            on b2b.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
+            and bunmv.text_value = 'ORIGINAL'
           inner join item2bundle i2b2 on i2b2.bundle_id=b2.bundle_id and i2b2.item_id = i.item_id
           limit 1
         ) 
