@@ -20,7 +20,7 @@ foreach(query::$QUERIES as $q) {
 $where = util::getIdList("collex", "where coll.collection_id not in ");
 
 $sql = <<< EOF
-select 
+select distinct
   coll.collection_id, 
   collname.text_value as collectionName,
   {$querycol}
