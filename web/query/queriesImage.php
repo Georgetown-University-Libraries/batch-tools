@@ -133,7 +133,7 @@ $subq = <<< EOF
           inner join metadatavalue bunmv
             on b2b2.bundle_id = bunmv.resource_id and bunmv.resource_type_id = 1
             and bunmv.text_value = 'ORIGINAL'
-          inner join item2bundle i2b2 on i2b2.bundle_id=b2.bundle_id and i2b2.item_id = i.item_id
+          inner join item2bundle i2b2 on i2b2.bundle_id=b2b2.bundle_id and i2b2.item_id = i.item_id
           limit 1
         ) 
       inner join metadatafieldregistry bitmfr
