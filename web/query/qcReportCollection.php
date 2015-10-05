@@ -22,11 +22,13 @@ $where = util::getIdList("collex", "where coll.collection_id not in ");
 $sql = <<< EOF
 select 
   coll.collection_id, 
-  coll.name as collectionName,
+  collname.text_value as collectionName,
   {$querycol}
   '' as blank
 from 
   collection coll
+inner join 
+  metadatavalue collname on collname.resource_id=coll.collection_id and collname.resource_type_id = 3
 {$where}
 order by collectionName
 ;
