@@ -20,7 +20,7 @@ foreach(query::$QUERIES as $q) {
 $where = util::getIdList("collex", "where coll.collection_id not in ");
 
 $sql = <<< EOF
-select distinct
+select 
   coll.collection_id, 
   collname.text_value as collectionName,
   {$querycol}
@@ -29,6 +29,8 @@ from
   collection coll
 inner join 
   metadatavalue collname on collname.resource_id=coll.collection_id and collname.resource_type_id = 3
+inner join metadatafieldregistry mfr on mfr.metadata_field_id = collname.metadata_field_id
+  and mfr.element = 'title' and mfr.qualifier is null
 {$where}
 order by collectionName
 ;
