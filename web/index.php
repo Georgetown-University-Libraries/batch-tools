@@ -37,7 +37,6 @@ $header->litPageHeader();
 <body>
 <?php 
 $header->litHeader(array());
-
 ?>
 
 <?php 
@@ -82,11 +81,6 @@ echo $CUSTOM->getOtherHtml();
 ?>
 </div>
 <?php
-
-function getQueryCols() {
-initQueries();
-$CUSTOM = custom::instance();
-
 $header->litFooter();
 ?>
 </body>
