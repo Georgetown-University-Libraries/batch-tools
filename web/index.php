@@ -57,7 +57,7 @@ echo $CUSTOM->getIntroHtml();
 if ($CUSTOM->showQueryTools()) {
 ?>
 <li>
-  <a href="/static/rest/index.html')">QC Overview for Collections</a>
+  <a href="/static/rest/index.html">QC Overview for Collections</a>
 </li>
 <li>
   <a href="/static/rest/query.html">Self-Service Query</a>
