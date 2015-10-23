@@ -57,13 +57,10 @@ echo $CUSTOM->getIntroHtml();
 if ($CUSTOM->showQueryTools()) {
 ?>
 <li>
-  <a href="javascript:qcLink('query/qcReportCollection.php?foo')">QC Overview for Collections</a>
+  <a href="/static/rest/index.html')">QC Overview for Collections</a>
 </li>
 <li>
-  <a href="javascript:qcLink('query/qcReportCommunity.php?foo')">QC Overview for Communities</a>
-</li>
-<li>
-  <a href="query/selfQuery.php">Self-Service Query</a>
+  <a href="/static/rest/query.html">Self-Service Query</a>
 </li>
 <?php 
 }
@@ -101,38 +98,7 @@ echo $CUSTOM->getOtherHtml();
 function getQueryCols() {
 initQueries();
 $CUSTOM = custom::instance();
-echo <<< HERE
-  <div id="queryCols">
-  <fieldset>
-    <legend>Query Options</legend>
-    <div id="colFilter">
-HERE;
-if (count($CUSTOM->getExcludeCollections()) > 0) {
-echo <<< HERE
-    <fieldset>	
-    <legend>Exclude Large Collections</legend>
-HERE;
-    foreach($CUSTOM->getExcludeCollections() as $k => $v) {
-        $kid = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h",array(":h"=>$k));
-        if ($kid == "") continue;
-        echo <<< HERE
-      <input name="collex" type="checkbox" id="collex-{$kid}" value="{$kid}" checked><label for="collex-{$kid}">{$v}</label>
-HERE;
-    }
-echo <<< HERE
-    </fieldset>	
-HERE;
-}
-echo <<< HERE
-    </div>
-    <input name="warnonly" type="checkbox" id="warnonly"><label for="warnonly">Filter Warnings</label>
-HERE;
-  query::getQueryList();
-  echo <<< HERE
-  </fieldset>
-  </div>
-HERE;
-}
+
 $header->litFooter();
 ?>
 </body>
