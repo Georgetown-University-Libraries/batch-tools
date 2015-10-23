@@ -42,9 +42,6 @@ $header->litHeader(array());
 
 <?php 
 echo $CUSTOM->getNavHtml();
-if ($CUSTOM->showQueryTools()) {
-	getQueryCols();
-}
 ?>
 <div class="batch-tool-links">
 <?php
@@ -53,18 +50,12 @@ echo $CUSTOM->getIntroHtml();
 <h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
-<?php 
-if ($CUSTOM->showQueryTools()) {
-?>
 <li>
   <a href="/static/rest/index.html">QC Overview for Collections</a>
 </li>
 <li>
   <a href="/static/rest/query.html">Self-Service Query</a>
 </li>
-<?php 
-}
-?>
 <?php 
 if ($CUSTOM->showStatsTools()) {
 ?>
