@@ -51,7 +51,7 @@ class custom {
 	public function isCheckFilter($name) {return false;}
 	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
-	public function getRestServiceUrl() {return "http://demo.dspace.org/rest";}
+	public function getRestServiceUrl() {return "/rest";}
 	public function showBatchTools() {return $this->isUserCollectionOwner();}
 	
 	public function isPdo() {return false;}
