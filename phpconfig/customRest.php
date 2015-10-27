@@ -44,7 +44,7 @@ class RestInitializer {
 	}
 	
 	public function initCollections() {
-		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=all");
+		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=collections");
 		foreach($json_a as $k=>$comm) {
 			$this->initJsonCommunityColl($comm);
 		}
@@ -59,10 +59,10 @@ class RestInitializer {
 			}		
 		}
 		
-		if (!isset($comm["subcommunities"])) continue;
-		foreach($comm["subcommunities"] as $scomm) {
-			$this->initJsonCommunityColl($scomm);
-		}		
+		//if (!isset($comm["subcommunities"])) continue;
+		//foreach($comm["subcommunities"] as $scomm) {
+		//	$this->initJsonCommunityColl($scomm);
+		//}		
 	}
 
 	public static function instance() {
