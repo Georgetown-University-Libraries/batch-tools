@@ -47,10 +47,7 @@ class RestInitializer {
 	}
 	
 	public function initCollections() {
-		echo custom::instance()->getRestServiceUrl() . "/communities/?expand=all";
 		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=all");
-		echo $json_a;
-		exit;
 		foreach($json_a as $k=>$comm) {
 			$this->initJsonCommunityColl($comm);
 		}
