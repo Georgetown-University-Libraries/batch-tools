@@ -40,7 +40,7 @@ class RestInitializer {
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
-		echo $comm["id"] . $comm["name"] . $comm["handle"] . $pid;
+		echo $comm["handle"] . "(" .  $pid . ") ";
 		new community($comm["id"], $comm["name"], $comm["handle"], $pid);
 	}
 	
