@@ -57,12 +57,7 @@ class RestInitializer {
 			foreach($comm["collections"] as $coll) {
 				new collection($coll["id"], $coll["name"], $coll["handle"], $comm["id"]);
 			}		
-		}
-		
-		//if (!isset($comm["subcommunities"])) continue;
-		//foreach($comm["subcommunities"] as $scomm) {
-		//	$this->initJsonCommunityColl($scomm);
-		//}		
+		}		
 	}
 
 	public static function instance() {
