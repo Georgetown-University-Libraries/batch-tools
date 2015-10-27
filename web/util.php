@@ -88,7 +88,6 @@ HERE;
 		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0 ); # custom headers, see above
 		$result = curl_exec( $ch ); # run!
 		curl_close($ch);
-echo $result;
 		return json_decode($result, true);
     	
     }
