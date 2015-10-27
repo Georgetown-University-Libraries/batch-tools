@@ -34,13 +34,13 @@ class RestInitializer {
 		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=parentCommunity");
 		foreach($json_a as $k=>$comm) {
 			$pid = (isset($comm["parentcommunity"])) ? $comm["parentcommunity"]["id"] : null;
+		echo $comm["parentcommunity"] . $comm["handle"] . "(" .  $pid . ") ";
 			$this->initJsonCommunity($pid, $comm);
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
-		echo $comm["handle"] . "(" .  $pid . ") ";
 		new community($comm["id"], $comm["name"], $comm["handle"], $pid);
 	}
 	
