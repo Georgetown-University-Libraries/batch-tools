@@ -79,7 +79,9 @@ if ($CUSTOM->showStatsTools()) {
   <a href="export/oaiExport.php">Export data from OAI harvester</a>
 </li>
 </ul>
+<?php
 echo $CUSTOM->getOtherHtml();
+?>
 </div>
 <div class="col">
 <?php
