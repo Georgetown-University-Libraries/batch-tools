@@ -48,10 +48,10 @@ $header->litHeader(array());
 echo $CUSTOM->getNavHtml();
 ?>
 <div class="batch-tool-links">
+<div class="col">
 <?php
 echo $CUSTOM->getIntroHtml();
 ?>
-<div class="col">
 <h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
