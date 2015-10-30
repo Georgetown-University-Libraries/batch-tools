@@ -52,7 +52,7 @@ class RestInitializer {
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
-		new community($comm["id"], $comm["name"], $comm["handle"], $pid);
+		new community($this->getId($comm), $comm["name"], $comm["handle"], $pid);
 	}
 	
 	public function initCollections() {
