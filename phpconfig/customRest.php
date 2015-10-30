@@ -32,8 +32,8 @@ class RestInitializer {
 	static $INSTANCE;
 	
 	public function getId($obj) {
-		if (isset($obj["uuid"])) {
-			return $obj["uuid"];
+		if (isset($obj["UUID"])) {
+			return $obj["UUID"];
 		}
 		if (isset($obj["id"])) {
 			return $obj["id"];
