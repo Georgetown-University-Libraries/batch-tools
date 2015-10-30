@@ -28,6 +28,12 @@ $CUSTOM = custom::instance();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+div.col {
+	width: 48%;
+	float: left;
+}
+</style>
 <?php 
 $header = new LitHeader("Home");
 $header->litPageHeader();
@@ -45,6 +51,7 @@ echo $CUSTOM->getNavHtml();
 <?php
 echo $CUSTOM->getIntroHtml();
 ?>
+<div class="col">
 <h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
@@ -72,11 +79,13 @@ if ($CUSTOM->showStatsTools()) {
   <a href="export/oaiExport.php">Export data from OAI harvester</a>
 </li>
 </ul>
+echo $CUSTOM->getOtherHtml();
+</div>
+<div class="col">
 <?php
 if ($CUSTOM->showBatchTools()) { 
 	echo $CUSTOM->getAdminHtml();
 }
-echo $CUSTOM->getOtherHtml();
 ?>
 </div>
 <?php
