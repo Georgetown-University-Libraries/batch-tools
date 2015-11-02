@@ -47,13 +47,12 @@ class RestInitializer {
 		echo "comm " . count($json_a);
 		
 		foreach($json_a as $k=>$comm) {
-			echo $k . "  **";
 			$pid = (isset($comm["parentCommunity"])) ? $this->getId($comm["parentCommunity"]) : $this->getId($comm);
 			$this->initJsonCommunity($pid, $comm);
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
 		foreach(community::$COMMUNITIES as $k=>$obj) {
-			echo $k . "   " . $obj["name"] . "<br/>";
+			echo $k . "   " . $obj->name . "<br/>";
 		}
 		exit;
 	}
