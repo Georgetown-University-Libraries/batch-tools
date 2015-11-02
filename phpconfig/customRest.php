@@ -67,7 +67,6 @@ class RestInitializer {
 	public function initJsonCommunityColl($comm) {
 		if (isset($comm["collections"])) {
 			foreach($comm["collections"] as $coll) {
-				echo $this->getId($coll) . " " . $this->getId($comm) . "<br/>";
 				new collection($this->getId($coll), $coll["name"], $coll["handle"], $this->getid($comm));
 			}		
 		}		
