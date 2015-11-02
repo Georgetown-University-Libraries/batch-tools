@@ -43,8 +43,9 @@ class RestInitializer {
 	
 	
 	public function initCommunities() {
-		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=parentCommunity&limit=10");
+		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=parentCommunity");
 		foreach($json_a as $k=>$comm) {
+			echo $k . "  **";
 			$pid = (isset($comm["parentCommunity"])) ? $this->getId($comm["parentCommunity"]) : $this->getId($comm);
 			$this->initJsonCommunity($pid, $comm);
 		}
