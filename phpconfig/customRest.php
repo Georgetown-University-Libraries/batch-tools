@@ -53,7 +53,7 @@ class RestInitializer {
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
 		foreach(community::$COMMUNITIES as $k=>$obj) {
-			echo $k . "   ";
+			echo $k . "   " . $obj["name"] . "<br/>";
 		}
 		exit;
 	}
