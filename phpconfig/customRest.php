@@ -32,8 +32,8 @@ class RestInitializer {
 	static $INSTANCE;
 	
 	public function getId($obj) {
-		if (isset($obj["UUID"])) {
-			return $obj["UUID"];
+		if (isset($obj["uuid"])) {
+			return $obj["uuid"];
 		}
 		if (isset($obj["id"])) {
 			return $obj["id"];
@@ -44,11 +44,8 @@ class RestInitializer {
 	
 	public function initCommunities() {
 		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=parentCommunity");
-		print_r($json_a);
-		exit;
 		foreach($json_a as $k=>$comm) {
 			$pid = (isset($comm["parentCommunity"])) ? $this->getId($comm["parentCommunity"]) : $k;
-			echo "zz ". $pid;
 			$this->initJsonCommunity($pid, $comm);
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
