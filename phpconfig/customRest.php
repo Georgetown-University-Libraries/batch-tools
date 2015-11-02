@@ -44,17 +44,11 @@ class RestInitializer {
 	
 	public function initCommunities() {
 		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=parentCommunity");
-		echo "comm " . count($json_a);
-		
 		foreach($json_a as $k=>$comm) {
 			$pid = (isset($comm["parentCommunity"])) ? $this->getId($comm["parentCommunity"]) : $this->getId($comm);
 			$this->initJsonCommunity($pid, $comm);
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
-		foreach(community::$COMMUNITIES as $k=>$obj) {
-			echo $k . "   " . $obj->name . "<br/>";
-		}
-		exit;
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
@@ -73,6 +67,7 @@ class RestInitializer {
 	public function initJsonCommunityColl($comm) {
 		if (isset($comm["collections"])) {
 			foreach($comm["collections"] as $coll) {
+				echo $this->getId($coll) . " " . $this->getId($comm) . "<br/>";
 				new collection($this->getId($coll), $coll["name"], $coll["handle"], $this->getid($comm));
 			}		
 		}		
