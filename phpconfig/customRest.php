@@ -55,6 +55,7 @@ class RestInitializer {
 		foreach(community::$COMMUNITIES as $k=>$obj) {
 			echo $k . "   ";
 		}
+		exit;
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
