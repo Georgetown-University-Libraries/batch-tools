@@ -49,6 +49,9 @@ class RestInitializer {
 			$this->initJsonCommunity($pid, $comm);
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
+		foreach(community::$COMMUNITIES as $k=>$obj) {
+			echo $k . "   ";
+		}
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
