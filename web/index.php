@@ -56,10 +56,10 @@ echo $CUSTOM->getIntroHtml();
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
 <li>
-  <a href="/static/rest/index.html">QC Overview for Collections</a>
+  <a href="/rest/static/reports/index.html">QC Overview for Collections</a>
 </li>
 <li>
-  <a href="/static/rest/query.html">Self-Service Query</a>
+  <a href="/rest/static/reports/query.html">Self-Service Query</a>
 </li>
 <?php 
 if ($CUSTOM->showStatsTools()) {
