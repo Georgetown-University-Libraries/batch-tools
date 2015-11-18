@@ -23,7 +23,10 @@ include "custom.php";
 class customRest extends custom {
 	
 	public function __construct() {
-		$this->communityInit = RestInitializer::instance();
+		//$this->communityInit = RestInitializer::instance();
+		
+		//This depends on https://github.com/DSpace/DSpace/pull/1173
+		$this->communityInit = RestHierInitializer::instance();
 	}
 
 }
@@ -78,4 +81,40 @@ class RestInitializer {
 	}
 }
 
+class RestHierInitializer {
+	static $INSTANCE;
+	
+	public function initHierarchy() {
+		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/hierarchy");
+		foreach($json_a as $k=>$comm) {
+			$this->initHierarchyComm(null, $comm);
+		}
+	}
+	
+	public function initHierarchyComm($parent, $comm) {
+		$pid = ($parent == null) ? null : $parent["id"];
+		$this->initJsonCommunity($pid, $comm);
+		foreach($comm["community"] as $k=>$scomm) {
+			new community($comm["id"], $comm["name"], $comm["handle"], $pid);
+		}
+		if (isset($comm["collection"])) {
+			foreach($comm["collection"] as $coll) {
+				new collection($coll["id"], $coll["name"], $coll["handle"], $comm["id"]);
+			}		
+		}				
+	}
+	
+	public function initCommunities() {
+		$this->initHierarchy();
+	}
+	
+	public function initCollections() {
+		$this->initHierarchy();
+	}
+
+	public static function instance() {
+		if (self::$INSTANCE == null) self::$INSTANCE = new RestHierInitializer();
+		return self::$INSTANCE;
+	}
+}
 ?>
