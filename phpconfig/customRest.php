@@ -86,8 +86,6 @@ class RestHierInitializer {
 	
 	public function initHierarchy() {
 		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/hierarchy");
-		var_dump(custom::instance()->getRestServiceUrl() . "/hierarchy");
-		var_dump($json_a);
 		foreach($json_a["community"] as $k=>$comm) {
 			$this->initHierarchyComm(null, $comm);
 		}
