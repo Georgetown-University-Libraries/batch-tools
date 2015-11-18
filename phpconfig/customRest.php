@@ -93,9 +93,11 @@ class RestHierInitializer {
 	
 	public function initHierarchyComm($parent, $comm) {
 		$pid = ($parent == null) ? null : $parent["id"];
-		$this->initJsonCommunity($pid, $comm);
-		foreach($comm["community"] as $k=>$scomm) {
-			new community($comm["id"], $comm["name"], $comm["handle"], $pid);
+		new community($comm["id"], $comm["name"], $comm["handle"], $pid);
+		if (isset($comm["community"])) {
+		    foreach($comm["community"] as $k=>$scomm) {
+			    $this->initHierarchyComm($comm, $scomm);
+		    }
 		}
 		if (isset($comm["collection"])) {
 			foreach($comm["collection"] as $coll) {
