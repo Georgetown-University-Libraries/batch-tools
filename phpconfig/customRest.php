@@ -89,6 +89,9 @@ class RestHierInitializer {
 		foreach($json_a["community"] as $k=>$comm) {
 			$this->initHierarchyComm(null, $comm);
 		}
+		uasort(community::$COMMUNITIES, "pathcmp");   
+		uasort(collection::$COLLECTIONS, "pathcmp");   
+		uasort(community::$COMBO, "pathcmp");   
 	}
 	
 	public function initHierarchyComm($parent, $comm) {
