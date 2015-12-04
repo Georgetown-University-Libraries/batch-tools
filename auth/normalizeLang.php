@@ -57,6 +57,9 @@ $header->litPageHeader();
 <?php 
 function testArgs(){
 	global $status;
+    $status = "This script is no longer supported";
+	
+	return; //no longer supported
 	$CUSTOM = custom::instance();
 	$root = $CUSTOM->getRoot();
 	$dspaceBatch =  $CUSTOM->getDspaceBatch();
