@@ -44,7 +44,7 @@ $header->litPageHeader();
 <body>
 <?php $header->litHeader(array());?>
 <div id="formReindex">
-<form method="POST" action="" onsubmit="jobQueue();return true;">
+<form method="POST" action="">
 <p>Select a community or collection to export</p>
 <div id="status"><?php echo $status?></div>
 <?php drawFormats($formats, util::getPostArg("format",""));?>
