@@ -23,31 +23,43 @@ include "custom.php";
 class customRest extends custom {
 	
 	public function __construct() {
-		$this->communityInit = RestInitializer::instance();
+		//$this->communityInit = RestInitializer::instance();
+		
+		//This depends on https://github.com/DSpace/DSpace/pull/1173
+		$this->communityInit = RestHierInitializer::instance();
 	}
 
 }
 
 class RestInitializer {
 	static $INSTANCE;
+	
+	public function getId($obj) {
+		if (isset($obj["uuid"])) {
+			return $obj["uuid"];
+		}
+		if (isset($obj["id"])) {
+			return $obj["id"];
+		}
+		return null;
+	}
+	
+	
 	public function initCommunities() {
-		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=subCommunities");
+		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=parentCommunity");
 		foreach($json_a as $k=>$comm) {
-			$this->initJsonCommunity(0, $comm);
+			$pid = (isset($comm["parentCommunity"])) ? $this->getId($comm["parentCommunity"]) : null;
+			$this->initJsonCommunity($pid, $comm);
 		}
 		uasort(community::$COMMUNITIES, "pathcmp");   
 	}
 	
 	public function initJsonCommunity($pid, $comm) {
-		new community($comm["id"], $comm["name"], $comm["handle"], $pid);
-		if (!isset($comm["subcommunities"])) continue;
-		foreach($comm["subcommunities"] as $scomm) {
-			$this->initJsonCommunity($comm["id"], $scomm);
-		}		
+		new community($this->getId($comm), $comm["name"], $comm["handle"], $pid);
 	}
 	
 	public function initCollections() {
-		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=all");
+		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/communities/?expand=collections");
 		foreach($json_a as $k=>$comm) {
 			$this->initJsonCommunityColl($comm);
 		}
@@ -58,13 +70,8 @@ class RestInitializer {
 	public function initJsonCommunityColl($comm) {
 		if (isset($comm["collections"])) {
 			foreach($comm["collections"] as $coll) {
-				new collection($coll["id"], $coll["name"], $coll["handle"], $comm["id"]);
+				new collection($this->getId($coll), $coll["name"], $coll["handle"], $this->getid($comm));
 			}		
-		}
-		
-		if (!isset($comm["subcommunities"])) continue;
-		foreach($comm["subcommunities"] as $scomm) {
-			$this->initJsonCommunityColl($scomm);
 		}		
 	}
 
@@ -74,4 +81,45 @@ class RestInitializer {
 	}
 }
 
+class RestHierInitializer {
+	static $INSTANCE;
+	
+	public function initHierarchy() {
+		$json_a = util::json_get(custom::instance()->getRestServiceUrl() . "/hierarchy");
+		foreach($json_a["community"] as $k=>$comm) {
+			$this->initHierarchyComm(null, $comm);
+		}
+		uasort(community::$COMMUNITIES, "pathcmp");   
+		uasort(collection::$COLLECTIONS, "pathcmp");   
+		uasort(community::$COMBO, "pathcmp");   
+	}
+	
+	public function initHierarchyComm($parent, $comm) {
+		$pid = ($parent == null) ? null : $parent["id"];
+		new community($comm["id"], $comm["name"], $comm["handle"], $pid);
+		if (isset($comm["community"])) {
+		    foreach($comm["community"] as $k=>$scomm) {
+			    $this->initHierarchyComm($comm, $scomm);
+		    }
+		}
+		if (isset($comm["collection"])) {
+			foreach($comm["collection"] as $coll) {
+				new collection($coll["id"], $coll["name"], $coll["handle"], $comm["id"]);
+			}		
+		}				
+	}
+	
+	public function initCommunities() {
+		$this->initHierarchy();
+	}
+	
+	public function initCollections() {
+		$this->initHierarchy();
+	}
+
+	public static function instance() {
+		if (self::$INSTANCE == null) self::$INSTANCE = new RestHierInitializer();
+		return self::$INSTANCE;
+	}
+}
 ?>

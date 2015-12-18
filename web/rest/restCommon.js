@@ -1,4 +1,38 @@
 var filterString = "none";
+var TOKEN = null;
+
+$(document).ready(function(){
+	if (true) {
+		$(".activate").attr("disabled", false);		
+	} else {
+		var login = {
+		  		  "email": "",
+				  "password": ""
+		    };
+			
+			$.ajax(
+			    {
+			    	url: "/rest/login", 
+			    	contentType: "application/json",
+			    	accepts: "application/json",
+			    	type: "POST",
+			    	data: JSON.stringify(login),
+				    success: function(data) {
+				    	TOKEN = data;
+				    	$(".activate").attr("disabled", false);
+				    }
+			    }
+			);		
+	}
+});
+
+function getHeaders() {
+	var HEADERS = {};
+	if (TOKEN != null) {
+		HEADERS['rest-dspace-token'] = TOKEN;
+	}
+	return HEADERS;
+}
 
 function createFilterTable() {
 	addFilter("","None","De-select all filters","none").click(

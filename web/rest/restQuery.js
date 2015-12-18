@@ -48,9 +48,11 @@ $(document).ready(function(){
 });
 
 function loadMetadataFields(params) {
-	$.getJSON(
-		"/rest/metadataregistry",
-		function(data){
+	$.ajax({
+		url: "/rest/registries/schema",
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data){
 			metadataSchemas = data;
 			$("#limit").val(params.limit);  
 		    $("#offset").val(params.offset);
@@ -68,7 +70,7 @@ function loadMetadataFields(params) {
 		    }
 			drawShowFields(params["show_fields[]"]);
 		}
-	);
+	});
 }
 
 function drawShowFields(pfields) {
@@ -170,8 +172,14 @@ function runQuery() {
 	});
 	params.limit = $("#limit").val();
 	params.offset = $("#offset").val();
-	$.getJSON("/rest/filtered-items", params, function(data){
-		drawItemFilterTable(data);
+	$.ajax({
+		url: "/rest/filtered-items", 
+		data: params, 
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data){
+		  drawItemFilterTable(data);
+		}
 	});
 	var pstr = $.param(params).replace(/%5B%5D/g,"[]");
 	$("#this-search").attr("href", window.location.pathname +"?" + pstr);

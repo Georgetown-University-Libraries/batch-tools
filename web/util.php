@@ -84,9 +84,10 @@ HERE;
 		curl_setopt($ch, CURLOPT_URL, "$url"); # URL to post to
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 ); # return into a variable
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers ); # custom headers, see above
+		//Assuming localhost access..
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0 ); # custom headers, see above
 		$result = curl_exec( $ch ); # run!
 		curl_close($ch);
-
 		return json_decode($result, true);
     	
     }

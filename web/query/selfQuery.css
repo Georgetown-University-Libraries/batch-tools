@@ -1,9 +1,0 @@
-form {width: 1000px;}
-div.edit {width: 100%;text-align: right;}
-#spinner {display: inline;float: left; height: 200px; width: 45%; border: none;}
-div.clear {clear: both;}
-.dataval {word-wrap: break-word; overflow-wrap: break-word; width: 200px; max-width: 200px;}
-#savebox label.field {display: block; float: left; width:250px;}
-#savebox div.clear {margin-bottom: 15px;}
-#accordion {margin: 8px;}
-.ui-widget {font-size: .8em!important;}

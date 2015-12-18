@@ -21,7 +21,6 @@ HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABI
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 include 'header.php';
-include 'query/queries.php';
 
 $CUSTOM = custom::instance();
 
@@ -29,6 +28,12 @@ $CUSTOM = custom::instance();
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
+<style type="text/css">
+div.col {
+	width: 48%;
+	float: left;
+}
+</style>
 <?php 
 $header = new LitHeader("Home");
 $header->litPageHeader();
@@ -37,37 +42,25 @@ $header->litPageHeader();
 <body>
 <?php 
 $header->litHeader(array());
-
 ?>
 
 <?php 
 echo $CUSTOM->getNavHtml();
-if ($CUSTOM->showQueryTools()) {
-	getQueryCols();
-}
 ?>
 <div class="batch-tool-links">
+<div class="col">
 <?php
 echo $CUSTOM->getIntroHtml();
 ?>
 <h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
 <li><a href="queue.php">Job Queue</a></li>
-<?php 
-if ($CUSTOM->showQueryTools()) {
-?>
 <li>
-  <a href="javascript:qcLink('query/qcReportCollection.php?foo')">QC Overview for Collections</a>
+  <a href="/rest/static/reports/index.html">QC Overview for Collections</a>
 </li>
 <li>
-  <a href="javascript:qcLink('query/qcReportCommunity.php?foo')">QC Overview for Communities</a>
+  <a href="/rest/static/reports/query.html">Self-Service Query</a>
 </li>
-<li>
-  <a href="query/selfQuery.php">Self-Service Query</a>
-</li>
-<?php 
-}
-?>
 <?php 
 if ($CUSTOM->showStatsTools()) {
 ?>
@@ -77,62 +70,23 @@ if ($CUSTOM->showStatsTools()) {
 <?php 
 }
 ?>
-<li>
-  <a href="query/qcA2Z.php">Collection and Community A-Z list</a>
-</li>
-<!--Analyze SOLR values-->
-<li>
-  <a href="solr/viewSolr.php">SOLR Index Queries</a>
-</li>
 <!-- Use the OAI service to provide data exports-->
 <li>
   <a href="export/oaiExport.php">Export data from OAI harvester</a>
 </li>
 </ul>
 <?php
-if ($CUSTOM->showBatchTools()) { 
-	echo $CUSTOM->getAdminHtml();
-}
 echo $CUSTOM->getOtherHtml();
 ?>
 </div>
+<div class="col">
 <?php
-
-function getQueryCols() {
-initQueries();
-$CUSTOM = custom::instance();
-echo <<< HERE
-  <div id="queryCols">
-  <fieldset>
-    <legend>Query Options</legend>
-    <div id="colFilter">
-HERE;
-if (count($CUSTOM->getExcludeCollections()) > 0) {
-echo <<< HERE
-    <fieldset>	
-    <legend>Exclude Large Collections</legend>
-HERE;
-    foreach($CUSTOM->getExcludeCollections() as $k => $v) {
-        $kid = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h",array(":h"=>$k));
-        if ($kid == "") continue;
-        echo <<< HERE
-      <input name="collex" type="checkbox" id="collex-{$kid}" value="{$kid}" checked><label for="collex-{$kid}">{$v}</label>
-HERE;
-    }
-echo <<< HERE
-    </fieldset>	
-HERE;
+if ($CUSTOM->showBatchTools()) { 
+	echo $CUSTOM->getAdminHtml();
 }
-echo <<< HERE
-    </div>
-    <input name="warnonly" type="checkbox" id="warnonly"><label for="warnonly">Filter Warnings</label>
-HERE;
-  query::getQueryList();
-  echo <<< HERE
-  </fieldset>
-  </div>
-HERE;
-}
+?>
+</div>
+<?php
 $header->litFooter();
 ?>
 </body>

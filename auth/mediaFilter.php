@@ -53,21 +53,6 @@ $header->litPageHeader();
   <input type="checkbox" class="checkbox" name="action[]" value="actThumb" id="actThumb" <?php checkedArr($arr,"actThumb")?> />
   <label for="actThumb">Create Thumbnails</label>
 </p>
-
-<?php if ($CUSTOM->isCheckFilter("Decomposed Zoomeable Images")) {?>
-<p>
-  <input type="checkbox" class="checkbox" name="action[]" value="actTiles" id="actTiles" <?php checkedArr($arr,"actTiles")?> />
-  <label for="actTiles">Create Zoom Tiles</label>
-</p>
-<?php }?>
-
-<?php if ($CUSTOM->isCheckFilter("Scribd Upload")) {?>
-<p>
-  <input type="checkbox" class="checkbox" name="action[]" value="actStream" id="actStream" <?php checkedArr($arr,"actStream")?> />
-  <label for="actStream">Prepare for Document Streaming</label>
-</p>
-<?php }?>
-
 <p>
   <input type="checkbox" class="checkbox" name="action[]" value="actText" id="actText" <?php checkedArr($arr,"actText")?> />
   <label for="actText">Full-text index</label>
@@ -80,12 +65,6 @@ $header->litPageHeader();
   <input type="checkbox" class="checkbox" name="optForce" value="optForce" id="optForce" <?php checkedPost("optForce", "optForce")?>/>
   <label for="optForce">Force re-creation of items</label>
 </p>
-<?php if ($CUSTOM->ver < 4) {?>
-<p>
-  <input type="checkbox" class="checkbox" name="optIndex" value="optIndex" id="optIndex" <?php uncheckedPost("optIndex", "optIndex")?> />
-  <label for="optIndex">Update text index</label>
-</p>
-<?php }?>
 </fieldset>
 </p>
 <p align="center">
@@ -139,16 +118,10 @@ function testArgs(){
 												' -p ' . escapeshellarg("PowerPoint Text Extractor") . 
 												' -p ' . escapeshellarg("Word Text Extractor");
 
-    if ($CUSTOM->ver < 4) {
-	    if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("LIT Image Thumbnail") . 
-		    										' -p ' . escapeshellarg("LIT PDF Thumbnail");
-    } else {
-	    if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("ImageMagick Image Thumbnail") . 
-		    										' -p ' . escapeshellarg("ImageMagick PDF Thumbnail");    	
-    }
+    if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("ImageMagick Image Thumbnail") . 
+	    										' -p ' . escapeshellarg("ImageMagick PDF Thumbnail");    	
 	
 	if (util::getPostArg("optForce", false)) $args .= " -f";
-	if (util::getPostArg("optIndex", false) == false) $args .= " -n";
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$cmd = <<< HERE

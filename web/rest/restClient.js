@@ -6,8 +6,11 @@ var ITEM_LIMIT = 1000;
 var COLL_LIMIT = 500;
 
 $(document).ready(function(){
-	createCollectionTable();
-	createFilterTable();
+	$("#showCollections").bind("click", function(){
+      $("#showCollections").attr("disabled", true);
+	  createCollectionTable();
+	  createFilterTable();
+	});
 });
 
 function createCollectionTable() {
@@ -22,23 +25,35 @@ function createCollectionTable() {
 	addTh(tr, "Num Items").addClass("sorttable_numeric");
 
 
-	$.getJSON(
-		"/rest/collections",
-		{
+	$.ajax({
+		url: "/rest/filtered-collections",
+		data: {
 			limit : COLL_LIMIT,
+			expand: "topCommunity"
 		},
-		function(data){
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data){
 			$.each(data, function(index, coll){
 				var tr = addTr($("#table"));
 				tr.attr("cid", coll.id).attr("index",index).addClass(index % 2 == 0 ? "odd data" : "even data");
 				addTd(tr, index).addClass("num");
-				addTd(tr, "").addClass("title comm");
+				var parval = ""; 
+				
+				if ("topCommunity" in coll) {
+					var par = coll.topCommunity;
+					parval = getAnchor(par.name, "/handle/" + par.handle)					
+				} else if ("parCommunityList" in coll) {
+					var par = coll.parentCommunityList[coll.parentCommunityList.length-1];
+					parval = getAnchor(par.name, "/handle/" + par.handle)
+				}
+				addTd(tr, parval).addClass("title comm");
 				addTdAnchor(tr, coll.name, "/handle/" + coll.handle).addClass("title");
 				addTdAnchor(tr, coll.numberItems, "javascript:drawItemTable("+coll.id+",'')").addClass("num");
 			});
-			loadParent();
+			sorttable.makeSortable($("#table")[0]);
 		}
-	);	
+	});	
 }
 
 function loadData() {
@@ -48,45 +63,23 @@ function loadData() {
 	doRow(0, THREADS, loadId);
 }
 
-function loadParent() {
-	doRowParent(0, THREADSP);
-}
-
-function doRowParent(row, threads) {
-	var tr = $("tr[index="+row+"]");
-	if (!tr.is("*")) return; 
-	var cid = tr.attr("cid");
-	$.getJSON(
-		"/rest/collections/"+cid,
-		{
-			expand : "parentCommunityList",
-		},
-		function(data) {
-			var par = data.parentCommunityList[data.parentCommunityList.length-1];
-			tr.find("td.comm:empty").append(getAnchor(par.name, "/handle/" + par.handle));
-			
-			sorttable.makeSortable($("#table")[0]);
-			if (row % threads == 0 || threads == 1) {
-				for(var i=1; i<=threads; i++) {
-					doRowParent(row+i, threads);
-				}					
-			}
- 		}
-	);
-}			
-
 function doRow(row, threads, curLoadId) {
 	if (loadId != curLoadId) return;
 	var tr = $("tr[index="+row+"]");
-	if (!tr.is("*")) return; 
+	if (!tr.is("*")) {
+		sorttable.makeSortable($("#table")[0]);
+		return; 
+	}
 	var cid = tr.attr("cid");
-	$.getJSON(
-		"/rest/filtered-collections/"+cid,
-		{
+	$.ajax({
+		url: "/rest/filtered-collections/"+cid,
+		data: {
 			limit : COUNT_LIMIT,
 			filters : filterString,
 		},
-		function(data) {
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data) {
 			$.each(data.itemFilters, function(index, itemFilter){
 				if (loadId != curLoadId) {
 					return;
@@ -120,14 +113,13 @@ function doRow(row, threads, curLoadId) {
 				
 			});
 			
-			sorttable.makeSortable($("#table")[0]);
 			if (row % threads == 0 || threads == 1) {
 				for(var i=1; i<=threads; i++) {
 					doRow(row+i, threads, curLoadId);
 				}					
 			}
  		}
-	);
+	});
 }			
 			
 function drawItemTable(cid, filter, collname) {
@@ -137,14 +129,16 @@ function drawItemTable(cid, filter, collname) {
 	addTh(tr, "Num").addClass("num").addClass("sorttable_numeric");
 	addTh(tr, "Handle");
 	addTh(tr, "Item").addClass("title");
-	$.getJSON(
-		"/rest/filtered-collections/"+cid,
-		{
+	$.ajax({
+		url: "/rest/filtered-collections/"+cid,
+		data: {
 			expand: "items",
 			limit: ITEM_LIMIT,
 			filters: filter,
 		},
-		function(data){
+		dataType: "json",
+		headers: getHeaders(),
+		success: function(data){
 			var source = filter == "" ? data.items : data.itemFilters[0].items;
 			
 			$.each(source, function(index, item){
@@ -156,6 +150,6 @@ function drawItemTable(cid, filter, collname) {
 			});
 			$("#itemdiv").dialog({title: filter + " Items in " + data.name, width: "80%", minHeight: 500, modal: true});
 		}
-	);
+	});
 }
 

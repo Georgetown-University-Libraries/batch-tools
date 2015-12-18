@@ -19,8 +19,8 @@ IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
 HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
-include "custom.php";
-class customPdo extends custom {
+include "customRest.php";
+class customPdo extends customRest {
 	
 	private $dbh;
 	public function getPdoDb() {
@@ -36,8 +36,6 @@ class customPdo extends custom {
 	public function isPdo() {return true;}
 	public function __construct($ver) {
 		parent::__construct($ver);
-		PdoInitializer::setInstance($this->getPdoDb());
-		$this->communityInit = PdoInitializer::instance();
 	}
 
 	public function getQueryVal($sql, $arg) {
@@ -55,74 +53,6 @@ class customPdo extends custom {
 		 	$ret = $row[0];
 		}  
 		return $ret;
-	}
-}
-
-class PdoInitializer {
-	private $dbh;
-	
-	public function __construct($dbh) {
-		$this->dbh = $dbh;
-	}
-	
-	public function initCommunities() {
-		$sql = <<< EOF
-		select community_id, name, handle, parent_comm_id 
-		from community
-		inner join handle on community_id = resource_id and resource_type_id = 4
-		left join community2community on child_comm_id = community_id
-		order by name;  
-EOF;
-
-		$result = $this->dbh->query($sql);
- 		if (!$result) {
- 			print($sql);
-  	        print_r($dbh->errorInfo());
-     		die("Error in SQL query: ");
- 		}       
-
- 		foreach ($result as $row) {
- 			new community($row[0], $row[1], $row[2], $row[3]);
- 		}       
-
-		// free memory
-		uasort(community::$COMMUNITIES, "pathcmp");   
-	}
-	
-	public function initCollections() {
-		$sql = <<< EOF
-		select c.collection_id, c.name, handle, c2c.community_id 
-		from collection c
-		inner join handle on collection_id = resource_id and resource_type_id = 3
-		left join community2collection c2c on c2c.collection_id = c.collection_id
-		order by c.name;  
-EOF;
-
-		$result = $this->dbh->query($sql);
- 		if (!$result) {
- 			print($sql);
-  	        print_r($dbh->errorInfo());
-     		die("Error in SQL query: ");
- 		}       
-
- 		foreach ($result as $row) {
-		 	new collection($row[0], $row[1], $row[2], $row[3]);
-		}       
-
-		// free memory
-		uasort(collection::$COLLECTIONS, "pathcmp");   
-		uasort(community::$COMBO, "pathcmp");   
-	}
-	
-
-	private static $INSTANCE;
-	public static function instance() {
-		if (self::$INSTANCE == null) die("Must init PdoInitializer");
-		return self::$INSTANCE;
-	}
-	public static function setInstance($dbh) {
-		if (self::$INSTANCE == null) self::$INSTANCE = new PdoInitializer($dbh);
-		return self::$INSTANCE;
 	}
 }
 
