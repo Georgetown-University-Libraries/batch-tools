@@ -70,10 +70,6 @@ if ($CUSTOM->showStatsTools()) {
 <?php 
 }
 ?>
-<!--Analyze SOLR values-->
-<li>
-  <a href="solr/viewSolr.php">SOLR Index Queries</a>
-</li>
 <!-- Use the OAI service to provide data exports-->
 <li>
   <a href="export/oaiExport.php">Export data from OAI harvester</a>
