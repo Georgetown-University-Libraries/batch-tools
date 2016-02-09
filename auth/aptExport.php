@@ -69,7 +69,7 @@ function testArgs(){
 		return;
 	}
 	
-	$items = preg_replace("[\n\r]", " ", $items);
+	$items = preg_replace("[\n\r2]", " ", $items);
 	echo "<textarea>[" . $items . "]</textarea>";
 	exit;
 	$cmd = <<< HERE
