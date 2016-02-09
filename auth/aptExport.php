@@ -69,11 +69,7 @@ function testArgs(){
 		return;
 	}
 	
-	echo $items;
-	echo "<h4>xxx</h4>";
 	$items = preg_replace("[\n\r]", " ", $items);
-	
-	echo $items; exit;
 	
 	$cmd = <<< HERE
 {$u} apt-export {$user} {$items}
