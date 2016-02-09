@@ -71,6 +71,8 @@ function testArgs(){
 	
 	$items = preg_replace("\n", " ", $items);
 	
+	echo $items; exit;
+	
 	$cmd = <<< HERE
 {$u} apt-export {$user} {$items}
 HERE;
