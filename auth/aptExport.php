@@ -41,7 +41,7 @@ $header->litPageHeader();
 <div id="status"><?php echo $status?></div>
 <fieldset class="mapfile">
 <p>Provide a list of item handles to export, place each item on a separate line</p>
-<textarea rows="10" cols="14" name="items" type="items" value=""/>
+<textarea rows="10" cols="14" name="items" type="items"></textarea>
 <p align="center">
 	<input id="submit" type="submit" title="Submit Job"/>
 </p>
