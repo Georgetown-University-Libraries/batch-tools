@@ -64,15 +64,12 @@ function testArgs(){
 	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
 	$items = util::getPostArg("itemhandles", "");
 	
-	echo $items;exit;
-	
-	
 	if ($items == "") {
 		$status = "Please supply at least one item handle";
 		return;
 	}
 	$cmd = <<< HERE
-{$u} apt-export {$user} 
+{$u} apt-export {$user} {$items}
 HERE;
     exec($dspaceBatch . " " . $cmd);
     header("Location: ../web/queue.php");
