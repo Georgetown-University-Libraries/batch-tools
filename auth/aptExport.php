@@ -64,7 +64,10 @@ function testArgs(){
 	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
 	$items = util::getPostArg("itemhandles", "");
 	
-	if ("$items" == "") {
+	echo $items;exit;
+	
+	
+	if ($items == "") {
 		$status = "Please supply at least one item handle";
 		return;
 	}
