@@ -41,7 +41,7 @@ $header->litPageHeader();
 <div id="status"><?php echo $status?></div>
 <fieldset class="mapfile">
 <p>Provide a list of item handles to export, place each item on a separate line</p>
-<textarea rows="10" cols="14" name="item-handles" type="item-handles"></textarea>
+<textarea rows="10" cols="14" name="itemhandles"></textarea>
 <p align="center">
 	<input id="submit" type="submit" title="Submit Job"/>
 </p>
@@ -62,7 +62,7 @@ function testArgs(){
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
-	$items = util :: getPostArg("item-handles", "");
+	$items = util :: getPostArg("itemhandles", "");
 	
 	if ($items == "") {
 		$status = "Please supply at least one item handle";
