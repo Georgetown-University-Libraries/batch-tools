@@ -71,7 +71,7 @@ function testArgs(){
 	
 	echo $items;
 	echo "<h4>xxx</h4>";
-	$items = preg_replace("\n", " ", $items);
+	$items = preg_replace("[\n\r]", " ", $items);
 	
 	echo $items; exit;
 	
