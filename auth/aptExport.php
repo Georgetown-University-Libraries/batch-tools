@@ -70,7 +70,8 @@ function testArgs(){
 	}
 	
 	$items = preg_replace("[\n\r]", " ", $items);
-	
+	echo "<textarea>[" . $items . "]</textarea>";
+	exit;
 	$cmd = <<< HERE
 {$u} apt-export {$user} {$items}
 HERE;
