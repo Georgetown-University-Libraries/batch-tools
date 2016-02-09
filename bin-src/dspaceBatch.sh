@@ -253,7 +253,8 @@ then
 elif [ "$1" = "apt-export" ]
 then
   shift
-  USER=shift
+  USER=$1
+  shift
   for ITEM in "$@"
   do
     OUTFILE=/opt/dg-transfer/data/apt-export/${ITEM//\//-}.zip
