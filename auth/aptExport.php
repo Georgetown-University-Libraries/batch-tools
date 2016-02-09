@@ -69,6 +69,8 @@ function testArgs(){
 		return;
 	}
 	
+	echo $items;
+	echo "<h4>xxx</h4>";
 	$items = preg_replace("\n", " ", $items);
 	
 	echo $items; exit;
