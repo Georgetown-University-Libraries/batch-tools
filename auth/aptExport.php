@@ -68,6 +68,9 @@ function testArgs(){
 		$status = "Please supply at least one item handle";
 		return;
 	}
+	
+	$items = preg_replace("\n", " ", $items);
+	
 	$cmd = <<< HERE
 {$u} apt-export {$user} {$items}
 HERE;

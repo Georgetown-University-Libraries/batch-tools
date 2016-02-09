@@ -260,7 +260,7 @@ then
     OUTFILE=/opt/dg-transfer/data/apt-export/${ITEM//\//-}.zip
 
     echo "/opt/dspace/bin/dspace packager -d -e ${USER} -t AIP -o includeBundles=ORIGINAL,LICENSE -i ${ITEM} $OUTFILE" >> ${RUNNING} 2>&1 
-    /opt/dspace/bin/dspace packager -d -e ${USER} -t AIP -o includeBundles=ORIGINAL,LICENSE -i "${ITEM}" $OUTFILE
+    /opt/dspace/bin/dspace packager -d -e ${USER} -t AIP -o includeBundles=ORIGINAL,LICENSE -i "${ITEM}" $OUTFILE >> ${RUNNING} 2>&1 
   done
 else
   echo "Unsupported DSpace Command" >> ${RUNNING}
