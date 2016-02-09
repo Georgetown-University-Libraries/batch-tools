@@ -37,7 +37,7 @@ $header->litPageHeader();
 <body>
 <?php $header->litHeaderAuth(array(), $hasPerm);?>
 <div id="formMetadata">
-<form method="POST" action="" onsubmit="jobQueue();return true;" enctype="multipart/form-data" >
+<form method="POST" action="" onsubmit="jobQueue();return true;">
 <div id="status"><?php echo $status?></div>
 <fieldset class="mapfile">
 <p>Provide a list of item handles to export, place each item on a separate line</p>
@@ -62,9 +62,9 @@ function testArgs(){
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$user = escapeshellarg($CUSTOM->getCurrentUserEmail());
-	$items = util :: getPostArg("itemhandles", "");
+	$items = util::getPostArg("itemhandles", "");
 	
-	if ($items == "") {
+	if ("$items" == "") {
 		$status = "Please supply at least one item handle";
 		return;
 	}
