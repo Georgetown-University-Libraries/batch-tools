@@ -250,6 +250,18 @@ then
 
   echo "Update lang from '',en_US, en_us to en" >> ${RUNNING} 2>&1 
   /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang in ('','en_US','en_us') and resource_type_id=2;" >> ${RUNNING} 2>&1
+elif [ "$1" = "apt-export" ]
+then
+  shift
+  USER=$1
+  shift
+  for ITEM in "$@"
+  do
+    OUTFILE=/opt/dg-transfer/data/apt-export/${ITEM//\//-}.zip
+
+    echo "/opt/dspace/bin/dspace packager -d -e ${USER} -t AIP -o includeBundles=ORIGINAL,LICENSE -i ${ITEM} $OUTFILE" >> ${RUNNING} 2>&1 
+    /opt/dspace/bin/dspace packager -d -e ${USER} -t AIP -o includeBundles=ORIGINAL,LICENSE -i "${ITEM}" $OUTFILE >> ${RUNNING} 2>&1 
+  done
 else
   echo "Unsupported DSpace Command" >> ${RUNNING}
 fi
