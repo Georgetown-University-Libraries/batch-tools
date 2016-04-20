@@ -421,5 +421,24 @@ class hierarchy {
         return $root->collList;
     }
 
+	public static function getHierarchyHandleWidget($objsel, $name, $label) {
+		$objs = "";
+		foreach(hierarchy::$OBJECTS as $obj) {
+			$sel = ($objsel == $obj->handle) ? "selected" : "";
+			$comms .= "<option value='{$obj->handle}' {$sel}>{$obj->getMyPath()}</option>";			
+		}
+		echo <<< HERE
+		<div id="hiearchyWidget">
+		<p>
+		<label for="hierarchySelect">Select the collection $label</label>
+		<select id="hiearchySelect" name="$name">
+		  <option value="">Select a Community or Collection</option>
+		  {$objs}
+		</select>
+		</p>
+		</div>
+HERE;
+	}
+
 }
 ?>

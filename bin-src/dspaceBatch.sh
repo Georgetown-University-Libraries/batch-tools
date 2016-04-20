@@ -2,8 +2,6 @@ ROOT=DSPACETOOLSROOT
 DSROOT=DSPACEROOT
 HPFX=YOURPFX
 SOLR=SOLRROOT
-VER=DSPACEVER
-SCRIBD=
 
 USERNAME=$1
 shift
@@ -57,12 +55,6 @@ function bulk_ingest {
   sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
   sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
 
-  if [ "$SCRIBD" != "" ]
-  then
-    echo "${DSROOT}/bin/dspace filter-media -p '${SCRIBD}' -f -n -v -i $COLL" >> ${RUNNING} 
-    ${DSROOT}/bin/dspace filter-media -p "${SCRIBD}" -f -n -v -i $COLL >> ${RUNNING} 2>&1 
-  fi
-     
   export JAVA_OPTS=-Xmx1200m   
   echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
   ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1         
