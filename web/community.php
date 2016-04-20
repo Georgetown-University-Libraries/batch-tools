@@ -425,7 +425,7 @@ class hierarchy {
 		$objs = "";
 		foreach(hierarchy::$OBJECTS as $obj) {
 			$sel = ($objsel == $obj->handle) ? "selected" : "";
-			$comms .= "<option value='{$obj->handle}' {$sel}>{$obj->getMyPath()}</option>";			
+			$comms .= "<option value='{$obj->handle}' {$sel}>{$obj->path}</option>";			
 		}
 		echo <<< HERE
 		<div id="hiearchyWidget">
