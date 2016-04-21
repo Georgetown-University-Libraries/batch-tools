@@ -430,7 +430,7 @@ class hierarchy {
 		echo <<< HERE
 		<div id="hiearchyWidget">
 		<p>
-		<label for="hierarchySelect">Select the collection $label</label>
+		<label for="hierarchySelect">Select the community/collection $label</label>
 		<select id="hiearchySelect" name="$name">
 		  <option value="">Select a Community or Collection</option>
 		  {$objs}
