@@ -119,7 +119,7 @@ function testArgs(){
         $args = "na";
     }  
 
-    $args .= "-v -i " . $coll;
+    $args .= " -v -i " . $coll;
     
     if (util::getPostArg("optForce", false)) $args .= " -f";
     
