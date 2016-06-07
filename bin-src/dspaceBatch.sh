@@ -80,6 +80,8 @@ then
   export JAVA_OPTS=-Xmx1200m   
   shift
   
+  env|sort > ~/env.sudo
+  
   //scope may be "all", "text", "thumb", or "na".  
   scope=$1
   shift
