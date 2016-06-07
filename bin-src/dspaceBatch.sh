@@ -92,6 +92,8 @@ then
   elif [ "${scope}" = "thumb" ]
   then
     plugins = -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail"
+  else
+    plugins = "XXX ${scope}"
   fi
 
   echo ${DSROOT}/bin/dspace filter-media ${plugins} "$@" >> ${RUNNING} 2>&1 
