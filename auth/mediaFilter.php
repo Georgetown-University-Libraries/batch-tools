@@ -111,11 +111,11 @@ function testArgs(){
     $arr = util::getPostArg("action",array());
 
     if (in_array("actText", $arr)) {
-        $args .= ' -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor"';   
+        $args .= escapeshellarg(' -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor"');   
     }
 
     if (in_array("actThumb", $arr)) {
-        $args .= ' -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail"';
+        $args .= escapeshellarg(' -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail"');
     }        
     
     if (util::getPostArg("optForce", false)) $args .= " -f";
