@@ -68,7 +68,7 @@ $header->litPageHeader();
 </fieldset>
 </p>
 <p align="center">
-	<input id="filterSubmit" type="submit" title="Submit Form" disabled/>
+    <input id="filterSubmit" type="submit" title="Submit Form" disabled/>
 </p>
 <p><em>* Required field</em></p>
 </form>
@@ -79,52 +79,49 @@ $header->litPageHeader();
 
 <?php 
 function checkedArr($arr, $value) {
-	echo in_array($value,$arr) ? "checked" : "";
+    echo in_array($value,$arr) ? "checked" : "";
 }
 function checkedPost($name, $value) {
-	echo (util::getPostArg($name, "") == $value) ? "checked" : "";
+    echo (util::getPostArg($name, "") == $value) ? "checked" : "";
 }
 function uncheckedPost($name, $value) {
-	if (count($_POST) > 0){
-		echo (util::getPostArg($name, "") == $value) ? "checked" : "";
-	} else {
-		echo "checked";
-	}
+    if (count($_POST) > 0){
+        echo (util::getPostArg($name, "") == $value) ? "checked" : "";
+    } else {
+        echo "checked";
+    }
 }
 
 function testArgs(){
-	global $status;
-	$CUSTOM = custom::instance();
-	$dspaceBatch = $CUSTOM->getDspaceBatch();
-	$bgindicator =  $CUSTOM->getBgindicator();
-	
-	if (count($_POST) == 0) return;
-	$coll = util::getPostArg("collection","");
-	$coll = util::getPostArg("collection","");
+    global $status;
+    $CUSTOM = custom::instance();
+    $dspaceBatch = $CUSTOM->getDspaceBatch();
+    $bgindicator =  $CUSTOM->getBgindicator();
+    
+    if (count($_POST) == 0) return;
+    $coll = util::getPostArg("collection","");
+    $coll = util::getPostArg("collection","");
 
-	$status = $CUSTOM->validateCollection($coll);
-	if ($status != "") return;
-	
-	
-	$args = "-v -i " . $coll;
+    $status = $CUSTOM->validateCollection($coll);
+    if ($status != "") return;
+    
+    
+    $args = "-v -i " . $coll;
 
-	$arr = util::getPostArg("action",array());
-	//if (in_array("actThumb", $arr))	 $args .= " -p TBD";
-	if (in_array("actTiles", $arr))	 $args .= ' -p ' . escapeshellarg("Decomposed Zoomeable Images");
-	if (in_array("actStream", $arr)) $args .= ' -p ' . escapeshellarg("Scribd Upload");
+    $arr = util::getPostArg("action",array());
 
-	if (in_array("actText", $arr))	 $args .= ' -p ' . escapeshellarg("HTML Text Extractor") . 
-												' -p ' . escapeshellarg("PDF Text Extractor") . 
-												' -p ' . escapeshellarg("PowerPoint Text Extractor") . 
-												' -p ' . escapeshellarg("Word Text Extractor");
+    if (in_array("actText", $arr))     $args .= ' -p ' . escapeshellarg("HTML Text Extractor") . 
+                                                ' -p ' . escapeshellarg("PDF Text Extractor") . 
+                                                ' -p ' . escapeshellarg("PowerPoint Text Extractor") . 
+                                                ' -p ' . escapeshellarg("Word Text Extractor");
 
-    if (in_array("actThumb", $arr))	 $args .= ' -p ' . escapeshellarg("ImageMagick Image Thumbnail") . 
-	    										' -p ' . escapeshellarg("ImageMagick PDF Thumbnail");    	
-	
-	if (util::getPostArg("optForce", false)) $args .= " -f";
-	
-	$u = escapeshellarg($CUSTOM->getCurrentUser());
-	$cmd = <<< HERE
+    if (in_array("actThumb", $arr))     $args .= ' -p ' . escapeshellarg("ImageMagick Image Thumbnail") . 
+                                                ' -p ' . escapeshellarg("ImageMagick PDF Thumbnail");        
+    
+    if (util::getPostArg("optForce", false)) $args .= " -f";
+    
+    $u = escapeshellarg($CUSTOM->getCurrentUser());
+    $cmd = <<< HERE
 {$u} filter-media {$args}
 HERE;
 

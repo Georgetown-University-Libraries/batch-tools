@@ -79,7 +79,7 @@ if [ "$1" = "filter-media" ]
 then
   export JAVA_OPTS=-Xmx1200m   
 
-  ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace $@ >> ${RUNNING} 2>&1 
   
   REINDEX=1
   while [ $# -ge 1 ]
