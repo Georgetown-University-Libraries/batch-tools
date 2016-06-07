@@ -88,10 +88,10 @@ then
   plugins="na"
   if [ "${scope}" = "text" ]
   then
-    plugins=-p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor"
+    plugins="-p \"HTML Text Extractor\" -p \"PDF Text Extractor\" -p \"PowerPoint Text Extractor\" -p \"Word Text Extractor\""
   elif [ "${scope}" = "thumb" ]
   then
-    plugins=-p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail"
+    plugins="-p \"ImageMagick Image Thumbnail\" -p \"ImageMagick PDF Thumbnail\""
   else
     plugins="XXX ${scope}"
   fi
