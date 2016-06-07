@@ -94,6 +94,7 @@ then
     plugins = -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail"
   fi
 
+  echo ${DSROOT}/bin/dspace filter-media ${plugins} "$@" >> ${RUNNING} 2>&1 
   ${DSROOT}/bin/dspace filter-media ${plugins} "$@" >> ${RUNNING} 2>&1 
   
   $(update_solr)
