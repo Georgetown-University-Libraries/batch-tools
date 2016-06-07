@@ -56,6 +56,8 @@ function bulk_ingest {
   sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
 
   export JAVA_OPTS=-Xmx1200m   
+  export LANG=en_US.UTF-8
+  
   echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
   ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1         
 }
@@ -80,7 +82,7 @@ then
   export JAVA_OPTS=-Xmx1200m   
   shift
   
-  env|sort > ~/env.sudo
+  export LANG=en_US.UTF-8
   
   //scope may be "all", "text", "thumb", or "na".  
   scope=$1
