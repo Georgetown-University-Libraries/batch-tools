@@ -85,15 +85,17 @@ then
   shift
   
   //default action, run all plugins
-  plugins="na"
   if [ "${scope}" = "text" ]
   then
-    plugins="-p \"HTML Text Extractor\" -p \"PDF Text Extractor\" -p \"PowerPoint Text Extractor\" -p \"Word Text Extractor\""
+    echo ${DSROOT}/bin/dspace filter-media -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor" "$@" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace filter-media -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor" "$@" >> ${RUNNING} 2>&1 
   elif [ "${scope}" = "thumb" ]
   then
-    plugins="-p \"ImageMagick Image Thumbnail\" -p \"ImageMagick PDF Thumbnail\""
+    echo ${DSROOT}/bin/dspace filter-media -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail" "$@" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace filter-media -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail" "$@" >> ${RUNNING} 2>&1 
   else
-    plugins="XXX ${scope}"
+    echo ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1 
+    ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1 
   fi
 
   echo ${DSROOT}/bin/dspace filter-media "${plugins}" "$@" >> ${RUNNING} 2>&1 
