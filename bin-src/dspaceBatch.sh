@@ -98,9 +98,6 @@ then
     ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1 
   fi
 
-  echo ${DSROOT}/bin/dspace filter-media "${plugins}" "$@" >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace filter-media "${plugins}" "$@" >> ${RUNNING} 2>&1 
-  
   $(update_solr)
 elif [ "$1" = "metadata-import" ]
 then
