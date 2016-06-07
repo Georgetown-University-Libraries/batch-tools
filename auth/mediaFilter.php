@@ -126,8 +126,7 @@ function testArgs(){
 {$u} filter-media {$args}
 HERE;
 
-    echo($dspaceBatch . " " . $cmd);
-    exit;
+    //echo($dspaceBatch . " " . $cmd);
     exec($dspaceBatch . " " . $cmd . " " . $bgindicator);
     header("Location: ../web/queue.php");
 }
