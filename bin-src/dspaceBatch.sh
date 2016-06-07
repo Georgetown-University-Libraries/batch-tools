@@ -78,26 +78,25 @@ echo Command: "$@" > ${RUNNING}
 if [ "$1" = "filter-media" ]
 then
   export JAVA_OPTS=-Xmx1200m   
-
-  ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
+  shift
   
-  REINDEX=1
-  while [ $# -ge 1 ]
-  do 
-    x=$1
-    shift
-    
-    if [ "$x" = "-n" ]
-    then
-      REINDEX=0
-    fi
-  done
+  //scope may be "all", "text", "thumb", or "na".  
+  scope = $1
+  shift
   
-  if [ $REINDEX = 1 ]
+  //default action, run all plugins
+  plugins = 
+  if [ "${scope}" = "text" ]
   then
-    $(update_solr)
+    plugins = -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor"
+  elif [ "${scope}" = "thumb" ]
+  then
+    plugins = -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail"
   fi
 
+  ${DSROOT}/bin/dspace filter-media ${plugins} "$@" >> ${RUNNING} 2>&1 
+  
+  $(update_solr)
 elif [ "$1" = "metadata-import" ]
 then
   export JAVA_OPTS="-Dfile.encoding=UTF-8"
