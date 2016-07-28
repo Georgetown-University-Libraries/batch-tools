@@ -51,6 +51,7 @@ echo $CUSTOM->getNavHtml();
 <div class="col">
 <?php
 echo $CUSTOM->getIntroHtml();
+if ($CUSTOM->isUserViewer()) {
 ?>
 <h4>Reporting Tools (Viewer Access)*</h4>
 <ul>
@@ -77,6 +78,7 @@ if ($CUSTOM->showStatsTools()) {
 </ul>
 <?php
 echo $CUSTOM->getOtherHtml();
+}
 ?>
 </div>
 <div class="col">
