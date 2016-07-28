@@ -41,7 +41,7 @@ $header->litPageHeader();
 </head>
 <body>
 <?php 
-$header->litHeader(array(), true);
+$header->litHeaderAuth(array(), true);
 ?>
 
 <?php 
