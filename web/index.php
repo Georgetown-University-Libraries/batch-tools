@@ -41,7 +41,7 @@ $header->litPageHeader();
 </head>
 <body>
 <?php 
-$header->litHeader(array());
+$header->litHeader(array(), true);
 ?>
 
 <?php 
