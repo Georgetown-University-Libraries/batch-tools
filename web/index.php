@@ -41,7 +41,7 @@ $header->litPageHeader();
 </head>
 <body>
 <?php 
-$header->litHeaderAuth(array(), true);
+$header->litHeaderAuth(array(), $CUSTOM->isUserKnown());
 ?>
 
 <?php 

@@ -47,6 +47,7 @@ class custom {
 	public function isUserCollectionOwner() {return $this->testUserInGroup(self::COLLADMIN);}
 	public function isUserSysAdmin() {return $this->testUserInGroup(self::SYSADMIN);}
 	public function isUserViewer() {return $this->testUserInGroup(self::VIEWER);}
+	public function isUserKnown() {return $this->testUserInGroup(self::VIEWER);}
 	
 	public function isCheckFilter($name) {return false;}
 	
