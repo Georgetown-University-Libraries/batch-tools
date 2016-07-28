@@ -48,7 +48,7 @@ class custom {
 	public function isUserSysAdmin() {return $this->testUserInGroup(self::SYSADMIN);}
 	public function isUserViewer() {return $this->testUserInGroup(self::VIEWER);}
 	public function isUserKnown() {
-		foreach($this->getAllGroups() as $k -> $v) {
+		foreach($this->getAllGroups() as $k => $v) {
 		    if ($this->testUserInGroup($k)) {
 		        return true;
 		    }
