@@ -53,7 +53,7 @@ HERE;
 		$WEBROOT = $CUSTOM->getWebRoot();
 		$sysname = $CUSTOM->getSystemName();
 		$syslogo = $CUSTOM->getSystemLogo();
-		$logo = $syslogo == "" ? "" : "<img src='{$syslogo}'/>"
+		$logo = ($syslogo == "" ? "") : "<img src='{$syslogo}'/>";
 		
 		echo <<< HERE
 		<div class="breadcrumb">
