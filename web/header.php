@@ -52,10 +52,12 @@ HERE;
 		$CUSTOM = custom::instance();
 		$WEBROOT = $CUSTOM->getWebRoot();
 		$sysname = $CUSTOM->getSystemName();
+		$syslogo = $CUSTOM->getSystemLogo();
+		$logo = $syslogo == "" ? "" : "<img src='{$syslogo}'/>"
 		
 		echo <<< HERE
 		<div class="breadcrumb">
-		  <a href="{$WEBROOT}/web/index.php">{$sysname}</a> &gt;
+		  <a href="{$WEBROOT}/web/index.php">{$logo}{$sysname}</a> &gt;
 HERE;
 	    foreach($arr as $a) {
 	    	echo "{$a} &gt;"; 
