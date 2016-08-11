@@ -57,7 +57,7 @@ HERE;
 		
 		echo <<< HERE
 		<div class="breadcrumb">
-		  <a href="{$WEBROOT}/web/index.php">{$syslogo}{$logo}{$sysname}</a> &gt;
+		  <a href="{$WEBROOT}/web/index.php">{$logo}{$sysname}</a> &gt;
 HERE;
 	    foreach($arr as $a) {
 	    	echo "{$a} &gt;"; 
