@@ -1,6 +1,14 @@
 This code was created by the Georgetown University Libraries to assist in the management of DSpace.
 Local customization will be required before running this code.
 
+## Demonstration Video
+
+This video demonstrates companion tools for the administration of DSpace content that provide a web-based interface to DSpace command line tools.
+
+[![Demonstration Video](https://i.ytimg.com/vi/ysk7zMXyWIk/hqdefault.jpg)](https://youtu.be/ysk7zMXyWIk)
+
+## Documentation 
+
 Project Page: http://georgetown-university-libraries.github.io/batch-tools/
 
 batch-tools Wiki: https://github.com/Georgetown-University-Libraries/batch-tools/wiki
