@@ -354,10 +354,9 @@ class hierarchy {
 		if ($obj instanceof community) {
   		  $this->id = $obj->community_id;
   		  $this->hid = "comm-".$obj->community_id;
-		  //$this->pid = ($obj->parent_comm_id == null) ? $obj->community_id : $obj->parent_comm_id;
 		  $this->pid = $obj->parent_comm_id;
-		  if ($this->pid == null) {
-		    $this->pid = "";   
+		  if ($this->pid == null || $this->pid == "") {
+		    $this->pid = 0;   
 		  }
   		  $this->topid = $obj->getMyTopCommunity()->community_id;
 		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
@@ -401,7 +400,7 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-			if ($object->pid == 0 || $object->pid == "") {
+			if ($object->pid == 0) {
 				self::$TOPS[] = $object;
 			} else {
 				array_push(self::$COMMS[$object->pid]->children, $object);
@@ -412,11 +411,11 @@ class hierarchy {
     
     function getMyChildCollections() {
         $this->collList = array();
-        //$c = count($this->children);
-        //echo "<h2>{$this->type} {$this->name} {$this->id} ch: {$c} ($this->pid)</h2>";
+        $c = count($this->children);
+        echo "<h2>{$this->type} {$this->name} {$this->id} ch: {$c} ($this->pid)</h2>";
         $ret = $this->getChildCollections($this);
-        //$c = count($ret);
-        //echo "<h2>{$this->type} {$this->name} {$this->id} ==> {$c}</h2>";
+        $c = count($ret);
+        echo "<h2>{$this->type} {$this->name} {$this->id} ==> {$c}</h2>";
         return $ret;
     }
     function getChildCollections($root) {
