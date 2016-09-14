@@ -402,9 +402,15 @@ class hierarchy {
 		foreach(hierarchy::$OBJECTS as $object) {
 			$pid = $object->pid;
 		    echo "<h4>{$object->type} {$object->id} ({$pid}) {$object->name} ";
-			if (($pid == 0) || ($pid == "") || ($pid == null)) {
+			if ($pid == 0) {
 				self::$TOPS[] = $object;
-				echo "n/a -- {$pid}";
+				echo "n/a1 -- {$pid}";
+			} else if ($pid == "") {
+				self::$TOPS[] = $object;
+				echo "n/a2 -- {$pid}";
+			} else if ($pid == null) {
+				self::$TOPS[] = $object;
+				echo "n/a3 -- {$pid}";
 			} else {
 				array_push(self::$COMMS[$pid]->children, $object);
 				echo count(self::$COMMS[$pid]->children);
