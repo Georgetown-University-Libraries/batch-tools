@@ -400,10 +400,10 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-		    echo "<h4>{$object->type} {$object->id} {$object->pid} {$object->name} ";
+		    echo "<h4>{$object->type} {$object->id} ({$object->pid}) {$object->name} ";
 			if ($object->pid == 0 || $object->pid == "" || $object->pid == null) {
 				self::$TOPS[] = $object;
-				echo "n/a";
+				echo "n/a {$object->pid}";
 			} else {
 				array_push(self::$COMMS[$object->pid]->children, $object);
 				echo count(self::$COMMS[$object->pid]->children);
