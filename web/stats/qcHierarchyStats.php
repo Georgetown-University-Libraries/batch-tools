@@ -51,12 +51,17 @@ var getStatsFunc = function(cell, tbd) {
         var colcount = parseInt($("#colcount").val());  
         var count=0;
         var times = new Array();
-        for(var time in data.facet_counts.facet_dates.time) {
-            times[count] = time;
-            $("#t"+count).text(time.substr(0,10));
-            count++;
-            if (count >= colcount) break;
-        }              
+        if (data.facet_counts == null) {
+        } else if (data.facet_counts.facet_dates == null) {
+        } else if (data.facet_counts.facet_dates.time == null) {
+        } else {
+            for(var time in data.facet_counts.facet_dates.time) {
+                times[count] = time;
+                $("#t"+count).text(time.substr(0,10));
+                count++;
+                if (count >= colcount) break;
+            }                          
+        }
             
         count = 0;
         for(var time in data.facet_counts.facet_dates.time) {
