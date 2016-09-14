@@ -412,6 +412,7 @@ class hierarchy {
     }
     function getChildCollections($root) {
         foreach($this->children as $child) {
+        echo "<h3>{$this->type} {$this->name} {$this->id}</h3>";
             if ($child->type == "community") {
                 $child->getChildCollections($root);
             } else {
