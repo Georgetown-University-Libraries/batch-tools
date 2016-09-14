@@ -28,7 +28,7 @@ if ($comm != "") {
             $q .= "id:" . $col;
         }
         $q .= ")";
-    } else {
+    } else if ($colls != ""){
         $q="(";
         foreach(explode(",",$colls) as $col) {
             if ($q != "(") {
