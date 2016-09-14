@@ -354,7 +354,9 @@ class hierarchy {
 		if ($obj instanceof community) {
   		  $this->id = $obj->community_id;
   		  $this->hid = "comm-".$obj->community_id;
-		  $this->pid = ($obj->parent_comm_id == null) ? $obj->community_id : $obj->parent_comm_id;
+		  //$this->pid = ($obj->parent_comm_id == null) ? $obj->community_id : $obj->parent_comm_id;
+		  $this->pid = $obj->parent_comm_id;
+		  print_r($this->pid);
   		  $this->topid = $obj->getMyTopCommunity()->community_id;
 		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
 		  $this->thandle = $obj->getMyTopCommunity()->handle; 
