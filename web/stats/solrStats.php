@@ -28,7 +28,11 @@ if ($comm != "") {
             $q .= "id:" . $col;
         }
         $q .= ")";
-    } else if ($colls != ""){
+    } else if ($colls == ""){
+        $q = "";
+    } else if ($colls == null){
+        $q = "";
+    } else {
         $q="(";
         foreach(explode(",",$colls) as $col) {
             if ($q != "(") {
@@ -37,8 +41,6 @@ if ($comm != "") {
             $q .= "owningColl:" . $col;
         }
         $q .= ")";
-    } else {
-        $q = "";
     }
 } else if ($coll != "") {
     if ($typearg == "COLLV")
