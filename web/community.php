@@ -355,9 +355,6 @@ class hierarchy {
   		  $this->id = $obj->community_id;
   		  $this->hid = "comm-".$obj->community_id;
 		  $this->pid = $obj->parent_comm_id;
-		  if ($this->pid == null || $this->pid == "") {
-		    $this->pid = null;   
-		  }
   		  $this->topid = $obj->getMyTopCommunity()->community_id;
 		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
 		  $this->thandle = $obj->getMyTopCommunity()->handle; 
@@ -400,33 +397,21 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
+		    //prior to dspace6, a top level has a pid of 0
+		    //in dspace6 some uuid values were equating to 0
 			$cpid = "" . $object->pid;
-		    echo "<h4>{$object->type} {$object->id} ({$cpid}) {$object->name} ";
-			if ($cpid == "0") {
+			if ($cpid == "0" || $cpid == "") {
 				self::$TOPS[] = $object;
-				echo "n/a1 -- {$cpid}";
-			} else if ($cpid == "") {
-				self::$TOPS[] = $object;
-				echo "n/a2 -- {$cpid}";
-			} else if ($cpid == null) {
-				self::$TOPS[] = $object;
-				echo "n/a3 -- {$cpid}";
-			} else {
+ 			} else {
 				array_push(self::$COMMS[$cpid]->children, $object);
-				echo count(self::$COMMS[$cpid]->children);
 			}
-			echo "</h4>";
 		}
 		uasort(self::$OBJECTS, 'hiercmp');
 	}
     
     function getMyChildCollections() {
         $this->collList = array();
-        $c = count($this->children);
-        echo "<h2>{$this->type} {$this->name} {$this->id} ch: {$c} ($this->pid)</h2>";
         $ret = $this->getChildCollections($this);
-        $c = count($ret);
-        echo "<h2>{$this->type} {$this->name} {$this->id} ==> {$c}</h2>";
         return $ret;
     }
     function getChildCollections($root) {
