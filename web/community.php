@@ -400,9 +400,9 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-			$cpid = $object->pid;
+			$cpid = "" . $object->pid;
 		    echo "<h4>{$object->type} {$object->id} ({$cpid}) {$object->name} ";
-			if ($cpid == 0) {
+			if ($cpid == "0") {
 				self::$TOPS[] = $object;
 				echo "n/a1 -- {$cpid}";
 			} else if ($cpid == "") {
