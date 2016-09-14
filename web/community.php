@@ -408,11 +408,13 @@ class hierarchy {
     
     function getMyChildCollections() {
         $this->collList = array();
+        echo "<h2>{$this->type} {$this->name} {$this->id}</h2>";
         return $this->getChildCollections($this);
     }
     function getChildCollections($root) {
         foreach($this->children as $child) {
-        echo "<h3>{$child->type} {$child->name} {$child->id}</h3>";
+        $c = count($root->collList);
+        echo "<h4>{$child->type} {$child->name} {$child->id} {$c}</h4>";
             if ($child->type == "community") {
                 $child->getChildCollections($root);
             } else {
