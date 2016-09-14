@@ -400,13 +400,14 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-		    echo "<h4>{$object->type} {$object->id} ({$object->pid}) {$object->name} ";
-			if ($object->pid == 0 || $object->pid == "" || $object->pid == null) {
+			$pid = $object->pid;
+		    echo "<h4>{$object->type} {$object->id} ({$pid}) {$object->name} ";
+			if ($pid == 0 || $pid == "" || $pid == null) {
 				self::$TOPS[] = $object;
-				echo "n/a {$object->pid}";
+				echo "n/a {$pid}";
 			} else {
-				array_push(self::$COMMS[$object->pid]->children, $object);
-				echo count(self::$COMMS[$object->pid]->children);
+				array_push(self::$COMMS[$pid]->children, $object);
+				echo count(self::$COMMS[$pid]->children);
 			}
 			echo "</h4>";
 		}
