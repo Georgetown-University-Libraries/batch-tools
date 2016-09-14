@@ -356,7 +356,8 @@ class hierarchy {
   		  $this->hid = "comm-".$obj->community_id;
 		  //$this->pid = ($obj->parent_comm_id == null) ? $obj->community_id : $obj->parent_comm_id;
 		  $this->pid = $obj->parent_comm_id;
-		  print_r($this->pid);
+		  if ($this->pid == null) echo "<h4>NULL  {$this->pid}</h4>";
+		  if ($this->pid == "")   echo "<h4>BLANK {$this->pid}</h4>";
   		  $this->topid = $obj->getMyTopCommunity()->community_id;
 		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
 		  $this->thandle = $obj->getMyTopCommunity()->handle; 
