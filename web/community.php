@@ -410,9 +410,10 @@ class hierarchy {
         $this->collList = array();
         $c = count($this->collList);
         echo "<h2>{$this->type} {$this->name} {$this->id} {$c}</h2>";
-        return $this->getChildCollections($this);
+        $ret = $this->getChildCollections($this);
         $c = count($this->collList);
         echo "<h2>{$this->type} {$this->name} {$this->id} ==> {$c}</h2>";
+        return $ret;
     }
     function getChildCollections($root) {
         foreach($this->children as $child) {
