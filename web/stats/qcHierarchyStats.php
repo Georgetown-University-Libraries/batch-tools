@@ -35,7 +35,7 @@ var complete = 0;
 
 var getStatsFunc = function(cell, tbd) {  
     var id = cell.attr("id");
-    var arr = /(comm|coll)-(\d+)-all/.exec(id);
+    var arr = /(comm|coll)-(\d+|[0-9az-z]{8,8}-[0-9az-z]{4,4}-[0-9az-z]{4,4}-[0-9az-z]{4,4}-[0-9az-z]{12,12})-all/.exec(id);
     if (arr.length <= 2) return;
     var prefix = id.replace("all","");
     var req = "solrStats.php?" +
