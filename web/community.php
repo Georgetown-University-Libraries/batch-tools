@@ -402,7 +402,7 @@ class hierarchy {
 		foreach(hierarchy::$OBJECTS as $object) {
 			$pid = $object->pid;
 		    echo "<h4>{$object->type} {$object->id} ({$pid}) {$object->name} ";
-			if ($pid == 0 || $pid == "" || $pid == null) {
+			if (($pid == 0) || ($pid == "") || ($pid == null)) {
 				self::$TOPS[] = $object;
 				echo "n/a {$pid}";
 			} else {
