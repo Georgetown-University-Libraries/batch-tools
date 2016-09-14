@@ -400,20 +400,20 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-			$pid = $object->pid;
-		    echo "<h4>{$object->type} {$object->id} ({$pid}) {$object->name} ";
-			if ($pid == 0) {
+			$cpid = $object->pid;
+		    echo "<h4>{$object->type} {$object->id} ({$cpid}) {$object->name} ";
+			if ($cpid == 0) {
 				self::$TOPS[] = $object;
-				echo "n/a1 -- {$pid}";
-			} else if ($pid == "") {
+				echo "n/a1 -- {$cpid}";
+			} else if ($cpid == "") {
 				self::$TOPS[] = $object;
-				echo "n/a2 -- {$pid}";
-			} else if ($pid == null) {
+				echo "n/a2 -- {$cpid}";
+			} else if ($cpid == null) {
 				self::$TOPS[] = $object;
-				echo "n/a3 -- {$pid}";
+				echo "n/a3 -- {$cpid}";
 			} else {
-				array_push(self::$COMMS[$pid]->children, $object);
-				echo count(self::$COMMS[$pid]->children);
+				array_push(self::$COMMS[$cpid]->children, $object);
+				echo count(self::$COMMS[$cpid]->children);
 			}
 			echo "</h4>";
 		}
