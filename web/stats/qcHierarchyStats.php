@@ -72,7 +72,7 @@ var getStatsFunc = function(cell, tbd) {
             cell.html("<a href='"+req+"&debug=rpt'>0</a>");
             cell.find("a").text(parseInt(data.response.numFound));
         } else {
-            //set vals to 0
+            $(cell).parent("tr").find("td.data").text(0);
         }
             
         complete++;
