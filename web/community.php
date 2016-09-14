@@ -354,7 +354,7 @@ class hierarchy {
 		if ($obj instanceof community) {
   		  $this->id = $obj->community_id;
   		  $this->hid = "comm-".$obj->community_id;
-		  $this->pid = $obj->parent_comm_id;
+		  $this->pid = ($obj->parent_comm_id == null) ? $obj->id : $obj->parent_comm_id;
   		  $this->topid = $obj->getMyTopCommunity()->community_id;
 		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
 		  $this->thandle = $obj->getMyTopCommunity()->handle; 
@@ -397,8 +397,7 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-		    //dspace6 - pid is null for top level comms
-			if ($object->pid == 0 || $object->pid == null) {
+			if ($object->pid == 0) {
 				self::$TOPS[] = $object;
 			} else {
 				array_push(self::$COMMS[$object->pid]->children, $object);
