@@ -356,7 +356,7 @@ class hierarchy {
   		  $this->hid = "comm-".$obj->community_id;
 		  $this->pid = $obj->parent_comm_id;
 		  if ($this->pid == null || $this->pid == "") {
-		    $this->pid = $this->id;   
+		    $this->pid = null;   
 		  }
   		  $this->topid = $obj->getMyTopCommunity()->community_id;
 		  $this->rclass = ($this->id == $this->topid) ? "comm" : "scomm";
