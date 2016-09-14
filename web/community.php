@@ -400,7 +400,8 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-			if ($object->pid == 0) {
+		    echo "<h4>{$object->type} {$object->id} {$object->pid} {$object->name}</h4>";
+			if ($object->pid == 0 || $object->pid == "" || $object->pid == null) {
 				self::$TOPS[] = $object;
 			} else {
 				array_push(self::$COMMS[$object->pid]->children, $object);
