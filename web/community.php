@@ -409,7 +409,7 @@ class hierarchy {
     function getMyChildCollections() {
         $this->collList = array();
         $c = count($this->children);
-        echo "<h2>{$this->type} {$this->name} {$this->id} ch: {$c}</h2>";
+        echo "<h2>{$this->type} {$this->name} {$this->id} ch: {$c} ($this->pid)</h2>";
         $ret = $this->getChildCollections($this);
         $c = count($ret);
         echo "<h2>{$this->type} {$this->name} {$this->id} ==> {$c}</h2>";
