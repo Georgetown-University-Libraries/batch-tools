@@ -400,12 +400,15 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-		    echo "<h4>{$object->type} {$object->id} {$object->pid} {$object->name}</h4>";
+		    echo "<h4>{$object->type} {$object->id} {$object->pid} {$object->name} ";
 			if ($object->pid == 0 || $object->pid == "" || $object->pid == null) {
 				self::$TOPS[] = $object;
+				echo "n/a";
 			} else {
 				array_push(self::$COMMS[$object->pid]->children, $object);
+				echo count(self::$COMMS[$object->pid]->children);
 			}
+			echo "</h4>";
 		}
 		uasort(self::$OBJECTS, 'hiercmp');
 	}
