@@ -397,8 +397,8 @@ class hierarchy {
 			}
 		}
 		foreach(hierarchy::$OBJECTS as $object) {
-		    //dspace6 - pid is blank for top level comms
-			if ($object->pid == 0 || $object->pid == "") {
+		    //dspace6 - pid is null for top level comms
+			if ($object->pid == 0 || $object->pid == null) {
 				self::$TOPS[] = $object;
 			} else {
 				array_push(self::$COMMS[$object->pid]->children, $object);
