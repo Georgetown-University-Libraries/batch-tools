@@ -28,10 +28,8 @@ if ($comm != "") {
             $q .= "id:" . $col;
         }
         $q .= ")";
-    } else if ($colls == ""){
-        $q = "";
-    } else if ($colls == null){
-        $q = "";
+    } else if ($colls == "" || $colls == null){
+        $q = "owningColl:na";
     } else {
         $q="(";
         foreach(explode(",",$colls) as $col) {
