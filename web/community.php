@@ -404,7 +404,7 @@ class hierarchy {
 		    echo "<h4>{$object->type} {$object->id} ({$pid}) {$object->name} ";
 			if (($pid == 0) || ($pid == "") || ($pid == null)) {
 				self::$TOPS[] = $object;
-				echo "n/a {$pid}";
+				echo "n/a -- {$pid}";
 			} else {
 				array_push(self::$COMMS[$pid]->children, $object);
 				echo count(self::$COMMS[$pid]->children);
