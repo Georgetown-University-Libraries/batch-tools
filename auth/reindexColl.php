@@ -123,13 +123,13 @@ function testArgsD6(){
 	$coll = util::getPostArg("coll","");
 	$comm = util::getPostArg("comm","");
 
-	if (util::isIdOrUuid($coll)) {
+	if (util::isHandle($coll)) {
 	    if (!isset(collection::$COLLECTIONS[$coll])) {
 	    	$status = "collection not found";
 	    	return;
 	    }
   	    $args = "coll " . $coll;
-	} else if (util::isIdOrUuid($comm)) {
+	} else if (util::isHandle($comm)) {
 	    if (!isset(community::$COMMUNITIES[$comm])) {
 	    	$status = "Community not found";
 	    	return;

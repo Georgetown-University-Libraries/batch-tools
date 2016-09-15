@@ -32,6 +32,11 @@ class util {
         return preg_match('/^(\d+|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/', $v);
     }
 
+    public static function isHandle($v) {
+        return preg_match('/^\d+(\.\d+)/\d+(\.\d+)$/', $v);
+    }
+
+
 	public static function getPostArg($name, $def) {
 		if (isset($_POST[$name])) return $_POST[$name];
 		return $def; 
