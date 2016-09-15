@@ -33,7 +33,7 @@ class util {
     }
 
     public static function isHandle($v) {
-        return preg_match('!^\d+(\.\d+)/\d+(\.\d+)$!', $v);
+        return preg_match('!^\d+(\.\d+)?/\d+(\.\d+)?$!', $v);
     }
 
 
