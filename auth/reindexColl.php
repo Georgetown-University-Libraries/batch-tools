@@ -128,7 +128,7 @@ function testArgsD6(){
 	} else if (util::isHandle($comm)) {
   	    $args = $comm;
 	} else {
-		$status = "A valid collection or community must be selected";
+		$status = "A valid collection ({$coll}) or community({$comm}) must be selected";
 		return;
 	}
 
