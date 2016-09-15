@@ -124,17 +124,9 @@ function testArgsD6(){
 	$comm = util::getPostArg("comm","");
 
 	if (!util::isHandle($coll)) {
-	    if (!isset(collection::$COLLECTIONS[$coll])) {
-	    	$status = "collection not found";
-	    	return;
-	    }
-  	    $args = "coll " . $coll;
+  	    $args = $coll;
 	} else if (!util::isHandle($comm)) {
-	    if (!isset(community::$COMMUNITIES[$comm])) {
-	    	$status = "Community not found";
-	    	return;
-	    }
-  	    $args = "comm " . $comm;
+  	    $args = $comm;
 	} else {
 		$status = "A valid collection or community must be selected";
 		return;
