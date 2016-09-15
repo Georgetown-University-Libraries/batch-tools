@@ -123,9 +123,9 @@ function testArgsD6(){
 	$coll = util::getPostArg("coll","");
 	$comm = util::getPostArg("comm","");
 
-	if (!util::isHandle($coll)) {
+	if (util::isHandle($coll)) {
   	    $args = $coll;
-	} else if (!util::isHandle($comm)) {
+	} else if (util::isHandle($comm)) {
   	    $args = $comm;
 	} else {
 		$status = "A valid collection or community must be selected";
