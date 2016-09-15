@@ -95,12 +95,12 @@ function testArgs(){
 	
 	if (count($_POST) == 0) return;
 	$child = util::getPostArg("child","");
-	if (!is_numeric($child)) return;
+	if (!util::isIdOrUuid($child)) return;
 	$child = intval($child);
 
 	$parent = util::getPostArg("parent","");
 
-	if (!is_numeric($parent)) return;
+    if (!util::isIdOrUuid($parent)) return;
 	$parent = intval($parent);
 
 	$currparent = "";

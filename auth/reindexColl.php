@@ -68,6 +68,7 @@ function testArgs(){
 	$coll = util::getPostArg("coll","");
 	$comm = util::getPostArg("comm","");
 
+    //NOTE: DSpace 6 will need handles... so this logic should be rewritten
 	if (is_numeric($coll)) {
 	    $coll = intval($coll);
 	    if (!isset(collection::$COLLECTIONS[$coll])) {

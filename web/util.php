@@ -28,26 +28,9 @@ class util {
 		return $def; 
 	}
 	
-	public static function getIdList($name, $prefix) {
-		$arg = self::getArg($name, "");
-		if ($arg == "") return "";
-		$ret = $prefix . "(";
-		$arr = explode(",", $arg);
-		$first = true;
-		foreach($arr as $i) {
-			if (is_numeric($i)) {
-				if ($first) {
-					$first = false;
-				} else {
-					$ret .= ",";
-				}
-				$ret .= $i;
-			}
-		}
-		$ret .= ")";
-		return $ret;
-	}
-	
+    public static function isIdOrUuid($v) {
+        return preg_match('/^(\d+|[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12})$/', $v);
+    }
 
 	public static function getPostArg($name, $def) {
 		if (isset($_POST[$name])) return $_POST[$name];
