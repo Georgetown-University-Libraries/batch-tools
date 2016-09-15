@@ -81,7 +81,7 @@ function testArgs(){
 	$child = util::getPostArg("child","");
 
 	if (!util::isIdOrUuid($child)) return;
-	$child = intval($child);
+	$child = is_numeric($child) ? intval($child) : $child;
 
 	if (!isset(collection::$COLLECTIONS[$child])) return;
 	$coll = collection::$COLLECTIONS[$child];
@@ -89,7 +89,7 @@ function testArgs(){
 	$parent = util::getPostArg("parent","");
 
 	if (!util::isIdOrUuid($parent)) return;
-	$parent = intval($parent);
+	$parent = is_numeric($parent) ? intval($parent) : $parent;
 	
 	if ($parent == $currparent) return;
 	
