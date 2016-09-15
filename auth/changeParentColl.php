@@ -96,6 +96,9 @@ function testArgs(){
 	$args = $child . " " . $currparent . " " . $parent;
 
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
+	
+	$task = $CUSTOM->getDSpaceVer() >= 6 ? "gu-change-coll-parent-d6" : "gu-change-coll-parent";"
+	
 	$cmd = <<< HERE
 {$u} gu-change-coll-parent {$args}
 HERE;

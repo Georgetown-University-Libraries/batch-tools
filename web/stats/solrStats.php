@@ -4,7 +4,7 @@ include 'solrFacets.php';
 
 $CUSTOM = custom::instance();
 
-$bfacet = ($CUSTOM->getDSpaceVer() == "1.7") ? "" : "&facet.field=bundleName";
+$bfacet = "&facet.field=bundleName";
 
 solrFacets::init($CUSTOM);
 
