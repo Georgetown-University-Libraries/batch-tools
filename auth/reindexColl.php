@@ -120,7 +120,7 @@ function testArgsD6(){
 	$bgindicator =  $CUSTOM->getBgindicator();
 	
 	if (count($_POST) == 0) return;
-	$coll = util::getPostArg("coll","");
+	$coll = util::getPostArg("collection","");
 	$comm = util::getPostArg("comm","");
 
 	if (util::isHandle($coll)) {
