@@ -92,7 +92,7 @@ class custom {
 	public function getOaiPath() {return "https://localhost/oai/";}
 	public function getQueryVal($sql, $arg) {return "";}
 	
-	public function getDSpaceVer() {return "3.1";}
+	public function getDSpaceVer() {return 5;}
 
 	protected $communityInit;
 	public function getCommunityInit() {return $this->communityInit;}

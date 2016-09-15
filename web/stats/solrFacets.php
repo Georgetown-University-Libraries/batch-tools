@@ -11,7 +11,7 @@ class solrFacets {
 		return $def; 
 	}
 	public static function init($CUSTOM) {
-	  $bfacet = (($CUSTOM->getDSpaceVer() == "1.7") ? "" : "+bundleName:ORIGINAL");
+	  $bfacet = "+bundleName:ORIGINAL";
 	  self::$DURATION = array(
 		"7DAYS" => array(
 			"desc" => "Last 7 days",

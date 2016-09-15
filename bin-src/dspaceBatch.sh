@@ -151,6 +151,17 @@ then
   echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1 
   echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1 
   echo " ** You must then run oai import" >> ${RUNNING} 2>&1 
+elif [ "$1" = "gu-change-coll-parent-d6" ]
+then
+  echo "Updating database..." >> ${RUNNING} 2>&1 
+  /usr/bin/psql -c "update community2collection set community_id='$4' where community_id='$3' and collection_id='$2';" >> ${RUNNING} 2>&1
+  echo " ** The item has been moved, but the search index does not yet reflect the change" >> ${RUNNING} 2>&1 
+  echo " ** Try re-indexing the parent community" >> ${RUNNING} 2>&1 
+  echo " ** " >> ${RUNNING} 2>&1 
+  echo " ** If items do not appear to be correctly indexed, then run the following steps" >> ${RUNNING} 2>&1 
+  echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1 
+  echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1 
+  echo " ** You must then run oai import" >> ${RUNNING} 2>&1 
 elif [ "$1" = "gu-ingest" ]
 then 
   USER=$2
@@ -231,6 +242,13 @@ then
 
   $(update_discovery)
 
+elif [ "$1" = "gu-reindex-d6" ]
+then 
+  HANDLE=$2
+  
+  export JAVA_OPTS=-Xmx1200m   
+  echo "${DSROOT}/bin/dspace index-discovery -i ${HANDLE}" >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace index-discovery -i ${HANDLE}>> ${RUNNING} 2>&1 
 elif [ "$1" = "gu-clean-oai-cache" ]
 then
   export JAVA_OPTS=-Xmx1200m   

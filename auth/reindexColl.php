@@ -26,8 +26,16 @@ $CUSTOM->getCommunityInit()->initCommunities();
 $CUSTOM->getCommunityInit()->initCollections();
 
 $status = "";
+$isD6 = ($CUSTOM->getDSpaceVer() >= 6);
+
 $hasPerm = $CUSTOM->isUserCollectionOwner();
-if ($hasPerm) testArgs();
+if ($hasPerm) {
+	if ($isD6) {
+		testArgsD6();
+	} else {
+		testArgs();	    
+	}
+}
 header('Content-type: text/html; charset=UTF-8');
 ?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -44,8 +52,15 @@ $header->litPageHeader();
 <form method="POST" action="" onsubmit="jobQueue();return true;">
 <p>Use this option to re-index the discovery index for a collection</p>
 <div id="status"><?php echo $status?></div>
-<?php collection::getCollectionIdWidget(util::getPostArg("coll",""), "coll", " to be reindexed*");?>
-<?php collection::getSubcommunityIdWidget(util::getPostArg("comm",""), "comm", " to be reindexed*");?>
+<?php
+if ($isD6) {
+  collection::getCollectionWidget(util::getPostArg("coll",""), "coll", " to be reindexed*");
+  collection::getSubcommunityWidget(util::getPostArg("comm",""), "comm", " to be reindexed*");        
+} else {
+  collection::getCollectionIdWidget(util::getPostArg("coll",""), "coll", " to be reindexed*");
+  collection::getSubcommunityIdWidget(util::getPostArg("comm",""), "comm", " to be reindexed*");    
+}
+?>
 <p align="center">
 	<input id="reindexSubmit" type="submit" title="Submit Form" disabled/>
 </p>
@@ -68,6 +83,7 @@ function testArgs(){
 	$coll = util::getPostArg("coll","");
 	$comm = util::getPostArg("comm","");
 
+    //NOTE: DSpace 6 will need handles... so this logic should be rewritten
 	if (is_numeric($coll)) {
 	    $coll = intval($coll);
 	    if (!isset(collection::$COLLECTIONS[$coll])) {
@@ -90,6 +106,35 @@ function testArgs(){
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
 	$cmd = <<< HERE
 {$u} gu-reindex {$args}
+HERE;
+
+    //echo($dspaceBatch . " " . $cmd);
+    exec($dspaceBatch . " " . $cmd . " " . $bgindicator);
+    header("Location: ../web/queue.php");
+}
+
+function testArgsD6(){
+	global $status;
+	$CUSTOM = custom::instance();
+	$dspaceBatch = $CUSTOM->getDspaceBatch();
+	$bgindicator =  $CUSTOM->getBgindicator();
+	
+	if (count($_POST) == 0) return;
+	$coll = util::getPostArg("collection","");
+	$comm = util::getPostArg("comm","");
+
+	if (util::isHandle($coll)) {
+  	    $args = $coll;
+	} else if (util::isHandle($comm)) {
+  	    $args = $comm;
+	} else {
+		$status = "A valid collection ({$coll}) or community({$comm}) must be selected";
+		return;
+	}
+
+	$u = escapeshellarg($CUSTOM->getCurrentUser());
+	$cmd = <<< HERE
+{$u} gu-reindex-d6 {$args}
 HERE;
 
     //echo($dspaceBatch . " " . $cmd);

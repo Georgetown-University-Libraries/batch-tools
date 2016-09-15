@@ -80,24 +80,27 @@ function testArgs(){
 	if (count($_POST) == 0) return;
 	$child = util::getPostArg("child","");
 
-	if (!is_numeric($child)) return;
-	$child = intval($child);
+	if (!util::isIdOrUuid($child)) return;
+	$child = is_numeric($child) ? intval($child) : $child;
 
 	if (!isset(collection::$COLLECTIONS[$child])) return;
 	$coll = collection::$COLLECTIONS[$child];
 	$currparent =$coll->getParent()->community_id;
 	$parent = util::getPostArg("parent","");
 
-	if (!is_numeric($parent)) return;
-	$parent = intval($parent);
+	if (!util::isIdOrUuid($parent)) return;
+	$parent = is_numeric($parent) ? intval($parent) : $parent;
 	
 	if ($parent == $currparent) return;
 	
 	$args = $child . " " . $currparent . " " . $parent;
 
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
+	
+	$task = $CUSTOM->getDSpaceVer() >= 6 ? "gu-change-coll-parent-d6" : "gu-change-coll-parent";
+	
 	$cmd = <<< HERE
-{$u} gu-change-coll-parent {$args}
+{$u} {$task} {$args}
 HERE;
 
     //echo($dspaceBatch . " " . $cmd);
