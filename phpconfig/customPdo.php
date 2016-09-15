@@ -54,6 +54,22 @@ class customPdo extends customRest {
 		}  
 		return $ret;
 	}
+	
+	public function getDSpaceVer() {
+	    $sql = <<< HERE
+  select 
+    cast(substring(version from '^\d+') as int) 
+  from 
+    schema_version 
+  where 
+    installed_rank = (
+      select 
+        max(installed_rank) 
+      from schema_version
+    );
+HERE;
+	    return $this->getQueryVal($sql, array());
+	}
 }
 
 ?>
