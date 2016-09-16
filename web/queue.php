@@ -72,7 +72,7 @@ for($index=0; $index < $indexCount  && $index < 25; $index++) {
 		$cmd = $carr[0];
 		
 		if (preg_match('|^(.* )(-[ic] "?([\d\.]+/[\d\.]+)"?)([^0-9].*)?$|', $cmd, $match) == 1) {
-			if (count($match) < 4) echo "*** {$cmd}";
+			if (count($match) < 5) echo "*** {$cmd}";
 			$cmd = $match[1] . "<a href='" . $handleContext . "/handle/" . $match[3] . "'>" . $match[2] . "</a>" . $match[4];
 		}
 		
