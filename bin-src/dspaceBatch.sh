@@ -265,6 +265,13 @@ then
 
   echo "Update lang from '',en_US, en-US, en_us to en" >> ${RUNNING} 2>&1 
   /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang in ('','en_US', 'en-US','en_us') and resource_type_id=2;" >> ${RUNNING} 2>&1
+elif [ "$1" = "normalize-lang-d6" ]
+then
+  echo "Update lang from null to en" >> ${RUNNING} 2>&1 
+  /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang is null  and dspace_object_id in (select uuid from item);" >> ${RUNNING} 2>&1
+
+  echo "Update lang from '',en_US, en-US, en_us to en" >> ${RUNNING} 2>&1 
+  /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang in ('','en_US', 'en-US','en_us')  and dspace_object_id in (select uuid from item);" >> ${RUNNING} 2>&1
 elif [ "$1" = "apt-export" ]
 then
   shift

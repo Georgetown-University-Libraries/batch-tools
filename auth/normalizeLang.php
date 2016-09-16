@@ -64,8 +64,9 @@ function testArgs(){
 	if (count($_POST) == 0) return;
 	
 	$u = escapeshellarg($CUSTOM->getCurrentUser());
+	$task = ($CUSTOM->getDSpaceVer() >= 6) ? "normalize-lang-d6" : "normalize-lang";
 	$cmd = <<< HERE
-{$u} normalize-lang
+{$u} {$task}
 HERE;
     exec($dspaceBatch . " " . $cmd);
     header("Location: ../web/queue.php");
