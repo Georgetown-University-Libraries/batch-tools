@@ -122,7 +122,7 @@ $header->litHeader(array());
 $rows=2000;
 
  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
+       "&rows=" . $rows . "&fl=*%2Cscore" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
  $ret = file_get_contents($req);
