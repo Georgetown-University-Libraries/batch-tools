@@ -84,7 +84,7 @@ if (!isset($_GET["debug"])){
   header('Content-type: text');
   $rows=2000;
   $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
+       "&rows=" . $rows . "&hl.fl=" . 
 	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet . 
        $duration['query'];
   $ret = file_get_contents($req);
