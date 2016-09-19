@@ -81,11 +81,11 @@ if (!isset($_GET["debug"])){
   return;
 } else if ($_GET["debug"] == "rpt"){
 } else if ($_GET["debug"] == "xml"){
-  header('Content-type: application/xml');
+  header('Content-type: text');
   $rows=2000;
   $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*,id,score" .
-	   "&facet.date=time" . 
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
+	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet . 
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -122,13 +122,9 @@ $header->litHeader(array());
 $rows=2000;
 
  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cid%2Cscore" . 
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
-
-echo $req;
-exit;
-
  $ret = file_get_contents($req);
  
  $xml = new DOMDocument();
