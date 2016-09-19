@@ -39,7 +39,10 @@
                   </xsl:attribute>
                   <xsl:value-of select="int[@name='id']"/>
                 </xsl:when>
-                <!-- DSpace 6 and later -->
+                <!-- 
+                  DSpace 6 and later.  Note that this data is not present when the shards parameter is provided.
+                  https://jira.duraspace.org/browse/DS-3331 
+                  -->
                 <xsl:otherwise>
                   <xsl:attribute name="href">
                     <xsl:value-of select="concat('getHandle.php?type=',int[@name='type'],'&amp;uid=',str[@name='id'])"/>
