@@ -31,10 +31,22 @@
           </td>
           <td>
           <a>
-            <xsl:attribute name="href">
-              <xsl:value-of select="concat('getHandle.php?type=',int[@name='type'],'&amp;id=',int[@name='id'])"/>
-            </xsl:attribute>
-            <xsl:value-of select="int[@name='id']"/>
+              <xsl:choose>
+                <!-- pre-DSpace 6 -->
+                <xsl:when test="int[@name='id']">
+                  <xsl:attribute name="href">
+                    <xsl:value-of select="concat('getHandle.php?type=',int[@name='type'],'&amp;id=',int[@name='id'])"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="int[@name='id']"/>
+                </xsl:when>
+                <!-- DSpace 6 and later -->
+                <xsl:otherwise>
+                  <xsl:attribute name="href">
+                    <xsl:value-of select="concat('getHandle.php?type=',int[@name='type'],'&amp;id=',str[@name='uid'])"/>
+                  </xsl:attribute>
+                  <xsl:value-of select="str[@name='uid']"/>
+                </xsl:otherwise>
+              </xsl:choose>
           </a>
           </td>
           <td class="referrer">
