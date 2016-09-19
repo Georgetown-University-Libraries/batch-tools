@@ -49,6 +49,8 @@ if ($comm != "") {
 	$q="owningComm:1";
 }
 
+$q .= "+AND+statistics_type:view";
+
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
 $auth = solrFacets::getAuth();
