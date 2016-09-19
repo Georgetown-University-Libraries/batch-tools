@@ -125,6 +125,10 @@ $rows=2000;
        "&rows=" . $rows . "&fl=*%2Cid%2Cscore" . 
 	   "&facet=true&facet.date=time" . 
        $duration['query'];
+
+echo $req;
+exit;
+
  $ret = file_get_contents($req);
  
  $xml = new DOMDocument();
