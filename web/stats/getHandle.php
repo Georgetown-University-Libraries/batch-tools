@@ -5,9 +5,6 @@ $CUSTOM = custom::instance();
 
 $type = util::getArg("type","");
 $id =util::getArg("id","");
-$uid =util::getArg("uid","");
-
-$id = ($uid == "") ? $id : $uid;
 
 if ($CUSTOM->isPdo()) {
 	$arg = array(":id" => $id);

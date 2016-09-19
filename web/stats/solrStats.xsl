@@ -42,9 +42,9 @@
                 <!-- DSpace 6 and later -->
                 <xsl:otherwise>
                   <xsl:attribute name="href">
-                    <xsl:value-of select="concat('getHandle.php?type=',int[@name='type'],'&amp;uid=',str[@name='uid'])"/>
+                    <xsl:value-of select="concat('getHandle.php?type=',int[@name='type'],'&amp;uid=',str[@name='id'])"/>
                   </xsl:attribute>
-                  <xsl:value-of select="str[@name='uid']"/>
+                  <xsl:value-of select="str[@name='id']"/>
                 </xsl:otherwise>
               </xsl:choose>
           </a>
