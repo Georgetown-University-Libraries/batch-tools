@@ -81,7 +81,7 @@ if (!isset($_GET["debug"])){
   return;
 } else if ($_GET["debug"] == "rpt"){
 } else if ($_GET["debug"] == "xml"){
-  header('Content-type: text');
+  header('Content-type: application/xml');
   $rows=2000;
   $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
        "&rows=" . $rows . "&fl=*,id,score" .
