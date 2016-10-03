@@ -29,6 +29,7 @@ class custom {
 	const SYSADMIN  = "system-admin";
 	const VIEWER = "viewer";
 	
+	public function getMode() {return "MODE";}
 	public function getSystemLogo() {return "";}
 	public function getSystemName() {return "DSpace Web Tools";}
 	public function getRoot() {return dirname(dirname(__FILE__));}
