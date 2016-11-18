@@ -33,6 +33,15 @@ $header->litPageHeader();
 var first = true;
 var complete = 0;
 
+var getWakeFunc = function(cell, tbd) {  
+    var req = "solrStats.php?wake=1";
+    $.getJSON(req,function(data){
+        $("tr.comm .data-all").each(function(index){
+            setTimeout(getStatsFunc, index * 500, $(this), $("tr.comm .data-all").length);
+        });
+    }
+}
+
 var getStatsFunc = function(cell, tbd) {  
     var id = cell.attr("id");
     var arr = /(comm|coll)-(\d+|[0-9a-z]{8,8}-[0-9a-z]{4,4}-[0-9a-z]{4,4}-[0-9a-z]{4,4}-[0-9a-z]{12,12})-all/.exec(id);
@@ -123,9 +132,8 @@ var doColl = function() {
 $(document).ready(function(){
     $("#cfscomm").click(doScomm);
     $("#cfcoll").click(doColl);
-    $("tr.comm .data-all").each(function(index){
-        setTimeout(getStatsFunc, index * 500, $(this), $("tr.comm .data-all").length);
-    });
+    
+    getWakeFunc();
 
     $("td.data").show();
     $("input.cfilter").change(

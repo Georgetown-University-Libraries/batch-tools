@@ -8,6 +8,7 @@ $bfacet = "&facet.field=bundleName";
 
 solrFacets::init($CUSTOM);
 
+$wake=util::getArg("wake","");
 $comm=util::getArg("comm","");
 $coll=util::getArg("coll","");
 $time=util::getArg("time","");
@@ -16,7 +17,9 @@ if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
 $typearg = solrFacets::getTypeArg();
 
-if ($comm != "") {
+if ($wake != "") {
+    $q = "wake:" . $wake;
+} else if ($comm != "") {
     if ($typearg == "COMMV") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
