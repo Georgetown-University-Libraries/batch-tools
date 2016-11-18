@@ -127,17 +127,15 @@ var initColl = false;
 var doScomm = function() {
     if (initScomm) return;
     initScomm = true;
-    $("tr.scomm .data-all").each(function(index){
-        setTimeout(getStatsFunc, index * 400, $(this), 0);
-    });
+    $("tr.scomm").addClass("unprocessed");
+    getNextRowFunc();
 }
 
 var doColl = function() {
     if (initColl) return;
     initColl = true;
-    $("tr.coll .data-all").each(function(index){
-        setTimeout(getStatsFunc, index * 200, $(this), 0);
-    });
+    $("tr.coll").addClass("unprocessed");
+    getNextRowFunc();
 }
 
 $(document).ready(function(){
