@@ -35,10 +35,16 @@ var complete = 0;
 
 var getWakeFunc = function() {  
     var req = "solrStats.php?wake=1";
-    $.getJSON(req,function(data){
-        $("tr.comm .data-all").each(function(index){
-            setTimeout(getStatsFunc, index * 500, $(this), $("tr.comm .data-all").length);
-        });
+    $.ajax({
+        url: req,
+        success: function(data){
+            $("tr.comm .data-all").each(function(index){
+                setTimeout(getStatsFunc, index * 500, $(this), $("tr.comm .data-all").length);
+            });
+        },
+        error: function(data) {
+            setTimeout(getWakeFunc, 500);
+        }
     });
 }
 
