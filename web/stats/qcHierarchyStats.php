@@ -34,14 +34,15 @@ var first = true;
 var complete = 0;
 
 var getNextRowFunc = function() {
-    $("tr.comm:not(.processed):first .data-all").each(function(index){    	
-        $(this).parent("tr").addClass("processed");
+    $("tr.comm.unprocessed:first .data-all").each(function(index){    	
+        $(this).parent("tr").removeClass("unprocessed");
         setTimeout(getStatsFunc, 500, $(this), $("tr.comm .data-all").length);
     });
 }
 
 var getWakeFunc = function() {  
     var req = "solrStats.php?wake=1";
+    $("tr.comm").addClass("unprocessed");
     $.ajax({
         url: req,
         success: getNextRowFunc,
