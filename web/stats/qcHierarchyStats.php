@@ -117,8 +117,8 @@ var getStatsFunc = function(cell, tbd) {
                 $(this).text(v);
             });
         }
+        getNextRowFunc();
     });
-    getNextRowFunc();
 };
 
 var initScomm = false;
