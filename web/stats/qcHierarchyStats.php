@@ -33,15 +33,17 @@ $header->litPageHeader();
 var first = true;
 var complete = 0;
 
+var getNextRowFunc = function() {
+    $("tr.comm:not(.processed):first .data-all").each(function(index){
+        setTimeout(getStatsFunc, 500, $(this), $("tr.comm .data-all").length);
+    });
+}
+
 var getWakeFunc = function() {  
     var req = "solrStats.php?wake=1";
     $.ajax({
         url: req,
-        success: function(data){
-            $("tr.comm .data-all").each(function(index){
-                setTimeout(getStatsFunc, index * 1500, $(this), $("tr.comm .data-all").length);
-            });
-        },
+        success: getNextRowFunc,
         error: function(data) {
             setTimeout(getWakeFunc, 1500);
         }
@@ -89,6 +91,8 @@ var getStatsFunc = function(cell, tbd) {
         } else {
             $(cell).parent("tr").find("td.data").text(0);
         }
+        
+        $(cell).parent("tr").addClass("processed");
             
         complete++;
         if (complete == tbd) {
@@ -114,6 +118,7 @@ var getStatsFunc = function(cell, tbd) {
             });
         }
     });
+    getNextRowFunc();
 };
 
 var initScomm = false;
