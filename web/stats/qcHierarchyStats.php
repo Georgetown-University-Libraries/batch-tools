@@ -33,13 +33,13 @@ $header->litPageHeader();
 var first = true;
 var complete = 0;
 
-var getWakeFunc = function(cell, tbd) {  
+var getWakeFunc = function() {  
     var req = "solrStats.php?wake=1";
     $.getJSON(req,function(data){
         $("tr.comm .data-all").each(function(index){
             setTimeout(getStatsFunc, index * 500, $(this), $("tr.comm .data-all").length);
         });
-    }
+    });
 }
 
 var getStatsFunc = function(cell, tbd) {  
