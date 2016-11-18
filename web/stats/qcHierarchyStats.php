@@ -35,7 +35,7 @@ var complete = 0;
 
 var getNextRowFunc = function() {
     $("tr.comm:not(.processed):first .data-all").each(function(index){    	
-        $(cell).parent("tr").addClass("processed");
+        $(this).parent("tr").addClass("processed");
         setTimeout(getStatsFunc, 500, $(this), $("tr.comm .data-all").length);
     });
 }
