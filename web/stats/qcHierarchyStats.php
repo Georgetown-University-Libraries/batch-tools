@@ -36,7 +36,7 @@ var complete = 0;
 var getNextRowFunc = function() {
     $("tr.comm.unprocessed:first .data-all").each(function(index){    	
         $(this).parent("tr").removeClass("unprocessed");
-        setTimeout(getStatsFunc, 500, $(this), $("tr.comm .data-all").length);
+        setTimeout(getStatsFunc, 1500, $(this), $("tr.comm .data-all").length);
     });
 }
 
