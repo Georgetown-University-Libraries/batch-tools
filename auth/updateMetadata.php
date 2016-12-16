@@ -67,7 +67,7 @@ function testArgs(){
 	global $status;
 	$CUSTOM = custom::instance();
 	$dspaceBatch = $CUSTOM->getDspaceBatch();
-	$ingestLoc =  $CUSTOM->getIngestLoc();
+	$ingestLoc =  $CUSTOM->getIngestLocTemp();
 	
 	if (count($_FILES) == 0) {
 		$status = "";

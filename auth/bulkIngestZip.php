@@ -24,7 +24,7 @@ $CUSTOM = custom::instance();
 $CUSTOM->getCommunityInit()->initCommunities();
 $CUSTOM->getCommunityInit()->initCollections();
 
-$ingestLoc =  $CUSTOM->getIngestLoc();
+$ingestLoc =  $CUSTOM->getIngestLocTemp();
 
 $status = "";
 

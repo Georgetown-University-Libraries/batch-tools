@@ -21,7 +21,6 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSI
 include '../web/header.php';
 
 $CUSTOM = custom::instance();
-$ingestLoc =  $CUSTOM->getIngestLoc();
 $root = $CUSTOM->getRoot();
 $mroot =  $CUSTOM->getMapRoot();
 
