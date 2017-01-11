@@ -249,10 +249,10 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  echo "<td>Repository Wide</td>";
  echo "<td></td>";
  for($i=0; $i<$colcount; $i++){
-    echo "<td class='data data-" . $i . "' id='0-" . $i . "'>";
+    echo "<td class='data data-" . $i . "' id='comm-0-" . $i . "'>";
     echo "-</td>";
  }
- echo "<td class='data data-all' id='0-all'>-</td>";
+ echo "<td class='data data-all' id='comm-0-all'>-</td>";
  echo "</tr>";
  $c = 0;
  foreach (hierarchy::$OBJECTS as $obj) {
