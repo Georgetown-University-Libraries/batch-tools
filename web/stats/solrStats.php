@@ -33,7 +33,7 @@ if ($wake != "") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="((type:4+AND+id:".$comm.")" 
+        $q="((type:4+AND+(id:".$comm."+OR+owningComm:".$comm."))" 
             . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))") 
             . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
             . ")";
