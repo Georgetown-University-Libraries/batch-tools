@@ -33,9 +33,10 @@ if ($wake != "") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="(type:4+AND+id:".$comm.")" 
+        $q="((type:4+AND+id:".$comm.")" 
             . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))") 
-            . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))");
+            . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
+            . ")";
     } else if ($typearg == "COMMV") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
