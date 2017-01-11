@@ -44,7 +44,7 @@ if ($wake != "") {
     } else if ($colls == "" || $colls == null){
         $q = "owningColl:na";
     } else {
-        $q=expandCommunityId($colls,"owningcoll");
+        $q=expandCommunityId($colls,"owningColl");
     }
 } else if ($coll != "") {
 	if ($typearg == "ALLV")
