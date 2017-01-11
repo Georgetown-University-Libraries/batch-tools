@@ -44,6 +44,10 @@ if ($wake != "") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
         $q=expandCommunityId($colls,"id");
+    } else if ($typearg == "SEARCH" && $comm == 0) {
+        $q="NOT(scopeType:*)";
+    } else if ($typearg == "SEARCH") {
+        $q="(scopeType:4+AND+scopeId:".$comm.")";
     } else if ($colls == "" || $colls == null){
         $q = "owningColl:na";
     } else {
@@ -53,7 +57,9 @@ if ($wake != "") {
     if ($typearg == "ALLV") {
         $q="na:na";
     } else if ($typearg == "COLLV") {
-  	    $q="id:".$coll;
+        $q="id:".$coll;
+    } else if ($typearg == "SEARCH") {
+        $q="(scopeType:3+AND+scopeId:".$coll.")";
     } else {	
         $q="owningColl:".$coll;
     }
