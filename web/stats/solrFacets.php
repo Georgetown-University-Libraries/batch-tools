@@ -41,26 +41,35 @@ class solrFacets {
 	  );
 
 	  self::$TYPE = array(
-		"ITEMV" => array(
+	    "ITEMV" => array(
 			"desc" => "Item Views",
-			"query" => "+AND+type:2"
+			"query" => "+AND+type:2+AND+statistics_type:view"
 		),
 		"COLLV" => array(
 			"desc" => "Collection Views",
-			"query" => "+AND+type:3"
+			"query" => "+AND+type:3+AND+statistics_type:view"
 		),
 		"COMMV" => array(
 			"desc" => "Community Views",
-			"query" => "+AND+type:4"
+			"query" => "+AND+type:4+AND+statistics_type:view"
 		),
-		"BITV" => array(
+	  	"ALLV" => array(
+	  		"desc" => "All Handle Views",
+	  		"query" => "+AND+(type:2+OR+type:3+OR+type:4)+AND+statistics_type:view"
+	  	),
+	  	"BITV" => array(
 			"desc" => "Original Bitstream Views/downloads",
-			"query" => "+AND+type:0" . $bfacet
+			"query" => "+AND+type:0" . $bfacet . "+AND+statistics_type:view"
 		),
 		"BITVALL" => array(
 			"desc" => "All Bitstream Views",
-			"query" => "+AND+type:0"
+			"query" => "+AND+type:0+AND+statistics_type:view"
 		),
+	  	"SEARCH" => array(
+	  		"desc" => "Searches",
+	  		"query" => "+AND+statistics_type:search"
+	  	),
+	  		
 	  );
 
 	  self::$AUTH = array(

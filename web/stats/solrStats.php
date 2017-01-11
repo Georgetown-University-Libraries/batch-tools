@@ -52,7 +52,7 @@ if ($wake != "") {
 	$q="owningComm:1";
 }
 
-$q .= "+AND+statistics_type:view";
+$q .= "";
 
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
