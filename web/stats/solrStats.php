@@ -47,12 +47,13 @@ if ($wake != "") {
         $q=expandCommunityId($colls,"owningColl");
     }
 } else if ($coll != "") {
-	if ($typearg == "ALLV")
-		$q="na:na";
-	if ($typearg == "COLLV")
+    if ($typearg == "ALLV") {
+        $q="na:na";
+    } else if ($typearg == "COLLV") {
   	    $q="id:".$coll;
-    else	
+    } else {	
         $q="owningColl:".$coll;
+    }
 } else {
 	$q="owningComm:1";
 }
