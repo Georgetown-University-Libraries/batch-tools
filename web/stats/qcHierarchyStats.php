@@ -245,7 +245,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
 <?php
  // iterate over result set
  // print each row
- echo "<tr class='repo' colls=''>";
+ echo "<tr class='repo comm' colls=''>";
  echo "<td>Repository Wide</td>";
  echo "<td></td>";
  for($i=0; $i<$colcount; $i++){
