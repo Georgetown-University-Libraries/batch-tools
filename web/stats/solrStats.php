@@ -69,6 +69,8 @@ if ($wake != "") {
 
 $q .= "";
 
+echo $q;exit;
+
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
 $auth = solrFacets::getAuth();
