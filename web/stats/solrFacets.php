@@ -53,7 +53,11 @@ class solrFacets {
 			"desc" => "Community Views",
 			"query" => "+AND+type:4+AND+statistics_type:view"
 		),
-	  	"ALLV" => array(
+	  	"REPV" => array(
+	  		"desc" => "Community Views",
+	  		"query" => "+AND+type:5+AND+statistics_type:view"
+	  	),
+	    "ALLV" => array(
 	  		"desc" => "All Handle Views",
 	  		"query" => "+AND+statistics_type:view"
 	  	),

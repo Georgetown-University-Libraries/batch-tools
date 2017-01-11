@@ -33,10 +33,12 @@ if ($wake != "") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="((type:4+AND+(id:".$comm."+OR+owningComm:".$comm."))" 
+        $q="(((type:4+OR+type:5)+AND+(id:".$comm."+OR+owningComm:".$comm."))" 
             . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))") 
             . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
             . ")";
+    } else if ($typearg == "REPV") {
+        $q="(id:".$comm.")";
     } else if ($typearg == "COMMV") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
