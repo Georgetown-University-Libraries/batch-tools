@@ -9,7 +9,7 @@ function expandCommunityId($arr, $field, $prefix = "(", $suff = ")") {
     	if ($q != $prefix) {
     		$q .= "+OR+";
     	}
-    	$q .= $field . ":" . $col;
+    	$q .= "{$field}:{$col}";
     }
     $q .= $suff;
     return $q;
@@ -34,20 +34,20 @@ if ($wake != "") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="(((type:4+OR+type:5)+AND+(id:".$comm."+OR+owningComm:".$comm."))" 
+        $q="(((type:4+OR+type:5)+AND+(id:{$comm}+OR+owningComm:{$comm}))" 
             . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))") 
             . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
             . ")";
     } else if ($typearg == "REPV") {
         $q="(id:".$comm.")";
     } else if ($typearg == "COMMV") {
-        $q="(owningComm:".$comm."+OR+id:".$comm.")";
+        $q="(owningComm:".$comm."+OR+id:{$comm})";
     } else if ($typearg == "COLLV") {
         $q=expandCommunityId($colls,"id");
     } else if ($typearg == "SEARCH" && $comm == 0) {
         $q="NOT(scopeType:*)";
     } else if ($typearg == "SEARCH") {
-        $q="((scopeType:4+AND+scopeId:".$comm.") OR " . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
+        $q="((scopeType:4+AND+scopeId:{$comm})+OR+" . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
     } else if ($colls == "" || $colls == null){
         $q = "owningColl:na";
     } else {
@@ -59,7 +59,7 @@ if ($wake != "") {
     } else if ($typearg == "COLLV") {
         $q="id:".$coll;
     } else if ($typearg == "SEARCH") {
-        $q="(scopeType:3+AND+scopeId:".$coll.")";
+        $q="(scopeType:3+AND+scopeId:{$coll})";
     } else {	
         $q="owningColl:".$coll;
     }
@@ -68,8 +68,6 @@ if ($wake != "") {
 }
 
 $q .= "";
-
-echo $q;exit;
 
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
