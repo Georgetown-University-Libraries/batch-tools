@@ -245,6 +245,15 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
 <?php
  // iterate over result set
  // print each row
+ echo "<tr class='repo' colls=''>";
+ echo "<td>Repository Wide</td>";
+ echo "<td></td>";
+ for($i=0; $i<$colcount; $i++){
+    echo "<td class='data data-" . $i . "' id='0-" . $i . "'>";
+    echo "-</td>";
+ }
+ echo "<td class='data data-all' id='0-all'>-</td>";
+ echo "</tr>";
  $c = 0;
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
