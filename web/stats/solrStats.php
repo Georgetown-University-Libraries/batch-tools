@@ -47,7 +47,7 @@ if ($wake != "") {
     } else if ($typearg == "SEARCH" && $comm == 0) {
         $q="NOT(scopeType:*)";
     } else if ($typearg == "SEARCH") {
-        $q="((scopeType:4+AND+scopeId:".$comm.") OR (" . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
+        $q="((scopeType:4+AND+scopeId:".$comm.") OR " . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
     } else if ($colls == "" || $colls == null){
         $q = "owningColl:na";
     } else {
