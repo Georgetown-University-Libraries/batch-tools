@@ -3,6 +3,7 @@ include '../header.php';
 include 'solrFacets.php';
 
 function expandCommunityId($arr, $field, $prefix = "(", $suff = ")") {
+	if (count($arr) == 0) return "";
     $q = $prefix;
     foreach(explode(",",$arr) as $col) {
     	if ($q != $prefix) {
