@@ -55,7 +55,7 @@ class solrFacets {
 		),
 	  	"ALLV" => array(
 	  		"desc" => "All Handle Views",
-	  		"query" => "+AND+(type:2+OR+type:3+OR+type:4)+AND+statistics_type:view"
+	  		"query" => "+AND+statistics_type:view"
 	  	),
 	  	"BITV" => array(
 			"desc" => "Original Bitstream Views/downloads",

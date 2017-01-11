@@ -2,6 +2,18 @@
 include '../header.php';
 include 'solrFacets.php';
 
+function expandCommunityId($arr, $field, $prefix = "(", $suff = ")") {
+    $q = $prefix;
+    foreach(explode(",",$arr) as $col) {
+    	if ($q != $prefix) {
+    		$q .= "+OR+";
+    	}
+    	$q .= $field . ":" . $col;
+    }
+    $q .= $suffix;
+    return $q;
+}
+
 $CUSTOM = custom::instance();
 
 $bfacet = "&facet.field=bundleName";
@@ -21,36 +33,22 @@ if ($wake != "") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="(owningComm:".$comm."+OR+id:".$comm;
-        foreach(explode(",",$colls) as $col) {
-       		$q .= "+OR+" . "id:" . $col;
-        }
-        $q .= ")";
+        $q="(type:4+AND+id:".$comm.")" 
+            . expandCommunityId($colls,"id","+AND+(type:3+AND+") 
+            . expandCommunityId($colls,"owningColl", "+AND+(type:2+AND+");
     } else if ($typearg == "COMMV") {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
-        $q="(";
-        foreach(explode(",",$colls) as $col) {
-            if ($q != "(") {
-                $q .= "+OR+";
-            }
-            $q .= "id:" . $col;
-        }
-        $q .= ")";
+        $q=expandCommunityId($colls,"id");
     } else if ($colls == "" || $colls == null){
         $q = "owningColl:na";
     } else {
-        $q="(";
-        foreach(explode(",",$colls) as $col) {
-            if ($q != "(") {
-                $q .= "+OR+";
-            }
-            $q .= "owningColl:" . $col;
-        }
-        $q .= ")";
+        $q=expandCommunityId($colls,"owningcoll");
     }
 } else if ($coll != "") {
-    if ($typearg == "COLLV")
+	if ($typearg == "ALLV")
+		$q="na:na";
+	if ($typearg == "COLLV")
   	    $q="id:".$coll;
     else	
         $q="owningColl:".$coll;
