@@ -10,7 +10,7 @@ function expandCommunityId($arr, $field, $prefix = "(", $suff = ")") {
     	}
     	$q .= $field . ":" . $col;
     }
-    $q .= $suffix;
+    $q .= $suff;
     return $q;
 }
 
@@ -57,8 +57,6 @@ if ($wake != "") {
 }
 
 $q .= "";
-
-echo $q;exit;
 
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
