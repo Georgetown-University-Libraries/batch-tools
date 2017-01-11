@@ -20,7 +20,7 @@ $typearg = solrFacets::getTypeArg();
 if ($wake != "") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
-    if ($typearg == "COMMV") {
+    if ($typearg == "COMMV" || $typearg == "ALLV" || $typearg == "SEARCH" ) {
         $q="(owningComm:".$comm."+OR+id:".$comm.")";
     } else if ($typearg == "COLLV") {
         $q="(";
