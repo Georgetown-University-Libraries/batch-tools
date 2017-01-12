@@ -34,7 +34,18 @@ $header->litPageHeader();
 <style type="text/css">
   td.num {text-align: right;}
   tr[class$="tot"] td,tr[class$="tot"] th {background-color: #EEE;}
+  tr.head td,tr.head th {background-color: yellow;}
+  tr.grand_tot td,tr.grand_tot th {background-color: orange;}
 </style>
+<script type="text/javascript">
+var tot = 0;
+$(function(){
+  $("tr[class$='-tot']").each(function(){
+    tot += Number($(this).find("td:first").text());
+    $(this).find("td:last").text(tot);
+  });
+});
+</script>
 </head>
 <body>
 <?php 
@@ -63,7 +74,7 @@ select
   group by month
 union
 select
-  'grand tot' as month,
+  'grand_tot' as month,
   count(*)
 from metadatavalue
 where metadata_field_id = (
