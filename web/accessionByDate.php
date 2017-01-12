@@ -31,6 +31,9 @@ header('Content-type: text/html; charset=UTF-8');
 $header = new LitHeader("Item Count By Accession Date");
 $header->litPageHeader();
 ?>
+<style type="text/css">
+  td.num {text-align: right;}
+</style>
 </head>
 <body>
 <?php 
@@ -81,11 +84,11 @@ if (!$result) {
 }
 $result = $stmt->fetchAll();
 echo "<table>";
-echo "<tr><th>Date</th><th>Accession Count</th></tr>";
+echo "<tr><th>Date</th><th>Accession Count</th><th>Total</th></tr>";
 foreach($result as $row) {
 	$d = $row[0];
 	$c = $row[1];
-	echo "<tr><th>{$d}</th><td>{$c}</td></tr>";
+	echo "<tr class='row {$d}'><th>{$d}</th><td class='num'>{$c}</td><td class='num'/></tr>";
 }
 echo "<table>";
 
