@@ -69,7 +69,7 @@ if ($CUSTOM->showStatsTools()) {
   <a href="stats/qcHierarchyStats.php">Show Statistics</a>
 </li>
 <li>
-  <a href="web/accessionByDate.php">Accessions By Date</a>
+  <a href="accessionByDate.php">Accessions By Date</a>
 </li>
 <?php 
 }
