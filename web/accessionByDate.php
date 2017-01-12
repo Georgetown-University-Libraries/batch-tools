@@ -33,6 +33,7 @@ $header->litPageHeader();
 ?>
 <style type="text/css">
   td.num {text-align: right;}
+  tr[class$="tot"] td,tr[class$="tot"] th {background-color: #EEE;}
 </style>
 </head>
 <body>
