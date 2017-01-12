@@ -34,7 +34,7 @@ $header->litPageHeader();
 </head>
 <body>
 <?php 
-$header->litHeaderAuth(array());
+$header->litHeader(array());
 $sql = <<< HERE
 select
   substr(text_value,1,7) as month,
