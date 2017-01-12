@@ -42,7 +42,8 @@ var tot = 0;
 $(function(){
   $("tr[class$='-tot']").each(function(){
     tot += Number($(this).find("td:first").text());
-    $(this).find("td:last").text(tot.format(0,3,','));
+    var s = (""+tot).format(0,3,',');
+    $(this).find("td:last").text(s);
   });
 });
 </script>
