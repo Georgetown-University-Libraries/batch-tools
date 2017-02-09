@@ -54,7 +54,7 @@ $header->litPageHeader();
 <div id="status"><?php echo $status?></div>
 <?php 
 collection::getCollectionWidget(util::getPostArg("community",""), util::getPostArg("collection",""));
-$skipindex = ((util::getPostArg("skipindex","") == "Y") || (count($_POST) == 0)) ? "checked" : "";
+$skipindex = ((util::getPostArg("skipindex","") == "Y") || (count($_POST) == 0)) ? "checked='1'" : "";
 echo count($_POST);
 echo $skipindex;
 ?>
