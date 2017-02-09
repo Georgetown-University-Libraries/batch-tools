@@ -54,13 +54,11 @@ $header->litPageHeader();
 <div id="status"><?php echo $status?></div>
 <?php 
 collection::getCollectionWidget(util::getPostArg("community",""), util::getPostArg("collection",""));
-$skipindex = ((util::getPostArg("skipindex","") == "Y") || (count($_POST) == 0)) ? "checked='1'" : "";
-echo count($_POST);
-echo $skipindex;
+$skipindex = ((util::getPostArg("skipindex","") == "Y") || (count($_POST) == 0)) ? "checked" : "";
 ?>
 <p>
   <label for="skipindex">Skip <?php echo ($CUSTOM->ver < 4) ? "Full Text/" : ""; ?>Solr Index Update</label>
-  <input type="checkbox" id="skipindex" name="skipindex" value="Y" {$skipindex}/>
+  <input type="checkbox" id="skipindex" name="skipindex" value="Y" <?php echo $skipindex?>/>
 </p>
 <p>
 <fieldset class="loc">
