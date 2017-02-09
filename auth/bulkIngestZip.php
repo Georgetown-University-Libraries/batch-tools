@@ -113,7 +113,7 @@ function testArgs(){
 	$loc = escapeshellarg($loc);
 	$mapfile = escapeshellarg($mapfile);
 	
-	$mode = (util::getPostArg("skipindex","") == "Y" || (count($_POST) == 0)) ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
+	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
 
 	$cmd = <<< HERE
 {$u} {$mode} {$user} {$coll} {$loc} {$mapfile}
