@@ -120,7 +120,7 @@ function testArgs(){
 	$loc = escapeshellarg($ingestLoc . $loc);
 	$mapfile = escapeshellarg($mapfile);
 	
-	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-skipindex" : "gu-ingest";
+	$mode = (util::getPostArg("skipindex","") == "Y" || (count($_POST) == 0)) ? "gu-ingest-skipindex" : "gu-ingest";
 
 	$cmd = <<< HERE
 {$u} {$mode} {$user} {$coll} {$loc} {$mapfile}

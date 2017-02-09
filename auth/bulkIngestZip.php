@@ -54,7 +54,7 @@ $header->litPageHeader();
 <div id="status"><?php echo $status?></div>
 <?php 
 collection::getCollectionWidget(util::getPostArg("community",""), util::getPostArg("collection",""));
-$skipindex = (util::getPostArg("skipindex","") == "Y") ? "checked" : "";
+$skipindex = (util::getPostArg("skipindex","") == "Y" || (count($_POST) == 0)) ? "checked" : "";
 ?>
 <p>
   <label for="skipindex">Skip <?php echo ($CUSTOM->ver < 4) ? "Full Text/" : ""; ?>Solr Index Update</label>
@@ -113,7 +113,7 @@ function testArgs(){
 	$loc = escapeshellarg($loc);
 	$mapfile = escapeshellarg($mapfile);
 	
-	$mode = (util::getPostArg("skipindex","") == "Y") ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
+	$mode = (util::getPostArg("skipindex","") == "Y" || (count($_POST) == 0)) ? "gu-ingest-zip-skipindex" : "gu-ingest-zip";
 
 	$cmd = <<< HERE
 {$u} {$mode} {$user} {$coll} {$loc} {$mapfile}
