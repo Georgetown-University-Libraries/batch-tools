@@ -55,6 +55,8 @@ $header->litPageHeader();
 <?php 
 collection::getCollectionWidget(util::getPostArg("community",""), util::getPostArg("collection",""));
 $skipindex = ((util::getPostArg("skipindex","") == "Y") || (count($_POST) == 0)) ? "checked" : "";
+echo count($_POST);
+echo $skipindex;
 ?>
 <p>
   <label for="skipindex">Skip <?php echo ($CUSTOM->ver < 4) ? "Full Text/" : ""; ?>Solr Index Update</label>
