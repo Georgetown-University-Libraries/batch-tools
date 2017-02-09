@@ -58,7 +58,7 @@ $skipindex = (util::getPostArg("skipindex","") == "Y" || (count($_POST) == 0)) ?
 ?>
 <p>
   <label for="skipindex">Skip <?php echo ($CUSTOM->ver < 4) ? "Full Text/" : ""; ?>Solr Index Update</label>
-  <input type="checkbox" id="skipindex" name="skipindex" value="Y" {$skipindex}/>
+  <input type="checkbox" id="skipindex" name="skipindex" value="Y" <?php echo $skipindex?>/>
 </p>
 <p>
 <fieldset class="loc">
