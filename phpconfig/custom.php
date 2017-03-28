@@ -61,6 +61,7 @@ class custom {
 	public function isCheckFilter($name) {return false;}
 	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
+	public function getArchivesSpaceProp() {return "/tmp/as.prop";}
 	public function getIngestLocTemp() {return "/var/dspace/ingest/";}
 	public function getRestServiceUrl() {return "https://localhost/rest";}
 	public function showBatchTools() {return $this->isUserCollectionOwner();}
