@@ -5,12 +5,12 @@ ini_set('max_execution_time', 120);
 
 $CUSTOM = custom::instance();
 $shards = $CUSTOM->getSolrShards();
-$qroot = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&rows=0&wt=json";
+$qroot = "/solr/statistics/select?shards={$shards}&rows=0&wt=json";
 
 $item=util::getArg("item","");
 $ititle = $item == "" ? "All Items" : $item;
-$isearch = "&q=type:2" . $item == "" ? "" : "+AND+id:{$item}";
-$bsearch = "&q=type:0+AND+bundle:ORIGINAL" . $item == "" ? "" : "+AND+owningItem:{$item}";
+$isearch = "&q=type:2" . (($item == "") ? "" : "+AND+id:{$item}");
+$bsearch = "&q=type:0+AND+bundle:ORIGINAL" . (($item == "") ? "" : "+AND+owningItem:{$item}");
 $facet = "&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-30MONTHS&facet.date.end=NOW&facet.date.gap=".urlencode("+1MONTH");
 $query1 = "{$qroot}{$facet}{$isearch}";
 
