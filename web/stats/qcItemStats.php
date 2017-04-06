@@ -38,7 +38,7 @@ $header->litPageHeader();
 </head>
 <body>
 <?php $header->litHeader();?>
-
+<h4><?php echo $query1?></h4>
 <form method="GET" action="qcItemStats.php">
 <input type="text" name="item" value="<?php echo $item?>"/>
 <input type="submit" value="Refresh"/>
