@@ -28,7 +28,13 @@ $header->litPageHeader();
   $(document).ready(function(){
     var url = '<?php echo $query1?>';
     $.getJSON(url, function(data){
-      $("#foo").text(data);
+      var timeobj = data.facet_values.facet_dates.time;
+      var times = timeobj.keys();
+      for(var i=0; i<times.length; i++) {
+        var ctime = times[i];
+        var count = timeobj[times];
+        $("#foo").append($("<h4>".ctime."=".count."</h4>")); 
+      }
     });
   });
 </script>
