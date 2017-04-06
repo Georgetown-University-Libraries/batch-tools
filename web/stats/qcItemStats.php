@@ -25,7 +25,8 @@ $header->litPageHeader();
 
 <script type="text/javascript">
   $(document).ready(function(){
-    $.getJSON("{$qroot}{$facet}{$isearch}", function(data){
+    var url = '<?php echo "{$qroot}{$facet}{$isearch}"?>';
+    $.getJSON(url, function(data){
       $("#foo").text(data);
     });
   });
