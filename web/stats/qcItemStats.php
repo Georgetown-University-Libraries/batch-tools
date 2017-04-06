@@ -33,7 +33,7 @@ $header->litPageHeader();
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
         var count = timeobj[times];
-        $("#foo").append($("<h4>".ctime."=".count."</h4>")); 
+        $("#foo").append($("<h4>"+ctime+"="+count+"</h4>")); 
       }
     });
   });
