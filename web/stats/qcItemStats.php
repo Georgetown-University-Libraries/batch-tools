@@ -12,6 +12,7 @@ $ititle = $item == "" ? "All Items" : $item;
 $isearch = "&q=type:2" . $item == "" ? "" : "+AND+id:{$item}";
 $bsearch = "&q=type:0+AND+bundle:ORIGINAL" . $item == "" ? "" : "+AND+owningItem:{$item}";
 $facet = "&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-30MONTHS&facet.date.end=NOW&facet.date.gap=".urlencode("+1MONTH");
+$query1 = "{$qroot}{$facet}{$isearch}";
 
 header('Content-type: text/html; charset=UTF-8');
 
@@ -19,13 +20,13 @@ header('Content-type: text/html; charset=UTF-8');
 <html>
 <head>
 <?php 
-$header = new LitHeader($item);
+$header = new LitHeader($ititle);
 $header->litPageHeader();
 ?>
 
 <script type="text/javascript">
   $(document).ready(function(){
-    var url = '<?php echo "{$qroot}{$facet}{$isearch}"?>';
+    var url = '<?php echo $query1?>';
     $.getJSON(url, function(data){
       $("#foo").text(data);
     });
@@ -36,7 +37,7 @@ $header->litPageHeader();
 
 </head>
 <body>
-<?php $header->litHeader(array());?>
+<?php $header->litHeader();?>
 
 <form method="GET" action="qcItemStats.php">
 <input type="text" name="item" value="<?php echo $item?>"/>
