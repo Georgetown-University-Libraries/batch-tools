@@ -34,11 +34,6 @@ $header->litPageHeader();
     return item == "" ? "*" : item;
   }
 
-  var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-  var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-  var QBY = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-  var QBM = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-
   function runQuery(url, regex, col) {
     $.getJSON(url, function(data){
       var timeobj = data.facet_counts.facet_dates.time;
@@ -58,10 +53,14 @@ $header->litPageHeader();
   
   $(document).ready(function(){
     $("#refresh").on("click", function(){
+      var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+      var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+      var QBY = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+      var QBM = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
       runQuery(QIY, /^(\d\d\d\d).*/, "item");
       runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
-      runQuery(QBY, /^(\d\d\d\d).*/, "item");
-      runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
+      runQuery(QBY, /^(\d\d\d\d).*/, "bit");
+      runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
     });
   });
 
