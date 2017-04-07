@@ -26,7 +26,7 @@ $header->litPageHeader();
 
 <script type="text/javascript">
   function getSolrHeader() {
-    return '<?php echo $qroot;?>'
+    return '<?php echo $qroot;?>';
   }
 
   function getItem() {
