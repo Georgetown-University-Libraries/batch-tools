@@ -57,11 +57,15 @@ $header->litPageHeader();
   }
   
   $(document).ready(function(){
-    runQuery(QIY, /^(\d\d\d\d).*/, "item");
-    runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
-    runQuery(QBY, /^(\d\d\d\d).*/, "item");
-    runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
+    $("#refresh").on("click", function(){
+      runQuery(QIY, /^(\d\d\d\d).*/, "item");
+      runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
+      runQuery(QBY, /^(\d\d\d\d).*/, "item");
+      runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
+    });
   });
+
+  
 
   function add(ctimestr, col, val) {
     var tr = $("tr.data[date='"+ctimestr+"']");
@@ -87,7 +91,7 @@ tr.header th, tr.header:td{background-color: yellow;}
 <h4><?php echo $query1?></h4>
 <form method="GET" action="qcItemStats.php">
 <input type="text" id="item" name="item" value="<?php echo $item?>"/>
-<input type="submit" value="Refresh"/>
+<input type="button" id="refresh" value="Refresh"/>
 </form>
 
 
