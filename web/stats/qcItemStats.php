@@ -53,7 +53,7 @@ $header->litPageHeader();
         var count = timeobj[ctime];
         add(ctimestr, col, count);
       }
-    }
+    });
   }
   
   $(document).ready(function(){
