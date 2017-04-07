@@ -95,6 +95,7 @@ $header->litPageHeader();
       tr.append($("<td/>").attr("class","item"));
       tr.append($("<td/>").attr("class","itemf"));
       tr.append($("<td/>").attr("class","bit"));
+      tr.append($("<td/>").attr("class","bitf"));
       $("#datatbl tbody").append(tr);
     }
     tr.find("td."+col).text(val);
@@ -124,6 +125,7 @@ Item Handle: <input type="text" id="handle" name="handle" value="<?php echo $han
   <th class="item">Item View</th>
   <th class="itemf">Item View (bots filtered)</th>
   <th class="bit">Bitstream Views</th>
+  <th class="bitf">Bitstream Views (bots filtered)</th>
 </tr>
 </tbody>
 </table>
