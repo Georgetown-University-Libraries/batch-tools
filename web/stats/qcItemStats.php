@@ -7,7 +7,11 @@ $CUSTOM = custom::instance();
 $shards = $CUSTOM->getSolrShards();
 $qroot = "/solr/statistics/select?shards={$shards}&rows=0&wt=json";
 
-$item=util::getArg("item","");
+$handle=getArg("handle","");
+$item="";
+if ($handle != '') {
+	$item = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h", array(":h" => $handle));
+}
 $ititle = $item == "" ? "All Items" : $item;
 
 header('Content-type: text/html; charset=UTF-8');
@@ -33,7 +37,7 @@ $header->litPageHeader();
   function runQuery(url, regex, col) {
     $.getJSON(url, function(data){
       var timeobj = data.facet_counts.facet_dates.time;
-      var times = Object.keys(timeobj);
+      var times = Object.keys(timeobj).reverse();
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
         var match = regex.exec(ctime);
@@ -48,16 +52,14 @@ $header->litPageHeader();
   }
   
   $(document).ready(function(){
-    $("#refresh").on("click", function(){
-      var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-      var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-      var QBY = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-      var QBM = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-      runQuery(QIY, /^(\d\d\d\d).*/, "item");
-      runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
-      runQuery(QBY, /^(\d\d\d\d).*/, "bit");
-      runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
-    });
+    var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+    var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+    var QBY = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+    var QBM = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+    runQuery(QIY, /^(\d\d\d\d).*/, "item");
+    runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
+    runQuery(QBY, /^(\d\d\d\d).*/, "bit");
+    runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
   });
 
   
@@ -85,8 +87,9 @@ tr.header th, tr.header:td{background-color: yellow;}
 <?php $header->litHeader();?>
 <h4><?php echo $query1?></h4>
 <form method="GET" action="qcItemStats.php">
-<input type="text" id="item" name="item" value="<?php echo $item?>"/>
-<input type="button" id="refresh" value="Refresh"/>
+<input type="hidden" id="item" name="item" value="<?php echo $item?>"/>
+<input type="text" id="handle" name="handle" value="<?php echo $handle?>"/>
+<input type="submit" id="refresh" value="Refresh"/>
 </form>
 
 
