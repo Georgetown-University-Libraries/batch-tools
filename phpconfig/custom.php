@@ -162,11 +162,12 @@ class custom {
     
     public function getStatsBotsStr() {
     	$botstr = "&fq=NOT(";
-    	foreach($bots as $k => $v) {
+    	foreach($this->getStatsBots() as $k => $v) {
     		if ($k != 0) $botstr .= "+OR+";
     		$botstr .= $v;
     	}
     	$botstr .= ")";
+    	return $botstr;
     }
     
     public function initCustomQueries() {    	
