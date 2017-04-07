@@ -160,6 +160,15 @@ class custom {
 		);
     }
     
+    public function getStatsBotsStr() {
+    	$botstr = "&fq=NOT(";
+    	foreach($bots as $k => $v) {
+    		if ($k != 0) $botstr .= "+OR+";
+    		$botstr .= $v;
+    	}
+    	$botstr .= ")";
+    }
+    
     public function initCustomQueries() {    	
     }
     

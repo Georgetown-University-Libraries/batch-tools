@@ -37,6 +37,9 @@ $header->litPageHeader();
   function getSolrHeader() {
     return '<?php echo $qroot;?>';
   }
+  function getStatsBotsStr() {
+    return '<?php echo $CUSTOM->getStatsBotsStr();?>';
+  }
 
   function getItem() {
     var item = $("#item").val();
@@ -59,16 +62,24 @@ $header->litPageHeader();
       }
     });
   }
-  
+
+  function getDateFacet(NUM,DUR) {
+    return "&facet=true&facet.date=time&facet.date.start=NOW/"+DUR+"/DAY-"+NUM+DUR+"S&facet.date.end=NOW&facet.date.gap=%2B1"+DUR;
+  }
+
   $(document).ready(function(){
-    var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-    var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-    var QBY = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-    var QBM = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-    runQuery(QIY, /^(\d\d\d\d).*/, "item");
-    runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
-    runQuery(QBY, /^(\d\d\d\d).*/, "bit");
-    runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
+    var QIY  = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(5,"YEAR");
+    var QIM  = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(60,"MONTH");
+    var QIYF = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(5,"YEAR")+getStatsBotsStr();
+    var QIMF = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
+    var QBY  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR");
+    var QBM  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH");
+    runQuery(QIY,  /^(\d\d\d\d).*/, "item");
+    runQuery(QIM,  /^(\d\d\d\d-\d\d-\d\d).*/, "item");
+    runQuery(QIYF, /^(\d\d\d\d).*/, "itemf");
+    runQuery(QIMF, /^(\d\d\d\d-\d\d-\d\d).*/, "itemf");
+    runQuery(QBY,  /^(\d\d\d\d).*/, "bit");
+    runQuery(QBM,  /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
   });
 
   
@@ -80,6 +91,7 @@ $header->litPageHeader();
       tr.attr("class","data").attr("date",ctimestr);
       tr.append($("<th/>").text(ctimestr));
       tr.append($("<td/>").attr("class","item"));
+      tr.append($("<td/>").attr("class","itemf"));
       tr.append($("<td/>").attr("class","bit"));
       $("#datatbl tbody").append(tr);
     }
@@ -108,6 +120,7 @@ Item Handle: <input type="text" id="handle" name="handle" value="<?php echo $han
 <tr  class='header'>
   <th>Month</th>
   <th class="item">Item View</th>
+  <th class="itemf">Item View (bots filtered)</th>
   <th class="bit">Bitstream Views</th>
 </tr>
 </tbody>
