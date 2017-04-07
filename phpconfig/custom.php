@@ -167,6 +167,7 @@ class custom {
     		$botstr .= $v;
     	}
     	$botstr .= ")";
+    	return $botstr;
     }
     
     public function initCustomQueries() {    	
