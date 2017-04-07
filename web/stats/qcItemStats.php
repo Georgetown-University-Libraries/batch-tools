@@ -25,22 +25,42 @@ $header->litPageHeader();
 ?>
 
 <script type="text/javascript">
-  $(document).ready(function(){
-    var url = '<?php echo $query1?>';
+  function getSolrHeader() {
+    return '<?php echo $qroot;?>'
+  }
+
+  function getItem() {
+    var item = $("#item").val();
+    return item == "" ? "*" : item;
+  }
+
+  var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+  var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+  var QBY = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+owningItem:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+  var QBM = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+owningItem:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+
+  function runQuery(url, regex, col) {
     $.getJSON(url, function(data){
       var timeobj = data.facet_counts.facet_dates.time;
       var times = Object.keys(timeobj);
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
-        var match = /^(\d{4}-\d\d-\d\d).*$/.exec(ctime);
+        var match = regex.exec(ctime);
         if (match == null) {
           continue;
         }
         var ctimestr = match[1];
         var count = timeobj[ctime];
-        add(ctimestr,"item", count);
+        add(ctimestr, col, count);
       }
-    });
+    }
+  }
+  
+  $(document).ready(function(){
+    runQuery(QIY, /^\d\d\d\d.*/, "item");
+    runQuery(QIM, /^\d\d\d\d-\d\d-\d\d.*/, "item");
+    runQuery(QBY, /^\d\d\d\d.*/, "item");
+    runQuery(QBM, /^\d\d\d\d-\d\d-\d\d.*/, "item");
   });
 
   function add(ctimestr, col, val) {
@@ -66,7 +86,7 @@ tr.header th, tr.header:td{background-color: yellow;}
 <?php $header->litHeader();?>
 <h4><?php echo $query1?></h4>
 <form method="GET" action="qcItemStats.php">
-<input type="text" name="item" value="<?php echo $item?>"/>
+<input type="text" id="item" name="item" value="<?php echo $item?>"/>
 <input type="submit" value="Refresh"/>
 </form>
 
