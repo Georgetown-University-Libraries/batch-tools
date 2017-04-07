@@ -48,7 +48,7 @@ $header->litPageHeader();
     if (!tr.is("*")) {
       tr = $("<tr/>");
       tr.attr("class","data").attr("date",ctimestr);
-      tr.append($("<th/>").text(timestr));
+      tr.append($("<th/>").text(ctimestr));
       tr.append($("<td/>").attr("class",item));
       tr.append($("<td/>").attr("class",bit));
       $("#datatbl tbody").append(tr);
