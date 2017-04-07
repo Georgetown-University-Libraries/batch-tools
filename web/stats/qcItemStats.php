@@ -32,8 +32,11 @@ $header->litPageHeader();
       var times = Object.keys(timeobj);
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
-        var match=/^(\d{4}-\d\d-\d\d).*$/.match(ctime);
-        if (match == null) continue;
+        var regex = /^(\d{4}-\d\d-\d\d).*$/;
+        if (!regex.test(ctime) {
+          continue;
+        }
+        var match=regex.match(ctime);
         var ctimestr = match[1];
         var count = timeobj[ctime];
         $("#foo").append($("<h4>"+ctimestr+"="+count+"</h4>")); 
