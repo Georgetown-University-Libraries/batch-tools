@@ -9,10 +9,14 @@ $qroot = "/solr/statistics/select?shards={$shards}&rows=0&wt=json";
 
 $handle=util::getArg("handle","");
 $item="";
-if ($handle != '') {
+if ($handle == '') {
+	$item = "";
+	$ititle = "All Items";
+} else {
+	$item = -1;
 	$item = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h", array(":h" => $handle));
+	$ititle = $handle;
 }
-$ititle = $item == "" ? "All Items" : $handle;
 
 header('Content-type: text/html; charset=UTF-8');
 
