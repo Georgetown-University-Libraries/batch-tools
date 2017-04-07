@@ -47,7 +47,7 @@ $header->litPageHeader();
     var tr = $("tr.data[date='"+ctimestr+"']");
     if (!tr.is("*")) {
       tr = $("<tr/>");
-      tr.attr("class","data").attr("date",timestr);
+      tr.attr("class","data").attr("date",ctimestr);
       tr.append($("<th/>").text(timestr));
       tr.append($("<td/>").attr("class",item));
       tr.append($("<td/>").attr("class",bit));
