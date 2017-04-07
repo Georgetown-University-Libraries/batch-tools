@@ -29,6 +29,7 @@ class custom {
 	const SYSADMIN  = "system-admin";
 	const VIEWER = "viewer";
 	
+	public function getExtConfig() {return array();}
 	public function getMode() {return "MODE";}
 	public function getSystemLogo() {return "";}
 	public function getSystemName() {return "DSpace Web Tools";}
