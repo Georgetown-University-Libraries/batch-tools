@@ -50,13 +50,13 @@ $header->litPageHeader();
     var handle = $("#handle").val();
     runQuery(handle, "item", "YEAR", 5, "item", false);
     runQuery(handle, "bit", "YEAR", 5, "bit", false);
-    runQuery(handle, "itemf", "YEAR", 5, "item", false);
-    runQuery(handle, "bitf", "YEAR", 5, "bit", true);
+    runQuery(handle, "item", "YEAR", 5, "itemf", true);
+    runQuery(handle, "bit", "YEAR", 5, "bitf", true);
 
     runQuery(handle, "item", "MONTH", 60, "item", false);
     runQuery(handle, "bit", "MONTH", 60, "bit", false);
-    runQuery(handle, "itemf", "MONTH", 60, "item", true);
-    runQuery(handle, "bitf", "MONTH", 60, "bit", true);
+    runQuery(handle, "item", "MONTH", 60, "itemf", true);
+    runQuery(handle, "bit", "MONTH", 60, "bitf", true);
   });
 
   
@@ -87,7 +87,6 @@ tr.data td {text-align: right;}
 <body>
 <?php $header->litHeader();?>
 <form method="GET" action="qcItemStats.php">
-<input type="hidden" id="item" name="item" value="<?php echo $item?>"/>
 Item Handle: <input type="text" id="handle" name="handle" value="<?php echo $handle?>"/>
 <input type="submit" id="refresh" value="Refresh"/>
 </form>
