@@ -82,8 +82,8 @@ $header->litPageHeader();
     runQuery(QIMF, /^(\d\d\d\d-\d\d).*/, "itemf", "month");
     runQuery(QBY,  /^(\d\d\d\d).*/, "bit", "year");
     runQuery(QBM,  /^(\d\d\d\d-\d\d).*/, "bit", "month");
-    runQuery(QBY,  /^(\d\d\d\d).*/, "bitf", "year");
-    runQuery(QBM,  /^(\d\d\d\d-\d\d).*/, "bitf", "month");
+    runQuery(QBYF, /^(\d\d\d\d).*/, "bitf", "year");
+    runQuery(QBMF, /^(\d\d\d\d-\d\d).*/, "bitf", "month");
   });
 
   
@@ -107,6 +107,7 @@ $header->litPageHeader();
 tr.data:nth-child(2n) th, tr.data:nth-child(2n) td{background-color: #EEEEEE;}
 tr.header th, tr.header td{background-color: yellow;}
 tr.year th, tr.year td {color: red;}
+tr.data td {text-align: right;}
 </style>
 
 </head>
