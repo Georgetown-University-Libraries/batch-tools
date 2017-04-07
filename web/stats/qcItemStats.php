@@ -29,7 +29,7 @@ $header->litPageHeader();
     var url = '<?php echo $query1?>';
     $.getJSON(url, function(data){
       var timeobj = data.facet_counts.facet_dates.time;
-      var times = timeobj.keys();
+      var times = Object.keys(timeobj);
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
         var count = timeobj[times];
