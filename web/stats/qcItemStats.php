@@ -74,6 +74,8 @@ $header->litPageHeader();
     var QIMF = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
     var QBY  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR");
     var QBM  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH");
+    var QBYF  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR")+getStatsBotsStr();
+    var QBMF  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
     runQuery(QIY,  /^(\d\d\d\d).*/, "item");
     runQuery(QIM,  /^(\d\d\d\d-\d\d-\d\d).*/, "item");
     runQuery(QIYF, /^(\d\d\d\d).*/, "itemf");
