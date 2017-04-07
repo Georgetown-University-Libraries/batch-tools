@@ -58,6 +58,9 @@ $header->litPageHeader();
     runQuery(handle, "bit", "MONTH", 60, "bit", false);
     runQuery(handle, "item", "MONTH", 60, "itemf", true);
     runQuery(handle, "bit", "MONTH", 60, "bitf", true);
+
+    var gana = "https://ga-dev-tools.appspot.com/query-explorer/?start-date=3000daysAgo&end-date=yesterday&metrics=ga%3Apageviews&dimensions=ga%3Ayear%2Cga%3Amonth&filters=ga%3ApagePath%3D%3D%2Fhandle%2F"+handle;
+    $.getJSON(gana, function(data){alert(data)});
   });
 
   
