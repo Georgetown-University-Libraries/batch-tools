@@ -30,6 +30,7 @@ $header->litPageHeader();
           filterbots: filterbots? "Y" : ""
         },
         function(data){
+          if (data == null) return;
           var timeobj = data.facet_counts.facet_dates.time;
           var times = Object.keys(timeobj).reverse();
           for(var i=0; i<times.length; i++) {
