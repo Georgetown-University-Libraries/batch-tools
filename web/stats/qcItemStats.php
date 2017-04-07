@@ -38,7 +38,7 @@ $header->litPageHeader();
         }
         var ctimestr = match[1];
         var count = timeobj[ctime];
-        add(timestr,"item", count);
+        add(ctimestr,"item", count);
       }
     });
   });
