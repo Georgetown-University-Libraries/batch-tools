@@ -37,13 +37,16 @@ $header->litPageHeader();
   function getSolrHeader() {
     return '<?php echo $qroot;?>';
   }
+  function getStatsBotsStr() {
+    return '<?php echo $CUSTOM->getStatsBotsStr();?>';
+  }
 
   function getItem() {
     var item = $("#item").val();
     return item == "" ? "*" : item;
   }
 
-  function runQuery(url, regex, col) {
+  function runQuery(url, regex, col, rclass) {
     $.getJSON(url, function(data){
       var timeobj = data.facet_counts.facet_dates.time;
       var times = Object.keys(timeobj).reverse();
@@ -55,40 +58,55 @@ $header->litPageHeader();
         }
         var ctimestr = match[1];
         var count = timeobj[ctime];
-        add(ctimestr, col, count);
+        add(ctimestr, col, count, rclass);
       }
     });
   }
-  
+
+  function getDateFacet(NUM,DUR) {
+    return "&facet=true&facet.date=time&facet.date.start=NOW/"+DUR+"/DAY-"+NUM+DUR+"S&facet.date.end=NOW&facet.date.gap=%2B1"+DUR;
+  }
+
   $(document).ready(function(){
-    var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-    var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-    var QBY = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-    var QBM = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-    runQuery(QIY, /^(\d\d\d\d).*/, "item");
-    runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
-    runQuery(QBY, /^(\d\d\d\d).*/, "bit");
-    runQuery(QBM, /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
+    var QIY  = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(5,"YEAR");
+    var QIM  = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(60,"MONTH");
+    var QIYF = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(5,"YEAR")+getStatsBotsStr();
+    var QIMF = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
+    var QBY  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR");
+    var QBM  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH");
+    var QBYF = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR")+getStatsBotsStr();
+    var QBMF = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
+    runQuery(QIY,  /^(\d\d\d\d).*/, "item", "year");
+    runQuery(QIM,  /^(\d\d\d\d-\d\d).*/, "item", "month");
+    runQuery(QIYF, /^(\d\d\d\d).*/, "itemf", "year");
+    runQuery(QIMF, /^(\d\d\d\d-\d\d).*/, "itemf", "month");
+    runQuery(QBY,  /^(\d\d\d\d).*/, "bit", "year");
+    runQuery(QBM,  /^(\d\d\d\d-\d\d).*/, "bit", "month");
+    runQuery(QBY,  /^(\d\d\d\d).*/, "bitf", "year");
+    runQuery(QBM,  /^(\d\d\d\d-\d\d).*/, "bitf", "month");
   });
 
   
 
-  function add(ctimestr, col, val) {
-    var tr = $("tr.data[date='"+ctimestr+"']");
+  function add(ctimestr, col, val, rclass) {
+    var tr = $("tr.data[date='"+ctimestr+"']").addClass(rclass);
     if (!tr.is("*")) {
       tr = $("<tr/>");
       tr.attr("class","data").attr("date",ctimestr);
       tr.append($("<th/>").text(ctimestr));
       tr.append($("<td/>").attr("class","item"));
+      tr.append($("<td/>").attr("class","itemf"));
       tr.append($("<td/>").attr("class","bit"));
+      tr.append($("<td/>").attr("class","bitf"));
       $("#datatbl tbody").append(tr);
     }
     tr.find("td."+col).text(val);
   }
 </script>
 <style type="text/css">
-tr.data:even th, tr.data:even:td{background-color: #EEEEEE;}
-tr.header th, tr.header:td{background-color: yellow;}
+tr.data:nth-child(2n) th, tr.data:nth-child(2n) td{background-color: #EEEEEE;}
+tr.header th, tr.header td{background-color: yellow;}
+tr.year th, tr.year td {color: red;}
 </style>
 
 </head>
@@ -108,7 +126,9 @@ Item Handle: <input type="text" id="handle" name="handle" value="<?php echo $han
 <tr  class='header'>
   <th>Month</th>
   <th class="item">Item View</th>
+  <th class="itemf">Item View (bots filtered)</th>
   <th class="bit">Bitstream Views</th>
+  <th class="bitf">Bitstream Views (bots filtered)</th>
 </tr>
 </tbody>
 </table>
