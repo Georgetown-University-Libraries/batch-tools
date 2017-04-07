@@ -107,6 +107,7 @@ $header->litPageHeader();
 tr.data:nth-child(2n) th, tr.data:nth-child(2n) td{background-color: #EEEEEE;}
 tr.header th, tr.header td{background-color: yellow;}
 tr.year th, tr.year td {color: red;}
+tr.data td {text-align: right;}
 </style>
 
 </head>
