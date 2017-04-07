@@ -33,7 +33,7 @@ $header->litPageHeader();
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
         var regex = /^(\d{4}-\d\d-\d\d).*$/;
-        if (!regex.test(ctime) {
+        if (!regex.test(ctime)) {
           continue;
         }
         var match=regex.match(ctime);
