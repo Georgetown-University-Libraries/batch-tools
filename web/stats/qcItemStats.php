@@ -7,7 +7,7 @@ $CUSTOM = custom::instance();
 $shards = $CUSTOM->getSolrShards();
 $qroot = "/solr/statistics/select?shards={$shards}&rows=0&wt=json";
 
-$handle=getArg("handle","");
+$handle=util::getArg("handle","");
 $item="";
 if ($handle != '') {
 	$item = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h", array(":h" => $handle));
