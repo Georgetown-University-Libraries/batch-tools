@@ -38,12 +38,27 @@ $header->litPageHeader();
         }
         var ctimestr = match[1];
         var count = timeobj[ctime];
-        $("#foo").append($("<h4>"+ctimestr+"="+count+"</h4>")); 
+        add(timestr,"item", count);
       }
     });
   });
+
+  function add(ctimestr, col, val) {
+    var tr = $("tr.data[date='"+ctimestr+"']");
+    if (!tr.is("*")) {
+      tr = $("<tr/>");
+      tr.attr("class","data").attr("date",timestr);
+      tr.append($("<th/>").text(timestr));
+      tr.append($("<td/>").attr("class",item));
+      tr.append($("<td/>").attr("class",bit));
+      $("#datatbl tbody").append(tr);
+    }
+    tr.find("td."+col).text(val);
+  }
 </script>
 <style type="text/css">
+tr.data:even th, tr.data:even:td{background-color: #EEEEEE;}
+tr.header th, tr.header:td{background-color: yellow;}
 </style>
 
 </head>
@@ -58,12 +73,12 @@ $header->litPageHeader();
 
 <div id="ins">
 <div id="foo"/>
-<table class="sortable">
+<table id="datatbl" class="sortable">
 <tbody>
 <tr  class='header'>
   <th>Month</th>
-  <th>Item View</th>
-  <th>Bitstream Views</th>
+  <th class="item">Item View</th>
+  <th class="bit">Bitstream Views</th>
 </tr>
 </tbody>
 </table>
