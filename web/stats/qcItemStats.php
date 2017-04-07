@@ -9,10 +9,6 @@ $qroot = "/solr/statistics/select?shards={$shards}&rows=0&wt=json";
 
 $item=util::getArg("item","");
 $ititle = $item == "" ? "All Items" : $item;
-$isearch = "&q=type:2" . (($item == "") ? "" : "+AND+id:{$item}");
-$bsearch = "&q=type:0+AND+bundle:ORIGINAL" . (($item == "") ? "" : "+AND+owningItem:{$item}");
-$facet = "&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-30MONTHS&facet.date.end=NOW&facet.date.gap=".urlencode("+1MONTH");
-$query1 = "{$qroot}{$facet}{$isearch}";
 
 header('Content-type: text/html; charset=UTF-8');
 
@@ -55,8 +51,8 @@ $header->litPageHeader();
     $("#refresh").on("click", function(){
       var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
       var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-      var QBY = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-      var QBM = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+      var QBY = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+      var QBM = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
       runQuery(QIY, /^(\d\d\d\d).*/, "item");
       runQuery(QIM, /^(\d\d\d\d-\d\d-\d\d).*/, "item");
       runQuery(QBY, /^(\d\d\d\d).*/, "bit");
