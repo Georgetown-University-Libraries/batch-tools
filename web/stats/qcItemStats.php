@@ -15,7 +15,12 @@ if ($handle == '') {
 } else {
 	$item = -1;
 	$item = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h", array(":h" => $handle));
-	$ititle = $handle;
+	if ($item == null) {
+		$item = -1;
+		$ititle = "{$handle} not found";
+	} else {
+		$ititle = $handle;
+	}
 }
 
 header('Content-type: text/html; charset=UTF-8');
