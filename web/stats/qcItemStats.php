@@ -12,7 +12,7 @@ $item="";
 if ($handle != '') {
 	$item = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h", array(":h" => $handle));
 }
-$ititle = $item == "" ? "All Items" : $item;
+$ititle = $item == "" ? "All Items" : $handle;
 
 header('Content-type: text/html; charset=UTF-8');
 
@@ -87,7 +87,7 @@ tr.header th, tr.header:td{background-color: yellow;}
 <?php $header->litHeader();?>
 <form method="GET" action="qcItemStats.php">
 <input type="hidden" id="item" name="item" value="<?php echo $item?>"/>
-<input type="text" id="handle" name="handle" value="<?php echo $handle?>"/>
+Item Handle: <input type="text" id="handle" name="handle" value="<?php echo $handle?>"/>
 <input type="submit" id="refresh" value="Refresh"/>
 </form>
 
