@@ -9,14 +9,14 @@ $CUSTOM = custom::instance();
 $shards = $CUSTOM->getSolrShards();
 $qroot  = $CUSTOM->getSolrPath() . "/statistics/select?shards={$shards}&rows=0&wt=json";
 
-$handle=util::getArg("handle","");
+$handle=trim(util::getArg("handle",""));
 $item="";
 if ($handle == '') {
 	$item = "*";
 } else {
 	$item = -1;
 	$item = $CUSTOM->getQueryVal("select resource_id from handle where handle=:h", array(":h" => $handle));
-	if ($item == null) {
+	if ($item == null || $item == "") {
 		$item = -1;
 	} else {
 	}

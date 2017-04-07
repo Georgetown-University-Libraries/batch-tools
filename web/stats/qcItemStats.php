@@ -3,7 +3,7 @@ include '../header.php';
 
 ini_set('max_execution_time', 120);
 
-$handle=util::getArg("handle","");
+$handle=trim(util::getArg("handle",""));
 
 header('Content-type: text/html; charset=UTF-8');
 
