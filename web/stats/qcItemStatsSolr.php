@@ -39,5 +39,5 @@ if ($type != "item" && $type != "bit") {
 $url = $qroot;
 $url .= ($type == "item") ? "&q=type:2+AND+id:{$item}" : "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:{$item}";
 $url .= $filterbots ? $CUSTOM->getStatsBotsStr() : "";
-$url .= "&facet=true&facet.date=time&facet.date.start=NOW/{$num}/DAY-{$num}{$dur}S&facet.date.end=NOW&facet.date.gap=%2B1{$dur}";
+$url .= "&facet=true&facet.date=time&facet.date.start=NOW/{$dur}/DAY-{$num}{$dur}S&facet.date.end=NOW&facet.date.gap=%2B1{$dur}";
 echo file_get_contents($url);
