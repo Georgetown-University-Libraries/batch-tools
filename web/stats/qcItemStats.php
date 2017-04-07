@@ -46,7 +46,7 @@ $header->litPageHeader();
     return item == "" ? "*" : item;
   }
 
-  function runQuery(url, regex, col) {
+  function runQuery(url, regex, col, rclass) {
     $.getJSON(url, function(data){
       var timeobj = data.facet_counts.facet_dates.time;
       var times = Object.keys(timeobj).reverse();
@@ -58,7 +58,7 @@ $header->litPageHeader();
         }
         var ctimestr = match[1];
         var count = timeobj[ctime];
-        add(ctimestr, col, count);
+        add(ctimestr, col, count, rclass);
       }
     });
   }
@@ -74,20 +74,22 @@ $header->litPageHeader();
     var QIMF = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
     var QBY  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR");
     var QBM  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH");
-    var QBYF  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR")+getStatsBotsStr();
-    var QBMF  = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
-    runQuery(QIY,  /^(\d\d\d\d).*/, "item");
-    runQuery(QIM,  /^(\d\d\d\d-\d\d-\d\d).*/, "item");
-    runQuery(QIYF, /^(\d\d\d\d).*/, "itemf");
-    runQuery(QIMF, /^(\d\d\d\d-\d\d-\d\d).*/, "itemf");
-    runQuery(QBY,  /^(\d\d\d\d).*/, "bit");
-    runQuery(QBM,  /^(\d\d\d\d-\d\d-\d\d).*/, "bit");
+    var QBYF = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(5,"YEAR")+getStatsBotsStr();
+    var QBMF = getSolrHeader() + "&q=type:0+AND+bundleName:ORIGINAL+AND+owningItem:"+getItem()+getDateFacet(60,"MONTH")+getStatsBotsStr();
+    runQuery(QIY,  /^(\d\d\d\d).*/, "item", "year");
+    runQuery(QIM,  /^(\d\d\d\d-\d\d).*/, "item", "month");
+    runQuery(QIYF, /^(\d\d\d\d).*/, "itemf", "year");
+    runQuery(QIMF, /^(\d\d\d\d-\d\d).*/, "itemf", "month");
+    runQuery(QBY,  /^(\d\d\d\d).*/, "bit", "year");
+    runQuery(QBM,  /^(\d\d\d\d-\d\d).*/, "bit", "month");
+    runQuery(QBY,  /^(\d\d\d\d).*/, "bitf", "year");
+    runQuery(QBM,  /^(\d\d\d\d-\d\d).*/, "bitf", "month");
   });
 
   
 
-  function add(ctimestr, col, val) {
-    var tr = $("tr.data[date='"+ctimestr+"']");
+  function add(ctimestr, col, val, rclass) {
+    var tr = $("tr.data[date='"+ctimestr+"']").addClass(rclass);
     if (!tr.is("*")) {
       tr = $("<tr/>");
       tr.attr("class","data").attr("date",ctimestr);
@@ -102,8 +104,9 @@ $header->litPageHeader();
   }
 </script>
 <style type="text/css">
-tr.data:even th, tr.data:even:td{background-color: #EEEEEE;}
+tr.data:nth-child(2) th, tr.data:nth-child(2) td{background-color: #EEEEEE;}
 tr.header th, tr.header:td{background-color: yellow;}
+tr.year th, tr.year td {color: red;}
 </style>
 
 </head>
