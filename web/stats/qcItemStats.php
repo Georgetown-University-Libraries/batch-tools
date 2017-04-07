@@ -34,10 +34,10 @@ $header->litPageHeader();
     return item == "" ? "*" : item;
   }
 
-  var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-  var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
-  var QBY = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+owningItem:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
-  var QBM = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+owningItem:"+getId()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+  var QIY = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+  var QIM = getSolrHeader() + "&q=type:2+AND+id:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
+  var QBY = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/YEAR/DAY-5YEARS&facet.date.end=NOW&facet.date.gap=%2B1YEAR";
+  var QBM = getSolrHeader() + "&q=type:0+AND+bundle:ORIGINAL+owningItem:"+getItem()+"&facet=true&facet.date=time&facet.date.start=NOW/MONTH/DAY-60MONTHS&facet.date.end=NOW&facet.date.gap=%2B1MONTH";
 
   function runQuery(url, regex, col) {
     $.getJSON(url, function(data){
