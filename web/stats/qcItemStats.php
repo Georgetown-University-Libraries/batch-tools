@@ -85,7 +85,6 @@ tr.header th, tr.header:td{background-color: yellow;}
 </head>
 <body>
 <?php $header->litHeader();?>
-<h4><?php echo $query1?></h4>
 <form method="GET" action="qcItemStats.php">
 <input type="hidden" id="item" name="item" value="<?php echo $item?>"/>
 <input type="text" id="handle" name="handle" value="<?php echo $handle?>"/>
