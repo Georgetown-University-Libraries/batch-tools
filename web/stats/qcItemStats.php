@@ -28,7 +28,7 @@ $header->litPageHeader();
   $(document).ready(function(){
     var url = '<?php echo $query1?>';
     $.getJSON(url, function(data){
-      var timeobj = data.facet_values.facet_dates.time;
+      var timeobj = data.facet_counts.facet_dates.time;
       var times = timeobj.keys();
       for(var i=0; i<times.length; i++) {
         var ctime = times[i];
