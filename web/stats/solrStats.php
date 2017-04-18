@@ -44,9 +44,9 @@ if ($wake != "") {
         $q="(owningComm:".$comm."+OR+id:{$comm})";
     } else if ($typearg == "COLLV") {
         $q=expandCommunityId($colls,"id");
-    } else if ($typearg == "SEARCH" && $comm == 0) {
+    } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == 0) {
         $q="NOT(scopeType:*)";
-    } else if ($typearg == "SEARCH") {
+    } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
         $q="((scopeType:4+AND+scopeId:{$comm})+OR+" . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
     } else if ($colls == "" || $colls == null){
         $q = "owningColl:na";
@@ -58,7 +58,7 @@ if ($wake != "") {
         $q="na:na";
     } else if ($typearg == "COLLV") {
         $q="id:".$coll;
-    } else if ($typearg == "SEARCH") {
+    } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
         $q="(scopeType:3+AND+scopeId:{$coll})";
     } else {	
         $q="owningColl:".$coll;
