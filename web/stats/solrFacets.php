@@ -70,10 +70,17 @@ class solrFacets {
 			"query" => "+AND+type:0+AND+statistics_type:view"
 		),
 	  	"SEARCH" => array(
-	  		"desc" => "Searches",
+	  		"desc" => "All Searches",
 	  		"query" => "+AND+statistics_type:search"
 	  	),
-	  		
+	  	"SEARCHF" => array(
+	  		"desc" => "Faceted Searches",
+	  		"query" => "+AND+statistics_type:search+AND+query:*_keyword*"
+	  	),
+	  	"SEARCHU" => array(
+	  		"desc" => "Unfaceted Searches",
+	  		"query" => "+AND+statistics_type:search+AND+NOT(query:*_keyword*)"
+	  	),	 
 	  );
 
 	  self::$AUTH = array(
