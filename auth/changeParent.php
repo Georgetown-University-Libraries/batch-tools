@@ -110,7 +110,7 @@ function testArgs(){
     foreach(community::$COMBO as $obj) {
     	$cmp = $obj->community_id;
     	$cmp = is_numeric($cmp) ? intval($cmp) : $cmp;
-    	echo "<p>[{$cmp}] [{$child}] {$obj->shortname}, {$obj->handle}</p>";
+    	echo "<p>[{$cmp}] [{$child}] {$obj->shortname}, {$obj->handle} {$obj->community_id}</p>";
     	 if ($cmp == $child) {
     		$currparent = $obj->getParent()->community_id;
     		break;
