@@ -105,7 +105,11 @@ function testArgs(){
 
 	$currparent = "";
 
-	$note ="";
+	
+	print_r(community::$COMBO[$child]);
+	echo "<hr/>";
+	print_r(community::$COMMUNITIES[$child]);
+	echo "<hr/>";
 	
     foreach(community::$COMBO as $obj) {
     	$cmp = $obj->community_id;
@@ -116,10 +120,8 @@ function testArgs(){
     	}
     }
     
-    $note .= count(community::$COMBO); 
-	
     if (($child == "") || ($parent == "") || ($currparent == "")) {
-    	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparent}. {$note}";
+    	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparent}.";
     	return;
     };
 
