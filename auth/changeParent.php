@@ -113,9 +113,11 @@ function testArgs(){
     		break;
     	}
     }
+    
+    $note = count(community::$COMBO); 
 	
     if (($child == "") || ($parent == "") || ($currparent == "")) {
-    	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparent}";
+    	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparent}. {$note}";
     	return;
     };
 
