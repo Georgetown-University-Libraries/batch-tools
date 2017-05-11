@@ -45,6 +45,8 @@ class community {
 		$this->parent_comm_id = $parent_comm_id;
 		$this->shortname = $this->getShortName($name, $name);
 		
+		echo "<p>{$community_id} {$handle} {$name}</p>";
+		
 		self::$COMMUNITIES[$community_id] = $this;
 		self::$COMBO[$community_id] = $this;
 	}
