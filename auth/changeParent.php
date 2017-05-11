@@ -106,11 +106,6 @@ function testArgs(){
 	$currparent = "";
 
 	
-	print_r(community::$COMBO[$child]);
-	echo "<hr/>";
-	print_r(community::$COMMUNITIES[$child]);
-	echo "<hr/>";
-	
     foreach(community::$COMBO as $obj) {
     	$cmp = $obj->community_id;
     	$cmp = is_numeric($cmp) ? intval($cmp) : $cmp;

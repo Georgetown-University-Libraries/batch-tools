@@ -46,7 +46,7 @@ class community {
 		$this->shortname = $this->getShortName($name, $name);
 		
 		self::$COMMUNITIES[$community_id] = $this;
-		self::$COMBO[$community_id] = $this;
+		self::$COMBO["comm{$community_id}"] = $this;
 	}
 	
 	public function getPathName() {
@@ -139,7 +139,7 @@ class collection {
 		$this->topCommunity=$this->getParent()->getMyTopCommunity();
 		
 		self::$COLLECTIONS[$collection_id] = $this;
-		community::$COMBO[$collection_id] = $this;
+		community::$COMBO["coll{$collection_id}"] = $this;
 	}
 	
 
