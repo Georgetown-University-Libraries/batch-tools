@@ -106,15 +106,16 @@ function testArgs(){
 	$currparent = "";
 
     foreach(community::$COMBO as $obj) {
-    	$cmp = is_numeric($obj->community_id) ? intval($obj->community_id) : $obj->community_id;
-    	if ($cmp == $child) {
+    	$cmp = $obj->community_id;
+    	$cmp = is_numeric($cmp) ? intval($cmp) : $cmp;
+    	 if ($cmp == $child) {
     		$currparent = $obj->getParent()->community_id;
     		break;
     	}
     }
 	
     if (($child == "") || ($parent == "") || ($currparent == "")) {
-    	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparnt}";
+    	$status = "Invalid id:  child: {$child}, parent: {$parent}, currparent: {$currparent}";
     	return;
     };
 
