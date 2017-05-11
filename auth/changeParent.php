@@ -106,7 +106,8 @@ function testArgs(){
 	$currparent = "";
 
     foreach(community::$COMBO as $obj) {
-    	if ($obj->community_id == $child) {
+    	$cmp = is_numeric($obj->community_id) ? intval($obj->community_id) : $obj->community_id;
+    	if ($cmp == $child) {
     		$currparent = $obj->getParent()->community_id;
     		break;
     	}
