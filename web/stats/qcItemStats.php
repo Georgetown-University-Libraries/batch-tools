@@ -86,7 +86,7 @@ tr.data td {text-align: right;}
 
 </head>
 <body>
-<?php $header->litHeader();?>
+<?php $header->litHeader(array());?>
 <form method="GET" action="qcItemStats.php">
 Item Handle: <input type="text" id="handle" name="handle" value="<?php echo $handle?>"/>
 <input type="submit" id="refresh" value="Refresh"/>
