@@ -50,6 +50,10 @@ $header->litPageHeader();
 <?php drawFormats($formats, util::getPostArg("format",""));?>
 <?php collection::getCollectionHandleWidget(util::getPostArg("coll",""), "coll", " to export*");?>
 <?php collection::getSubcommunityWidget(util::getPostArg("comm",""), "comm", " to export*");?>
+<div>
+  <label for="from">From Date YYYY-MM-DD (optional)</label>
+  <input type="text" id="from" name="from" size="10" value="<?php echo util::getPostArg("from","")?>"/>
+</div>
 <p align="center">
 	<input id="exportSubmit" type="submit" title="Submit Form"/>
 </p>
@@ -113,6 +117,7 @@ function testArgs(){
 	$coll = util::getPostArg("coll","");
 	$comm = util::getPostArg("comm","");
 	$format = util::getPostArg("format","");
+	$from = util::getPostArg("from","");
 	
 	$set = "";
 
@@ -136,17 +141,17 @@ function testArgs(){
     global $OAI;
     header('Content-type: application/xml; charset=UTF-8');
     echo "<ListRecords>";
-    getRecords($format, $set);
+    getRecords($format, $set, $from);
     echo "</ListRecords>";
     exit;
 }
 
-function getRecords($format, $set, $resumption = "") {
+function getRecords($format, $set, $from, $resumption = "") {
     global $OAI;
     try {
       $req = $OAI . "verb=ListRecords";
       if ($resumption == "") {
-      	$req .= "&metadataPrefix={$format}&set={$set}";
+      	$req .= "&metadataPrefix={$format}&set={$set}&from={$from}";
       } else {
       	$req .= "&resumptionToken=" . $resumption;
       }
@@ -169,7 +174,7 @@ function getRecords($format, $set, $resumption = "") {
 	  	$token = $nl->item(0)->nodeValue;
 	  	if ($token == null) return;
 	  	if ($token == "") return;
-	  	getRecords($format, $set, $token);
+	  	getRecords($format, $set, $from, $token);
 	  }
 	  
     } catch(exception $ex) {
