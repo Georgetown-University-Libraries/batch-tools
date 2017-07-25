@@ -151,7 +151,8 @@ function getRecords($format, $set, $from, $resumption = "") {
     try {
       $req = $OAI . "verb=ListRecords";
       if ($resumption == "") {
-      	$req .= "&metadataPrefix={$format}&set={$set}&from={$from}";
+      	$req .= "&metadataPrefix={$format}&set={$set}";
+      	$req .= ($from == "") ? "" : "&from={$from}";
       } else {
       	$req .= "&resumptionToken=" . $resumption;
       }
