@@ -7,6 +7,9 @@ This video demonstrates companion tools for the administration of DSpace content
 
 [![Demonstration Video](https://i.ytimg.com/vi/ysk7zMXyWIk/hqdefault.jpg)](https://youtu.be/ysk7zMXyWIk)
 
+## Query/Report Tools - Now a Part of DSpace 6.x
+The Query and Reporting tools described in this repository were migrated to DSpace 6x.  See https://github.com/terrywbrady/restReportTutorial/blob/master/README.md for more details.
+
 ## Documentation 
 
 Project Page: http://georgetown-university-libraries.github.io/batch-tools/
