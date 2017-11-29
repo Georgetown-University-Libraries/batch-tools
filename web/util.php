@@ -64,22 +64,28 @@ echo <<< HERE
 HERE;
 	exit();
 	}
-
+	
     public static function json_get($url) {
-    	$ch = curl_init();
-		$headers = array('Accept: application/json');
-
-		curl_setopt($ch, CURLOPT_URL, "$url"); # URL to post to
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 ); # return into a variable
-		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers ); # custom headers, see above
-		//Assuming localhost access..
-		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0 ); # custom headers, see above
-		$result = curl_exec( $ch ); # run!
-		curl_close($ch);
+        $result = util::url_get($url);
 		return json_decode($result, true);
-    	
     }
 	
+    public static function url_get($url) {
+        $ch = curl_init();
+        $headers = array('Accept: application/json');
+    
+        curl_setopt($ch, CURLOPT_URL, "$url"); # URL to post to
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1 ); # return into a variable
+        curl_setopt($ch, CURLOPT_HTTPHEADER, $headers ); # custom headers, see above
+
+        $isNotLocal = (strpos($url, '//localhost') === false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $isNotLocal ); # custom headers, see above
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $isNotLocal);
+        $result = curl_exec( $ch ); # run!
+        curl_close($ch);
+        return $result;
+         
+    }
 }
 
 ?>
