@@ -79,7 +79,7 @@ HERE;
         curl_setopt($ch, CURLOPT_HTTPHEADER, $headers ); # custom headers, see above
 
         $isNotLocal = (strpos($url, '//localhost') === false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $isNotLocal ); # custom headers, see above
+        //curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, $isNotLocal ); # custom headers, see above
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, $isNotLocal);
         $result = curl_exec( $ch ); # run!
         curl_close($ch);
