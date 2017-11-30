@@ -62,13 +62,14 @@ class custom {
 	
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
 	public function getIngestLocTemp() {return "/var/dspace/ingest/";}
-	public function getRestServiceUrl() {return "https://localhost/rest";}
+	
+	public function getRestServiceUrl() {return "http://localhost/rest";}
 	public function showBatchTools() {return $this->isUserCollectionOwner();}
 	
 	public function isPdo() {return false;}
 	public function showQueryTools() {return $this->isPdo();}
 	public function showStatsTools() {return true;}
-	public function getSolrPath() {return "https://localhost/solr/";}
+	public function getSolrPath() {return "http://localhost/solr/";}
 	public function getSolrDir() {return "/dspace/solr";}
 	public function getSolrShards() {
 		$shardpfx = preg_replace("|https?://|","", $this->getSolrPath());
@@ -91,7 +92,7 @@ class custom {
         asort($shard);
         return $shard;
     }
-	public function getOaiPath() {return "https://localhost/oai/";}
+	public function getOaiPath() {return "http://localhost/oai/";}
 	public function getQueryVal($sql, $arg) {return "";}
 	
 	public function getDSpaceVer() {return 5;}
