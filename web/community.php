@@ -148,13 +148,15 @@ class collection {
 		foreach(community::$COMMUNITIES as $c) {
 			if ($c->parent_comm_id == null) {
 				$sel = ($commsel == $c->shortname) ? "selected" : "";
-				$comms .= "<option value='{$c->shortname}' {$sel}>{$c->name}</option>";			
+				$short = str_replace(" ", "_", $c->shortname);
+				$comms .= "<option value='{$short}' {$sel}>{$c->name}</option>";			
 			}
 		}
 		$colls = "";
 		foreach(self::$COLLECTIONS as $c) {
 			$sel = ($collsel == $c->handle) ? "selected" : "";
-			$colls .= "<option class='allcoll {$c->topCommunity->shortname}' value='{$c->handle}' {$sel}>{$c->getMyPath()}</option>";
+			$short = str_replace(" ", "_", $c->topCommunity->shortname)
+			$colls .= "<option class='allcoll {$short}' value='{$c->handle}' {$sel}>{$c->getMyPath()}</option>";
 		}
 		echo <<< HERE
 		<div id="collWidget">
