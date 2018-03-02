@@ -155,7 +155,7 @@ class collection {
 		$colls = "";
 		foreach(self::$COLLECTIONS as $c) {
 			$sel = ($collsel == $c->handle) ? "selected" : "";
-			$short = str_replace(" ", "_", $c->topCommunity->shortname)
+			$short = str_replace(" ", "_", $c->topCommunity->shortname);
 			$colls .= "<option class='allcoll {$short}' value='{$c->handle}' {$sel}>{$c->getMyPath()}</option>";
 		}
 		echo <<< HERE
