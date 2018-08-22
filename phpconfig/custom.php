@@ -159,6 +159,7 @@ class custom {
   			"userAgent:Mozilla*crawler*",
   			"userAgent:Java*",
 				"dns:*.siteimprove.com*",
+				"dns:*.compute.amazonaws.com*",
 		);
     }
 
