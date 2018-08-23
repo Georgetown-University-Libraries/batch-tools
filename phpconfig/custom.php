@@ -10,25 +10,25 @@ Copyright (c) 2013, Georgetown University Libraries All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
-Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer. 
-in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials 
-provided with the distribution. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, 
-BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. 
-IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES 
-(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) 
-HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) 
+Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials
+provided with the distribution. THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING,
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION)
+HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 include dirname(dirname(__FILE__)) . "/web/community.php";
 class custom {
-	
+
 	public static $INSTANCE;
 	public $ver;
 	public $QKEY = array();
 	const COLLADMIN = "collection-admin";
 	const SYSADMIN  = "system-admin";
 	const VIEWER = "viewer";
-	
+
 	public function getMode() {return "MODE";}
 	public function getSystemLogo() {return "";}
 	public function getSystemName() {return "DSpace Web Tools";}
@@ -57,15 +57,15 @@ class custom {
 		    return false;
 		}
     }
-	
+
 	public function isCheckFilter($name) {return false;}
-	
+
 	public function getIngestLoc() {return "/var/dspace/ingest/";}
 	public function getIngestLocTemp() {return "/var/dspace/ingest/";}
-	
+
 	public function getRestServiceUrl() {return "http://localhost/rest";}
 	public function showBatchTools() {return $this->isUserCollectionOwner();}
-	
+
 	public function isPdo() {return false;}
 	public function showQueryTools() {return $this->isPdo();}
 	public function showStatsTools() {return true;}
@@ -94,12 +94,12 @@ class custom {
     }
 	public function getOaiPath() {return "http://localhost/oai/";}
 	public function getQueryVal($sql, $arg) {return "";}
-	
+
 	public function getDSpaceVer() {return 5;}
 
 	protected $communityInit;
 	public function getCommunityInit() {return $this->communityInit;}
-	
+
 	public function __construct($ver) {
 		$this->communityInit = DefaultInitializer::instance();
 		$this->QKEY = array();
@@ -110,7 +110,7 @@ class custom {
 		if (self::$INSTANCE == null) die("Set custom::$INSTANCE");
 		return self::$INSTANCE;
 	}
-	
+
   //validate the collection handle provided
   function validateCollection($coll) {
 	return "";
@@ -122,7 +122,7 @@ class custom {
 		//$name = str_replace("XXX University","XU",$name);
 		return $name;
 	}
-	
+
 	//return a short hand name for top level collections - used to create CSS classes
 	public function getShortName($name, $def) {
 		return str_replace(" ","_",$def);
@@ -158,9 +158,11 @@ class custom {
   			"userAgent:Sogou*",
   			"userAgent:Mozilla*crawler*",
   			"userAgent:Java*",
+				"dns:*.siteimprove.com*",
+				"dns:*.compute.amazonaws.com*",
 		);
     }
-    
+
     public function getStatsBotsStr() {
     	$botstr = "&fq=NOT(";
     	foreach($this->getStatsBots() as $k => $v) {
@@ -170,10 +172,10 @@ class custom {
     	$botstr .= ")";
     	return $botstr;
     }
-    
-    public function initCustomQueries() {    	
+
+    public function initCustomQueries() {
     }
-    
+
     public function hasQueryKey($str) {
     	if (count($this->QKEY) == 0) {
     		$this->QKEY = $this->getQueryKeys();
@@ -187,7 +189,7 @@ class custom {
     	}
     	return true;
     }
-    
+
     public static function getDefaultQueryKeys() {
     	return array (
     	    "basic" => "Basic Attributes",
@@ -198,15 +200,15 @@ class custom {
     	    "image" => "Image Attributes",
     	    "meta" => "Metadata Attributes",
     	    "misc" => "Misc Content Use Cases",
-    	    "mod" => "Modification Date",    		
-    	    "embargo" => "Embargo Attributes",    		
-	    );    	
+    	    "mod" => "Modification Date",
+    	    "embargo" => "Embargo Attributes",
+	    );
     }
-    
+
     public function getQueryKeys() {
     	return $self->getDefaultQueryKeys();
     }
-    
+
     public function getIntroHtml() {return "";}
 
     public function getAdminHtml() {
@@ -247,7 +249,7 @@ EOF;
 	public function initHierarchy() {
 		hierarchy::initHierarchy(true,"");
 	}
-	
+
 	public function getExcludeCollections() {
 		return array();
 	}
@@ -257,7 +259,7 @@ class DefaultInitializer {
 	static $INSTANCE;
 	public function initCommunities() {
 	}
-	
+
 	public function initCollections() {
 	}
 
