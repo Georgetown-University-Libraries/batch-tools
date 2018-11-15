@@ -30,12 +30,12 @@ if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
 $typearg = solrFacets::getTypeArg();
 
-if ($wake != "") {
+if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="((type:4+AND+(id:{$comm}+OR+owningComm:{$comm}))" 
-            . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))") 
+        $q="((type:4+AND+(id:{$comm}+OR+owningComm:{$comm}))"
+            . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))")
             . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
             . ")";
     } else if ($typearg == "REPV") {
@@ -60,7 +60,7 @@ if ($wake != "") {
         $q="id:".$coll;
     } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
         $q="(scopeType:3+AND+scopeId:{$coll})";
-    } else {	
+    } else {
         $q="owningColl:".$coll;
     }
 } else {
@@ -87,12 +87,12 @@ $qparm = $q . $type['query'] . $auth['query'] . $ip['query'] . $time . $botstr;
 
 $shards = $CUSTOM->getSolrShards();
 
-if (!isset($_GET["debug"])){ 
+if (!isset($_GET["debug"])){
   header('Content-type: application/json');
   $rows = 0;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-	   "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.date=time" . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+	   "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" .
+	   "&facet=true&facet.date=time" .
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -101,9 +101,9 @@ if (!isset($_GET["debug"])){
 } else if ($_GET["debug"] == "xml"){
   header('Content-type: text');
   $rows=2000;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" .
+	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet .
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -111,9 +111,9 @@ if (!isset($_GET["debug"])){
 } else {
   header('Content-type: text');
   $rows=100;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.date=time" . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" .
+	   "&facet=true&facet.date=time" .
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -124,30 +124,30 @@ header('Content-type: text/html; charset=UTF-8');
 ?>
 <html>
 <head>
-<?php 
+<?php
 $header = new LitHeader("Detailed Statistics");
 $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php 
+<?php
 $header->litHeader(array());
 
- $str = "solrStats.php?" . str_replace("debug=rpt","debug=xml",$_SERVER["QUERY_STRING"]);  
+ $str = "solrStats.php?" . str_replace("debug=rpt","debug=xml",$_SERVER["QUERY_STRING"]);
  echo "<a href='" . $str . "'>XML View</a>";
  //echo "<h4>" . $qparm . "</h4>";
 
 $rows=2000;
 
- $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.date=time" . 
+ $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" .
+	   "&facet=true&facet.date=time" .
        $duration['query'];
  $ret = file_get_contents($req);
- 
+
  $xml = new DOMDocument();
  $stat = $xml->loadXML($ret);
- 
+
  $xsl = new DOMDocument();
  $xsl->load("solrStats.xsl");
 
@@ -157,7 +157,7 @@ $rows=2000;
  $res = $proc->transformToDoc($xml);
  echo $res->saveHTML();
 
- 
+
 ?>
 <?php $header->litFooter();?>
 </body>
