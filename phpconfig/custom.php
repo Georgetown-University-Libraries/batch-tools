@@ -230,7 +230,6 @@ class custom {
 <li><a href="../auth/changeParent.php">Move Community</a></li>
 <li><a href="../auth/changeParentColl.php">Move Collection</a></li>
 <li><a href="../auth/mediaFilter.php">Initiate Media Filter</a></li>
-<li><a href="../auth/refreshStatistics.php">Refresh Statistics</a></li>
 <li><a href="../auth/updateMetadata.php">Update Metadata</a></li>
 <li><a href="../auth/reindexColl.php">Re-index Collection</a></li>
 </ul>
