@@ -67,7 +67,7 @@ if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
 	$q="owningComm:1";
 }
 
-$q .= "";
+$q = ($q == "") ? "*:*" : $q;
 
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
