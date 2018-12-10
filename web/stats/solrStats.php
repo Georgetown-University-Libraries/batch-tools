@@ -34,11 +34,11 @@ if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="id:{$comm}+OR+owningComm:{$comm}";
+        $q="(owningComm:{$comm}+OR+id:{$comm})";
     } else if ($typearg == "REPV") {
         $q="(id:".$comm.")";
     } else if ($typearg == "COMMV") {
-        $q="owningComm:{$comm}+AND+type:4";
+        $q="(owningComm:{$comm}+OR+id:{$comm})+AND+type:4";
     } else if ($typearg == "COLLV") {
         $q="owningComm:{$comm}+AND+type:3";
     } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == 0) {
@@ -52,11 +52,11 @@ if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
     if ($typearg == "ALLV") {
         $q="na:na";
     } else if ($typearg == "COLLV") {
-        $q="id:".$coll;
+        $q="(owningColl:{$coll}+OR+id:{$coll})";
     } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
         $q="(scopeType:3+AND+scopeId:{$coll})";
     } else {
-        $q="owningColl:".$coll;
+        $q="owningColl:{$coll}";
     }
 } else {
 	$q="owningComm:1";
