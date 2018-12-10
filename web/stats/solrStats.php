@@ -25,7 +25,7 @@ $wake=util::getArg("wake","");
 $comm=util::getArg("comm","");
 $coll=util::getArg("coll","");
 $time=util::getArg("time","");
-$colls=util::getArg("colls","");
+
 if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
 $typearg = solrFacets::getTypeArg();
@@ -34,24 +34,19 @@ if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="((type:4+AND+(id:{$comm}+OR+owningComm:{$comm}))"
-            . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))")
-            . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
-            . ")";
+        $q="id:{$comm}+OR+owningComm:{$comm}";
     } else if ($typearg == "REPV") {
         $q="(id:".$comm.")";
     } else if ($typearg == "COMMV") {
-        $q="(owningComm:".$comm."+OR+id:{$comm})";
+        $q="owningComm:{$comm}+AND+type:4";
     } else if ($typearg == "COLLV") {
-        $q=expandCommunityId($colls,"id");
+        $q="owningComm:{$comm}+AND+type:3";
     } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == 0) {
         $q="NOT(scopeType:*)";
     } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
-        $q="((scopeType:4+AND+scopeId:{$comm})+OR+" . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
-    } else if ($colls == "" || $colls == null){
-        $q = "owningColl:na";
+        $q="scopeType:4+AND+scopeId:{$comm}";
     } else {
-        $q=expandCommunityId($colls,"owningColl");
+        $q="owningComm:{$comm}";
     }
 } else if ($coll != "") {
     if ($typearg == "ALLV") {
