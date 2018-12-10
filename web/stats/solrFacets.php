@@ -5,10 +5,10 @@ class solrFacets {
 	public static $TYPE;
 	public static $AUTH;
 	public static $IP;
-	
+
 	public static function getArg($name, $def) {
 		if (isset($_GET[$name])) return $_GET[$name];
-		return $def; 
+		return $def;
 	}
 	public static function init($CUSTOM) {
 	  $bfacet = "+bundleName:ORIGINAL";
@@ -71,16 +71,16 @@ class solrFacets {
 		),
 	  	"SEARCH" => array(
 	  		"desc" => "All Searches",
-	  		"query" => "+AND+statistics_type:search"
+	  		"query" => "+AND+statistics_type:search*"
 	  	),
 	  	"SEARCHF" => array(
 	  		"desc" => "Faceted Searches",
-	  		"query" => "+AND+statistics_type:search+AND+query:*_keyword*"
+	  		"query" => "+AND+statistics_type:search*+AND+query:*_keyword*"
 	  	),
 	  	"SEARCHU" => array(
 	  		"desc" => "Unfaceted Searches",
-	  		"query" => "+AND+statistics_type:search+AND+NOT(query:*_keyword*)"
-	  	),	 
+	  		"query" => "+AND+statistics_type:search*+AND+NOT(query:*_keyword*)"
+	  	),
 	  );
 
 	  self::$AUTH = array(
@@ -100,7 +100,7 @@ class solrFacets {
 
 	  self::$IP = $CUSTOM->getStatsIPs();
 	}
-	
+
 	public static function getDurationArg() {
 		$duration = self::getArg("duration","6MONTHS");
 		if (!isset(self::$DURATION[$duration])) $duration = "6MONTHS";
@@ -128,7 +128,7 @@ class solrFacets {
 		$arr = self::getType();
 		return $arr[$k];
 	}
-	
+
 	public static function getAuthArg() {
 		$auth = self::getArg("auth","ALL");
 		if (!isset(self::$AUTH[$auth])) $auth = "ALL";
@@ -154,6 +154,6 @@ class solrFacets {
 		$arr = self::getIp();
 		return $arr[$k];
 	}
-	
+
 }
 ?>

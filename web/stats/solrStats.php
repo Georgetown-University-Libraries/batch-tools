@@ -35,13 +35,15 @@ if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
         $q="(owningComm:{$comm}+OR+id:{$comm})";
+    } else if ($typearg == "REPV" && $comm == "0") {
+        $q="";
     } else if ($typearg == "REPV") {
-        $q="(id:".$comm.")";
+        $q="id:{$comm}";
     } else if ($typearg == "COMMV") {
         $q="(owningComm:{$comm}+OR+id:{$comm})+AND+type:4";
     } else if ($typearg == "COLLV") {
         $q="owningComm:{$comm}+AND+type:3";
-    } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == 0) {
+    } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == "0") {
         $q="NOT(scopeType:*)";
     } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
         $q="scopeType:4+AND+scopeId:{$comm}";
