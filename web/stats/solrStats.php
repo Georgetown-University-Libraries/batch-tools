@@ -25,49 +25,46 @@ $wake=util::getArg("wake","");
 $comm=util::getArg("comm","");
 $coll=util::getArg("coll","");
 $time=util::getArg("time","");
-$colls=util::getArg("colls","");
+
 if ($time != "") $time="+AND+time:" . str_replace(" ","+",$time);
 
 $typearg = solrFacets::getTypeArg();
 
-if ($wake != "") {
+if ($wake != "" && $CUSTOM->getDSpaceVer() == "5") {
     $q = "wake:" . $wake;
 } else if ($comm != "") {
     if ($typearg == "ALLV") {
-        $q="((type:4+AND+(id:{$comm}+OR+owningComm:{$comm}))" 
-            . expandCommunityId($colls,"id","+OR+(type:3+AND+(","))") 
-            . expandCommunityId($colls,"owningColl", "+OR+(type:2+AND+(", "))")
-            . ")";
+        $q="(owningComm:{$comm}+OR+id:{$comm})";
+    } else if ($typearg == "REPV" && $comm == "0") {
+        $q="";
     } else if ($typearg == "REPV") {
-        $q="(id:".$comm.")";
+        $q="id:{$comm}";
     } else if ($typearg == "COMMV") {
-        $q="(owningComm:".$comm."+OR+id:{$comm})";
+        $q="(owningComm:{$comm}+OR+id:{$comm})+AND+type:4";
     } else if ($typearg == "COLLV") {
-        $q=expandCommunityId($colls,"id");
-    } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == 0) {
+        $q="owningComm:{$comm}+AND+type:3";
+    } else if (($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") && $comm == "0") {
         $q="NOT(scopeType:*)";
     } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
-        $q="((scopeType:4+AND+scopeId:{$comm})+OR+" . expandCommunityId($colls,"scopeId", "(scopeType:3+AND+(", "))") . ")";
-    } else if ($colls == "" || $colls == null){
-        $q = "owningColl:na";
+        $q="scopeType:4+AND+scopeId:{$comm}";
     } else {
-        $q=expandCommunityId($colls,"owningColl");
+        $q="owningComm:{$comm}";
     }
 } else if ($coll != "") {
     if ($typearg == "ALLV") {
         $q="na:na";
     } else if ($typearg == "COLLV") {
-        $q="id:".$coll;
+        $q="(owningColl:{$coll}+OR+id:{$coll})";
     } else if ($typearg == "SEARCH" || $typearg == "SEARCHU" || $typearg == "SEARCHF") {
         $q="(scopeType:3+AND+scopeId:{$coll})";
-    } else {	
-        $q="owningColl:".$coll;
+    } else {
+        $q="owningColl:{$coll}";
     }
 } else {
 	$q="owningComm:1";
 }
 
-$q .= "";
+$q = ($q == "") ? "*:*" : $q;
 
 $duration = solrFacets::getDuration();
 $type = solrFacets::getType();
@@ -87,12 +84,12 @@ $qparm = $q . $type['query'] . $auth['query'] . $ip['query'] . $time . $botstr;
 
 $shards = $CUSTOM->getSolrShards();
 
-if (!isset($_GET["debug"])){ 
+if (!isset($_GET["debug"])){
   header('Content-type: application/json');
   $rows = 0;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-	   "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.date=time" . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+	   "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" .
+	   "&facet=true&facet.date=time" .
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -101,9 +98,9 @@ if (!isset($_GET["debug"])){
 } else if ($_GET["debug"] == "xml"){
   header('Content-type: text');
   $rows=2000;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" .
+	   "&facet=true&facet.field=userAgent&facet.date=time" . $bfacet .
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -111,9 +108,9 @@ if (!isset($_GET["debug"])){
 } else {
   header('Content-type: text');
   $rows=100;
-  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.date=time" . 
+  $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&wt=json&explainOther=&hl.fl=" .
+	   "&facet=true&facet.date=time" .
        $duration['query'];
   $ret = file_get_contents($req);
   echo $ret;
@@ -124,30 +121,30 @@ header('Content-type: text/html; charset=UTF-8');
 ?>
 <html>
 <head>
-<?php 
+<?php
 $header = new LitHeader("Detailed Statistics");
 $header->litPageHeader();
 ?>
 </head>
 <body>
-<?php 
+<?php
 $header->litHeader(array());
 
- $str = "solrStats.php?" . str_replace("debug=rpt","debug=xml",$_SERVER["QUERY_STRING"]);  
+ $str = "solrStats.php?" . str_replace("debug=rpt","debug=xml",$_SERVER["QUERY_STRING"]);
  echo "<a href='" . $str . "'>XML View</a>";
  //echo "<h4>" . $qparm . "</h4>";
 
 $rows=2000;
 
- $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm . 
-       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" . 
-	   "&facet=true&facet.date=time" . 
+ $req = $CUSTOM->getSolrPath() . "statistics/select?shards={$shards}&indent=on&q=". $qparm .
+       "&rows=" . $rows . "&fl=*%2Cscore&qt=&explainOther=&hl.fl=" .
+	   "&facet=true&facet.date=time" .
        $duration['query'];
  $ret = file_get_contents($req);
- 
+
  $xml = new DOMDocument();
  $stat = $xml->loadXML($ret);
- 
+
  $xsl = new DOMDocument();
  $xsl->load("solrStats.xsl");
 
@@ -157,7 +154,7 @@ $rows=2000;
  $res = $proc->transformToDoc($xml);
  echo $res->saveHTML();
 
- 
+
 ?>
 <?php $header->litFooter();?>
 </body>

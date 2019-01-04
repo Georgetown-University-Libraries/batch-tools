@@ -24,7 +24,7 @@ header('Content-type: text/html; charset=UTF-8');
 ?>
 <html>
 <head>
-<?php 
+<?php
 $header = new LitHeader(solrFacets::getTypeKey("desc") . " for the " . solrFacets::getDurationKey("desc") . " for " . solrFacets::getAuthKey("desc") . " from " . solrFacets::getIpKey("desc"));
 $header->litPageHeader();
 ?>
@@ -34,13 +34,13 @@ var first = true;
 var complete = 0;
 
 var getNextRowFunc = function() {
-    $("tr.unprocessed:first .data-all").each(function(index){    	
+    $("tr.unprocessed:first .data-all").each(function(index){
         $(this).parent("tr").removeClass("unprocessed");
         setTimeout(getStatsFunc, 1000, $(this), $("tr.comm .data-all").length);
     });
 }
 
-var getWakeFunc = function() {  
+var getWakeFunc = function() {
     var req = "solrStats.php?wake=1";
     $("tr.comm").addClass("unprocessed");
     $.ajax({
@@ -52,22 +52,21 @@ var getWakeFunc = function() {
     });
 }
 
-var getStatsFunc = function(cell, tbd) {  
+var getStatsFunc = function(cell, tbd) {
     var id = cell.attr("id");
     var arr = /(comm|coll)-(\d+|[0-9a-z]{8,8}-[0-9a-z]{4,4}-[0-9a-z]{4,4}-[0-9a-z]{4,4}-[0-9a-z]{12,12})-all/.exec(id);
     if (arr.length <= 2) return;
     var prefix = id.replace("all","");
     var req = "solrStats.php?" +
-        arr[1] + "=" + arr[2] +  
-        "&colls=" + $(cell).parent("tr").attr("colls") +
+        arr[1] + "=" + arr[2] +
         "&duration=" + $("#duration").val() +
         "&type=" + $("#type").val() +
         "&auth=" + $("#auth").val() +
         "&ip=" + $("#ip").val()
         ;
-            
+
     $.getJSON(req,function(data){
-        var colcount = parseInt($("#colcount").val());  
+        var colcount = parseInt($("#colcount").val());
         var count=0;
         var times = new Array();
         if (data != null) {
@@ -83,7 +82,7 @@ var getStatsFunc = function(cell, tbd) {
                 var range = "&time=[" + time + "+TO+" + ((count + 1 == times.length) ? "NOW" : times[count+1]) + "]";
                 var val = parseInt(data.facet_counts.facet_dates.time[time]);
                 $("#"+prefix+count).html("<a href='"+req+range+"&debug=rpt'>0</a>");
-                $("#"+prefix+count).find("a").text(val);        
+                $("#"+prefix+count).find("a").text(val);
                 count++;
                 if (count > colcount) break;
             }
@@ -93,7 +92,7 @@ var getStatsFunc = function(cell, tbd) {
         } else {
             $(cell).parent("tr").find("td.data").text(0);
         }
-        
+
         complete++;
         if (complete == tbd) {
             $(".tot").each(function(){
@@ -141,7 +140,7 @@ var doColl = function() {
 $(document).ready(function(){
     $("#cfscomm").click(doScomm);
     $("#cfcoll").click(doColl);
-    
+
     getWakeFunc();
 
     $("td.data").show();
@@ -150,17 +149,17 @@ $(document).ready(function(){
           if ($("#cfcomm:checked").is("*")) {
               $("tr.comm").show();
           } else {
-              $("tr.comm").hide();              
+              $("tr.comm").hide();
           }
           if ($("#cfscomm:checked").is("*")) {
               $("tr.scomm").show();
           } else {
-              $("tr.scomm").hide();              
+              $("tr.scomm").hide();
           }
           if ($("#cfcoll:checked").is("*")) {
               $("tr.coll").show();
           } else {
-              $("tr.coll").hide();              
+              $("tr.coll").hide();
           }
       }
     );
@@ -237,7 +236,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
   <?php
   for($i=0; $i<$colcount; $i++){
     echo '<th class="sorttable_numeric" id="t' . $i .'">Loading...</th>';
-  } 
+  }
   ?>
   <th class="sorttable_numeric" id="all">All Time</th>
 </tr>
@@ -257,22 +256,22 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
  $c = 0;
  foreach (hierarchy::$OBJECTS as $obj) {
     $class = ($c++ % 2 == 0) ? "allrow even" : "allrow odd";
-      
+
     if ($obj->type == "community") {
-        echo "<tr class='".$obj->rclass."' colls='" . implode(",", $obj->getMyChildCollections()) . "'>";
+        echo "<tr class='".$obj->rclass."'>";
     } else {
-        echo "<tr class='".$obj->rclass."' colls=''>";        
+        echo "<tr class='".$obj->rclass."'>";
     }
-      
+
     echo "<td>" . $obj->path . "</td>";
     echo "<td><a href='/handle/" . $obj->handle . "'>" . $obj->handle . "</td>";
     for($i=0; $i<$colcount; $i++){
         echo "<td class='data data-" . $i . "' id='" . $obj->hid . "-" . $i . "'>";
         echo "-</td>";
-    } 
+    }
     echo "<td class='data data-all' id='".$obj->hid."-all'>-</td>";
     echo "</tr>";
- }       
+ }
 ?>
 <tr class='total'>
   <th style="width:600px">Total</th>
@@ -280,7 +279,7 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
   <?php
   for($i=0; $i<$colcount; $i++){
     echo '<td class="sorttable_numeric tot" id="tot-data-' . $i .'">0</td>';
-  } 
+  }
   ?>
   <td class="sorttable_numeric" id="totall">0</td>
 </tr>
@@ -291,4 +290,3 @@ foreach($CUSTOM->getStatsComm() as $k => $v) {
 <?php $header->litFooter();?>
 </body>
 </html>
-

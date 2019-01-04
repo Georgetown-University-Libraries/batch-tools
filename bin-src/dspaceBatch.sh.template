@@ -19,19 +19,19 @@ COMPLETE=${QDIR}/${FNAME}.complete.txt
 RUN=false
 
 function update_discovery {
-    export JAVA_OPTS=-Xmx1200m   
-    echo "${DSROOT}/bin/dspace index-discovery" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace index-discovery >> ${RUNNING} 2>&1 
+    export JAVA_OPTS=-Xmx1200m
+    echo "${DSROOT}/bin/dspace index-discovery" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace index-discovery >> ${RUNNING} 2>&1
 }
 
 function update_oai {
-    export JAVA_OPTS=-Xmx1200m   
+    export JAVA_OPTS=-Xmx1200m
     echo "${DSROOT}/bin/dspace oai import" >> ${RUNNING} 2>&1
     ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
 }
 
 function update_oai_opt {
-    export JAVA_OPTS=-Xmx1200m   
+    export JAVA_OPTS=-Xmx1200m
     echo "${DSROOT}/bin/dspace oai import -o" >> ${RUNNING} 2>&1
     ${DSROOT}/bin/dspace oai import -o >> ${RUNNING} 2>&1
 }
@@ -42,28 +42,28 @@ function update_solr {
 }
 
 function discovery_opt {
-    echo "${DSROOT}/bin/dspace index-discovery -o" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace index-discovery -o >> ${RUNNING} 2>&1 
+    echo "${DSROOT}/bin/dspace index-discovery -o" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace index-discovery -o >> ${RUNNING} 2>&1
 }
 
 function index_update {
-    echo "Index update is N/A since DSpace 4" >> ${RUNNING} 2>&1 
+    echo "Index update is N/A since DSpace 4" >> ${RUNNING} 2>&1
 }
 
 function bulk_ingest {
-  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1 
+  echo Command: import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace import -a -e $USER -c $COLL -s $LOC -m $MAP >> ${RUNNING} 2>&1
 
-  echo "Modify Map File : ${MAP}" >> ${RUNNING} 
-  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
-  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1 
+  echo "Modify Map File : ${MAP}" >> ${RUNNING}
+  sed -e "s/ /_/g" -i $MAP >> ${RUNNING} 2>&1
+  sed -e "s|_\(${HPFX}\\.[0-9]/\)| \1|" -i $MAP >> ${RUNNING} 2>&1
+  sed -e "s|_\(${HPFX}/\)| \1|" -i $MAP >> ${RUNNING} 2>&1
 
-  export JAVA_OPTS=-Xmx1200m   
+  export JAVA_OPTS=-Xmx1200m
   export LANG=en_US.UTF-8
-  
-  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING} 
-  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1         
+
+  echo "${DSROOT}/bin/dspace filter-media -i $COLL" >> ${RUNNING}
+  ${DSROOT}/bin/dspace filter-media -i $COLL >> ${RUNNING} 2>&1
 }
 
 function download_zip {
@@ -83,27 +83,27 @@ echo Command: "$@" > ${RUNNING}
 
 if [ "$1" = "filter-media" ]
 then
-  export JAVA_OPTS=-Xmx1200m   
+  export JAVA_OPTS=-Xmx1200m
   shift
-  
+
   export LANG=en_US.UTF-8
-  
-  //scope may be "all", "text", "thumb", or "na".  
+
+  //scope may be "all", "text", "thumb", or "na".
   scope=$1
   shift
-  
+
   //default action, run all plugins
   if [ "${scope}" = "text" ]
   then
-    echo ${DSROOT}/bin/dspace filter-media -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor" "$@" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace filter-media -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor" "$@" >> ${RUNNING} 2>&1 
+    echo ${DSROOT}/bin/dspace filter-media -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor" "$@" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace filter-media -p "HTML Text Extractor" -p "PDF Text Extractor" -p "PowerPoint Text Extractor" -p "Word Text Extractor" "$@" >> ${RUNNING} 2>&1
   elif [ "${scope}" = "thumb" ]
   then
-    echo ${DSROOT}/bin/dspace filter-media -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail" "$@" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace filter-media -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail" "$@" >> ${RUNNING} 2>&1 
+    echo ${DSROOT}/bin/dspace filter-media -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail" "$@" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace filter-media -p "ImageMagick Image Thumbnail" -p "ImageMagick PDF Thumbnail" "$@" >> ${RUNNING} 2>&1
   else
-    echo ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1 
-    ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1 
+    echo ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1
+    ${DSROOT}/bin/dspace filter-media "$@" >> ${RUNNING} 2>&1
   fi
 
   $(update_solr)
@@ -111,26 +111,6 @@ elif [ "$1" = "metadata-import" ]
 then
   export JAVA_OPTS="-Dfile.encoding=UTF-8"
   ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
-
-elif [ "$1" = "gu-refresh-statistics" ]
-then
-  export JAVA_OPTS=-Xmx1200m   
-  echo ${DSROOT}/bin/dspace stat-general >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace stat-general >> ${RUNNING} 2>&1 
-
-  echo ${DSROOT}/bin/dspace stat-report-general >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace stat-report-general >> ${RUNNING} 2>&1 
-
-  echo ${DSROOT}/bin/dspace stat-monthly >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace stat-monthly >> ${RUNNING} 2>&1 
-
-  echo ${DSROOT}/bin/dspace stat-report-monthly >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace stat-report-monthly >> ${RUNNING} 2>&1 
-
-  echo ${DSROOT}/bin/dspace stats-util -o >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace stats-util -o >> ${RUNNING} 2>&1 
-
-  $(discovery_opt)
 elif [ "$1" = "gu-update-index" ]
 then
   $(index_update)
@@ -139,44 +119,44 @@ then
 
 elif [ "$1" = "gu-change-parent" ]
 then
-  echo ${DSROOT}/bin/dspace community-filiator -r -c $2 -p $3 >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace community-filiator -r -c $2 -p $3 >> ${RUNNING} 2>&1 
+  echo ${DSROOT}/bin/dspace community-filiator -r -c $2 -p $3 >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace community-filiator -r -c $2 -p $3 >> ${RUNNING} 2>&1
 
-  echo ${DSROOT}/bin/dspace community-filiator -s -c $2 -p $4 >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace community-filiator -s -c $2 -p $4 >> ${RUNNING} 2>&1 
+  echo ${DSROOT}/bin/dspace community-filiator -s -c $2 -p $4 >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace community-filiator -s -c $2 -p $4 >> ${RUNNING} 2>&1
 elif [ "$1" = "gu-change-coll-parent" ]
 then
-  echo "Updating database..." >> ${RUNNING} 2>&1 
+  echo "Updating database..." >> ${RUNNING} 2>&1
   /usr/bin/psql -c "update community2collection set community_id=$4 where community_id=$3 and collection_id=$2;" >> ${RUNNING} 2>&1
-  echo " ** The item has been moved, but the search index does not yet reflect the change" >> ${RUNNING} 2>&1 
-  echo " ** Try re-indexing the parent community" >> ${RUNNING} 2>&1 
-  echo " ** " >> ${RUNNING} 2>&1 
-  echo " ** If items do not appear to be correctly indexed, then run the following steps" >> ${RUNNING} 2>&1 
-  echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1 
-  echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1 
-  echo " ** You must then run oai import" >> ${RUNNING} 2>&1 
+  echo " ** The item has been moved, but the search index does not yet reflect the change" >> ${RUNNING} 2>&1
+  echo " ** Try re-indexing the parent community" >> ${RUNNING} 2>&1
+  echo " ** " >> ${RUNNING} 2>&1
+  echo " ** If items do not appear to be correctly indexed, then run the following steps" >> ${RUNNING} 2>&1
+  echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1
+  echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1
+  echo " ** You must then run oai import" >> ${RUNNING} 2>&1
 elif [ "$1" = "gu-change-coll-parent-d6" ]
 then
-  echo "Updating database..." >> ${RUNNING} 2>&1 
+  echo "Updating database..." >> ${RUNNING} 2>&1
   /usr/bin/psql -c "update community2collection set community_id='$4' where community_id='$3' and collection_id='$2';" >> ${RUNNING} 2>&1
-  echo " ** The item has been moved, but the search index does not yet reflect the change" >> ${RUNNING} 2>&1 
-  echo " ** Try re-indexing the parent community" >> ${RUNNING} 2>&1 
-  echo " ** " >> ${RUNNING} 2>&1 
-  echo " ** If items do not appear to be correctly indexed, then run the following steps" >> ${RUNNING} 2>&1 
-  echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1 
-  echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1 
-  echo " ** You must then run oai import" >> ${RUNNING} 2>&1 
+  echo " ** The item has been moved, but the search index does not yet reflect the change" >> ${RUNNING} 2>&1
+  echo " ** Try re-indexing the parent community" >> ${RUNNING} 2>&1
+  echo " ** " >> ${RUNNING} 2>&1
+  echo " ** If items do not appear to be correctly indexed, then run the following steps" >> ${RUNNING} 2>&1
+  echo " ** You must run index-init while the server is offline" >> ${RUNNING} 2>&1
+  echo " ** You must run update-discovery-index/index-discovery -f after restarting the server" >> ${RUNNING} 2>&1
+  echo " ** You must then run oai import" >> ${RUNNING} 2>&1
 elif [ "$1" = "gu-ingest" ]
-then 
+then
   USER=$2
   COLL=$3
   LOC=$4
   MAP=$5
-  
+
   $(bulk_ingest)
   $(update_solr)
 elif [ "$1" = "gu-ingest-zip" ]
-then 
+then
   USER=$2
   COLL=$3
   ZIP=$4
@@ -187,7 +167,7 @@ then
   $(bulk_ingest)
   $(update_solr)
 elif [ "$1" = "gu-ingest-zipurl" ]
-then 
+then
   USER=$2
   COLL=$3
   URL=$4
@@ -200,15 +180,15 @@ then
   $(bulk_ingest)
   $(update_solr)
 elif [ "$1" = "gu-ingest-skipindex" ]
-then 
+then
   USER=$2
   COLL=$3
   LOC=$4
   MAP=$5
-  
+
   $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zip-skipindex" ]
-then 
+then
   USER=$2
   COLL=$3
   ZIP=$4
@@ -218,7 +198,7 @@ then
   $(unzip_ingest)
   $(bulk_ingest)
 elif [ "$1" = "gu-ingest-zipurl-skipindex" ]
-then 
+then
   USER=$2
   COLL=$3
   URL=$4
@@ -230,51 +210,51 @@ then
   $(unzip_ingest)
   $(bulk_ingest)
 elif [ "$1" = "gu-uningest" ]
-then 
+then
   USER=$2
   MAP=$3
-  
-  echo Command: import -d -e ${USER} -m "${MAP}" >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace import -d -e ${USER} -m "${MAP}" >> ${RUNNING} 2>&1 
+
+  echo Command: import -d -e ${USER} -m "${MAP}" >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace import -d -e ${USER} -m "${MAP}" >> ${RUNNING} 2>&1
 elif [ "$1" = "gu-reindex" ]
-then 
+then
   SRCH=$2
   VAL=$3
-  
-  echo Command: curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1 
-  curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1 
+
+  echo Command: curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1
+  curl "${SOLR}/search/update?stream.body=%3Cupdate%3E%3Cdelete%3E%3Cquery%3Elocation.${SRCH}:${VAL}%3C/query%3E%3C/delete%3E%3C/update%3E" >> ${RUNNING} 2>&1
 
   $(update_discovery)
 
 elif [ "$1" = "gu-reindex-d6" ]
-then 
+then
   HANDLE=$2
-  
-  export JAVA_OPTS=-Xmx1200m   
-  echo "${DSROOT}/bin/dspace index-discovery -i ${HANDLE}" >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace index-discovery -i ${HANDLE}>> ${RUNNING} 2>&1 
+
+  export JAVA_OPTS=-Xmx1200m
+  echo "${DSROOT}/bin/dspace index-discovery -i ${HANDLE}" >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace index-discovery -i ${HANDLE}>> ${RUNNING} 2>&1
 elif [ "$1" = "gu-clean-oai-cache" ]
 then
-  export JAVA_OPTS=-Xmx1200m   
+  export JAVA_OPTS=-Xmx1200m
 
-  echo ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1 
+  echo ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
 
-  echo ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
-  ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1 
+  echo ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1
+  ${DSROOT}/bin/dspace oai clean-cache >> ${RUNNING} 2>&1
 elif [ "$1" = "normalize-lang" ]
 then
-  echo "Update lang from null to en" >> ${RUNNING} 2>&1 
+  echo "Update lang from null to en" >> ${RUNNING} 2>&1
   /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang is null and resource_type_id=2;" >> ${RUNNING} 2>&1
 
-  echo "Update lang from '',en_US, en-US, en_us to en" >> ${RUNNING} 2>&1 
+  echo "Update lang from '',en_US, en-US, en_us to en" >> ${RUNNING} 2>&1
   /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang in ('','en_US', 'en-US','en_us') and resource_type_id=2;" >> ${RUNNING} 2>&1
 elif [ "$1" = "normalize-lang-d6" ]
 then
-  echo "Update lang from null to en" >> ${RUNNING} 2>&1 
+  echo "Update lang from null to en" >> ${RUNNING} 2>&1
   /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang is null  and dspace_object_id in (select uuid from item);" >> ${RUNNING} 2>&1
 
-  echo "Update lang from '',en_US, en-US, en_us to en" >> ${RUNNING} 2>&1 
+  echo "Update lang from '',en_US, en-US, en_us to en" >> ${RUNNING} 2>&1
   /usr/bin/psql -c "update metadatavalue set text_lang='en' where text_lang in ('','en_US', 'en-US','en_us')  and dspace_object_id in (select uuid from item);" >> ${RUNNING} 2>&1
 else
   echo "Unsupported DSpace Command" >> ${RUNNING}
