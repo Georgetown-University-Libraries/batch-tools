@@ -59,7 +59,7 @@ where metadata_field_id = (
   select metadata_field_id
   from metadatafieldregistry
   where element='date' and qualifier='accessioned'
-)
+) and place<2
 group by month
 union
 select
@@ -70,7 +70,7 @@ select
     select metadata_field_id
     from metadatafieldregistry
     where element='date' and qualifier='accessioned'
-  )
+  ) and place<2
   group by month
 union
 select
@@ -81,7 +81,7 @@ where metadata_field_id = (
   select metadata_field_id
   from metadatafieldregistry
   where element='date' and qualifier='accessioned'
-) 
+) and place<2
 group by month
 order by month;
 HERE;
