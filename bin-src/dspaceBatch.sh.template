@@ -30,12 +30,6 @@ function update_oai {
     ${DSROOT}/bin/dspace oai import >> ${RUNNING} 2>&1
 }
 
-function update_oai_opt {
-    export JAVA_OPTS=-Xmx1200m
-    echo "${DSROOT}/bin/dspace oai import -o" >> ${RUNNING} 2>&1
-    ${DSROOT}/bin/dspace oai import -o >> ${RUNNING} 2>&1
-}
-
 function update_solr {
   $(update_discovery)
   $(update_oai)
@@ -115,7 +109,7 @@ elif [ "$1" = "gu-update-index" ]
 then
   $(index_update)
   $(discovery_opt)
-  $(update_oai_opt)
+  $(update_oai)
 
 elif [ "$1" = "gu-change-parent" ]
 then
