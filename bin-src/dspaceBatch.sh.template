@@ -35,11 +35,6 @@ function update_solr {
   $(update_oai)
 }
 
-function discovery_opt {
-    echo "${DSROOT}/bin/dspace index-discovery -o" >> ${RUNNING} 2>&1
-    ${DSROOT}/bin/dspace index-discovery -o >> ${RUNNING} 2>&1
-}
-
 function index_update {
     echo "Index update is N/A since DSpace 4" >> ${RUNNING} 2>&1
 }
@@ -104,11 +99,11 @@ then
 elif [ "$1" = "metadata-import" ]
 then
   export JAVA_OPTS="-Dfile.encoding=UTF-8"
-  ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1 
+  ${DSROOT}/bin/dspace "$@" >> ${RUNNING} 2>&1
 elif [ "$1" = "gu-update-index" ]
 then
   $(index_update)
-  $(discovery_opt)
+  $(update_discovery)
   $(update_oai)
 
 elif [ "$1" = "gu-change-parent" ]
