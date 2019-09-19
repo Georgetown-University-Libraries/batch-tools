@@ -159,13 +159,6 @@ class custom {
   			"userAgent:Mozilla*crawler*",
 				"dns:*.siteimprove.com*",
 				"dns:*.compute.amazonaws.com*",
-        "userAgent:Mozilla*bingbot*",
-        "userAgent:weborama*",
-        "userAgent:Mozilla*SemanticScholarBot*",
-        "userAgent:Linguee*",
-        "userAgent:PiplBot*",
-        "userAgent:Mozilla*YandexBox*",
-        "userAgent:Grammarly*",
 		);
     }
 
