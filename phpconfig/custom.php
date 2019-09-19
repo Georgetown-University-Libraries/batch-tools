@@ -162,7 +162,7 @@ class custom {
         "userAgent:*bingbot*",
         "userAgent:weborama-fetcher*",
         "userAgent:*SemanticScholarBot*",
-        "userAgent:Linguee\ Bot*",
+        "userAgent:Linguee*",
         "userAgent:PiplBot*",
         "userAgent:*YandexBox*",
         "userAgent:Grammarly*",
