@@ -160,7 +160,7 @@ class custom {
 				"dns:*.siteimprove.com*",
 				"dns:*.compute.amazonaws.com*",
         "userAgent:*bingbot*",
-        "userAgent:weborama-fetcher*",
+        "userAgent:weborama*",
         "userAgent:*SemanticScholarBot*",
         "userAgent:Linguee*",
         "userAgent:PiplBot*",
